@@ -8,12 +8,12 @@ export default async function Home() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="hero-section" style={{ position: "relative", height: "108vh" }}>
+      <section className="hero-section" style={{ position: "relative", height: "104vh" }}>
         {/* Sticky Background with Overlay */}
         <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", display: "flex", alignItems: "center", overflow: "hidden" }}>
           <HeroScroll />
 
-        <div className="container" style={{ position: "relative", zIndex: 1, marginTop: "20vh" }}>
+        <div className="container" style={{ position: "relative", zIndex: 1, marginTop: "25vh" }}>
           <div style={{ maxWidth: "800px" }}>
             <div className="animate-fade-in" style={{ display: "inline-block", padding: "0.5rem 1rem", backgroundColor: "rgba(0, 119, 255, 0.15)", border: "1px solid rgba(0, 119, 255, 0.3)", borderRadius: "30px", color: "var(--primary-blue)", fontWeight: "600", fontSize: "0.9rem", marginBottom: "1.5rem" }}>
               🚀 Welcome to Artemis 6621
