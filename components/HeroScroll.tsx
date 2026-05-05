@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 
 export default function HeroScroll() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const frameCount = 7;
+  const frameCount = 6;
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -19,7 +19,7 @@ export default function HeroScroll() {
     const images: HTMLImageElement[] = [];
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
-      img.src = `/hero-sequence/${i + 5}.jpg`;
+      img.src = `/hero-sequence/${i + 6}.jpg`;
       images.push(img);
     }
     
@@ -44,7 +44,7 @@ export default function HeroScroll() {
     const handleScroll = () => {
       // Hero section is 200vh tall, so 100vh is available for scrubbing
       const scrollTop = window.scrollY;
-      const maxScroll = window.innerHeight * 0.15; 
+      const maxScroll = window.innerHeight * 0.08; 
       const scrollFraction = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
       
       const frameIndex = Math.floor(scrollFraction * (frameCount - 1));
