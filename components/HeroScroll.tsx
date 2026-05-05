@@ -70,10 +70,17 @@ export default function HeroScroll() {
   return (
     <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: -1 }}>
       <canvas ref={canvasRef} style={{ display: "block" }} />
+      {/* Intense Vignette Overlay */}
+      <div style={{ 
+        position: "absolute", top: 0, left: 0, right: 0, bottom: 0, 
+        background: "radial-gradient(ellipse at center, transparent 30%, #050505 85%, #050505 100%)",
+        pointerEvents: "none"
+      }}></div>
       {/* Premium dark gradient overlay for text readability */}
       <div style={{ 
         position: "absolute", top: 0, left: 0, right: 0, bottom: 0, 
-        background: "linear-gradient(to right, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.6) 50%, rgba(5,5,5,0.3) 100%)" 
+        background: "linear-gradient(to right, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.5) 50%, transparent 100%)",
+        pointerEvents: "none"
       }}></div>
     </div>
   );
