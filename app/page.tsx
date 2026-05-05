@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getTeamInfo } from "@/lib/tba";
+import HeroScroll from "@/components/HeroScroll";
 
 export default async function Home() {
   const teamInfo = await getTeamInfo();
@@ -7,22 +8,10 @@ export default async function Home() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="hero-section" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
-        {/* Background Image with Overlay */}
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: -1 }}>
-          <Image 
-            src="/hero_robotics_match.png" 
-            alt="Artemis 6621 Drive Team at Competition"
-            fill
-            style={{ objectFit: "cover", objectPosition: "center" }}
-            priority
-          />
-          {/* Gradient Overlay for text readability */}
-          <div style={{ 
-            position: "absolute", top: 0, left: 0, right: 0, bottom: 0, 
-            background: "linear-gradient(to right, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.6) 50%, rgba(5,5,5,0.3) 100%)" 
-          }}></div>
-        </div>
+      <section className="hero-section" style={{ position: "relative", height: "200vh" }}>
+        {/* Sticky Background with Overlay */}
+        <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", display: "flex", alignItems: "center", overflow: "hidden" }}>
+          <HeroScroll />
 
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div style={{ maxWidth: "800px" }}>
@@ -44,6 +33,7 @@ export default async function Home() {
               <a href="#robot" className="btn btn-secondary">Meet the Robot</a>
             </div>
           </div>
+        </div>
         </div>
       </section>
 
