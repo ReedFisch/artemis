@@ -44,7 +44,7 @@ export default function HeroScroll() {
     const handleScroll = () => {
       // Hero section is 200vh tall, so 100vh is available for scrubbing
       const scrollTop = window.scrollY;
-      const maxScroll = window.innerHeight * 1.0; 
+      const maxScroll = window.innerHeight * 0.5; 
       const scrollFraction = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
       
       const frameIndex = Math.floor(scrollFraction * (frameCount - 1));

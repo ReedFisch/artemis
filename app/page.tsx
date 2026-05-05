@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="hero-section" style={{ position: "relative", height: "200vh" }}>
+      <section className="hero-section" style={{ position: "relative", height: "150vh" }}>
         {/* Sticky Background with Overlay */}
         <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", display: "flex", alignItems: "center", overflow: "hidden" }}>
           <HeroScroll />
