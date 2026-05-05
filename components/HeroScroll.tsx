@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 
 export default function HeroScroll() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const frameCount = 6;
+  const frameCount = 5;
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -19,7 +19,7 @@ export default function HeroScroll() {
     const images: HTMLImageElement[] = [];
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
-      img.src = `/hero-sequence/${i + 6}.jpg`;
+      img.src = `/hero-sequence/${i + 7}.jpg`;
       images.push(img);
     }
     
