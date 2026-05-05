@@ -19,6 +19,6 @@
 - [x] Phase 1: Blueprint - Research (In progress)
 - [x] Phase 1: Blueprint - Approval
 - [x] Phase 2: Link
-- [ ] Phase 3: Architect
+- [x] Phase 3: Architect
 - [ ] Phase 4: Stylize
 - [ ] Phase 5: Trigger
