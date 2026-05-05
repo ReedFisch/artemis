@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 
 export default function HeroScroll() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const frameCount = 11; // We extracted 11 frames
+  const frameCount = 7;
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -17,9 +17,9 @@ export default function HeroScroll() {
     
     // Preload images
     const images: HTMLImageElement[] = [];
-    for (let i = 1; i <= frameCount; i++) {
+    for (let i = 0; i < frameCount; i++) {
       const img = new Image();
-      img.src = `/hero-sequence/${i}.jpg`;
+      img.src = `/hero-sequence/${i + 5}.jpg`;
       images.push(img);
     }
     
@@ -44,7 +44,7 @@ export default function HeroScroll() {
     const handleScroll = () => {
       // Hero section is 200vh tall, so 100vh is available for scrubbing
       const scrollTop = window.scrollY;
-      const maxScroll = window.innerHeight * 0.5; 
+      const maxScroll = window.innerHeight * 0.15; 
       const scrollFraction = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
       
       const frameIndex = Math.floor(scrollFraction * (frameCount - 1));
@@ -73,7 +73,7 @@ export default function HeroScroll() {
       {/* Intense Vignette Overlay */}
       <div style={{ 
         position: "absolute", top: 0, left: 0, right: 0, bottom: 0, 
-        background: "radial-gradient(ellipse at center, transparent 30%, #050505 85%, #050505 100%)",
+        background: "radial-gradient(ellipse 70% 90% at center, transparent 40%, #050505 85%, #050505 100%)",
         pointerEvents: "none"
       }}></div>
       {/* Premium dark gradient overlay for text readability */}
