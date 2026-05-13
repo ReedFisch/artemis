@@ -394,9 +394,6 @@ function Hero2() {
             ARTEMIS
           </h1>
         </div>
-
-        {/* The Transparent Robot */}
-        <img src="/hero/robot_masked.webp" alt="Artemis Lunar Robot" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 3 }} />
       </div>
 
       {/* 4. Glowing Organic Outline */}
