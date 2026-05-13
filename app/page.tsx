@@ -189,7 +189,7 @@ function Hero1() {
             fontSize: "clamp(2.5rem, 15.8vw, 17.3rem)", fontWeight: 900, textTransform: "uppercase",
             letterSpacing: "0.05em", color: "rgba(255, 255, 255, 0.5)", mixBlendMode: "overlay",
             margin: 0, fontFamily: "'Trebuchet MS', sans-serif", display: "flex", lineHeight: 1, 
-            transform: "translateY(-15vh)"
+            transform: "translateY(-20vh)"
           }}>
             {ARTEMIS_LETTERS.map((letter, i) => (
               <span key={`a-${i}`} style={getLetterStyle(i)}>{letter}</span>
@@ -410,7 +410,7 @@ function Hero2() {
           mixBlendMode: "overlay",
           margin: 0, 
           fontFamily: "'Trebuchet MS', sans-serif",
-          transform: "translateY(-15vh)"
+          transform: "translateY(-20vh)"
         }}>
           ARTEMIS
         </h1>
@@ -439,7 +439,7 @@ function Hero2() {
             mixBlendMode: "overlay",
             margin: 0, 
             fontFamily: "'Trebuchet MS', sans-serif",
-            transform: "translateY(-15vh)"
+            transform: "translateY(-20vh)"
           }}>
             ARTEMIS
           </h1>
