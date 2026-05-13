@@ -7,6 +7,13 @@
 body {
   background-color: #000;
   color: #fff;
+  overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+}
+
+@media (max-width: 768px) {
+  .mobile-hide {
+    display: none !important;
+  }
 }
 
 @keyframes waterfallFall {

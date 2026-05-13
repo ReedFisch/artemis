@@ -27,8 +27,8 @@ const LETTER_TRAJECTORIES = ARTEMIS_LETTERS.map((_, i) => {
   // Fan from 150° (upper-left) to 30° (upper-right)
   const angleDeg = 150 - (i / (ARTEMIS_LETTERS.length - 1)) * 120;
   const angleRad = (angleDeg * Math.PI) / 180;
-  const speed = 80 + Math.random() * 40; // vw units of travel
-  const rotationSpeed = (Math.random() - 0.5) * 540; // degrees of spin
+  const speed = 25 + Math.random() * 15; // Reduced for mobile safety
+  const rotationSpeed = (Math.random() - 0.5) * 360; 
   return { angleRad, speed, rotationSpeed };
 });
 
@@ -61,15 +61,17 @@ function Hero1() {
 
     // 2. Lazy-load the rest of the sequence in the background
     setTimeout(() => {
-      for (let i = 1; i < frameCount; i++) {
+      for (let i = 1; i <= frameCount; i++) {
         const img = new Image();
-        if (i === frameCount - 1) {
-          img.src = '/hero/110_highres.png'; // Maximum uncompressed quality for the final holding frame
+        if (i === frameCount) {
+          img.src = '/hero/moon_final.jpg'; // The new cinematic ending frame
+        } else if (i === frameCount - 1) {
+          img.src = '/hero/110_highres.png';
         } else {
           img.src = `/hero/${i.toString().padStart(3,'0')}.webp`;
         }
         img.onload = () => { loaded[i] = img; };
-        img.onerror = () => { loaded[i] = img; }; // keep array slot
+        img.onerror = () => { loaded[i] = img; }; 
       }
     }, 100);
 
@@ -86,6 +88,9 @@ function Hero1() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     let vi = index;
+    // At the very end of scroll, force show the final moon frame
+    if (index >= 110) vi = 111;
+    
     while (vi >= 0 && (!images[vi] || images[vi].naturalWidth === 0)) vi--;
     if (vi < 0) return;
     const img = images[vi];
@@ -162,8 +167,8 @@ function Hero1() {
           pointerEvents: "none", zIndex: 2, opacity: isLoaded ? 1 : 0, transition: "opacity 2s ease-in",
         }}>
           <h1 style={{ 
-            fontSize: "clamp(6.5rem, 15.8vw, 17.3rem)", fontWeight: 900, textTransform: "uppercase",
-            letterSpacing: "0.15em", color: "rgba(255, 255, 255, 0.5)", mixBlendMode: "overlay",
+            fontSize: "clamp(2.5rem, 15.8vw, 17.3rem)", fontWeight: 900, textTransform: "uppercase",
+            letterSpacing: "0.05em", color: "rgba(255, 255, 255, 0.5)", mixBlendMode: "overlay",
             margin: 0, fontFamily: "'Trebuchet MS', sans-serif", display: "flex", lineHeight: 1, transform: "translateY(-10vh)"
           }}>
             {ARTEMIS_LETTERS.map((letter, i) => (
@@ -174,19 +179,19 @@ function Hero1() {
 
         {/* Header */}
         <header style={{
-          position: "absolute", top: 0, left: 0, right: 0, padding: "2rem 4vw",
+          position: "absolute", top: 0, left: 0, right: 0, padding: "1.5rem 5vw",
           display: "flex", justifyContent: "space-between", alignItems: "center",
           zIndex: 50, color: "#F8FAFC", fontFamily: "'Trebuchet MS', sans-serif"
         }}>
           <div style={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
-            <img src="/branding/logo_4.jpeg" alt="Artemis Logo" style={{ height: "60px", objectFit: "contain", borderRadius: "8px" }} />
+            <img src="/branding/logo_4.jpeg" alt="Artemis Logo" style={{ height: "45px", mdHeight: "60px", objectFit: "contain", borderRadius: "8px" } as any} />
           </div>
-          <nav style={{ display: "flex", gap: "3rem", fontSize: "1.925rem", fontWeight: "bold", fontFamily: "'Inter', sans-serif" }}>
+          <nav className="mobile-hide" style={{ display: "flex", gap: "3rem", fontSize: "1.2rem", fontWeight: "bold", fontFamily: "'Inter', sans-serif" }}>
             <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "color 0.2s, opacity 0.2s" }} onMouseEnter={e => { e.currentTarget.style.color = "#2563EB"; e.currentTarget.style.opacity = "1"; }} onMouseLeave={e => { e.currentTarget.style.color = "#F8FAFC"; e.currentTarget.style.opacity = "0.6"; }}>About</a>
             <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "color 0.2s, opacity 0.2s" }} onMouseEnter={e => { e.currentTarget.style.color = "#2563EB"; e.currentTarget.style.opacity = "1"; }} onMouseLeave={e => { e.currentTarget.style.color = "#F8FAFC"; e.currentTarget.style.opacity = "0.6"; }}>Robots</a>
             <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "color 0.2s, opacity 0.2s" }} onMouseEnter={e => { e.currentTarget.style.color = "#2563EB"; e.currentTarget.style.opacity = "1"; }} onMouseLeave={e => { e.currentTarget.style.color = "#F8FAFC"; e.currentTarget.style.opacity = "0.6"; }}>Sponsors</a>
           </nav>
-          <button style={{ padding: "0.8rem 2.5rem", backgroundColor: "#2563EB", color: "#F8FAFC", border: "none", borderRadius: "50px", fontWeight: "bold", fontSize: "1rem", cursor: "pointer", transition: "transform 0.2s, background-color 0.2s" }}
+          <button style={{ padding: "0.6rem 1.8rem", backgroundColor: "#2563EB", color: "#F8FAFC", border: "none", borderRadius: "50px", fontWeight: "bold", fontSize: "0.9rem", cursor: "pointer", transition: "transform 0.2s, background-color 0.2s" }}
             onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.backgroundColor = "#F97316"; }}
             onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.backgroundColor = "#2563EB"; }}>
             Join Us
@@ -347,10 +352,10 @@ function Hero2() {
       {/* 2. Base Text (Visible everywhere) */}
       <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", zIndex: 2 }}>
         <h1 style={{ 
-          fontSize: "clamp(6rem, 15vw, 16rem)", 
+          fontSize: "clamp(2.5rem, 15vw, 16rem)", 
           fontWeight: 900, 
           textTransform: "uppercase", 
-          letterSpacing: "0.15em", 
+          letterSpacing: "0.05em", 
           color: "rgba(255, 255, 255, 0.4)", 
           mixBlendMode: "overlay",
           margin: 0, 
@@ -376,10 +381,10 @@ function Hero2() {
         {/* Highlighted Text */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", zIndex: 2 }}>
           <h1 style={{ 
-            fontSize: "clamp(6rem, 15vw, 16rem)", 
+            fontSize: "clamp(2.5rem, 15vw, 16rem)", 
             fontWeight: 900, 
             textTransform: "uppercase", 
-            letterSpacing: "0.15em", 
+            letterSpacing: "0.05em", 
             color: "rgba(255, 255, 255, 0.4)", 
             mixBlendMode: "overlay",
             margin: 0, 
