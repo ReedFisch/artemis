@@ -46,7 +46,7 @@ function Hero1() {
 
     // 1. Load the first frame immediately so the site appears instantly
     const firstImg = new Image();
-    firstImg.src = '/hero/Robotbackground.jpeg';
+    firstImg.src = '/hero/Robotbackground_v2.jpeg';
     
     const revealSite = () => {
       loaded[0] = firstImg;
@@ -64,7 +64,7 @@ function Hero1() {
       for (let i = 1; i <= frameCount; i++) {
         const img = new Image();
         if (i === frameCount) {
-          img.src = '/hero/finalmoon.jpeg'; // High-fidelity ending frame
+          img.src = '/hero/finalmoon_v2.jpeg'; // High-fidelity ending frame
         } else if (i === frameCount - 1) {
           img.src = '/hero/110_highres.png';
         } else {
@@ -428,7 +428,7 @@ function Hero2() {
         }}
       >
         {/* Bright Background inside spotlight */}
-        <img src="/hero/Robotbackground.jpeg" alt="Moon Robot Bright" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }} />
+        <img src="/hero/Robotbackground_v2.jpeg" alt="Moon Robot Bright" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }} />
 
         {/* Highlighted Text */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", zIndex: 2 }}>
