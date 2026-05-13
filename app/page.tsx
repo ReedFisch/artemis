@@ -156,19 +156,11 @@ function Hero1() {
         {/* Vignette */}
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle, transparent 40%, rgba(0,0,0,0.95) 120%)", pointerEvents: "none", zIndex: 5 }} />
 
-        {/* Layer 2: Text "ARTEMIS" (zIndex 2) — masked by robot silhouette persistently */}
+        {/* Layer 2: Text "ARTEMIS" (zIndex 2) */}
         <div style={{
           position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
           pointerEvents: "none", zIndex: 2, opacity: isLoaded ? 1 : 0, transition: "opacity 2s ease-in",
-          maskImage: "url(/hero/robot_text_mask.webp)",
-          WebkitMaskImage: "url(/hero/robot_text_mask.webp)",
-          maskSize: "cover",
-          WebkitMaskSize: "cover",
-          maskPosition: "center",
-          WebkitMaskPosition: "center",
-          maskRepeat: "no-repeat",
-          WebkitMaskRepeat: "no-repeat",
-        } as React.CSSProperties}>
+        }}>
           <h1 style={{ 
             fontSize: "clamp(6.5rem, 15.8vw, 17.3rem)", fontWeight: 900, textTransform: "uppercase",
             letterSpacing: "0.15em", color: "rgba(255, 255, 255, 0.5)", mixBlendMode: "overlay",
@@ -179,22 +171,6 @@ function Hero1() {
             ))}
           </h1>
         </div>
-
-        {/* Layer 3: The Transparent Robot — ON TOP of text at zIndex 3
-            Same as Hero 2's <img src="moon2_masked.png" zIndex 3 />
-            Pre-generated via AI background removal (rembg) */}
-        <img 
-          id="hero1-robot-cutout"
-          src="/hero/robot_masked.webp" 
-          alt="Artemis Robot" 
-          style={{ 
-            width: "100%", height: "100%", objectFit: "cover",
-            position: "absolute", top: 0, left: 0, zIndex: 3,
-            pointerEvents: "none",
-            opacity: isLoaded ? 1 : 0,
-            transition: "opacity 1.5s ease-in"
-          }} 
-        />
 
         {/* Header */}
         <header style={{
