@@ -38,7 +38,7 @@ function Hero1() {
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const lastDrawnFrameIndex = useRef(-1);
-  const frameCount = 111;
+  const frameCount = 110;
 
   useEffect(() => {
     const loaded: HTMLImageElement[] = new Array(frameCount);
@@ -61,12 +61,10 @@ function Hero1() {
 
     // 2. Lazy-load the rest of the sequence in the background
     setTimeout(() => {
-      for (let i = 1; i <= frameCount; i++) {
+      for (let i = 1; i < frameCount; i++) {
         const img = new Image();
-        if (i === frameCount) {
-          img.src = '/hero/finalmoon_v2.jpeg'; // High-fidelity ending frame
-        } else if (i === frameCount - 1) {
-          img.src = '/hero/110_highres.png';
+        if (i === frameCount - 1) {
+          img.src = '/hero/110_highres.png'; // Maximum uncompressed quality for the final holding frame
         } else {
           img.src = `/hero/${i.toString().padStart(3,'0')}.webp`;
         }
@@ -88,8 +86,6 @@ function Hero1() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     let vi = index;
-    // At the very end of scroll, force show the final moon frame
-    if (index >= 110) vi = 111;
     
     while (vi >= 0 && (!images[vi] || images[vi].naturalWidth === 0)) vi--;
     if (vi < 0) return;
