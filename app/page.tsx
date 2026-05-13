@@ -46,7 +46,7 @@ function Hero1() {
 
     // 1. Load the first frame immediately so the site appears instantly
     const firstImg = new Image();
-    firstImg.src = '/hero/Robotbackground_v2.jpeg';
+    firstImg.src = '/hero/Robotbackground_v3.jpeg';
     
     const revealSite = () => {
       loaded[0] = firstImg;
@@ -94,16 +94,9 @@ function Hero1() {
     const ir = img.width / img.height, cr = canvas.width / canvas.height;
     let dw: number, dh: number, ox: number, oy: number;
 
-    const isMobile = window.innerWidth < 768;
-
-    if (isMobile) {
-      // "Zoom out" - show full frame (contain logic)
-      dw = canvas.width; dh = canvas.width / ir; ox = 0; oy = (canvas.height - dh) / 2;
-    } else {
-      // High-performance widescreen cover logic
-      if (cr > ir) { dw = canvas.width; dh = canvas.width / ir; ox = 0; oy = (canvas.height - dh) / 2; }
-      else { dw = canvas.height * ir; dh = canvas.height; ox = (canvas.width - dw) / 2; oy = 0; }
-    }
+    // Use "Cover" logic on all devices to ensure full-screen immersion
+    if (cr > ir) { dw = canvas.width; dh = canvas.width / ir; ox = 0; oy = (canvas.height - dh) / 2; }
+    else { dw = canvas.height * ir; dh = canvas.height; ox = (canvas.width - dw) / 2; oy = 0; }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, ox, oy, dw, dh);
@@ -179,11 +172,9 @@ function Hero1() {
 
         {/* Layer 1: Full frame canvas (zIndex 1) */}
         <canvas ref={canvasRef} style={{ 
-          width: "100%", height: "100%", display: "block", 
+          width: "100%", height: "100%", display: "block", objectFit: "cover",
           opacity: isLoaded ? 1 : 0, transition: "opacity 1.5s ease-in",
-          position: "absolute", top: 0, left: 0, zIndex: 1,
-          transform: "scale(var(--mobile-hero-scale, 1))",
-          transformOrigin: "center center"
+          position: "absolute", top: 0, left: 0, zIndex: 1
         }} />
 
         {/* Vignette */}
@@ -198,7 +189,7 @@ function Hero1() {
             fontSize: "clamp(2.5rem, 15.8vw, 17.3rem)", fontWeight: 900, textTransform: "uppercase",
             letterSpacing: "0.05em", color: "rgba(255, 255, 255, 0.5)", mixBlendMode: "overlay",
             margin: 0, fontFamily: "'Trebuchet MS', sans-serif", display: "flex", lineHeight: 1, 
-            transform: "translateY(var(--mobile-text-y, -10vh))"
+            transform: "translateY(-10vh)"
           }}>
             {ARTEMIS_LETTERS.map((letter, i) => (
               <span key={`a-${i}`} style={getLetterStyle(i)}>{letter}</span>
@@ -435,7 +426,7 @@ function Hero2() {
         }}
       >
         {/* Bright Background inside spotlight */}
-        <img src="/hero/Robotbackground_v2.jpeg" alt="Moon Robot Bright" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }} />
+        <img src="/hero/Robotbackground_v3.jpeg" alt="Moon Robot Bright" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }} />
 
         {/* Highlighted Text */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", zIndex: 2 }}>
