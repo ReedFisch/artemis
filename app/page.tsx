@@ -38,7 +38,7 @@ function Hero1() {
   const containerRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const frameCount = 441;
+  const frameCount = 114;
 
   useEffect(() => {
     const loaded: HTMLImageElement[] = [];
@@ -51,7 +51,7 @@ function Hero1() {
     };
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
-      img.src = i === 0 ? '/hero/Robotbackground.jpeg' : `/hero/${i.toString().padStart(3,'0')}.png`;
+      img.src = i === 0 ? '/hero/Robotbackground.webp' : `/hero/${i.toString().padStart(3,'0')}.webp`;
       img.onload = () => { ok++; done(); };
       img.onerror = () => { err++; done(); };
       loaded.push(img);
@@ -138,8 +138,8 @@ function Hero1() {
         <div style={{
           position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
           pointerEvents: "none", zIndex: 2, opacity: isLoaded ? 1 : 0, transition: "opacity 2s ease-in",
-          maskImage: "url(/hero/robot_text_mask.png)",
-          WebkitMaskImage: "url(/hero/robot_text_mask.png)",
+          maskImage: "url(/hero/robot_text_mask.webp)",
+          WebkitMaskImage: "url(/hero/robot_text_mask.webp)",
           maskSize: "cover",
           WebkitMaskSize: "cover",
           maskPosition: "center",
@@ -163,7 +163,7 @@ function Hero1() {
             Pre-generated via AI background removal (rembg) */}
         <img 
           id="hero1-robot-cutout"
-          src="/hero/robot_masked.png" 
+          src="/hero/robot_masked.webp" 
           alt="Artemis Robot" 
           style={{ 
             width: "100%", height: "100%", objectFit: "cover",
