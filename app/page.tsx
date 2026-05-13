@@ -38,7 +38,7 @@ function Hero1() {
   const containerRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const frameCount = 114;
+  const frameCount = 111;
 
   useEffect(() => {
     const loaded: HTMLImageElement[] = [];
@@ -121,7 +121,7 @@ function Hero1() {
   };
 
   return (
-    <div ref={containerRef} style={{ height: "280vh", position: "relative" }}>
+    <div ref={containerRef} style={{ height: "200vh", position: "relative" }}>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", backgroundColor: "#000" }}>
 
         {/* Layer 1: Full frame canvas (zIndex 1) */}
