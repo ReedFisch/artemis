@@ -97,8 +97,18 @@ function Hero1() {
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     const ir = img.width / img.height, cr = canvas.width / canvas.height;
     let dw: number, dh: number, ox: number, oy: number;
-    if (cr > ir) { dw = canvas.width; dh = canvas.width / ir; ox = 0; oy = (canvas.height - dh) / 2; }
-    else { dw = canvas.height * ir; dh = canvas.height; ox = (canvas.width - dw) / 2; oy = 0; }
+
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+      // "Zoom out" - show full frame (contain logic)
+      dw = canvas.width; dh = canvas.width / ir; ox = 0; oy = (canvas.height - dh) / 2;
+    } else {
+      // High-performance widescreen cover logic
+      if (cr > ir) { dw = canvas.width; dh = canvas.width / ir; ox = 0; oy = (canvas.height - dh) / 2; }
+      else { dw = canvas.height * ir; dh = canvas.height; ox = (canvas.width - dw) / 2; oy = 0; }
+    }
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, ox, oy, dw, dh);
   };
@@ -147,9 +157,20 @@ function Hero1() {
     };
   };
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const stars = useRef(generateStars(300));
+
   return (
     <div ref={containerRef} style={{ height: "150vh", position: "relative" }}>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", backgroundColor: "#000" }}>
+        
+        {/* Persistent Star Background (Fills black space on mobile) */}
+        <div style={{
+          position: "absolute", inset: 0, 
+          width: "100%", height: "100%", 
+          boxShadow: stars.current,
+          pointerEvents: "none", zIndex: 0 
+        }} />
 
         {/* Layer 1: Full frame canvas (zIndex 1) */}
         <canvas ref={canvasRef} style={{ 
@@ -181,19 +202,47 @@ function Hero1() {
         <header style={{
           position: "absolute", top: 0, left: 0, right: 0, padding: "1.5rem 5vw",
           display: "flex", justifyContent: "space-between", alignItems: "center",
-          zIndex: 50, color: "#F8FAFC", fontFamily: "'Trebuchet MS', sans-serif"
+          zIndex: 100, color: "#F8FAFC", fontFamily: "'Trebuchet MS', sans-serif"
         }}>
-          <div style={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
-            <img src="/branding/logo_4.jpeg" alt="Artemis Logo" style={{ height: "45px", mdHeight: "60px", objectFit: "contain", borderRadius: "8px" } as any} />
+          <div style={{ cursor: "pointer", display: "flex", alignItems: "center", zIndex: 101 }}>
+            <img src="/branding/logo_4.jpeg" alt="Artemis Logo" style={{ height: "45px", objectFit: "contain", borderRadius: "8px" } as any} />
           </div>
+
+          {/* Desktop Nav */}
           <nav className="mobile-hide" style={{ display: "flex", gap: "3rem", fontSize: "1.2rem", fontWeight: "bold", fontFamily: "'Inter', sans-serif" }}>
-            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "color 0.2s, opacity 0.2s" }} onMouseEnter={e => { e.currentTarget.style.color = "#2563EB"; e.currentTarget.style.opacity = "1"; }} onMouseLeave={e => { e.currentTarget.style.color = "#F8FAFC"; e.currentTarget.style.opacity = "0.6"; }}>About</a>
-            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "color 0.2s, opacity 0.2s" }} onMouseEnter={e => { e.currentTarget.style.color = "#2563EB"; e.currentTarget.style.opacity = "1"; }} onMouseLeave={e => { e.currentTarget.style.color = "#F8FAFC"; e.currentTarget.style.opacity = "0.6"; }}>Robots</a>
-            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "color 0.2s, opacity 0.2s" }} onMouseEnter={e => { e.currentTarget.style.color = "#2563EB"; e.currentTarget.style.opacity = "1"; }} onMouseLeave={e => { e.currentTarget.style.color = "#F8FAFC"; e.currentTarget.style.opacity = "0.6"; }}>Sponsors</a>
+            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6 }}>About</a>
+            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6 }}>Robots</a>
+            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6 }}>Sponsors</a>
           </nav>
-          <button style={{ padding: "0.6rem 1.8rem", backgroundColor: "#2563EB", color: "#F8FAFC", border: "none", borderRadius: "50px", fontWeight: "bold", fontSize: "0.9rem", cursor: "pointer", transition: "transform 0.2s, background-color 0.2s" }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.backgroundColor = "#F97316"; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.backgroundColor = "#2563EB"; }}>
+
+          {/* Hamburger Menu Icon (Mobile) */}
+          <div 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            style={{ 
+              display: "flex", flexDirection: "column", gap: "6px", cursor: "pointer", zIndex: 101,
+              padding: "10px", margin: "-10px"
+            }}
+            className="md-hidden"
+          >
+            <div style={{ width: "25px", height: "2px", backgroundColor: "#fff", transition: "0.3s", transform: isMenuOpen ? "rotate(45deg) translate(5px, 5px)" : "" }} />
+            <div style={{ width: "25px", height: "2px", backgroundColor: "#fff", opacity: isMenuOpen ? 0 : 1 }} />
+            <div style={{ width: "25px", height: "2px", backgroundColor: "#fff", transition: "0.3s", transform: isMenuOpen ? "rotate(-45deg) translate(7px, -7px)" : "" }} />
+          </div>
+
+          {/* Mobile Dropdown */}
+          <div style={{
+            position: "fixed", inset: 0, backgroundColor: "rgba(0,0,0,0.95)",
+            display: isMenuOpen ? "flex" : "none", flexDirection: "column",
+            alignItems: "center", justifyContent: "center", gap: "2rem",
+            zIndex: 100, backdropFilter: "blur(10px)", transition: "0.3s"
+          }}>
+            <a href="#" onClick={() => setIsMenuOpen(false)} style={{ fontSize: "2rem", color: "#fff", textDecoration: "none" }}>About</a>
+            <a href="#" onClick={() => setIsMenuOpen(false)} style={{ fontSize: "2rem", color: "#fff", textDecoration: "none" }}>Robots</a>
+            <a href="#" onClick={() => setIsMenuOpen(false)} style={{ fontSize: "2rem", color: "#fff", textDecoration: "none" }}>Sponsors</a>
+            <button style={{ padding: "1rem 3rem", backgroundColor: "#2563EB", color: "#fff", borderRadius: "50px", border: "none", fontSize: "1.2rem", fontWeight: "bold" }}>Join Us</button>
+          </div>
+
+          <button className="mobile-hide" style={{ padding: "0.6rem 1.8rem", backgroundColor: "#2563EB", color: "#F8FAFC", border: "none", borderRadius: "50px", fontWeight: "bold", fontSize: "0.9rem", cursor: "pointer" }}>
             Join Us
           </button>
         </header>

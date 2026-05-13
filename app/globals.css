@@ -10,8 +10,15 @@ body {
   overflow-x: hidden; /* Prevent horizontal scroll on mobile */
 }
 
+/* Visibility Utilities */
 @media (max-width: 768px) {
   .mobile-hide {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .md-hidden {
     display: none !important;
   }
 }
