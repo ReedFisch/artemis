@@ -42,27 +42,31 @@ function Hero1() {
   const frameCount = 111;
 
   useEffect(() => {
-    const loaded: HTMLImageElement[] = [];
-    let ok = 0, err = 0;
-    const done = () => {
-      if (ok + err === frameCount) {
-        imagesRef.current = loaded;
-        setIsLoaded(true);
-      }
+    const loaded: HTMLImageElement[] = new Array(frameCount);
+    imagesRef.current = loaded;
+
+    // 1. Load the first frame immediately so the site appears instantly
+    const firstImg = new Image();
+    firstImg.src = '/hero/Robotbackground.webp';
+    firstImg.onload = () => {
+      loaded[0] = firstImg;
+      setIsLoaded(true); // Reveal the site!
+
+      // 2. Lazy-load the rest of the sequence in the background
+      setTimeout(() => {
+        for (let i = 1; i < frameCount; i++) {
+          const img = new Image();
+          if (i === frameCount - 1) {
+            img.src = '/hero/110_highres.png'; // Maximum uncompressed quality for the final holding frame
+          } else {
+            img.src = `/hero/${i.toString().padStart(3,'0')}.webp`;
+          }
+          img.onload = () => { loaded[i] = img; };
+          img.onerror = () => { loaded[i] = img; }; // keep array slot
+        }
+      }, 100);
     };
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      if (i === 0) {
-        img.src = '/hero/Robotbackground.webp';
-      } else if (i === frameCount - 1) {
-        img.src = '/hero/110_highres.png'; // Maximum uncompressed quality for the final holding frame
-      } else {
-        img.src = `/hero/${i.toString().padStart(3,'0')}.webp`;
-      }
-      img.onload = () => { ok++; done(); };
-      img.onerror = () => { err++; done(); };
-      loaded.push(img);
-    }
+
     const c = canvasRef.current;
     if (c) { const x = c.getContext("2d"); if (x) { c.width = window.innerWidth; c.height = window.innerHeight; x.clearRect(0,0,c.width,c.height); }}
   }, []);
