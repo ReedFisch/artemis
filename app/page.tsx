@@ -47,27 +47,36 @@ function Hero1() {
     // 1. Load the first frame immediately so the site appears instantly
     const firstImg = new Image();
     firstImg.src = '/hero/Robotbackground.png';
-    firstImg.onload = () => {
+    
+    const revealSite = () => {
       loaded[0] = firstImg;
       setIsLoaded(true); // Reveal the site!
-
-      // 2. Lazy-load the rest of the sequence in the background
-      setTimeout(() => {
-        for (let i = 1; i < frameCount; i++) {
-          const img = new Image();
-          if (i === frameCount - 1) {
-            img.src = '/hero/110_highres.png'; // Maximum uncompressed quality for the final holding frame
-          } else {
-            img.src = `/hero/${i.toString().padStart(3,'0')}.webp`;
-          }
-          img.onload = () => { loaded[i] = img; };
-          img.onerror = () => { loaded[i] = img; }; // keep array slot
-        }
-      }, 100);
     };
+
+    firstImg.onload = revealSite;
+    firstImg.onerror = revealSite; // Fallback: show site even if bg fails
+
+    // Force reveal after 3 seconds no matter what
+    const fallbackTimeout = setTimeout(revealSite, 3000);
+
+    // 2. Lazy-load the rest of the sequence in the background
+    setTimeout(() => {
+      for (let i = 1; i < frameCount; i++) {
+        const img = new Image();
+        if (i === frameCount - 1) {
+          img.src = '/hero/110_highres.png'; // Maximum uncompressed quality for the final holding frame
+        } else {
+          img.src = `/hero/${i.toString().padStart(3,'0')}.webp`;
+        }
+        img.onload = () => { loaded[i] = img; };
+        img.onerror = () => { loaded[i] = img; }; // keep array slot
+      }
+    }, 100);
 
     const c = canvasRef.current;
     if (c) { const x = c.getContext("2d"); if (x) { c.width = window.innerWidth; c.height = window.innerHeight; x.clearRect(0,0,c.width,c.height); }}
+
+    return () => clearTimeout(fallbackTimeout);
   }, []);
 
   const drawFrame = (index: number) => {
