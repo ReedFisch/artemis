@@ -64,7 +64,7 @@ function Hero1() {
       for (let i = 1; i <= frameCount; i++) {
         const img = new Image();
         if (i === frameCount) {
-          img.src = '/hero/moon_final.jpg'; // The new cinematic ending frame
+          img.src = '/hero/finalmoon.jpeg'; // High-fidelity ending frame
         } else if (i === frameCount - 1) {
           img.src = '/hero/110_highres.png';
         } else {
@@ -205,7 +205,7 @@ function Hero1() {
           zIndex: 100, color: "#F8FAFC", fontFamily: "'Trebuchet MS', sans-serif"
         }}>
           <div style={{ cursor: "pointer", display: "flex", alignItems: "center", zIndex: 101 }}>
-            <img src="/branding/logo_4.jpeg" alt="Artemis Logo" style={{ height: "45px", objectFit: "contain", borderRadius: "8px" } as any} />
+            <img src="/branding/logo_4.jpeg" alt="Artemis Logo" style={{ height: "45px", objectFit: "contain", borderRadius: "8px" }} />
           </div>
 
           {/* Desktop Nav */}
@@ -220,7 +220,8 @@ function Hero1() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             style={{ 
               display: "flex", flexDirection: "column", gap: "6px", cursor: "pointer", zIndex: 101,
-              padding: "10px", margin: "-10px"
+              padding: "10px", margin: "-10px",
+              // Use a standard approach for mobile visibility since md-hidden might be tricky
             }}
             className="md-hidden"
           >
@@ -234,7 +235,9 @@ function Hero1() {
             position: "fixed", inset: 0, backgroundColor: "rgba(0,0,0,0.95)",
             display: isMenuOpen ? "flex" : "none", flexDirection: "column",
             alignItems: "center", justifyContent: "center", gap: "2rem",
-            zIndex: 100, backdropFilter: "blur(10px)", transition: "0.3s"
+            zIndex: 100, backdropFilter: "blur(10px)", transition: "opacity 0.3s ease",
+            opacity: isMenuOpen ? 1 : 0,
+            pointerEvents: isMenuOpen ? "auto" : "none"
           }}>
             <a href="#" onClick={() => setIsMenuOpen(false)} style={{ fontSize: "2rem", color: "#fff", textDecoration: "none" }}>About</a>
             <a href="#" onClick={() => setIsMenuOpen(false)} style={{ fontSize: "2rem", color: "#fff", textDecoration: "none" }}>Robots</a>
