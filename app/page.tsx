@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Helper to generate realistic star patterns
 const generateStars = (count: number) => {
-  let shadows = [];
+  const shadows = [];
   for (let i = 0; i < count; i++) {
     const x = Math.floor(Math.random() * 3000);
     const y = Math.floor(Math.random() * 3000);
@@ -17,8 +17,7 @@ const generateStars = (count: number) => {
   return shadows.join(', ');
 };
 
-const staticStarsSmall = generateStars(400);
-const staticStarsMedium = generateStars(100);
+
 
 // Pre-compute random explosion trajectories for each letter
 const ARTEMIS_LETTERS = "ARTEMIS".split("");
@@ -47,7 +46,7 @@ function Hero1() {
 
     // 1. Load the first frame immediately so the site appears instantly
     const firstImg = new Image();
-    firstImg.src = '/hero/Robotbackground.webp';
+    firstImg.src = '/hero/Robotbackground.png';
     firstImg.onload = () => {
       loaded[0] = firstImg;
       setIsLoaded(true); // Reveal the site!
@@ -71,8 +70,6 @@ function Hero1() {
     if (c) { const x = c.getContext("2d"); if (x) { c.width = window.innerWidth; c.height = window.innerHeight; x.clearRect(0,0,c.width,c.height); }}
   }, []);
 
-  useEffect(() => { if (isLoaded) drawFrame(0); }, [isLoaded]);
-
   const drawFrame = (index: number) => {
     const images = imagesRef.current;
     if (!canvasRef.current || !images.length) return;
@@ -92,12 +89,14 @@ function Hero1() {
     ctx.drawImage(img, ox, oy, dw, dh);
   };
 
+  useEffect(() => { if (isLoaded) drawFrame(0); }, [isLoaded]);
+
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
       const { top, height } = containerRef.current.getBoundingClientRect();
       const maxScroll = height - window.innerHeight;
-      let progress = Math.max(0, Math.min(1, -top / maxScroll));
+      const progress = Math.max(0, Math.min(1, -top / maxScroll));
       const frameIndex = Math.min(frameCount - 1, Math.floor(progress * frameCount));
       requestAnimationFrame(() => {
         if (frameIndex !== lastDrawnFrameIndex.current) {
@@ -289,6 +288,7 @@ function Hero2() {
         maskEl.style.opacity = opacity.current.toString();
         // Use SVG Clip-Path instead of rigid radial-gradient
         maskEl.style.clipPath = "url(#blob-clip)";
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (maskEl.style as any).webkitClipPath = "url(#blob-clip)";
       }
       
@@ -351,7 +351,7 @@ function Hero2() {
 
       {/* 1. Darkened Base Layer */}
       <img 
-        src="/hero/moon1.jpg" 
+        src="/hero/Robotbackground.png" 
         alt="Moon Base" 
         style={{ 
           width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0,
@@ -386,7 +386,7 @@ function Hero2() {
         }}
       >
         {/* Bright Background inside spotlight */}
-        <img src="/hero/moon2.jpg" alt="Moon Robot Bright" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }} />
+        <img src="/hero/Robotbackground.png" alt="Moon Robot Bright" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }} />
 
         {/* Highlighted Text */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", zIndex: 2 }}>
@@ -406,7 +406,7 @@ function Hero2() {
         </div>
 
         {/* The Transparent Robot */}
-        <img src="/hero/moon2_masked.png" alt="Artemis Lunar Robot" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 3 }} />
+        <img src="/hero/robot_masked.webp" alt="Artemis Lunar Robot" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 3 }} />
       </div>
 
       {/* 4. Glowing Organic Outline */}
@@ -476,12 +476,11 @@ function Hero2() {
 
 export default function Home() {
   const [heroChoice, setHeroChoice] = useState<'selection' | 'hero1' | 'hero2'>('selection');
-  const [starsSmall, setStarsSmall] = useState<string>("");
-  const [starsMedium, setStarsMedium] = useState<string>("");
+  const [starsSmall] = useState<string>(() => generateStars(400));
+  const [starsMedium] = useState<string>(() => generateStars(100));
 
   useEffect(() => {
-    setStarsSmall(generateStars(400));
-    setStarsMedium(generateStars(100));
+    // Stars are now initialized via useState initializer to avoid lint errors
   }, []);
 
   if (heroChoice === 'selection') {
