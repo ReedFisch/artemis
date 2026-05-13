@@ -38,6 +38,7 @@ function Hero1() {
   const containerRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const lastDrawnFrameIndex = useRef(-1);
   const frameCount = 111;
 
   useEffect(() => {
@@ -51,7 +52,13 @@ function Hero1() {
     };
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
-      img.src = i === 0 ? '/hero/Robotbackground.webp' : `/hero/${i.toString().padStart(3,'0')}.webp`;
+      if (i === 0) {
+        img.src = '/hero/Robotbackground.webp';
+      } else if (i === frameCount - 1) {
+        img.src = '/hero/110_highres.png'; // Maximum uncompressed quality for the final holding frame
+      } else {
+        img.src = `/hero/${i.toString().padStart(3,'0')}.webp`;
+      }
       img.onload = () => { ok++; done(); };
       img.onerror = () => { err++; done(); };
       loaded.push(img);
@@ -89,7 +96,10 @@ function Hero1() {
       let progress = Math.max(0, Math.min(1, -top / maxScroll));
       const frameIndex = Math.min(frameCount - 1, Math.floor(progress * frameCount));
       requestAnimationFrame(() => {
-        drawFrame(frameIndex);
+        if (frameIndex !== lastDrawnFrameIndex.current) {
+          drawFrame(frameIndex);
+          lastDrawnFrameIndex.current = frameIndex;
+        }
         document.documentElement.style.setProperty('--scroll-progress', progress.toString());
         // Blur and fade the robot cutout when sequence starts playing
         const el = document.getElementById('hero1-robot-cutout');
@@ -121,7 +131,7 @@ function Hero1() {
   };
 
   return (
-    <div ref={containerRef} style={{ height: "200vh", position: "relative" }}>
+    <div ref={containerRef} style={{ height: "150vh", position: "relative" }}>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", backgroundColor: "#000" }}>
 
         {/* Layer 1: Full frame canvas (zIndex 1) */}
