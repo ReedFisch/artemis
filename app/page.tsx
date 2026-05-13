@@ -46,7 +46,7 @@ function Hero1() {
 
     // 1. Load the first frame immediately so the site appears instantly
     const firstImg = new Image();
-    firstImg.src = '/hero/Robotbackground_final.jpeg';
+    firstImg.src = '/hero/Robotbackground_final_v2.jpeg';
     
     const revealSite = () => {
       loaded[0] = firstImg;
@@ -189,7 +189,7 @@ function Hero1() {
             fontSize: "clamp(2.5rem, 15.8vw, 17.3rem)", fontWeight: 900, textTransform: "uppercase",
             letterSpacing: "0.05em", color: "rgba(255, 255, 255, 0.5)", mixBlendMode: "overlay",
             margin: 0, fontFamily: "'Trebuchet MS', sans-serif", display: "flex", lineHeight: 1, 
-            transform: "translateY(-10vh)"
+            transform: "translateY(-15vh)"
           }}>
             {ARTEMIS_LETTERS.map((letter, i) => (
               <span key={`a-${i}`} style={getLetterStyle(i)}>{letter}</span>
@@ -391,7 +391,7 @@ function Hero2() {
 
       {/* 1. Darkened Base Layer */}
       <img 
-        src="/hero/Robotbackground_final.jpeg" 
+        src="/hero/Robotbackground_final_v2.jpeg" 
         alt="Moon Base" 
         style={{ 
           width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0,
@@ -410,7 +410,7 @@ function Hero2() {
           mixBlendMode: "overlay",
           margin: 0, 
           fontFamily: "'Trebuchet MS', sans-serif",
-          transform: "translateY(-10vh)"
+          transform: "translateY(-15vh)"
         }}>
           ARTEMIS
         </h1>
@@ -426,7 +426,7 @@ function Hero2() {
         }}
       >
         {/* Bright Background inside spotlight */}
-        <img src="/hero/Robotbackground_final.jpeg" alt="Moon Robot Bright" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }} />
+        <img src="/hero/Robotbackground_final_v2.jpeg" alt="Moon Robot Bright" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }} />
 
         {/* Highlighted Text */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", zIndex: 2 }}>
@@ -439,7 +439,7 @@ function Hero2() {
             mixBlendMode: "overlay",
             margin: 0, 
             fontFamily: "'Trebuchet MS', sans-serif",
-            transform: "translateY(-10vh)"
+            transform: "translateY(-15vh)"
           }}>
             ARTEMIS
           </h1>
