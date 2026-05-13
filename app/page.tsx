@@ -46,7 +46,7 @@ function Hero1() {
 
     // 1. Load the first frame immediately so the site appears instantly
     const firstImg = new Image();
-    firstImg.src = '/hero/Robotbackground_v2.png';
+    firstImg.src = '/hero/Robotbackground.jpeg';
     
     const revealSite = () => {
       loaded[0] = firstImg;
@@ -360,7 +360,7 @@ function Hero2() {
 
       {/* 1. Darkened Base Layer */}
       <img 
-        src="/hero/Robotbackground_v2.png" 
+        src="/hero/Robotbackground.jpeg" 
         alt="Moon Base" 
         style={{ 
           width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0,
@@ -395,7 +395,7 @@ function Hero2() {
         }}
       >
         {/* Bright Background inside spotlight */}
-        <img src="/hero/Robotbackground_v2.png" alt="Moon Robot Bright" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }} />
+        <img src="/hero/Robotbackground.jpeg" alt="Moon Robot Bright" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }} />
 
         {/* Highlighted Text */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", zIndex: 2 }}>
