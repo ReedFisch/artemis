@@ -15,10 +15,16 @@ body {
   .mobile-hide {
     display: none !important;
   }
+  #mobile-hamburger {
+    display: flex !important;
+  }
 }
 
 @media (min-width: 769px) {
   .md-hidden {
+    display: none !important;
+  }
+  #mobile-hamburger {
     display: none !important;
   }
 }

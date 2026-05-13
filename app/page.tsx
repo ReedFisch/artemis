@@ -128,6 +128,15 @@ function Hero1() {
           lastDrawnFrameIndex.current = frameIndex;
         }
         document.documentElement.style.setProperty('--scroll-progress', progress.toString());
+        
+        // Update dynamic padding/scale for mobile "zoom-in" effect
+        if (window.innerWidth < 768) {
+          const scale = 1 + progress * 0.4; // Grow from contain to cover
+          const textY = -25 + (progress * 10); // Start higher up, move down slightly
+          document.documentElement.style.setProperty('--mobile-hero-scale', scale.toString());
+          document.documentElement.style.setProperty('--mobile-text-y', `${textY}vh`);
+        }
+
         // Blur and fade the robot cutout when sequence starts playing
         const el = document.getElementById('hero1-robot-cutout');
         if (el) {
@@ -174,9 +183,11 @@ function Hero1() {
 
         {/* Layer 1: Full frame canvas (zIndex 1) */}
         <canvas ref={canvasRef} style={{ 
-          width: "100%", height: "100%", display: "block", objectFit: "cover",
+          width: "100%", height: "100%", display: "block", 
           opacity: isLoaded ? 1 : 0, transition: "opacity 1.5s ease-in",
-          position: "absolute", top: 0, left: 0, zIndex: 1
+          position: "absolute", top: 0, left: 0, zIndex: 1,
+          transform: "scale(var(--mobile-hero-scale, 1))",
+          transformOrigin: "center center"
         }} />
 
         {/* Vignette */}
@@ -190,7 +201,8 @@ function Hero1() {
           <h1 style={{ 
             fontSize: "clamp(2.5rem, 15.8vw, 17.3rem)", fontWeight: 900, textTransform: "uppercase",
             letterSpacing: "0.05em", color: "rgba(255, 255, 255, 0.5)", mixBlendMode: "overlay",
-            margin: 0, fontFamily: "'Trebuchet MS', sans-serif", display: "flex", lineHeight: 1, transform: "translateY(-10vh)"
+            margin: 0, fontFamily: "'Trebuchet MS', sans-serif", display: "flex", lineHeight: 1, 
+            transform: "translateY(var(--mobile-text-y, -10vh))"
           }}>
             {ARTEMIS_LETTERS.map((letter, i) => (
               <span key={`a-${i}`} style={getLetterStyle(i)}>{letter}</span>
@@ -217,17 +229,16 @@ function Hero1() {
 
           {/* Hamburger Menu Icon (Mobile) */}
           <div 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={(e) => { e.stopPropagation(); setIsMenuOpen(!isMenuOpen); }}
             style={{ 
-              display: "flex", flexDirection: "column", gap: "6px", cursor: "pointer", zIndex: 101,
-              padding: "10px", margin: "-10px",
-              // Use a standard approach for mobile visibility since md-hidden might be tricky
+              display: "flex", flexDirection: "column", gap: "6px", cursor: "pointer", zIndex: 200,
+              padding: "15px", margin: "-15px"
             }}
-            className="md-hidden"
+            id="mobile-hamburger"
           >
-            <div style={{ width: "25px", height: "2px", backgroundColor: "#fff", transition: "0.3s", transform: isMenuOpen ? "rotate(45deg) translate(5px, 5px)" : "" }} />
-            <div style={{ width: "25px", height: "2px", backgroundColor: "#fff", opacity: isMenuOpen ? 0 : 1 }} />
-            <div style={{ width: "25px", height: "2px", backgroundColor: "#fff", transition: "0.3s", transform: isMenuOpen ? "rotate(-45deg) translate(7px, -7px)" : "" }} />
+            <div style={{ width: "30px", height: "3px", backgroundColor: "#fff", transition: "0.3s", transform: isMenuOpen ? "rotate(45deg) translate(6px, 6px)" : "" }} />
+            <div style={{ width: "30px", height: "3px", backgroundColor: "#fff", opacity: isMenuOpen ? 0 : 1, transition: "0.3s" }} />
+            <div style={{ width: "30px", height: "3px", backgroundColor: "#fff", transition: "0.3s", transform: isMenuOpen ? "rotate(-45deg) translate(6px, -6px)" : "" }} />
           </div>
 
           {/* Mobile Dropdown */}
@@ -514,45 +525,12 @@ function Hero2() {
 
 
 export default function Home() {
-  const [heroChoice, setHeroChoice] = useState<'selection' | 'hero1' | 'hero2'>('selection');
   const [starsSmall] = useState<string>(() => generateStars(400));
   const [starsMedium] = useState<string>(() => generateStars(100));
 
-  useEffect(() => {
-    // Stars are now initialized via useState initializer to avoid lint errors
-  }, []);
-
-  if (heroChoice === 'selection') {
-    return (
-      <div style={{ height: "100vh", backgroundColor: "#050505", color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "'Inter', sans-serif" }}>
-        <h1 style={{ fontSize: "3rem", marginBottom: "3rem", fontWeight: "bold" }}>Select Hero Test</h1>
-        <div style={{ display: "flex", gap: "2rem" }}>
-          <button 
-            onClick={() => setHeroChoice('hero1')} 
-            style={{ padding: "1.5rem 2rem", fontSize: "1.2rem", fontWeight: "bold", backgroundColor: "#fff", color: "#000", border: "none", borderRadius: "8px", cursor: "pointer", transition: "transform 0.2s" }}
-            onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
-            onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
-          >
-            Hero 1 (Sequence)
-          </button>
-          <button 
-            onClick={() => setHeroChoice('hero2')} 
-            style={{ padding: "1.5rem 2rem", fontSize: "1.2rem", fontWeight: "bold", backgroundColor: "transparent", color: "#fff", border: "2px solid #fff", borderRadius: "8px", cursor: "pointer", transition: "transform 0.2s" }}
-            onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
-            onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
-          >
-            Hero 2 (Cursor Reveal)
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <main style={{ backgroundColor: "#000" }}>
-      
-      {heroChoice === 'hero1' && <Hero1 />}
-      {heroChoice === 'hero2' && <Hero2 />}
+      <Hero1 />
 
       {/* ======================================================== */}
       {/* === TEMPORARY OUTLINE SECTION (Easy to delete later) === */}
