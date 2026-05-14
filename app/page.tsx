@@ -186,15 +186,28 @@ function Hero1() {
           pointerEvents: "none", zIndex: 2, opacity: isLoaded ? 1 : 0, transition: "opacity 2s ease-in",
         }}>
           <h1 style={{ 
-            fontSize: "clamp(2.5rem, 15.8vw, 17.3rem)", fontWeight: 900, textTransform: "uppercase",
-            letterSpacing: "0.05em", color: "rgba(255, 255, 255, 0.5)", mixBlendMode: "overlay",
-            margin: 0, fontFamily: "'Trebuchet MS', sans-serif", display: "flex", lineHeight: 1, 
-            transform: "translateY(-20vh)"
+            transform: "translateY(-10vh)"
           }}>
             {ARTEMIS_LETTERS.map((letter, i) => (
               <span key={`a-${i}`} style={getLetterStyle(i)}>{letter}</span>
             ))}
           </h1>
+        </div>
+
+        {/* Layer 3: Robot Cutout for Occlusion (zIndex 3) */}
+        <div style={{
+          position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
+          pointerEvents: "none", zIndex: 3, opacity: isLoaded ? 1 : 0, transition: "opacity 1.5s ease-in",
+        }}>
+          <img 
+            id="hero1-robot-cutout"
+            src="/hero/robot_masked.webp" 
+            alt="Robot Mask" 
+            style={{ 
+              width: "100%", height: "100%", objectFit: "cover",
+              // We'll sync this with the canvas rendering logic in the effect
+            }} 
+          />
         </div>
 
         {/* Header */}
@@ -208,10 +221,45 @@ function Hero1() {
           </div>
 
           {/* Desktop Nav */}
-          <nav className="mobile-hide" style={{ display: "flex", gap: "3rem", fontSize: "1.2rem", fontWeight: "bold", fontFamily: "'Inter', sans-serif" }}>
-            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6 }}>About</a>
-            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6 }}>Robots</a>
-            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6 }}>Sponsors</a>
+          <nav className="mobile-hide" style={{ display: "flex", gap: "2.5rem", alignItems: "center", fontSize: "1.1rem", fontWeight: "bold", fontFamily: "'Inter', sans-serif" }}>
+            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={e => e.currentTarget.style.opacity = "1"} onMouseLeave={e => e.currentTarget.style.opacity = "0.6"}>About</a>
+            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={e => e.currentTarget.style.opacity = "1"} onMouseLeave={e => e.currentTarget.style.opacity = "0.6"}>Robots</a>
+            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={e => e.currentTarget.style.opacity = "1"} onMouseLeave={e => e.currentTarget.style.opacity = "0.6"}>Sponsors</a>
+            
+            {/* Premium "Sponsor Now" CTA Chip */}
+            <div style={{ position: "relative", padding: "1.5px", borderRadius: "50px", overflow: "hidden", cursor: "pointer", transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)", marginLeft: "1rem" }}
+              onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
+              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+            >
+              <div style={{
+                position: "absolute", inset: "-100%", 
+                background: "conic-gradient(from 0deg, transparent 0deg, #2563EB 90deg, transparent 180deg, #F97316 270deg, transparent 360deg)",
+                animation: "rotate 4s linear infinite",
+                zIndex: 0
+              }} />
+              <button style={{
+                position: "relative", zIndex: 1,
+                padding: "0.6rem 1.8rem",
+                backgroundColor: "rgba(10, 10, 10, 0.6)",
+                backdropFilter: "blur(12px)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                borderRadius: "50px",
+                color: "#F8FAFC",
+                fontWeight: "bold",
+                fontSize: "0.85rem",
+                textTransform: "uppercase",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                cursor: "pointer"
+              }}>
+                Sponsor Now
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </div>
           </nav>
 
           {/* Hamburger Menu Icon (Mobile) */}
@@ -410,7 +458,7 @@ function Hero2() {
           mixBlendMode: "overlay",
           margin: 0, 
           fontFamily: "'Trebuchet MS', sans-serif",
-          transform: "translateY(-20vh)"
+          transform: "translateY(-10vh)"
         }}>
           ARTEMIS
         </h1>
@@ -439,7 +487,7 @@ function Hero2() {
             mixBlendMode: "overlay",
             margin: 0, 
             fontFamily: "'Trebuchet MS', sans-serif",
-            transform: "translateY(-20vh)"
+            transform: "translateY(-10vh)"
           }}>
             ARTEMIS
           </h1>
