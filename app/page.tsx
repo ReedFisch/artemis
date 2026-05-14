@@ -186,6 +186,15 @@ function Hero1() {
           pointerEvents: "none", zIndex: 2, opacity: isLoaded ? 1 : 0, transition: "opacity 2s ease-in",
         }}>
           <h1 style={{ 
+            fontSize: "clamp(2.5rem, 15vw, 16rem)", 
+            fontWeight: 900, 
+            textTransform: "uppercase", 
+            letterSpacing: "0.05em", 
+            color: "rgba(255, 255, 255, 0.4)", 
+            mixBlendMode: "overlay",
+            margin: 0, 
+            fontFamily: "'Trebuchet MS', sans-serif",
+            display: "flex", lineHeight: 1, 
             transform: "translateY(-10vh)"
           }}>
             {ARTEMIS_LETTERS.map((letter, i) => (
@@ -221,46 +230,22 @@ function Hero1() {
           </div>
 
           {/* Desktop Nav */}
-          <nav className="mobile-hide" style={{ display: "flex", gap: "2.5rem", alignItems: "center", fontSize: "1.1rem", fontWeight: "bold", fontFamily: "'Inter', sans-serif" }}>
-            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={e => e.currentTarget.style.opacity = "1"} onMouseLeave={e => e.currentTarget.style.opacity = "0.6"}>About</a>
-            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={e => e.currentTarget.style.opacity = "1"} onMouseLeave={e => e.currentTarget.style.opacity = "0.6"}>Robots</a>
-            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={e => e.currentTarget.style.opacity = "1"} onMouseLeave={e => e.currentTarget.style.opacity = "0.6"}>Sponsors</a>
-            
-            {/* Premium "Sponsor Now" CTA Chip */}
-            <div style={{ position: "relative", padding: "1.5px", borderRadius: "50px", overflow: "hidden", cursor: "pointer", transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)", marginLeft: "1rem" }}
-              onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
-              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
-            >
-              <div style={{
-                position: "absolute", inset: "-100%", 
-                background: "conic-gradient(from 0deg, transparent 0deg, #2563EB 90deg, transparent 180deg, #F97316 270deg, transparent 360deg)",
-                animation: "rotate 4s linear infinite",
-                zIndex: 0
-              }} />
-              <button style={{
-                position: "relative", zIndex: 1,
-                padding: "0.6rem 1.8rem",
-                backgroundColor: "rgba(10, 10, 10, 0.6)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
-                borderRadius: "50px",
-                color: "#F8FAFC",
-                fontWeight: "bold",
-                fontSize: "0.85rem",
-                textTransform: "uppercase",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                cursor: "pointer"
-              }}>
-                Sponsor Now
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </button>
-            </div>
+          <nav className="mobile-hide" style={{ display: "flex", gap: "3rem", fontSize: "1.1rem", fontWeight: "bold", fontFamily: "'Inter', sans-serif", opacity: 0.85 }}>
+            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.8, transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#2563EB"} onMouseLeave={e => e.currentTarget.style.color = "#F8FAFC"}>About</a>
+            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.8, transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#2563EB"} onMouseLeave={e => e.currentTarget.style.color = "#F8FAFC"}>Robots</a>
+            <a href="#" style={{ color: "#F8FAFC", textDecoration: "none", opacity: 0.8, transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#2563EB"} onMouseLeave={e => e.currentTarget.style.color = "#F8FAFC"}>Sponsors</a>
           </nav>
+
+          <button className="mobile-hide" style={{
+            padding: "0.8rem 2.5rem", backgroundColor: "#2563EB", color: "#F8FAFC",
+            border: "none", borderRadius: "50px", fontWeight: "bold", fontSize: "1rem",
+            cursor: "pointer", transition: "transform 0.2s, background-color 0.2s"
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.backgroundColor = "#F97316"; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.backgroundColor = "#2563EB"; }}
+          >
+            Join Us
+          </button>
 
           {/* Hamburger Menu Icon (Mobile) */}
           <div 
@@ -543,9 +528,6 @@ function Hero2() {
         }}
         onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.backgroundColor = "#F97316"; }}
         onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.backgroundColor = "#2563EB"; }}
-        >
-          Join Us
-        </button>
       </header>
 
       {/* 6. Seamless Fade to Next Section */}
@@ -554,6 +536,63 @@ function Hero2() {
         background: "linear-gradient(to bottom, transparent, #000)",
         zIndex: 51, pointerEvents: "none"
       }} />
+
+      {/* Persistent Floating "Sponsor Now" Chip (Bottom Right) */}
+      <div style={{
+        position: "fixed", bottom: "2.5rem", right: "2.5rem",
+        zIndex: 1000, pointerEvents: "auto",
+      }}>
+        {/* External Glow Layer */}
+        <div style={{
+          position: "absolute", inset: "-10px",
+          background: "radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, transparent 70%)",
+          filter: "blur(20px)",
+          animation: "pulse 3s infinite alternate"
+        }} />
+        
+        <div style={{ position: "relative", padding: "2px", borderRadius: "50px", overflow: "hidden", cursor: "pointer", transition: "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)" }}
+          onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1) rotate(-2deg)"}
+          onMouseLeave={e => e.currentTarget.style.transform = "scale(1) rotate(0deg)"}
+        >
+          {/* Rotating Vivid Border */}
+          <div style={{
+            position: "absolute", inset: "-150%", 
+            background: "conic-gradient(from 0deg, #2563EB, #F97316, #2563EB)",
+            animation: "rotate 3s linear infinite",
+            zIndex: 0
+          }} />
+          
+          {/* High-End Frosted Glass Button */}
+          <button style={{
+            position: "relative", zIndex: 1,
+            padding: "1rem 2.5rem",
+            backgroundColor: "rgba(255, 255, 255, 0.08)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            borderRadius: "50px",
+            color: "#fff",
+            fontWeight: 900,
+            fontSize: "1.1rem",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            cursor: "pointer",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05)",
+            fontFamily: "'Inter', sans-serif"
+          }}>
+            Sponsor Now
+            <div style={{ width: "24px", height: "24px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
