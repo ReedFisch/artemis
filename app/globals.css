@@ -1,13 +1,112 @@
-/* Blank slate */
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+@import "tailwindcss";
+
+@theme {
+  --color-space-black: #0A0E17;
+  --color-space-darker: #05070B;
+  --color-artemis-blue: #2563EB;
+  --color-stellar-orange: #F97316;
+  
+  --font-sans: var(--font-inter), "Inter", "sans-serif";
+  --font-header: "Trebuchet MS", "Trebuchet MS", sans-serif;
 }
+
+/* Base element styles */
 body {
-  background-color: #000;
-  color: #fff;
-  overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+  background-color: #05070B; /* Override to absolute deep space black */
+  color: #ffffff;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Glassmorphism custom utilities for Tailwind v4 */
+@utility glass-frosted {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+@utility glass-frosted-heavy {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+}
+
+@utility glass-card-hover {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    border-color: rgba(37, 99, 235, 0.3);
+    box-shadow: 0 0 25px rgba(37, 99, 235, 0.15);
+    transform: translateY(-4px);
+  }
+}
+
+@utility glass-card-hover-orange {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    border-color: rgba(249, 115, 22, 0.3);
+    box-shadow: 0 0 25px rgba(249, 115, 22, 0.15);
+    transform: translateY(-4px);
+  }
+}
+
+/* Custom CSS Keyframe Animations */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse-slow {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Marquee Scrolling Text for Sponsors */
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+}
+
+.marquee-content {
+  display: flex;
+  flex-shrink: 0;
+  gap: 4rem;
+  animation: scroll-left 30s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Radial Glow Background helpers */
+.bg-radial-gradient {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
 }
 
 /* Visibility Utilities */
@@ -27,21 +126,4 @@ body {
   #mobile-hamburger {
     display: none !important;
   }
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-  from { opacity: 0.6; transform: scale(1); }
-  to { opacity: 1; transform: scale(1.1); }
-}
-
-@keyframes waterfallFall {
-  0% { transform: translateY(-30vh) rotate(0deg); opacity: 0; filter: blur(3px); }
-  5% { opacity: 1; filter: blur(3px); }
-  85% { filter: blur(2px); }
-  100% { transform: translateY(var(--target-y, 100vh)) rotate(var(--target-rotation, 360deg)); opacity: 1; filter: blur(0px); }
 }
