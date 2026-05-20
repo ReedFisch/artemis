@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 
-// Types corresponding to rule-defined schemas
+// ─── Types (matching gemini.md schema) ──────────────────────────
 interface SponsorshipInterestPayload {
   companyName: string;
   contactName: string;
@@ -12,25 +12,146 @@ interface SponsorshipInterestPayload {
   message: string;
 }
 
-// Letter Explosion Physics (Calculated dynamically)
-const HERO_TITLE = "ARTEMIS";
-const TITLE_LETTERS = HERO_TITLE.split("");
-const LETTER_PHYSICS = TITLE_LETTERS.map((_, i) => {
-  const angleDeg = 150 - (i / (TITLE_LETTERS.length - 1)) * 120; // Fan from 150° (upper-left) to 30° (upper-right)
-  const angleRad = (angleDeg * Math.PI) / 180;
-  const speed = 20 + Math.random() * 15;
-  const rotateSpeed = (Math.random() - 0.5) * 240;
-  return { angleRad, speed, rotateSpeed };
-});
+// ─── NAV LINKS ──────────────────────────────────────────────────
+const NAV_LINKS = [
+  { href: "#about", label: "About", id: "about" },
+  { href: "#outreach", label: "Outreach", id: "outreach" },
+  { href: "#budget", label: "Budget", id: "budget" },
+  { href: "#tiers", label: "Sponsors", id: "tiers" },
+  { href: "#contact", label: "Contact", id: "contact" },
+];
+
+// ─── TIER DATA ──────────────────────────────────────────────────
+const TIERS = [
+  {
+    name: "Hermes" as const,
+    label: "Bronze Tier",
+    price: "$500+",
+    color: "amber",
+    dotColor: "bg-amber-500",
+    dotShadow: "shadow-[0_0_10px_rgba(217,119,6,0.6)]",
+    accentText: "text-amber-500",
+    benefits: [
+      "Corporate logo on team website",
+      "Invitation to team presentations",
+      "Bi-annual progress newsletter",
+    ],
+    btnClass: "glass-button font-bold uppercase text-[10px] tracking-wider",
+    cardHover: "glass-panel-hover",
+  },
+  {
+    name: "Apollo" as const,
+    label: "Silver Tier",
+    price: "$1,500+",
+    color: "blue",
+    dotColor: "bg-artemis-blue",
+    dotShadow: "shadow-[0_0_10px_rgba(37,99,235,0.6)]",
+    accentText: "text-artemis-blue",
+    recommended: true,
+    benefits: [
+      "Small logo placement on FRC robot",
+      "Company name on team pit banner",
+      "All Hermes-level perks included",
+      "Signed team photo frame",
+    ],
+    btnClass:
+      "bg-artemis-blue hover:bg-artemis-blue/80 text-white font-bold uppercase text-[10px] tracking-wider rounded-xl shadow-[0_4px_20px_rgba(37,99,235,0.25)]",
+    cardHover: "glass-panel-hover",
+  },
+  {
+    name: "ZEUS" as const,
+    label: "Gold Tier",
+    price: "$5,000+",
+    color: "orange",
+    dotColor: "bg-stellar-orange",
+    dotShadow: "shadow-[0_0_10px_rgba(249,115,22,0.6)]",
+    accentText: "text-stellar-orange",
+    benefits: [
+      "Prominent large logo on FRC robot",
+      "Logo printed on competition shirts",
+      "VIP invite to robot rollout party",
+      "Dedicated social media spotlights",
+    ],
+    btnClass: "glass-button font-bold uppercase text-[10px] tracking-wider hover:bg-stellar-orange hover:text-white hover:border-stellar-orange/30",
+    cardHover: "glass-panel-hover-orange",
+  },
+];
+
+// ─── BUDGET DATA ────────────────────────────────────────────────
+const BUDGET_ITEMS = [
+  {
+    label: "Robot Parts, Pneumatics & Electronics",
+    amount: "$15,000",
+    width: "85%",
+    color: "from-artemis-blue to-blue-400",
+    shadow: "shadow-[0_0_12px_rgba(37,99,235,0.4)]",
+    desc: "Brushless motors, aluminum extrusions, custom PCBs",
+  },
+  {
+    label: "FRC District & Regional Entry Fees",
+    amount: "$12,000",
+    width: "70%",
+    color: "from-stellar-orange to-amber-400",
+    shadow: "shadow-[0_0_12px_rgba(249,115,22,0.4)]",
+    desc: "Official FIRST team registrations and arena fees",
+  },
+  {
+    label: "Travel, Logistics & Machine Shipping",
+    amount: "$25,395",
+    width: "60%",
+    color: "from-white/50 to-white/20",
+    shadow: "",
+    desc: "Transporting 120-pound robots and pit crew",
+  },
+  {
+    label: "STEM Outreach & Community Programs",
+    amount: "$13,000",
+    width: "90%",
+    color: "from-artemis-blue to-stellar-orange",
+    shadow: "shadow-[0_0_12px_rgba(37,99,235,0.3)]",
+    desc: "Regional workshops and public school showcases",
+  },
+];
+
+// ─── OUTREACH DATA ──────────────────────────────────────────────
+const OUTREACH_CARDS = [
+  {
+    tag: "Program 01",
+    tagColor: "text-artemis-blue",
+    title: "Junior Library Workshops",
+    desc: "Monthly hands-on building and coding workshops at the Chatham Joint Library, sparking STEM excitement in elementary school students.",
+    footer: "Chatham Public Schools",
+    hoverRotate: "hover:rotate-y-[-2deg] hover:rotate-x-[1deg]",
+  },
+  {
+    tag: "Program 02",
+    tagColor: "text-stellar-orange",
+    title: "Middle School FLL Mentorship",
+    desc: "Artemis members directly mentor local FIRST LEGO League teams, guiding younger students through game strategy and engineering fundamentals.",
+    footer: "FIRST LEGO League",
+    hoverRotate: "hover:rotate-y-[0deg] hover:rotate-x-[-1.5deg]",
+  },
+  {
+    tag: "Values",
+    tagColor: "text-white/70",
+    title: "Gracious Professionalism",
+    desc: "Fierce engineering competition blended with mutual respect. We support competitor teams in the pits because that is what FIRST is all about.",
+    footer: "FRC Core Ethos",
+    hoverRotate: "hover:rotate-y-[2deg] hover:rotate-x-[1deg]",
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// COMPONENT
+// ═══════════════════════════════════════════════════════════════
 
 export default function Home() {
-  // Mounting & Loading state
+  // ─── State ──────────────────────────────────────────────────
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedTier, setSelectedTier] = useState<
+    "Hermes" | "Apollo" | "ZEUS" | "Other"
+  >("Apollo");
 
-  // Form states
-  const [selectedTier, setSelectedTier] = useState<"Hermes" | "Apollo" | "ZEUS" | "Other">("Apollo");
-  
-  // Sponsorship Form Payload
   const [sponsorForm, setSponsorForm] = useState<SponsorshipInterestPayload>({
     companyName: "",
     contactName: "",
@@ -39,12 +160,10 @@ export default function Home() {
     interestedTier: "Apollo",
     message: "",
   });
-  
   const [isSubmittingSponsor, setIsSubmittingSponsor] = useState(false);
   const [sponsorSuccess, setSponsorSuccess] = useState(false);
-  const [sponsorReceipt, setSponsorReceipt] = useState<any>(null);
+  const [sponsorReceipt, setSponsorReceipt] = useState<SponsorshipInterestPayload | null>(null);
 
-  // General Contact Form Payload
   const [contactForm, setContactForm] = useState({
     name: "",
     email: "",
@@ -54,285 +173,319 @@ export default function Home() {
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
   const [contactSuccess, setContactSuccess] = useState(false);
 
-  // Navigation states
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
-  // Canvas Sequence simulation
-  const heroContainerRef = useRef<HTMLDivElement>(null);
-
-  // Star backdrop layers
+  const heroRef = useRef<HTMLDivElement>(null);
   const [starsSmall, setStarsSmall] = useState("");
   const [starsMedium, setStarsMedium] = useState("");
 
-  // Populate stars on client mount
+  // ─── Effects ────────────────────────────────────────────────
+
+  // Stars
   useEffect(() => {
-    const generateStars = (count: number) => {
-      const shadows = [];
-      for (let i = 0; i < count; i++) {
-        const x = Math.floor(Math.random() * 2000);
-        const y = Math.floor(Math.random() * 2000);
-        const opacity = (Math.random() * 0.5 + 0.3).toFixed(2);
-        shadows.push(`${x}px ${y}px 0 0px rgba(255, 255, 255, ${opacity})`);
+    const gen = (n: number) => {
+      const s: string[] = [];
+      for (let i = 0; i < n; i++) {
+        const x = Math.floor(Math.random() * 2400);
+        const y = Math.floor(Math.random() * 2400);
+        const o = (Math.random() * 0.4 + 0.2).toFixed(2);
+        s.push(`${x}px ${y}px 0 0px rgba(255,255,255,${o})`);
       }
-      return shadows.join(", ");
+      return s.join(", ");
     };
-    setStarsSmall(generateStars(200));
-    setStarsMedium(generateStars(50));
+    setStarsSmall(gen(180));
+    setStarsMedium(gen(40));
   }, []);
 
-  // End loading after timeout simulating asset preheating
+  // Loading
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1300);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(t);
   }, []);
 
-  // Listen to scroll to update fanning calculations and navigation triggers
+  // Scroll — CSS variable approach (no React re-renders)
   useEffect(() => {
     let ticking = false;
-    const handleScroll = () => {
+    const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          if (heroContainerRef.current) {
-            const { top, height } = heroContainerRef.current.getBoundingClientRect();
-            const maxScroll = height - window.innerHeight;
-            const progress = Math.max(0, Math.min(1, -top / maxScroll));
-            document.documentElement.style.setProperty('--scroll-progress', progress.toString());
+          if (heroRef.current) {
+            const { top, height } = heroRef.current.getBoundingClientRect();
+            const max = height - window.innerHeight;
+            const p = Math.max(0, Math.min(1, -top / max));
+            document.documentElement.style.setProperty(
+              "--scroll-progress",
+              p.toString()
+            );
           }
-
-          // Check current section active status
-          const sections = ["hero", "about", "outreach", "budget", "tiers", "pay", "contact"];
-          const scrollPosition = window.scrollY + 200;
-
-          for (const section of sections) {
-            const el = document.getElementById(section);
-            if (el) {
-              const top = el.offsetTop;
-              const height = el.offsetHeight;
-              if (scrollPosition >= top && scrollPosition < top + height) {
-                setActiveSection(section);
-                break;
-              }
+          const scrollY = window.scrollY + 200;
+          for (const { id } of NAV_LINKS) {
+            const el = document.getElementById(id);
+            if (el && scrollY >= el.offsetTop && scrollY < el.offsetTop + el.offsetHeight) {
+              setActiveSection(id);
+              break;
             }
+          }
+          // Also check hero
+          const heroEl = document.getElementById("hero");
+          if (heroEl && scrollY < heroEl.offsetTop + heroEl.offsetHeight) {
+            setActiveSection("hero");
           }
           ticking = false;
         });
         ticking = true;
       }
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Handle tier selection and scroll to simulated Pay Form
+  // ─── Handlers ───────────────────────────────────────────────
+
   const handleSelectTier = (tier: "Hermes" | "Apollo" | "ZEUS" | "Other") => {
     setSelectedTier(tier);
-    setSponsorForm((prev) => ({ ...prev, interestedTier: tier }));
-    const paySection = document.getElementById("pay");
-    if (paySection) {
-      paySection.scrollIntoView({ behavior: "smooth" });
-    }
+    setSponsorForm((p) => ({ ...p, interestedTier: tier }));
+    document.getElementById("pay")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Submit sponsorship pay/form
   const handleSponsorSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmittingSponsor(true);
-
-    // Mock API dispatch
     setTimeout(() => {
       setIsSubmittingSponsor(false);
       setSponsorSuccess(true);
-      
-      // Complete payload format validation logged to console matching gemini.md
       const payload: SponsorshipInterestPayload = {
-        companyName: sponsorForm.companyName || "Acme Space Corp",
-        contactName: sponsorForm.contactName || "John Doe",
-        email: sponsorForm.email || "sponsor@acme.org",
+        companyName: sponsorForm.companyName,
+        contactName: sponsorForm.contactName,
+        email: sponsorForm.email,
         phone: sponsorForm.phone || undefined,
         interestedTier: sponsorForm.interestedTier,
-        message: sponsorForm.message || "Excited to support Team 6621!",
+        message: sponsorForm.message,
       };
-      
-      console.log("🚀 sponsorship interest payload valid:", payload);
+      console.log("Sponsorship payload:", payload);
       setSponsorReceipt(payload);
     }, 1500);
   };
 
-  // Submit contact form
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmittingContact(true);
     setTimeout(() => {
       setIsSubmittingContact(false);
       setContactSuccess(true);
-      console.log("📩 contact inquiry sent:", contactForm);
+      console.log("Contact inquiry:", contactForm);
     }, 1200);
   };
 
-  // Letter styling helper
-  const getLetterStyle = (i: number): React.CSSProperties => {
-    const p = LETTER_PHYSICS[i];
-    const dx = Math.cos(p.angleRad) * p.speed;
-    const dy = -Math.sin(p.angleRad) * p.speed;
-    const rotation = p.rotateSpeed;
-
-    return {
-      display: "inline-block",
-      transform: `translate(calc(var(--scroll-progress, 0) * ${dx}vw), calc(var(--scroll-progress, 0) * ${dy}vh)) rotate(calc(var(--scroll-progress, 0) * ${rotation}deg))`,
-      opacity: `calc(1 - var(--scroll-progress, 0) * 4.5)`,
-      willChange: "transform, opacity",
-    };
-  };
+  // ═══════════════════════════════════════════════════════════
+  // RENDER
+  // ═══════════════════════════════════════════════════════════
 
   return (
-    <div className="relative min-h-screen bg-[#05070B] text-white selection:bg-artemis-blue/30 overflow-hidden font-sans">
-      
-      {/* Dynamic Star Backdrop (Depth Layer) */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div 
-          className="absolute w-px h-px rounded-full opacity-60" 
-          style={{ boxShadow: starsSmall }} 
+    <div className="relative min-h-screen bg-[#05070B] text-white overflow-x-hidden font-sans">
+
+      {/* ══════ SVG FILTER DEFS ══════ */}
+      <svg width="0" height="0" className="absolute" aria-hidden="true">
+        <defs>
+          <filter id="glass-warp">
+            <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
+          </filter>
+        </defs>
+      </svg>
+
+      {/* ══════ STAR BACKDROP (fixed) ══════ */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute w-px h-px rounded-full opacity-50" style={{ boxShadow: starsSmall }} />
+        <div className="absolute w-0.5 h-0.5 rounded-full opacity-70" style={{ boxShadow: starsMedium }} />
+      </div>
+
+      {/* ══════ AMBIENT GLASS BLOBS (fixed) ══════ */}
+      <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden">
+        <div
+          className="absolute w-[500px] h-[500px] opacity-[0.035]"
+          style={{
+            top: "8%", left: "-8%",
+            background: "radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)",
+            animation: "blob 28s ease-in-out infinite, drift 35s ease-in-out infinite",
+            filter: "blur(90px)",
+          }}
         />
-        <div 
-          className="absolute w-0.5 h-0.5 rounded-full opacity-80" 
-          style={{ boxShadow: starsMedium }} 
+        <div
+          className="absolute w-[400px] h-[400px] opacity-[0.025]"
+          style={{
+            bottom: "15%", right: "-6%",
+            background: "radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)",
+            animation: "blob 22s ease-in-out infinite reverse, drift 30s ease-in-out infinite reverse",
+            filter: "blur(90px)",
+          }}
+        />
+        <div
+          className="absolute w-[600px] h-[600px] opacity-[0.018]"
+          style={{
+            top: "45%", left: "25%",
+            background: "radial-gradient(circle, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 50%, transparent 70%)",
+            animation: "blob 32s ease-in-out infinite, drift 45s ease-in-out infinite",
+            filter: "blur(110px)",
+          }}
         />
       </div>
 
-      {/* 🟢 ORBITAL LOADING SKELETON SCREEN */}
-      <div 
+      {/* ══════════════════════════════════════════════════════
+           LOADING SCREEN
+           ══════════════════════════════════════════════════════ */}
+      <div
         className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#05070B] transition-all duration-1000 ease-in-out ${
           isLoading ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         }`}
       >
-        <div className="relative w-44 h-44 flex items-center justify-center">
-          {/* Inner Glowing Core */}
-          <div className="absolute w-12 h-12 rounded-full bg-[#05070B] border border-artemis-blue/30 shadow-[0_0_30px_rgba(37,99,235,0.4)] flex items-center justify-center animate-pulse">
-            <span className="text-xs font-bold text-artemis-blue/80 tracking-widest font-header">6621</span>
+        <div className="relative w-48 h-48 flex items-center justify-center">
+          {/* Glow backdrop */}
+          <div
+            className="absolute w-28 h-28 rounded-full bg-gradient-to-br from-artemis-blue/20 to-stellar-orange/20 blur-3xl"
+            style={{ animation: "pulse-glow 3s ease-in-out infinite" }}
+          />
+          {/* Glass circle with logo */}
+          <div
+            className="relative w-24 h-24 glass-panel-deep rounded-full flex items-center justify-center overflow-hidden"
+            style={{ animation: "breathe 3s ease-in-out infinite" }}
+          >
+            <img
+              src="/branding/logo_4.jpeg"
+              alt="Artemis 6621"
+              className="w-14 h-16 object-contain"
+              style={{ mixBlendMode: "screen" }}
+            />
           </div>
-          {/* Orbital Ring 1 */}
-          <div className="absolute inset-0 rounded-full border border-dashed border-white/5 animate-[spin_10s_linear_infinite]" />
-          {/* Orbital Ring 2 */}
-          <div className="absolute inset-4 rounded-full border border-white/10 animate-[spin-slow_6s_linear_infinite]" />
-          {/* Orbiting Planet Dot */}
-          <div className="absolute w-3.5 h-3.5 rounded-full bg-stellar-orange shadow-[0_0_15px_rgba(249,115,22,0.8)] animate-[orbit_3s_linear_infinite]" />
-          <div className="absolute w-2 h-2 rounded-full bg-artemis-blue shadow-[0_0_10px_rgba(37,99,235,0.8)] animate-[orbit_2s_linear_infinite_reverse]" style={{ animationDelay: "-1s" }} />
+          {/* Orbital rings */}
+          <div
+            className="absolute inset-0 rounded-full border border-dashed border-white/[0.05]"
+            style={{ animation: "rotate-slow 18s linear infinite" }}
+          />
+          <div
+            className="absolute inset-5 rounded-full border border-white/[0.03]"
+            style={{ animation: "rotate-reverse 12s linear infinite" }}
+          />
+          {/* Orbiting dots */}
+          <div
+            className="absolute w-2.5 h-2.5 rounded-full bg-stellar-orange shadow-[0_0_12px_rgba(249,115,22,0.7)]"
+            style={{ animation: "orbit 3s linear infinite" }}
+          />
+          <div
+            className="absolute w-1.5 h-1.5 rounded-full bg-artemis-blue shadow-[0_0_8px_rgba(37,99,235,0.7)]"
+            style={{ animation: "orbit 2.2s linear infinite reverse", animationDelay: "-0.8s" }}
+          />
         </div>
-        <div className="mt-8 flex flex-col items-center space-y-2">
-          <p className="text-sm font-semibold tracking-[0.3em] text-white/50 uppercase font-header animate-pulse">
-            Preheating Star Systems
+        <div className="mt-8 flex flex-col items-center space-y-3">
+          <p className="text-[10px] font-semibold tracking-[0.35em] uppercase text-white/25 font-header">
+            Initializing Systems
           </p>
-          <div className="w-48 h-0.5 bg-white/5 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-artemis-blue to-stellar-orange animate-[shimmer_2s_infinite]" style={{ backgroundSize: "200% 100%" }} />
+          <div className="w-44 h-px bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-artemis-blue to-stellar-orange"
+              style={{ backgroundSize: "200% 100%", animation: "shimmer-glass 1.5s infinite" }}
+            />
           </div>
         </div>
       </div>
 
-      {/* 🪐 STICKY GLASS HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="glass-frosted rounded-2xl px-6 py-3 flex items-center justify-between border border-white/5 shadow-2xl">
-            {/* Logo area */}
-            <a href="#hero" className="flex items-center space-x-3 group">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-artemis-blue/40 to-stellar-orange/40 flex items-center justify-center border border-white/10 group-hover:border-stellar-orange/30 transition-colors">
-                <span className="font-header font-black text-white text-base tracking-wider">A</span>
+      {/* ══════════════════════════════════════════════════════
+           HEADER / NAV
+           ══════════════════════════════════════════════════════ */}
+      <header className="fixed top-0 left-0 right-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+          <div className="glass-nav px-5 py-2.5 flex items-center justify-between shadow-2xl">
+            {/* Logo */}
+            <a href="#hero" className="flex items-center space-x-2.5 group">
+              <div className="w-7 h-9 overflow-hidden flex items-center justify-center">
+                <img
+                  src="/branding/logo_4.jpeg"
+                  alt="Artemis"
+                  className="w-full h-full object-contain"
+                  style={{ mixBlendMode: "screen" }}
+                />
               </div>
-              <span className="font-header font-black tracking-widest text-lg group-hover:text-artemis-blue transition-colors">
+              <span className="font-header font-bold tracking-[0.15em] text-sm group-hover:text-artemis-blue transition-colors duration-300">
                 ARTEMIS<span className="text-stellar-orange">.6621</span>
               </span>
             </a>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-8 text-xs font-semibold uppercase tracking-wider text-white/60">
-              <a 
-                href="#about" 
-                className={`hover:text-white transition-colors ${activeSection === "about" ? "text-artemis-blue" : ""}`}
-              >
-                About
-              </a>
-              <a 
-                href="#outreach" 
-                className={`hover:text-white transition-colors ${activeSection === "outreach" ? "text-artemis-blue" : ""}`}
-              >
-                Outreach
-              </a>
-              <a 
-                href="#budget" 
-                className={`hover:text-white transition-colors ${activeSection === "budget" ? "text-artemis-blue" : ""}`}
-              >
-                Budget
-              </a>
-              <a 
-                href="#tiers" 
-                className={`hover:text-white transition-colors ${activeSection === "tiers" ? "text-artemis-blue" : ""}`}
-              >
-                Tiers
-              </a>
-              <a 
-                href="#contact" 
-                className={`hover:text-white transition-colors ${activeSection === "contact" ? "text-artemis-blue" : ""}`}
-              >
-                Contact
-              </a>
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center space-x-7 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/45">
+              {NAV_LINKS.map((l) => (
+                <a
+                  key={l.id}
+                  href={l.href}
+                  className={`hover:text-white transition-colors duration-300 ${
+                    activeSection === l.id ? "text-artemis-blue" : ""
+                  }`}
+                >
+                  {l.label}
+                </a>
+              ))}
             </nav>
 
-            {/* CTA action buttons */}
-            <div className="hidden md:flex items-center space-x-4">
-              <a 
+            {/* Desktop CTAs */}
+            <div className="hidden md:flex items-center space-x-3">
+              <a
                 href="#pay"
-                className="px-5 py-2 text-xs font-bold uppercase tracking-wider text-white bg-transparent border border-white/10 rounded-full hover:bg-white/5 transition-all duration-300"
+                className="glass-button px-4 py-2 text-[9px] font-bold uppercase tracking-[0.15em]"
               >
-                Checkout Terminal
+                Terminal
               </a>
-              <a 
+              <a
                 href="#tiers"
-                className="px-5 py-2 text-xs font-bold uppercase tracking-wider text-black bg-white rounded-full hover:bg-stellar-orange hover:text-white shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all duration-300"
+                className="px-4 py-2 text-[9px] font-bold uppercase tracking-[0.15em] bg-white text-black rounded-full hover:bg-stellar-orange hover:text-white transition-all duration-300 shadow-[0_0_16px_rgba(255,255,255,0.06)]"
               >
                 Sponsor Us
               </a>
             </div>
 
-            {/* Hamburger Button */}
-            <button 
+            {/* Mobile Hamburger */}
+            <button
               className="md:hidden flex flex-col space-y-1.5 p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Menu"
             >
-              <div className={`w-6 h-0.5 bg-white transition-transform ${isMobileMenuOpen ? "transform rotate-45 translate-y-2" : ""}`} />
-              <div className={`w-6 h-0.5 bg-white transition-opacity ${isMobileMenuOpen ? "opacity-0" : ""}`} />
-              <div className={`w-6 h-0.5 bg-white transition-transform ${isMobileMenuOpen ? "transform -rotate-45 -translate-y-2" : ""}`} />
+              <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+              <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? "opacity-0" : ""}`} />
+              <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
             </button>
           </div>
         </div>
 
-        {/* Mobile Dropdown Nav */}
-        <div 
-          className={`fixed inset-0 top-[88px] z-40 bg-[#05070B]/98 backdrop-blur-xl border-b border-white/5 transition-all duration-500 ease-in-out ${
-            isMobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10 pointer-events-none"
+        {/* Mobile Dropdown */}
+        <div
+          className={`fixed inset-0 top-[72px] z-40 bg-[#05070B]/[0.98] backdrop-blur-2xl transition-all duration-500 ease-in-out ${
+            isMobileMenuOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-6 pointer-events-none"
           }`}
         >
-          <div className="flex flex-col items-center justify-center h-[calc(100vh-120px)] space-y-8 text-lg font-bold uppercase tracking-widest font-header">
-            <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-artemis-blue transition-colors">About</a>
-            <a href="#outreach" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-artemis-blue transition-colors">Outreach</a>
-            <a href="#budget" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-artemis-blue transition-colors">Budget</a>
-            <a href="#tiers" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-artemis-blue transition-colors">Tiers</a>
-            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-artemis-blue transition-colors">Contact</a>
-            
-            <div className="flex flex-col space-y-4 pt-8 w-64">
-              <a 
+          <div className="flex flex-col items-center justify-center h-[calc(100vh-90px)] space-y-6">
+            {NAV_LINKS.map((l) => (
+              <a
+                key={l.id}
+                href={l.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-base font-header font-bold uppercase tracking-[0.2em] hover:text-artemis-blue transition-colors"
+              >
+                {l.label}
+              </a>
+            ))}
+            <div className="flex flex-col space-y-3 pt-6 w-52">
+              <a
                 href="#pay"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full text-center py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold tracking-wider"
+                className="glass-button w-full text-center py-3 text-[10px] font-bold uppercase tracking-wider"
               >
-                Checkout Terminal
+                Terminal
               </a>
-              <a 
+              <a
                 href="#tiers"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full text-center py-3 bg-artemis-blue hover:bg-stellar-orange text-white rounded-xl text-sm font-bold tracking-wider"
+                className="w-full text-center py-3 bg-artemis-blue text-white rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-stellar-orange transition-colors"
               >
                 Sponsor Us
               </a>
@@ -341,138 +494,265 @@ export default function Home() {
         </div>
       </header>
 
-      {/* 🚀 HERO SECTION (Continuous Scroll Canvas Placeholder) */}
-      <section 
-        id="hero"
-        ref={heroContainerRef}
-        className="relative h-[150vh] flex flex-col justify-start"
-      >
+      {/* ══════════════════════════════════════════════════════
+           HERO
+           ══════════════════════════════════════════════════════ */}
+      <section id="hero" ref={heroRef} className="relative h-[150vh]">
         <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
-          
-          {/* Artistic Space Sequence Mock Graphic Grid (Layer 1 Background) */}
-          <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center">
-            {/* Glass Solar System Graphic Circle Grid */}
-            <div className="absolute w-[600px] h-[600px] rounded-full border border-white/5 flex items-center justify-center animate-[spin_60s_linear_infinite]">
-              <div className="absolute top-0 left-1/2 w-4 h-4 rounded-full bg-artemis-blue/30 blur-xs" />
-              <div className="absolute w-[400px] h-[400px] rounded-full border border-white/5 flex items-center justify-center animate-[spin_40s_linear_infinite_reverse]">
-                <div className="absolute bottom-0 right-1/4 w-3 h-3 rounded-full bg-stellar-orange/30 blur-xs" />
-              </div>
-            </div>
-            {/* Cinematic Vignette Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-transparent to-[#05070B] z-10" />
-            <div className="absolute inset-0 bg-radial-gradient(circle, transparent 30%, rgba(5,7,11,0.9) 100%) z-10" />
+
+          {/* BG Layer: Robot image, mega-blurred */}
+          <div className="absolute inset-0 z-0">
+            <div
+              className="absolute inset-0 opacity-[0.06]"
+              style={{
+                backgroundImage: "url(/hero/Robotbackground_final_v2.jpeg)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                filter: "blur(40px) saturate(0.4)",
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#05070B] via-transparent to-[#05070B]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#05070B]/70 via-transparent to-[#05070B]/70" />
           </div>
 
-          {/* Fanning Exploding Heading (Layer 2 Text) */}
-          <div className="relative z-20 flex flex-col items-center text-center px-4 max-w-5xl">
-            {/* Mini tag */}
-            <div className="glass-frosted px-4 py-1.5 rounded-full border border-white/10 mb-8 inline-flex items-center space-x-2 animate-bounce">
-              <span className="w-1.5 h-1.5 rounded-full bg-stellar-orange" />
-              <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-white/80">
-                FRC TEAM 6621 • CHATHAM NJ
-              </span>
+          {/* Floating orb 1 — golden/warm */}
+          <div
+            className="absolute z-[2] w-14 h-14 md:w-20 md:h-20 rounded-full"
+            style={{
+              top: "14%", right: "18%",
+              background: "radial-gradient(circle at 30% 30%, rgba(251,191,36,0.7), rgba(249,115,22,0.3) 60%, transparent)",
+              boxShadow: "0 0 50px rgba(251,191,36,0.25), 0 0 100px rgba(249,115,22,0.1)",
+              animation: "float 9s ease-in-out infinite",
+            }}
+          />
+
+          {/* Floating orb 2 — blue */}
+          <div
+            className="absolute z-[2] w-8 h-8 md:w-12 md:h-12 rounded-full"
+            style={{
+              bottom: "22%", left: "12%",
+              background: "radial-gradient(circle at 30% 30%, rgba(96,165,250,0.7), rgba(37,99,235,0.3) 60%, transparent)",
+              boxShadow: "0 0 30px rgba(37,99,235,0.25)",
+              animation: "float 7s ease-in-out infinite reverse",
+              animationDelay: "-3s",
+            }}
+          />
+
+          {/* Floating orb 3 — tiny accent */}
+          <div
+            className="absolute z-[2] w-4 h-4 md:w-6 md:h-6 rounded-full opacity-50"
+            style={{
+              top: "55%", right: "8%",
+              background: "radial-gradient(circle, rgba(249,115,22,0.6), transparent 70%)",
+              animation: "float 5s ease-in-out infinite",
+              animationDelay: "-1.5s",
+            }}
+          />
+
+          {/* Orbital rings */}
+          <div
+            className="absolute z-[1] w-[min(520px,85vw)] h-[min(520px,85vw)] rounded-full border border-white/[0.03] flex items-center justify-center"
+            style={{ animation: "rotate-slow 70s linear infinite" }}
+          >
+            <div className="absolute top-0 left-1/2 w-2 h-2 rounded-full bg-artemis-blue/20 blur-sm" />
+          </div>
+          <div
+            className="absolute z-[1] w-[min(360px,60vw)] h-[min(360px,60vw)] rounded-full border border-white/[0.025]"
+            style={{ animation: "rotate-reverse 50s linear infinite" }}
+          >
+            <div className="absolute bottom-0 right-1/4 w-1.5 h-1.5 rounded-full bg-stellar-orange/20 blur-sm" />
+          </div>
+
+          {/* ─── Hero Content ─── */}
+          <div
+            className="relative z-10 flex flex-col items-center text-center px-4 max-w-5xl"
+            style={{
+              opacity: "calc(1 - var(--scroll-progress, 0) * 3.5)",
+              transform: "translateY(calc(var(--scroll-progress, 0) * -70px)) scale(calc(1 + var(--scroll-progress, 0) * 0.04))",
+              willChange: "transform, opacity",
+            }}
+          >
+            {/* Deer Logo in Glass Orb */}
+            <div className="relative mb-6">
+              <div
+                className="absolute inset-[-16px] rounded-full bg-gradient-to-br from-artemis-blue/10 to-stellar-orange/10 blur-2xl"
+                style={{ animation: "pulse-glow 5s ease-in-out infinite" }}
+              />
+              <div
+                className="relative w-24 h-24 md:w-32 md:h-32 glass-panel-deep rounded-full flex items-center justify-center overflow-hidden"
+                style={{ animation: "breathe 5s ease-in-out infinite" }}
+              >
+                <img
+                  src="/branding/logo_4.jpeg"
+                  alt="Artemis 6621"
+                  className="w-14 h-16 md:w-18 md:h-20 object-contain"
+                  style={{ mixBlendMode: "screen" }}
+                />
+              </div>
             </div>
 
-            <h1 className="font-header font-black tracking-widest text-[clamp(2.8rem,11vw,8rem)] text-white select-none leading-none flex items-center justify-center">
-              {TITLE_LETTERS.map((letter, idx) => (
-                <span key={idx} style={getLetterStyle(idx)} className="will-change-transform">
-                  {letter}
-                </span>
-              ))}
-            </h1>
-
-            {/* Sub-hero outline cards (visible when scrollProgress < 0.15) */}
-            <div 
-              className="mt-12 max-w-xl transition-all duration-500 ease-out"
+            {/* ARTEMIS — transparent outline with gradient sweep */}
+            <h1
+              className="font-header font-black tracking-[0.1em] text-[clamp(3rem,14vw,10rem)] leading-[0.85] select-none"
               style={{
-                opacity: `calc(1 - var(--scroll-progress, 0) * 4)`,
-                transform: `translateY(calc(var(--scroll-progress, 0) * 25px))`
+                WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.1)",
+                WebkitTextFillColor: "transparent",
+                background:
+                  "linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.02) 100%)",
+                backgroundSize: "200% 100%",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                animation: "gradient-sweep 5s ease-in-out infinite",
               }}
             >
-              <p className="text-base md:text-lg text-white/50 font-medium leading-relaxed font-sans">
-                Chatham High School's premier competitive engineering squad. Sandwiched behind heavy glassmorphism, we build cutting-edge machines and local innovators.
+              ARTEMIS
+            </h1>
+
+            {/* 6621 in gradient text */}
+            <div className="mt-3 flex items-center space-x-4">
+              <div className="w-10 h-px bg-gradient-to-r from-transparent to-artemis-blue/30" />
+              <span className="text-gradient-blue text-lg md:text-xl font-header font-black tracking-[0.35em]">
+                TEAM 6621
+              </span>
+              <div className="w-10 h-px bg-gradient-to-l from-transparent to-stellar-orange/30" />
+            </div>
+
+            {/* Subtitle tag */}
+            <div className="mt-3 flex items-center space-x-2 text-[9px] uppercase font-semibold tracking-[0.3em] text-white/25">
+              <span className="w-1 h-1 rounded-full bg-stellar-orange/60" />
+              <span>FRC Robotics</span>
+              <span className="text-white/10">|</span>
+              <span>Chatham NJ</span>
+              <span className="w-1 h-1 rounded-full bg-artemis-blue/60" />
+            </div>
+
+            {/* Tagline in glass panel */}
+            <div className="mt-8 glass-panel px-6 py-4 max-w-lg">
+              <p className="text-sm md:text-base text-white/45 font-light leading-relaxed">
+                Chatham High School&apos;s competitive engineering squad. Building machines,
+                writing code, and inspiring the next generation of innovators.
               </p>
-              
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a 
-                  href="#about"
-                  className="px-8 py-3.5 bg-white text-black font-extrabold uppercase text-xs tracking-widest rounded-full hover:bg-stellar-orange hover:text-white transition-all duration-300 w-full sm:w-auto shadow-[0_4px_20px_rgba(255,255,255,0.08)]"
-                >
-                  Explore Mission
-                </a>
-                <a 
-                  href="#contact"
-                  className="px-8 py-3.5 glass-frosted border border-white/10 text-white font-extrabold uppercase text-xs tracking-widest rounded-full hover:bg-white/5 transition-all duration-300 w-full sm:w-auto"
-                >
-                  Book a Consultation
-                </a>
-              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
+              <a
+                href="#about"
+                className="px-7 py-3 bg-white text-black font-bold uppercase text-[10px] tracking-[0.15em] rounded-full hover:bg-stellar-orange hover:text-white transition-all duration-300 shadow-[0_4px_30px_rgba(255,255,255,0.05)] w-full sm:w-auto text-center"
+              >
+                Explore Mission
+              </a>
+              <a
+                href="#tiers"
+                className="glass-button px-7 py-3 font-bold uppercase text-[10px] tracking-[0.15em] w-full sm:w-auto text-center"
+              >
+                Become a Sponsor
+              </a>
             </div>
           </div>
 
-          {/* Scrolling prompt element */}
-          <div 
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center space-y-2 text-white/30 transition-opacity duration-300"
-            style={{ opacity: `calc(1 - var(--scroll-progress, 0) * 6)` }}
+          {/* Scroll indicator */}
+          <div
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center space-y-2 text-white/20"
+            style={{ opacity: "calc(1 - var(--scroll-progress, 0) * 8)" }}
           >
-            <span className="text-[9px] uppercase font-bold tracking-[0.3em]">Scrub Scroll</span>
-            <div className="w-5 h-8 rounded-full border-2 border-white/20 flex justify-center p-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-stellar-orange animate-bounce" />
+            <span className="text-[7px] uppercase font-semibold tracking-[0.35em]">
+              Scroll
+            </span>
+            <div className="w-4 h-7 rounded-full border border-white/10 flex justify-center p-1.5">
+              <div
+                className="w-0.5 h-0.5 rounded-full bg-stellar-orange"
+                style={{ animation: "float 2s ease-in-out infinite" }}
+              />
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* 🌑 ABOUT US & MISSION SECTION */}
-      <section id="about" className="relative z-10 py-32 px-6 border-t border-white/5 bg-[#05070B]">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="flex flex-col items-start mb-16 space-y-2">
-            <span className="text-xs font-bold tracking-[0.3em] uppercase text-artemis-blue">01 / Foundation</span>
-            <h2 className="text-4xl md:text-5xl font-header font-black tracking-tight">
-              About Artemis <span className="text-white/40">& Our Mission</span>
+      {/* ══════════════════════════════════════════════════════
+           ABOUT
+           ══════════════════════════════════════════════════════ */}
+      <section id="about" className="relative z-10 py-24 md:py-32 px-4 md:px-6 border-t border-white/[0.04]">
+        {/* Giant watermark number */}
+        <div
+          className="absolute top-4 left-2 md:left-6 text-[18vw] font-header font-black leading-none pointer-events-none select-none"
+          style={{
+            WebkitTextStroke: "1px rgba(255,255,255,0.015)",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          01
+        </div>
+
+        <div className="max-w-7xl mx-auto relative">
+          {/* Section header */}
+          <div className="flex flex-col items-start mb-14 space-y-2">
+            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue">
+              01 / Foundation
+            </span>
+            <h2 className="text-3xl md:text-5xl font-header font-black tracking-tight">
+              About Artemis{" "}
+              <span className="text-white/25">&amp; Our Mission</span>
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-artemis-blue to-transparent mt-2" />
+            <div className="w-14 h-0.5 bg-gradient-to-r from-artemis-blue to-transparent mt-1" />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* Large text block */}
-            <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
-              <p className="text-lg md:text-xl text-white/70 font-light leading-relaxed">
-                Founded as Team 6621 under FIRST Robotics Competition, Artemis represents Chatham High School's flagship technology incubator. We are not just a sports team for the mind; we are a fully functional corporate simulation where student executives engineer competitive robotics hardware, write code, formulate budgets, and deploy regional STEM programs.
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            {/* Left — text */}
+            <div className="lg:col-span-7 flex flex-col space-y-6">
+              <p className="text-base md:text-lg text-white/55 font-light leading-relaxed">
+                Founded as Team 6621 under FIRST Robotics Competition, Artemis represents
+                Chatham High School&apos;s flagship engineering program. We are a fully
+                student-operated robotics team where members design competitive hardware,
+                write sophisticated software, manage real budgets, and deploy STEM outreach
+                programs across our community.
               </p>
-              
-              <div className="grid grid-cols-2 gap-6 pt-4">
-                <div className="glass-frosted p-6 rounded-2xl border border-white/5">
-                  <h4 className="text-3xl font-header font-black text-stellar-orange">100%</h4>
-                  <p className="text-xs text-white/40 uppercase tracking-widest mt-1">Student Operated</p>
-                </div>
-                <div className="glass-frosted p-6 rounded-2xl border border-white/5">
-                  <h4 className="text-3xl font-header font-black text-artemis-blue">6621</h4>
-                  <p className="text-xs text-white/40 uppercase tracking-widest mt-1">FRC Team Designation</p>
-                </div>
-              </div>
-            </div>
 
-            {/* Artistic glassmorphic mission card */}
-            <div className="lg:col-span-5">
-              <div className="glass-frosted p-8 rounded-3xl border border-white/10 h-full flex flex-col justify-between shadow-2xl relative overflow-hidden group">
-                {/* Subtle blue accent glow inside glass */}
-                <div className="absolute -right-24 -bottom-24 w-48 h-48 rounded-full bg-artemis-blue/10 blur-[60px] group-hover:bg-artemis-blue/15 transition-all duration-700" />
-                
-                <div className="space-y-6">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-white/0 border border-white/10 flex items-center justify-center text-stellar-orange font-bold text-xl">
-                    🎯
-                  </div>
-                  <h3 className="text-2xl font-header font-black">Our North Star</h3>
-                  <p className="text-white/60 text-sm leading-relaxed font-light">
-                    To cultivate a high-velocity environment where students master professional toolkits—spanning mechanical CAD modelling, machine learning, web-stack infrastructure, and operations management—while fostering Chatham's spirit of scientific inquiry.
+              <div className="grid grid-cols-2 gap-4">
+                <div className="glass-panel glass-panel-hover p-5 group">
+                  <h4 className="text-2xl md:text-3xl font-header font-black text-gradient-orange">
+                    100%
+                  </h4>
+                  <p className="text-[9px] text-white/30 uppercase tracking-[0.2em] mt-1 font-semibold">
+                    Student Operated
                   </p>
                 </div>
-                <div className="border-t border-white/5 pt-6 mt-8 flex items-center justify-between text-xs text-white/40 font-bold uppercase tracking-wider">
+                <div className="glass-panel glass-panel-hover p-5 group">
+                  <h4 className="text-2xl md:text-3xl font-header font-black text-gradient-blue">
+                    6621
+                  </h4>
+                  <p className="text-[9px] text-white/30 uppercase tracking-[0.2em] mt-1 font-semibold">
+                    FRC Designation
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right — mission card */}
+            <div className="lg:col-span-5">
+              <div className="glass-panel-deep glass-panel-hover p-7 h-full flex flex-col justify-between relative overflow-hidden group">
+                <div className="absolute -right-20 -bottom-20 w-36 h-36 rounded-full bg-artemis-blue/[0.06] blur-[50px] group-hover:bg-artemis-blue/[0.1] transition-all duration-700" />
+
+                <div className="relative space-y-5">
+                  <div className="w-10 h-10 rounded-xl glass-panel flex items-center justify-center overflow-hidden">
+                    <img
+                      src="/branding/logo_4.jpeg"
+                      alt=""
+                      className="w-6 h-7 object-contain"
+                      style={{ mixBlendMode: "screen" }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-header font-black">Our Mission</h3>
+                  <p className="text-white/45 text-sm leading-relaxed font-light">
+                    To build an environment where students master real-world engineering,
+                    spanning mechanical design, programming, and project management,
+                    while inspiring Chatham&apos;s next generation of scientific thinkers.
+                  </p>
+                </div>
+
+                <div className="border-t border-white/[0.04] pt-5 mt-6 flex items-center justify-between text-[8px] text-white/25 font-bold uppercase tracking-[0.2em]">
                   <span>STEM Leadership</span>
-                  <span>Chatham High School</span>
+                  <span>Chatham, NJ</span>
                 </div>
               </div>
             </div>
@@ -480,568 +760,538 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 📡 COMMUNITY OUTREACH & FRC VALUES */}
-      <section id="outreach" className="relative z-10 py-32 px-6 border-t border-white/5 bg-[#05070B]">
-        <div className="max-w-7xl mx-auto">
-          {/* Title block */}
-          <div className="flex flex-col items-start mb-16 space-y-2">
-            <span className="text-xs font-bold tracking-[0.3em] uppercase text-stellar-orange">02 / Ecosystem</span>
-            <h2 className="text-4xl md:text-5xl font-header font-black tracking-tight">
-              FRC Education <span className="text-white/40">& Local Outreach</span>
+      {/* ══════════════════════════════════════════════════════
+           OUTREACH
+           ══════════════════════════════════════════════════════ */}
+      <section id="outreach" className="relative z-10 py-24 md:py-32 px-4 md:px-6 border-t border-white/[0.04]">
+        {/* Watermark */}
+        <div
+          className="absolute top-4 right-2 md:right-6 text-[18vw] font-header font-black leading-none pointer-events-none select-none"
+          style={{
+            WebkitTextStroke: "1px rgba(255,255,255,0.015)",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          02
+        </div>
+
+        <div className="max-w-7xl mx-auto relative">
+          <div className="flex flex-col items-start mb-14 space-y-2">
+            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-stellar-orange">
+              02 / Ecosystem
+            </span>
+            <h2 className="text-3xl md:text-5xl font-header font-black tracking-tight">
+              FRC Education{" "}
+              <span className="text-white/25">&amp; Outreach</span>
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-stellar-orange to-transparent mt-2" />
+            <div className="w-14 h-0.5 bg-gradient-to-r from-stellar-orange to-transparent mt-1" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Outreach card 1 */}
-            <div className="glass-frosted p-8 rounded-3xl border border-white/5 shadow-xl glass-card-hover flex flex-col justify-between min-h-[300px]">
-              <div className="space-y-4">
-                <span className="text-xs font-bold tracking-widest text-artemis-blue uppercase">Program 01</span>
-                <h3 className="text-xl font-header font-black">Junior Library Workshops</h3>
-                <p className="text-sm text-white/50 font-light leading-relaxed">
-                  We host monthly, hands-on mechanical building blocks and coding logic workshops at the Chatham Joint Library, igniting STEM excitement in elementary kids.
-                </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {OUTREACH_CARDS.map((card, idx) => (
+              <div
+                key={idx}
+                className="glass-panel glass-panel-hover p-7 flex flex-col justify-between min-h-[280px] group"
+                style={{
+                  transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+              >
+                <div className="space-y-4">
+                  <span className={`text-[9px] font-bold tracking-[0.2em] uppercase ${card.tagColor}`}>
+                    {card.tag}
+                  </span>
+                  <h3 className="text-lg font-header font-black">{card.title}</h3>
+                  <p className="text-sm text-white/40 font-light leading-relaxed">
+                    {card.desc}
+                  </p>
+                </div>
+                <div className="text-[8px] font-bold uppercase text-white/20 tracking-[0.2em] pt-5 border-t border-white/[0.04]">
+                  {card.footer}
+                </div>
               </div>
-              <div className="text-[10px] font-extrabold uppercase text-white/30 tracking-widest pt-6 border-t border-white/5">
-                Chatham Public Schools
-              </div>
-            </div>
-
-            {/* Outreach card 2 */}
-            <div className="glass-frosted p-8 rounded-3xl border border-white/5 shadow-xl glass-card-hover flex flex-col justify-between min-h-[300px]">
-              <div className="space-y-4">
-                <span className="text-xs font-bold tracking-widest text-stellar-orange uppercase">Program 02</span>
-                <h3 className="text-xl font-header font-black">Middle School FLL Mentorship</h3>
-                <p className="text-sm text-white/50 font-light leading-relaxed">
-                  Artemis team executives directly mentor local FIRST LEGO League (FLL) squads, guiding junior engineering candidates through game strategy and CAD math.
-                </p>
-              </div>
-              <div className="text-[10px] font-extrabold uppercase text-white/30 tracking-widest pt-6 border-t border-white/5">
-                FIRST LEGO League
-              </div>
-            </div>
-
-            {/* Outreach card 3 */}
-            <div className="glass-frosted p-8 rounded-3xl border border-white/5 shadow-xl glass-card-hover flex flex-col justify-between min-h-[300px]">
-              <div className="space-y-4">
-                <span className="text-xs font-bold tracking-widest text-white uppercase">Values</span>
-                <h3 className="text-xl font-header font-black">Gracious Professionalism</h3>
-                <p className="text-sm text-white/50 font-light leading-relaxed">
-                  We adhere strictly to FRC core principles: fierce engineering competition blended with mutual respect, supporting competitor teams in pits when disaster strikes.
-                </p>
-              </div>
-              <div className="text-[10px] font-extrabold uppercase text-white/30 tracking-widest pt-6 border-t border-white/5">
-                FRC Ethos
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 📊 FINANCIALS & BUDGET METERS */}
-      <section id="budget" className="relative z-10 py-32 px-6 border-t border-white/5 bg-[#05070B]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left description */}
-            <div className="lg:col-span-5 space-y-6">
-              <span className="text-xs font-bold tracking-[0.3em] uppercase text-artemis-blue">03 / Operations</span>
-              <h2 className="text-4xl md:text-5xl font-header font-black tracking-tight">
-                Our Operating <span className="text-white/40">Budget Target</span>
+      {/* ══════════════════════════════════════════════════════
+           BUDGET
+           ══════════════════════════════════════════════════════ */}
+      <section id="budget" className="relative z-10 py-24 md:py-32 px-4 md:px-6 border-t border-white/[0.04]">
+        <div
+          className="absolute top-4 left-2 md:left-6 text-[18vw] font-header font-black leading-none pointer-events-none select-none"
+          style={{
+            WebkitTextStroke: "1px rgba(255,255,255,0.015)",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          03
+        </div>
+
+        <div className="max-w-7xl mx-auto relative">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+
+            {/* Left — description */}
+            <div className="lg:col-span-5 space-y-5">
+              <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue">
+                03 / Operations
+              </span>
+              <h2 className="text-3xl md:text-5xl font-header font-black tracking-tight">
+                Operating{" "}
+                <span className="text-white/25">Budget</span>
               </h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-artemis-blue to-transparent" />
-              <p className="text-sm text-white/60 leading-relaxed font-light pt-2">
-                Running a world-class robotics squad requires extensive capital. Our target budget of <strong className="text-white">$65,395</strong> covers everything from raw aluminum extrusions to global event registrations. Sponsoring Chatham Artemis directly finances these categories.
+              <div className="w-14 h-0.5 bg-gradient-to-r from-artemis-blue to-transparent" />
+              <p className="text-sm text-white/50 leading-relaxed font-light pt-1">
+                Running a competitive robotics team requires serious capital. Our target
+                budget of <strong className="text-white font-medium">$65,395</strong> covers
+                everything from raw materials to competition registration and travel logistics.
               </p>
-              
-              <div className="glass-frosted p-6 rounded-2xl border border-white/5 flex items-center justify-between">
+
+              <div className="glass-panel p-5 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-white/40">Consolidated Goal</span>
-                  <div className="text-2xl font-header font-black text-stellar-orange mt-1">$65,395.00</div>
+                  <span className="text-[8px] uppercase font-bold tracking-[0.2em] text-white/30">
+                    Season Goal
+                  </span>
+                  <div className="text-xl md:text-2xl font-header font-black text-gradient-orange mt-0.5">
+                    $65,395
+                  </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-white/40">Team Count</span>
-                  <div className="text-lg font-bold text-white mt-1">45+ Students</div>
+                  <span className="text-[8px] uppercase font-bold tracking-[0.2em] text-white/30">
+                    Team Size
+                  </span>
+                  <div className="text-base font-bold text-white mt-0.5">45+ Students</div>
                 </div>
               </div>
             </div>
 
-            {/* Right progress sliders (frosted glass) */}
+            {/* Right — progress bars in glass panel */}
             <div className="lg:col-span-7">
-              <div className="glass-frosted p-8 rounded-3xl border border-white/10 shadow-2xl space-y-8 relative">
-                
-                {/* Budget Item 1 */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold tracking-wider text-white/80">Robot Parts, Pneumatics, & Electronics</span>
-                    <span className="font-bold text-artemis-blue">$15,000</span>
+              <div className="glass-panel-deep p-7 md:p-8 space-y-7 relative">
+                {BUDGET_ITEMS.map((item, idx) => (
+                  <div key={idx} className="space-y-2">
+                    <div className="flex justify-between items-center text-[11px]">
+                      <span className="font-semibold tracking-wide text-white/70">
+                        {item.label}
+                      </span>
+                      <span className="font-bold text-gradient-blue">{item.amount}</span>
+                    </div>
+                    <div className="w-full h-2 bg-white/[0.04] rounded-full overflow-hidden">
+                      <div
+                        className={`h-full bg-gradient-to-r ${item.color} rounded-full ${item.shadow}`}
+                        style={{ width: item.width }}
+                      />
+                    </div>
+                    <p className="text-[9px] text-white/25">{item.desc}</p>
                   </div>
-                  <div className="w-full h-2.5 bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-artemis-blue w-[85%] rounded-full shadow-[0_0_10px_rgba(37,99,235,0.5)]" />
-                  </div>
-                  <p className="text-[10px] text-white/40">Brushless motors, titanium alloys, custom PCB prints</p>
-                </div>
-
-                {/* Budget Item 2 */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold tracking-wider text-white/80">FRC District & Regional Entry Fees</span>
-                    <span className="font-bold text-stellar-orange">$12,000</span>
-                  </div>
-                  <div className="w-full h-2.5 bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-stellar-orange w-[70%] rounded-full shadow-[0_0_10px_rgba(249,115,22,0.5)]" />
-                  </div>
-                  <p className="text-[10px] text-white/40">Official FIRST team registrations & arena fees</p>
-                </div>
-
-                {/* Budget Item 3 */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold tracking-wider text-white/80">Travel, Logistics, & Machine Shipping</span>
-                    <span className="font-bold text-white">$25,395</span>
-                  </div>
-                  <div className="w-full h-2.5 bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-white/40 w-[60%] rounded-full" />
-                  </div>
-                  <p className="text-[10px] text-white/40">Transporting 120-pound machines and student pit crew crew</p>
-                </div>
-
-                {/* Budget Item 4 */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold tracking-wider text-white/80">STEM Community Outreach & Materials</span>
-                    <span className="font-bold text-artemis-blue">$13,000</span>
-                  </div>
-                  <div className="w-full h-2.5 bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-artemis-blue w-[90%] rounded-full shadow-[0_0_10px_rgba(37,99,235,0.5)]" />
-                  </div>
-                  <p className="text-[10px] text-white/40">Financing regional workshops & public school showcases</p>
-                </div>
-
+                ))}
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* 🌀 WRAPPING TEXT - SPONSORS ONLY MARQUEE */}
-      <section className="relative z-10 py-12 border-t border-b border-white/5 bg-[#05070B]">
-        <div className="marquee-container py-4">
-          <div className="marquee-content text-sm font-header font-black tracking-[0.25em] text-white/30 uppercase">
-            <span>• Hermes Partners • Apollo Champions • ZEUS Titans • Become a Sponsor • FRC Team 6621 • Chatham NJ</span>
-            <span>• Hermes Partners • Apollo Champions • ZEUS Titans • Become a Sponsor • FRC Team 6621 • Chatham NJ</span>
-            <span>• Hermes Partners • Apollo Champions • ZEUS Titans • Become a Sponsor • FRC Team 6621 • Chatham NJ</span>
-            <span>• Hermes Partners • Apollo Champions • ZEUS Titans • Become a Sponsor • FRC Team 6621 • Chatham NJ</span>
+      {/* ══════════════════════════════════════════════════════
+           MARQUEE
+           ══════════════════════════════════════════════════════ */}
+      <section className="relative z-10 py-10 border-t border-b border-white/[0.04]">
+        <div className="marquee-container py-3">
+          <div className="marquee-content text-sm font-header font-black tracking-[0.2em] text-white/15 uppercase">
+            <span>
+              ◆ Hermes Partners ◆ Apollo Champions ◆ ZEUS Titans ◆ Become a Sponsor
+              ◆ FRC Team 6621 ◆ Chatham NJ ◆ Deep Space Deep Time
+            </span>
+            <span>
+              ◆ Hermes Partners ◆ Apollo Champions ◆ ZEUS Titans ◆ Become a Sponsor
+              ◆ FRC Team 6621 ◆ Chatham NJ ◆ Deep Space Deep Time
+            </span>
+            <span>
+              ◆ Hermes Partners ◆ Apollo Champions ◆ ZEUS Titans ◆ Become a Sponsor
+              ◆ FRC Team 6621 ◆ Chatham NJ ◆ Deep Space Deep Time
+            </span>
           </div>
         </div>
       </section>
 
-      {/* 💎 SPONSORSHIP TIER SYSTEM */}
-      <section id="tiers" className="relative z-10 py-32 px-6 bg-[#05070B]">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="flex flex-col items-center text-center mb-20 space-y-2">
-            <span className="text-xs font-bold tracking-[0.3em] uppercase text-stellar-orange">04 / Alliance</span>
-            <h2 className="text-4xl md:text-5xl font-header font-black tracking-tight">
-              Sponsorship Tier Structure
+      {/* ══════════════════════════════════════════════════════
+           SPONSORSHIP TIERS
+           ══════════════════════════════════════════════════════ */}
+      <section id="tiers" className="relative z-10 py-24 md:py-32 px-4 md:px-6">
+        <div
+          className="absolute top-4 right-2 md:right-6 text-[18vw] font-header font-black leading-none pointer-events-none select-none"
+          style={{
+            WebkitTextStroke: "1px rgba(255,255,255,0.015)",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          04
+        </div>
+
+        <div className="max-w-7xl mx-auto relative">
+          <div className="flex flex-col items-center text-center mb-16 space-y-2">
+            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-stellar-orange">
+              04 / Alliance
+            </span>
+            <h2 className="text-3xl md:text-5xl font-header font-black tracking-tight">
+              Sponsorship Tiers
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-stellar-orange via-artemis-blue to-transparent mt-2 mx-auto" />
-            <p className="text-sm text-white/50 max-w-xl mx-auto pt-4 leading-relaxed font-light">
-              Accelerate our engineering research. Select an alignment tier to activate custom benefits, display corporate banners, and place your logo on our competitive robot.
+            <div className="w-14 h-0.5 bg-gradient-to-r from-stellar-orange via-artemis-blue to-transparent mt-1 mx-auto" />
+            <p className="text-sm text-white/40 max-w-lg mx-auto pt-3 leading-relaxed font-light">
+              Power our engineering research. Select a tier to place your brand on our
+              robot, team banner, and competition shirts.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-            
-            {/* Hermes Tier */}
-            <div className="glass-frosted p-8 rounded-3xl border border-white/5 shadow-xl glass-card-hover flex flex-col justify-between relative group overflow-hidden">
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold tracking-widest text-white/40 uppercase">Bronze Tier</span>
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-600 shadow-[0_0_8px_rgba(217,119,6,0.6)]" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-header font-black">Hermes</h3>
-                  <div className="text-3xl font-header font-black text-white/80 mt-2">$500+</div>
-                </div>
-                <div className="w-full h-px bg-white/5" />
-                <ul className="space-y-3 text-xs text-white/60 font-light">
-                  <li className="flex items-center space-x-2">
-                    <span className="text-stellar-orange text-sm">✓</span>
-                    <span>Corporate Logo on Website Sponsors page</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <span className="text-stellar-orange text-sm">✓</span>
-                    <span>Invitation to team presentations</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <span className="text-stellar-orange text-sm">✓</span>
-                    <span>Bi-annual progress newsletter updates</span>
-                  </li>
-                </ul>
-              </div>
-              <button 
-                onClick={() => handleSelectTier("Hermes")}
-                className="mt-8 w-full py-3 bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300"
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+            {TIERS.map((tier, idx) => (
+              <div
+                key={tier.name}
+                className={`glass-panel-deep ${tier.cardHover} p-7 flex flex-col justify-between relative group overflow-hidden ${
+                  tier.recommended ? "lg:scale-[1.03] z-10" : ""
+                }`}
+                style={{
+                  transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
               >
-                Select Hermes
-              </button>
-            </div>
+                {/* Recommended badge */}
+                {tier.recommended && (
+                  <div className="absolute top-0 right-0 bg-artemis-blue px-3 py-1 rounded-bl-xl text-[8px] font-bold uppercase tracking-[0.15em]">
+                    Recommended
+                  </div>
+                )}
 
-            {/* Apollo Tier */}
-            <div className="glass-frosted p-8 rounded-3xl border border-white/10 shadow-2xl glass-card-hover flex flex-col justify-between relative group overflow-hidden scale-100 lg:scale-105">
-              {/* Highlight ribbon indicator */}
-              <div className="absolute top-0 right-0 bg-artemis-blue px-3 py-1 rounded-bl-xl text-[9px] font-extrabold uppercase tracking-widest">
-                Recommended
-              </div>
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold tracking-widest text-artemis-blue uppercase">Silver Tier</span>
-                  <div className="w-2.5 h-2.5 rounded-full bg-artemis-blue shadow-[0_0_8px_rgba(37,99,235,0.6)]" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-header font-black">Apollo</h3>
-                  <div className="text-3xl font-header font-black text-white mt-2">$1,500+</div>
-                </div>
-                <div className="w-full h-px bg-white/5" />
-                <ul className="space-y-3 text-xs text-white/80 font-light">
-                  <li className="flex items-center space-x-2">
-                    <span className="text-artemis-blue text-sm">✓</span>
-                    <span>Small Logo placement on competitive FRC robot</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <span className="text-artemis-blue text-sm">✓</span>
-                    <span>Company Name on team banner in event pit</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <span className="text-artemis-blue text-sm">✓</span>
-                    <span>All Hermes level website perks included</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <span className="text-artemis-blue text-sm">✓</span>
-                    <span>Signed team photo frame for display</span>
-                  </li>
-                </ul>
-              </div>
-              <button 
-                onClick={() => handleSelectTier("Apollo")}
-                className="mt-8 w-full py-3 bg-artemis-blue hover:bg-artemis-blue/90 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.3)]"
-              >
-                Select Apollo
-              </button>
-            </div>
+                {/* Inner glow */}
+                <div
+                  className={`absolute -right-16 -bottom-16 w-32 h-32 rounded-full blur-[40px] transition-all duration-700 ${
+                    tier.color === "orange"
+                      ? "bg-stellar-orange/[0.04] group-hover:bg-stellar-orange/[0.08]"
+                      : tier.color === "blue"
+                      ? "bg-artemis-blue/[0.04] group-hover:bg-artemis-blue/[0.08]"
+                      : "bg-amber-500/[0.04] group-hover:bg-amber-500/[0.08]"
+                  }`}
+                />
 
-            {/* ZEUS Tier */}
-            <div className="glass-frosted p-8 rounded-3xl border border-white/5 shadow-xl glass-card-hover-orange flex flex-col justify-between relative group overflow-hidden">
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold tracking-widest text-stellar-orange uppercase">Gold Tier</span>
-                  <div className="w-2.5 h-2.5 rounded-full bg-stellar-orange shadow-[0_0_8px_rgba(249,115,22,0.6)]" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-header font-black">ZEUS</h3>
-                  <div className="text-3xl font-header font-black text-white mt-2">$5,000+</div>
-                </div>
-                <div className="w-full h-px bg-white/5" />
-                <ul className="space-y-3 text-xs text-white/60 font-light">
-                  <li className="flex items-center space-x-2">
-                    <span className="text-stellar-orange text-sm">✓</span>
-                    <span>Prominent large logo placement on FRC robot</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <span className="text-stellar-orange text-sm">✓</span>
-                    <span>Logo printed on official competition shirts</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <span className="text-stellar-orange text-sm">✓</span>
-                    <span>VIP invitation to annual robot rollout party</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <span className="text-stellar-orange text-sm">✓</span>
-                    <span>Dedicated social media spotlight broadcasts</span>
-                  </li>
-                </ul>
-              </div>
-              <button 
-                onClick={() => handleSelectTier("ZEUS")}
-                className="mt-8 w-full py-3 bg-white/5 border border-white/10 hover:bg-stellar-orange hover:text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 group-hover:border-stellar-orange/30"
-              >
-                Select ZEUS
-              </button>
-            </div>
+                <div className="relative space-y-5">
+                  <div className="flex justify-between items-center">
+                    <span className={`text-[9px] font-bold tracking-[0.2em] uppercase ${tier.accentText}`}>
+                      {tier.label}
+                    </span>
+                    <div className={`w-2 h-2 rounded-full ${tier.dotColor} ${tier.dotShadow}`} />
+                  </div>
 
+                  <div>
+                    <h3 className="text-xl font-header font-black">{tier.name}</h3>
+                    <div className="text-2xl md:text-3xl font-header font-black text-white/85 mt-1">
+                      {tier.price}
+                    </div>
+                  </div>
+
+                  <div className="w-full h-px bg-white/[0.04]" />
+
+                  <ul className="space-y-3 text-[11px] text-white/50 font-light">
+                    {tier.benefits.map((b, i) => (
+                      <li key={i} className="flex items-start space-x-2.5">
+                        <span className={`${tier.accentText} text-xs mt-0.5`}>✦</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <button
+                  onClick={() => handleSelectTier(tier.name)}
+                  className={`mt-7 w-full py-3 rounded-xl transition-all duration-300 ${tier.btnClass}`}
+                >
+                  Select {tier.name}
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 🧾 INTERACTIVE CHECKOUT TERMINAL / PAY FORM */}
-      <section id="pay" className="relative z-10 py-32 px-6 border-t border-white/5 bg-[#05070B]">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col items-center text-center mb-12 space-y-2">
-            <span className="text-xs font-bold tracking-[0.3em] uppercase text-artemis-blue">05 / Transaction</span>
-            <h2 className="text-3xl md:text-4xl font-header font-black tracking-tight">
+      {/* ══════════════════════════════════════════════════════
+           CHECKOUT TERMINAL
+           ══════════════════════════════════════════════════════ */}
+      <section id="pay" className="relative z-10 py-24 md:py-32 px-4 md:px-6 border-t border-white/[0.04]">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex flex-col items-center text-center mb-10 space-y-2">
+            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue">
+              05 / Transaction
+            </span>
+            <h2 className="text-2xl md:text-4xl font-header font-black tracking-tight">
               Sponsor Checkout Terminal
             </h2>
-            <p className="text-xs text-white/40 pt-2">
-              Frosted checkout terminal mockup. Enter credentials to trigger validated sponsorship interest.
+            <p className="text-[11px] text-white/30 pt-1">
+              Submit your sponsorship interest. Our team will follow up with invoicing details.
             </p>
           </div>
 
-          <div className="glass-frosted-heavy p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
-            {/* Decorative Grid Line backdrop */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+          <div className="glass-panel-deep p-7 md:p-10 relative overflow-hidden">
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.008)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.008)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
 
             {!sponsorSuccess ? (
-              <form onSubmit={handleSponsorSubmit} className="relative z-10 space-y-6">
-                
-                {/* Visual Tier Selector Switch */}
+              <form onSubmit={handleSponsorSubmit} className="relative z-10 space-y-5">
+
+                {/* Tier selector */}
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Selected Support Alignment</label>
-                  <div className="grid grid-cols-4 gap-2 bg-black/40 p-1.5 rounded-xl border border-white/5">
-                    {(["Hermes", "Apollo", "ZEUS", "Other"] as const).map((tier) => (
+                  <label className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+                    Selected Tier
+                  </label>
+                  <div className="grid grid-cols-4 gap-1.5 bg-black/30 p-1 rounded-xl border border-white/[0.04]">
+                    {(["Hermes", "Apollo", "ZEUS", "Other"] as const).map((t) => (
                       <button
-                        key={tier}
+                        key={t}
                         type="button"
                         onClick={() => {
-                          setSelectedTier(tier);
-                          setSponsorForm((prev) => ({ ...prev, interestedTier: tier }));
+                          setSelectedTier(t);
+                          setSponsorForm((p) => ({ ...p, interestedTier: t }));
                         }}
-                        className={`py-2 text-center text-xs font-bold uppercase rounded-lg tracking-wider transition-all ${
-                          selectedTier === tier
+                        className={`py-2 text-center text-[10px] font-bold uppercase rounded-lg tracking-wider transition-all duration-300 ${
+                          selectedTier === t
                             ? "bg-white text-black shadow-lg"
-                            : "text-white/60 hover:text-white hover:bg-white/5"
+                            : "text-white/50 hover:text-white hover:bg-white/[0.04]"
                         }`}
                       >
-                        {tier}
+                        {t}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Company Name */}
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Company Name *</label>
-                    <input 
-                      type="text" 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+                      Company Name *
+                    </label>
+                    <input
+                      type="text"
                       required
                       value={sponsorForm.companyName}
-                      onChange={(e) => setSponsorForm({...sponsorForm, companyName: e.target.value})}
-                      placeholder="e.g. Apollo Forge Inc."
-                      className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-artemis-blue/50 focus:bg-black/50 transition-colors"
+                      onChange={(e) => setSponsorForm({ ...sponsorForm, companyName: e.target.value })}
+                      placeholder="e.g. Acme Engineering"
+                      className="w-full glass-input"
                     />
                   </div>
-
-                  {/* Representative Name */}
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Contact Name *</label>
-                    <input 
-                      type="text" 
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+                      Contact Name *
+                    </label>
+                    <input
+                      type="text"
                       required
                       value={sponsorForm.contactName}
-                      onChange={(e) => setSponsorForm({...sponsorForm, contactName: e.target.value})}
-                      placeholder="e.g. Captain Diana"
-                      className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-artemis-blue/50 focus:bg-black/50 transition-colors"
+                      onChange={(e) => setSponsorForm({ ...sponsorForm, contactName: e.target.value })}
+                      placeholder="e.g. Jane Smith"
+                      className="w-full glass-input"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Email */}
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Corporate Email Address *</label>
-                    <input 
-                      type="email" 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
                       required
                       value={sponsorForm.email}
-                      onChange={(e) => setSponsorForm({...sponsorForm, email: e.target.value})}
-                      placeholder="e.g. align@apolloforge.com"
-                      className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-artemis-blue/50 focus:bg-black/50 transition-colors"
+                      onChange={(e) => setSponsorForm({ ...sponsorForm, email: e.target.value })}
+                      placeholder="e.g. sponsor@company.com"
+                      className="w-full glass-input"
                     />
                   </div>
-
-                  {/* Phone (Optional) */}
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Corporate Phone (Optional)</label>
-                    <input 
-                      type="tel" 
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+                      Phone (Optional)
+                    </label>
+                    <input
+                      type="tel"
                       value={sponsorForm.phone}
-                      onChange={(e) => setSponsorForm({...sponsorForm, phone: e.target.value})}
-                      placeholder="e.g. +1 (555) 662-1000"
-                      className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-artemis-blue/50 focus:bg-black/50 transition-colors"
+                      onChange={(e) => setSponsorForm({ ...sponsorForm, phone: e.target.value })}
+                      placeholder="e.g. (555) 662-1000"
+                      className="w-full glass-input"
                     />
                   </div>
                 </div>
 
-                {/* Messages */}
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Sponsorship Message / Alignment Goals *</label>
-                  <textarea 
-                    rows={4}
+                <div className="space-y-1.5">
+                  <label className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+                    Message *
+                  </label>
+                  <textarea
+                    rows={3}
                     required
                     value={sponsorForm.message}
-                    onChange={(e) => setSponsorForm({...sponsorForm, message: e.target.value})}
-                    placeholder="Briefly state your company goals or potential collaborative ideas..."
-                    className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-artemis-blue/50 focus:bg-black/50 transition-colors resize-none"
+                    onChange={(e) => setSponsorForm({ ...sponsorForm, message: e.target.value })}
+                    placeholder="Tell us about your sponsorship goals..."
+                    className="w-full glass-input resize-none"
                   />
                 </div>
 
-                {/* Simulated Payment Credentials Card Block */}
-                <div className="p-5 rounded-2xl bg-black/50 border border-white/5 space-y-4">
-                  <div className="flex justify-between items-center text-xs font-semibold">
-                    <span className="text-white/40 uppercase tracking-wider text-[9px]">Simulated Billing Allocation</span>
-                    <span className="text-stellar-orange font-bold uppercase">
-                      {selectedTier === "Hermes" && "$500+ Allocation"}
-                      {selectedTier === "Apollo" && "$1,500+ Allocation"}
-                      {selectedTier === "ZEUS" && "$5,000+ Allocation"}
-                      {selectedTier === "Other" && "Variable Allocation"}
+                {/* Billing info card */}
+                <div className="p-4 rounded-xl bg-black/30 border border-white/[0.04] space-y-3">
+                  <div className="flex justify-between items-center text-[10px] font-semibold">
+                    <span className="text-white/25 uppercase tracking-wider text-[8px]">
+                      Allocation Summary
+                    </span>
+                    <span className="text-gradient-orange font-bold uppercase">
+                      {selectedTier === "Hermes" && "$500+ Tier"}
+                      {selectedTier === "Apollo" && "$1,500+ Tier"}
+                      {selectedTier === "ZEUS" && "$5,000+ Tier"}
+                      {selectedTier === "Other" && "Custom Amount"}
                     </span>
                   </div>
-                  <p className="text-[11px] text-white/30 leading-relaxed font-light">
-                    Your interest payload validates the requested tier and flags our finance crew. An executive representative will follow up with manual wire setup / billing invoices. No card processing is conducted in this front-end demo.
+                  <p className="text-[10px] text-white/20 leading-relaxed font-light">
+                    Your interest will be reviewed by our team. An executive will follow up
+                    with invoicing details. No payment is processed on this form.
                   </p>
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmittingSponsor}
-                  className="w-full py-4 bg-gradient-to-r from-artemis-blue to-stellar-orange text-white font-extrabold uppercase text-xs tracking-widest rounded-xl hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] disabled:opacity-50 transition-all duration-500"
+                  className="w-full py-3.5 bg-gradient-to-r from-artemis-blue to-stellar-orange text-white font-bold uppercase text-[10px] tracking-[0.15em] rounded-xl hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] disabled:opacity-50 transition-all duration-500"
                 >
-                  {isSubmittingSponsor ? "Dispatching Core Payload..." : "Submit Sponsorship Interest"}
+                  {isSubmittingSponsor ? "Sending..." : "Submit Sponsorship Interest"}
                 </button>
-
               </form>
             ) : (
-              <div className="relative z-10 text-center py-8 space-y-6 animate-fade-in">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-artemis-blue/30 to-stellar-orange/30 border border-stellar-orange/50 mx-auto flex items-center justify-center text-2xl animate-bounce">
-                  ✨
+              <div className="relative z-10 text-center py-6 space-y-5">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-artemis-blue/20 to-stellar-orange/20 border border-stellar-orange/30 mx-auto flex items-center justify-center text-xl">
+                  ✦
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-header font-black">Interest Dispatch Completed</h3>
-                  <p className="text-xs text-white/50 max-w-md mx-auto leading-relaxed">
-                    Sponsorship payload validated to correct schema formatting. An Artemis executive will review the wire request.
+                  <h3 className="text-xl font-header font-black">Interest Submitted</h3>
+                  <p className="text-[11px] text-white/40 max-w-sm mx-auto leading-relaxed">
+                    Thank you! An Artemis team member will review your inquiry and follow up.
                   </p>
                 </div>
 
-                {/* Displaying payload receipt detail */}
-                <div className="max-w-md mx-auto p-6 rounded-2xl bg-black/60 border border-white/5 text-left font-mono text-[11px] space-y-2.5">
-                  <div className="text-center font-header font-black tracking-widest uppercase text-white/40 pb-2 border-b border-white/5 mb-3 text-xs">
-                    OFFICIAL RECEIPTS
+                <div className="max-w-sm mx-auto p-5 rounded-xl bg-black/40 border border-white/[0.04] text-left font-mono text-[10px] space-y-2">
+                  <div className="text-center font-header font-bold tracking-[0.2em] uppercase text-white/25 pb-2 border-b border-white/[0.04] mb-2 text-[9px]">
+                    Receipt
                   </div>
                   <div><span className="text-stellar-orange">COMPANY:</span> {sponsorReceipt?.companyName}</div>
-                  <div><span className="text-stellar-orange">REP NAME:</span> {sponsorReceipt?.contactName}</div>
+                  <div><span className="text-stellar-orange">CONTACT:</span> {sponsorReceipt?.contactName}</div>
                   <div><span className="text-stellar-orange">EMAIL:</span> {sponsorReceipt?.email}</div>
                   {sponsorReceipt?.phone && <div><span className="text-stellar-orange">PHONE:</span> {sponsorReceipt?.phone}</div>}
-                  <div><span className="text-stellar-orange">REQUESTED TIER:</span> {sponsorReceipt?.interestedTier}</div>
-                  <div className="pt-2 border-t border-white/5 mt-2"><span className="text-white/40">MESSAGE HASH:</span> &quot;{sponsorReceipt?.message}&quot;</div>
+                  <div><span className="text-stellar-orange">TIER:</span> {sponsorReceipt?.interestedTier}</div>
                 </div>
 
                 <button
                   onClick={() => setSponsorSuccess(false)}
-                  className="px-6 py-2 border border-white/10 rounded-full text-xs font-bold uppercase tracking-wider text-white/60 hover:text-white"
+                  className="glass-button px-5 py-2 text-[10px] font-bold uppercase tracking-wider"
                 >
-                  Verify New Entry
+                  Submit Another
                 </button>
               </div>
             )}
-
           </div>
         </div>
       </section>
 
-      {/* 📧 CONTACT US FORM */}
-      <section id="contact" className="relative z-10 py-32 px-6 border-t border-white/5 bg-[#05070B]">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col items-center text-center mb-16 space-y-2">
-            <span className="text-xs font-bold tracking-[0.3em] uppercase text-stellar-orange">06 / Message</span>
-            <h2 className="text-3xl md:text-4xl font-header font-black tracking-tight">
-              Connect With The Crew
+      {/* ══════════════════════════════════════════════════════
+           CONTACT
+           ══════════════════════════════════════════════════════ */}
+      <section id="contact" className="relative z-10 py-24 md:py-32 px-4 md:px-6 border-t border-white/[0.04]">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex flex-col items-center text-center mb-12 space-y-2">
+            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-stellar-orange">
+              06 / Connect
+            </span>
+            <h2 className="text-2xl md:text-4xl font-header font-black tracking-tight">
+              Get In Touch
             </h2>
-            <p className="text-sm text-white/50 max-w-md mx-auto pt-2 font-light">
-              Submit community inquiries, FLL mentoring requests, or schedule laboratory site consultations directly.
+            <p className="text-[11px] text-white/35 max-w-sm mx-auto pt-1 font-light">
+              Questions about mentoring, collaboration, or visiting the lab? Reach out below.
             </p>
           </div>
 
-          <div className="glass-frosted p-8 md:p-12 rounded-3xl border border-white/5 shadow-xl">
+          <div className="glass-panel p-7 md:p-10">
             {!contactSuccess ? (
-              <form onSubmit={handleContactSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Name */}
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Full Name *</label>
-                    <input 
-                      type="text" 
+              <form onSubmit={handleContactSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+                      Name *
+                    </label>
+                    <input
+                      type="text"
                       required
                       value={contactForm.name}
-                      onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
-                      placeholder="e.g. Captain Reed"
-                      className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-stellar-orange/50 focus:bg-black/50 transition-colors"
+                      onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                      placeholder="Your name"
+                      className="w-full glass-input"
                     />
                   </div>
-
-                  {/* Email */}
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Email Address *</label>
-                    <input 
-                      type="email" 
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
                       required
                       value={contactForm.email}
-                      onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
-                      placeholder="e.g. reed@domain.com"
-                      className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-stellar-orange/50 focus:bg-black/50 transition-colors"
+                      onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                      placeholder="you@email.com"
+                      className="w-full glass-input"
                     />
                   </div>
                 </div>
 
-                {/* Subject */}
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Subject *</label>
-                  <input 
-                    type="text" 
+                <div className="space-y-1.5">
+                  <label className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+                    Subject *
+                  </label>
+                  <input
+                    type="text"
                     required
                     value={contactForm.subject}
-                    onChange={(e) => setContactForm({...contactForm, subject: e.target.value})}
-                    placeholder="e.g. Mentoring Collaboration Request"
-                    className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-stellar-orange/50 focus:bg-black/50 transition-colors"
+                    onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
+                    placeholder="What is this about?"
+                    className="w-full glass-input"
                   />
                 </div>
 
-                {/* Message */}
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Inquiry Message *</label>
-                  <textarea 
+                <div className="space-y-1.5">
+                  <label className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+                    Message *
+                  </label>
+                  <textarea
                     rows={4}
                     required
                     value={contactForm.message}
-                    onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
-                    placeholder="Write detailed request metrics here..."
-                    className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-stellar-orange/50 focus:bg-black/50 transition-colors resize-none"
+                    onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                    placeholder="Write your message here..."
+                    className="w-full glass-input resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmittingContact}
-                  className="w-full py-4 bg-white hover:bg-stellar-orange text-black hover:text-white font-extrabold uppercase text-xs tracking-widest rounded-xl transition-all duration-300"
+                  className="w-full py-3.5 bg-white hover:bg-stellar-orange text-black hover:text-white font-bold uppercase text-[10px] tracking-[0.15em] rounded-xl transition-all duration-300"
                 >
-                  {isSubmittingContact ? "Sending..." : "Send Consultation Inquiry"}
+                  {isSubmittingContact ? "Sending..." : "Send Message"}
                 </button>
               </form>
             ) : (
-              <div className="text-center py-8 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-green-500/20 border border-green-500/50 mx-auto flex items-center justify-center text-xl">
+              <div className="text-center py-6 space-y-4">
+                <div className="w-12 h-12 rounded-full bg-green-500/10 border border-green-500/30 mx-auto flex items-center justify-center text-lg text-green-400">
                   ✓
                 </div>
-                <h3 className="text-xl font-header font-black">Message Sent Successfully</h3>
-                <p className="text-xs text-white/50 max-w-sm mx-auto leading-relaxed">
-                  Thank you for reaching out. An executive from Artemis FRC 6621 will follow up on your subject inquiry.
+                <h3 className="text-lg font-header font-black">Message Sent</h3>
+                <p className="text-[11px] text-white/40 max-w-xs mx-auto leading-relaxed">
+                  Thanks for reaching out. A team member will get back to you soon.
                 </p>
                 <button
                   onClick={() => setContactSuccess(false)}
-                  className="mt-4 px-6 py-2 border border-white/10 rounded-full text-xs font-bold uppercase tracking-wider text-white/60 hover:text-white"
+                  className="glass-button px-5 py-2 text-[10px] font-bold uppercase tracking-wider mt-2"
                 >
-                  Send Another Message
+                  Send Another
                 </button>
               </div>
             )}
@@ -1049,30 +1299,50 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 🪐 FOOTER */}
-      <footer className="relative z-10 border-t border-white/5 py-12 px-6 bg-[#030508] text-white/40 text-xs">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <span className="font-header font-black tracking-widest text-sm text-white">
-              ARTEMIS<span className="text-stellar-orange">.6621</span>
-            </span>
-            <span>Chatham High School Competitive Engineering</span>
+      {/* ══════════════════════════════════════════════════════
+           FOOTER
+           ══════════════════════════════════════════════════════ */}
+      <footer className="relative z-10 border-t border-white/[0.04] py-10 px-4 md:px-6 bg-[#030508]">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-white/30 text-[11px]">
+          {/* Logo + tagline */}
+          <div className="flex items-center space-x-3">
+            <div className="w-6 h-7 overflow-hidden">
+              <img
+                src="/branding/logo_4.jpeg"
+                alt="Artemis"
+                className="w-full h-full object-contain"
+                style={{ mixBlendMode: "screen" }}
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-header font-bold tracking-[0.15em] text-sm text-white/80">
+                ARTEMIS<span className="text-stellar-orange">.6621</span>
+              </span>
+              <span className="text-[9px] text-white/20 tracking-wider">
+                Chatham High School Engineering
+              </span>
+            </div>
           </div>
 
-          <div className="flex items-center space-x-6">
-            <a href="#about" className="hover:text-white transition-colors">About</a>
-            <a href="#outreach" className="hover:text-white transition-colors">Outreach</a>
-            <a href="#budget" className="hover:text-white transition-colors">Budget</a>
-            <a href="#tiers" className="hover:text-white transition-colors">Tiers</a>
-            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+          {/* Nav links */}
+          <div className="flex items-center space-x-5">
+            {NAV_LINKS.map((l) => (
+              <a
+                key={l.id}
+                href={l.href}
+                className="hover:text-white transition-colors duration-300 text-[10px] uppercase tracking-wider"
+              >
+                {l.label}
+              </a>
+            ))}
           </div>
 
-          <div>
-            &copy; {new Date().getFullYear()} Team 6621. Chatham NJ. All Rights Reserved.
+          {/* Copyright */}
+          <div className="text-[10px] text-white/20">
+            &copy; {new Date().getFullYear()} Team 6621 &middot; Chatham NJ
           </div>
         </div>
       </footer>
-
     </div>
   );
 }

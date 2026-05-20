@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ 
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  variable: "--font-inter", 
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Artemis 6621 | FIRST Robotics Team",
-  description: "Chatham High School's student-led FIRST Robotics team. We build robots and the next generation of innovators.",
+  title: "ARTEMIS 6621 | FRC Robotics Team — Chatham NJ",
+  description:
+    "Chatham High School's FIRST Robotics Competition Team 6621. Building the future through competitive engineering, STEM education, and community outreach.",
 };
 
 export default function RootLayout({
@@ -19,7 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.variable}>{children}</body>
+      <body className={`${inter.variable} ${outfit.variable} antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }
