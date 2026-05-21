@@ -13,7 +13,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "ARTEMIS 6621 | FRC Robotics Team — Chatham NJ",
+  title: "ARTEMIS 6621 | FRC Robotics Team — Chatham NY",
   description:
     "Chatham High School's FIRST Robotics Competition Team 6621. Building the future through competitive engineering, STEM education, and community outreach.",
 };

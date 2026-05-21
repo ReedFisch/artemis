@@ -16,6 +16,7 @@ interface SponsorshipInterestPayload {
 const NAV_LINKS = [
   { href: "#about", label: "About", id: "about" },
   { href: "#outreach", label: "Outreach", id: "outreach" },
+  { href: "#competitions", label: "Competitions", id: "competitions" },
   { href: "#budget", label: "Budget", id: "budget" },
   { href: "#tiers", label: "Sponsors", id: "tiers" },
   { href: "#contact", label: "Contact", id: "contact" },
@@ -25,24 +26,25 @@ const NAV_LINKS = [
 const TIERS = [
   {
     name: "Hermes" as const,
-    label: "Bronze Tier",
-    price: "$500+",
+    label: "Partner Tier",
+    price: "$250+",
     color: "amber",
     dotColor: "bg-amber-500",
     dotShadow: "shadow-[0_0_10px_rgba(217,119,6,0.6)]",
     accentText: "text-amber-500",
     benefits: [
-      "Corporate logo on team website",
-      "Invitation to team presentations",
-      "Bi-annual progress newsletter",
+      "Logo on team website",
+      "Name on team pit banner",
+      "Name on competition shirt",
+      "Personal thank you card",
     ],
     btnClass: "glass-button font-bold uppercase text-[10px] tracking-wider",
     cardHover: "glass-panel-hover",
   },
   {
     name: "Apollo" as const,
-    label: "Silver Tier",
-    price: "$1,500+",
+    label: "Champion Tier",
+    price: "$500+",
     color: "blue",
     dotColor: "bg-artemis-blue",
     dotShadow: "shadow-[0_0_10px_rgba(37,99,235,0.6)]",
@@ -50,9 +52,9 @@ const TIERS = [
     recommended: true,
     benefits: [
       "Small logo placement on FRC robot",
-      "Company name on team pit banner",
-      "All Hermes-level perks included",
-      "Signed team photo frame",
+      "Name on team pit banner",
+      "All Hermes perks included",
+      "Signed team photo & team shirt",
     ],
     btnClass:
       "bg-artemis-blue hover:bg-artemis-blue/80 text-white font-bold uppercase text-[10px] tracking-wider rounded-xl shadow-[0_4px_20px_rgba(37,99,235,0.25)]",
@@ -60,17 +62,17 @@ const TIERS = [
   },
   {
     name: "ZEUS" as const,
-    label: "Gold Tier",
-    price: "$5,000+",
+    label: "Titan Tier",
+    price: "$1,000+",
     color: "orange",
     dotColor: "bg-stellar-orange",
     dotShadow: "shadow-[0_0_10px_rgba(249,115,22,0.6)]",
     accentText: "text-stellar-orange",
     benefits: [
-      "Prominent large logo on FRC robot",
+      "Large prominent logo on FRC robot",
       "Logo printed on competition shirts",
-      "VIP invite to robot rollout party",
-      "Dedicated social media spotlights",
+      "Social media spotlight shout-outs",
+      "All Apollo perks included",
     ],
     btnClass: "glass-button font-bold uppercase text-[10px] tracking-wider hover:bg-stellar-orange hover:text-white hover:border-stellar-orange/30",
     cardHover: "glass-panel-hover-orange",
@@ -80,63 +82,66 @@ const TIERS = [
 // ─── BUDGET DATA ────────────────────────────────────────────────
 const BUDGET_ITEMS = [
   {
-    label: "Robot Parts, Pneumatics & Electronics",
-    amount: "$15,000",
-    width: "85%",
+    label: "Competition Registration, Meals & Travel",
+    amount: "$20,000",
+    width: "57%",
     color: "from-artemis-blue to-blue-400",
     shadow: "shadow-[0_0_12px_rgba(37,99,235,0.4)]",
-    desc: "Brushless motors, aluminum extrusions, custom PCBs",
+    desc: "Regional & championship entry fees, meals, and transport",
   },
   {
-    label: "FRC District & Regional Entry Fees",
-    amount: "$12,000",
-    width: "70%",
+    label: "Worlds Travel, Hotels & Registration",
+    amount: "$35,000",
+    width: "100%",
     color: "from-stellar-orange to-amber-400",
     shadow: "shadow-[0_0_12px_rgba(249,115,22,0.4)]",
-    desc: "Official FIRST team registrations and arena fees",
+    desc: "FIRST Championship in Houston — lodging, flights, and meals",
   },
   {
-    label: "Travel, Logistics & Machine Shipping",
-    amount: "$25,395",
-    width: "60%",
+    label: "Competition Parts & Equipment",
+    amount: "$9,000",
+    width: "26%",
     color: "from-white/50 to-white/20",
     shadow: "",
-    desc: "Transporting 120-pound robots and pit crew",
+    desc: "Motors, sensors, pneumatics, aluminum, and custom fabrication",
   },
   {
-    label: "STEM Outreach & Community Programs",
-    amount: "$13,000",
-    width: "90%",
+    label: "Off-Season Events",
+    amount: "$1,000",
+    width: "3%",
     color: "from-artemis-blue to-stellar-orange",
     shadow: "shadow-[0_0_12px_rgba(37,99,235,0.3)]",
-    desc: "Regional workshops and public school showcases",
+    desc: "Robot Rumble and other off-season scrimmages",
   },
 ];
 
 // ─── OUTREACH DATA ──────────────────────────────────────────────
 const OUTREACH_CARDS = [
   {
-    tag: "Program 01",
+    tag: "Origami for Good",
     tagColor: "text-artemis-blue",
-    title: "Junior Library Workshops",
-    desc: "Monthly hands-on building and coding workshops at the Chatham Joint Library, sparking STEM excitement in elementary school students.",
-    footer: "Chatham Public Schools",
+    title: "1,000 Cranes Initiative",
+    desc: "We folded over 1,000 origami cranes to donate to local hospitals and created custom team-colored origami kits for every team at our competitions — forging meaningful connections across the FRC community.",
+    footer: "Community Impact",
+    image: "/photos/outreach/origami_for_good.jpg",
     hoverRotate: "hover:rotate-y-[-2deg] hover:rotate-x-[1deg]",
   },
   {
-    tag: "Program 02",
+    tag: "STEAM Advocacy",
     tagColor: "text-stellar-orange",
-    title: "Middle School FLL Mentorship",
-    desc: "Artemis members directly mentor local FIRST LEGO League teams, guiding younger students through game strategy and engineering fundamentals.",
-    footer: "FIRST LEGO League",
+    title: "NY State STEAM Day",
+    desc: "Advocated for STEAM grants at New York State STEAM Day alongside Assembly Member Didi Barrett. We demonstrated our robot in action and networked with teams statewide to champion the importance of STEAM education.",
+    footer: "Legislative Advocacy",
+    image: "/photos/outreach/steam_day_assembly.png",
     hoverRotate: "hover:rotate-y-[0deg] hover:rotate-x-[-1.5deg]",
   },
   {
-    tag: "Values",
+    tag: "Safety & Mentorship",
     tagColor: "text-white/70",
-    title: "Gracious Professionalism",
-    desc: "Fierce engineering competition blended with mutual respect. We support competitor teams in the pits because that is what FIRST is all about.",
-    footer: "FRC Core Ethos",
+    title: "Community Safety Kits",
+    desc: "At every competition, we distribute free safety kits to every team — a commitment that earned Safety All-Star awards for Josiah Eugenio (2026) and Reed Fisch (2024). We also partnered with Team 7504 Cybearbots to mentor on fundraising and strategy.",
+    footer: "Gracious Professionalism",
+    image: "/photos/outreach/community_fair_booth.png",
     hoverRotate: "hover:rotate-y-[2deg] hover:rotate-x-[1deg]",
   },
 ];
@@ -180,7 +185,24 @@ export default function Home() {
   const [starsSmall, setStarsSmall] = useState("");
   const [starsMedium, setStarsMedium] = useState("");
 
+  const [competitions, setCompetitions] = useState<any[]>([]);
+  const [isTBALoading, setIsTBALoading] = useState(true);
+
   // ─── Effects ────────────────────────────────────────────────
+
+  // Fetch Blue Alliance competition records on load
+  useEffect(() => {
+    fetch("/api/tba")
+      .then((res) => res.json())
+      .then((data) => {
+        setCompetitions(data);
+        setIsTBALoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load competitions:", err);
+        setIsTBALoading(false);
+      });
+  }, []);
 
   // Stars
   useEffect(() => {
@@ -249,23 +271,28 @@ export default function Home() {
     document.getElementById("pay")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSponsorSubmit = (e: React.FormEvent) => {
+  const handleSponsorSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmittingSponsor(true);
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/sponsorship", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(sponsorForm),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSponsorSuccess(true);
+        setSponsorReceipt(data.receipt);
+      } else {
+        alert(data.errors?.join("\n") || "Failed to submit interest.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred during submission. Please try again.");
+    } finally {
       setIsSubmittingSponsor(false);
-      setSponsorSuccess(true);
-      const payload: SponsorshipInterestPayload = {
-        companyName: sponsorForm.companyName,
-        contactName: sponsorForm.contactName,
-        email: sponsorForm.email,
-        phone: sponsorForm.phone || undefined,
-        interestedTier: sponsorForm.interestedTier,
-        message: sponsorForm.message,
-      };
-      console.log("Sponsorship payload:", payload);
-      setSponsorReceipt(payload);
-    }, 1500);
+    }
   };
 
   const handleContactSubmit = (e: React.FormEvent) => {
@@ -622,7 +649,7 @@ export default function Home() {
               <span className="w-1 h-1 rounded-full bg-stellar-orange/60" />
               <span>FRC Robotics</span>
               <span className="text-white/10">|</span>
-              <span>Chatham NJ</span>
+              <span>Chatham NY</span>
               <span className="w-1 h-1 rounded-full bg-artemis-blue/60" />
             </div>
 
@@ -701,35 +728,59 @@ export default function Home() {
             {/* Left — text */}
             <div className="lg:col-span-7 flex flex-col space-y-6">
               <p className="text-base md:text-lg text-white/55 font-light leading-relaxed">
-                Founded as Team 6621 under FIRST Robotics Competition, Artemis represents
-                Chatham High School&apos;s flagship engineering program. We are a fully
-                student-operated robotics team where members design competitive hardware,
-                write sophisticated software, manage real budgets, and deploy STEM outreach
-                programs across our community.
+                Founded in 2016, Team 6621 Artemis Robotics is the only FRC team in
+                Columbia County. We represent Chatham High School not only as the only
+                robotics team but as the only competitive engineering program — fully
+                student-operated, where members design hardware, write software, manage
+                real budgets, and deploy STEM outreach across our community.
               </p>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="glass-panel glass-panel-hover p-5 group">
                   <h4 className="text-2xl md:text-3xl font-header font-black text-gradient-orange">
-                    100%
+                    2016
                   </h4>
                   <p className="text-[9px] text-white/30 uppercase tracking-[0.2em] mt-1 font-semibold">
-                    Student Operated
+                    Year Founded
                   </p>
                 </div>
                 <div className="glass-panel glass-panel-hover p-5 group">
                   <h4 className="text-2xl md:text-3xl font-header font-black text-gradient-blue">
-                    6621
+                    20
                   </h4>
                   <p className="text-[9px] text-white/30 uppercase tracking-[0.2em] mt-1 font-semibold">
-                    FRC Designation
+                    Active Members
+                  </p>
+                </div>
+                <div className="glass-panel glass-panel-hover p-5 group">
+                  <h4 className="text-2xl md:text-3xl font-header font-black text-gradient-orange">
+                    5,000+
+                  </h4>
+                  <p className="text-[9px] text-white/30 uppercase tracking-[0.2em] mt-1 font-semibold">
+                    Hours This Season
+                  </p>
+                </div>
+                <div className="glass-panel glass-panel-hover p-5 group">
+                  <h4 className="text-2xl md:text-3xl font-header font-black text-gradient-blue">
+                    600%
+                  </h4>
+                  <p className="text-[9px] text-white/30 uppercase tracking-[0.2em] mt-1 font-semibold">
+                    Growth in Girls
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Right — mission card */}
-            <div className="lg:col-span-5">
+            {/* Right — team photo + mission card */}
+            <div className="lg:col-span-5 space-y-6">
+              {/* Team photo */}
+              <div className="glass-panel overflow-hidden rounded-2xl">
+                <img
+                  src="/photos/hero/team_with_robot.jpg"
+                  alt="Team 6621 Artemis with robot at competition"
+                  className="w-full h-56 object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </div>
               <div className="glass-panel-deep glass-panel-hover p-7 h-full flex flex-col justify-between relative overflow-hidden group">
                 <div className="absolute -right-20 -bottom-20 w-36 h-36 rounded-full bg-artemis-blue/[0.06] blur-[50px] group-hover:bg-artemis-blue/[0.1] transition-all duration-700" />
 
@@ -742,17 +793,17 @@ export default function Home() {
                       style={{ mixBlendMode: "screen" }}
                     />
                   </div>
-                  <h3 className="text-xl font-header font-black">Our Mission</h3>
+                  <h3 className="text-xl font-header font-black">Our North Star</h3>
                   <p className="text-white/45 text-sm leading-relaxed font-light">
-                    To build an environment where students master real-world engineering,
-                    spanning mechanical design, programming, and project management,
-                    while inspiring Chatham&apos;s next generation of scientific thinkers.
+                    To cultivate a welcoming environment centered on STEAM learning and
+                    values of gracious professionalism regardless of background. We believe
+                    that talent is universal but opportunity is not.
                   </p>
                 </div>
 
                 <div className="border-t border-white/[0.04] pt-5 mt-6 flex items-center justify-between text-[8px] text-white/25 font-bold uppercase tracking-[0.2em]">
                   <span>STEM Leadership</span>
-                  <span>Chatham, NJ</span>
+                  <span>Chatham, NY</span>
                 </div>
               </div>
             </div>
@@ -791,22 +842,35 @@ export default function Home() {
             {OUTREACH_CARDS.map((card, idx) => (
               <div
                 key={idx}
-                className="glass-panel glass-panel-hover p-7 flex flex-col justify-between min-h-[280px] group"
+                className="glass-panel glass-panel-hover flex flex-col justify-between min-h-[380px] group overflow-hidden"
                 style={{
                   transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
                 }}
               >
-                <div className="space-y-4">
-                  <span className={`text-[9px] font-bold tracking-[0.2em] uppercase ${card.tagColor}`}>
-                    {card.tag}
-                  </span>
-                  <h3 className="text-lg font-header font-black">{card.title}</h3>
-                  <p className="text-sm text-white/40 font-light leading-relaxed">
-                    {card.desc}
-                  </p>
-                </div>
-                <div className="text-[8px] font-bold uppercase text-white/20 tracking-[0.2em] pt-5 border-t border-white/[0.04]">
-                  {card.footer}
+                {/* Card image */}
+                {card.image && (
+                  <div className="w-full h-44 overflow-hidden relative">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-space-darker/80 to-transparent" />
+                  </div>
+                )}
+                <div className="p-7 flex flex-col flex-1 justify-between">
+                  <div className="space-y-4">
+                    <span className={`text-[9px] font-bold tracking-[0.2em] uppercase ${card.tagColor}`}>
+                      {card.tag}
+                    </span>
+                    <h3 className="text-lg font-header font-black">{card.title}</h3>
+                    <p className="text-sm text-white/40 font-light leading-relaxed">
+                      {card.desc}
+                    </p>
+                  </div>
+                  <div className="text-[8px] font-bold uppercase text-white/20 tracking-[0.2em] pt-5 border-t border-white/[0.04]">
+                    {card.footer}
+                  </div>
                 </div>
               </div>
             ))}
@@ -843,8 +907,9 @@ export default function Home() {
               <div className="w-14 h-0.5 bg-gradient-to-r from-artemis-blue to-transparent" />
               <p className="text-sm text-white/50 leading-relaxed font-light pt-1">
                 Running a competitive robotics team requires serious capital. Our target
-                budget of <strong className="text-white font-medium">$65,395</strong> covers
-                everything from raw materials to competition registration and travel logistics.
+                budget of <strong className="text-white font-medium">$65,000</strong> covers
+                everything from competition parts to worlds travel. 42% of students in our
+                school are on free or reduced lunch — we refuse to charge a single cent to participate.
               </p>
 
               <div className="glass-panel p-5 flex items-center justify-between">
@@ -853,14 +918,14 @@ export default function Home() {
                     Season Goal
                   </span>
                   <div className="text-xl md:text-2xl font-header font-black text-gradient-orange mt-0.5">
-                    $65,395
+                    $65,000
                   </div>
                 </div>
                 <div className="text-right">
                   <span className="text-[8px] uppercase font-bold tracking-[0.2em] text-white/30">
                     Team Size
                   </span>
-                  <div className="text-base font-bold text-white mt-0.5">45+ Students</div>
+                  <div className="text-base font-bold text-white mt-0.5">20 Students</div>
                 </div>
               </div>
             </div>
@@ -899,15 +964,15 @@ export default function Home() {
           <div className="marquee-content text-sm font-header font-black tracking-[0.2em] text-white/15 uppercase">
             <span>
               ◆ Hermes Partners ◆ Apollo Champions ◆ ZEUS Titans ◆ Become a Sponsor
-              ◆ FRC Team 6621 ◆ Chatham NJ ◆ Deep Space Deep Time
+              ◆ FRC Team 6621 ◆ Chatham NY ◆ Deep Space Deep Time
             </span>
             <span>
               ◆ Hermes Partners ◆ Apollo Champions ◆ ZEUS Titans ◆ Become a Sponsor
-              ◆ FRC Team 6621 ◆ Chatham NJ ◆ Deep Space Deep Time
+              ◆ FRC Team 6621 ◆ Chatham NY ◆ Deep Space Deep Time
             </span>
             <span>
               ◆ Hermes Partners ◆ Apollo Champions ◆ ZEUS Titans ◆ Become a Sponsor
-              ◆ FRC Team 6621 ◆ Chatham NJ ◆ Deep Space Deep Time
+              ◆ FRC Team 6621 ◆ Chatham NY ◆ Deep Space Deep Time
             </span>
           </div>
         </div>
@@ -1319,7 +1384,7 @@ export default function Home() {
                 ARTEMIS<span className="text-stellar-orange">.6621</span>
               </span>
               <span className="text-[9px] text-white/20 tracking-wider">
-                Chatham High School Engineering
+                50 Woodbridge Ave, Chatham, NY 12037
               </span>
             </div>
           </div>
@@ -1337,9 +1402,22 @@ export default function Home() {
             ))}
           </div>
 
+          {/* Social links */}
+          <div className="flex items-center space-x-4">
+            <a href="https://www.instagram.com/artemis_6621/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300 text-white/30">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@ArtemisFrc6621" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300 text-white/30">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://www.thebluealliance.com/team/6621" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300 text-white/30 text-[9px] font-bold tracking-wider">
+              TBA
+            </a>
+          </div>
+
           {/* Copyright */}
           <div className="text-[10px] text-white/20">
-            &copy; {new Date().getFullYear()} Team 6621 &middot; Chatham NJ
+            &copy; {new Date().getFullYear()} Team 6621 &middot; Chatham NY
           </div>
         </div>
       </footer>
