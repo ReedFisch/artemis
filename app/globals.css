@@ -31,6 +31,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 0;
 }
 
 body {
@@ -262,6 +263,131 @@ body {
 .marquee-content span {
   flex-shrink: 0;
 }
+
+/* ========== 3D & PARALLAX UTILITIES ========== */
+
+@utility text-3d {
+  text-shadow:
+    0 1px 0 #cccccc,
+    0 2px 0 #c9c9c9,
+    0 3px 0 #bbbbbb,
+    0 4px 0 #b9b9b9,
+    0 5px 0 #aaaaaa,
+    0 6px 1px rgba(0,0,0,.1),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.3),
+    0 3px 5px rgba(0,0,0,.2),
+    0 5px 10px rgba(0,0,0,.25),
+    0 10px 10px rgba(0,0,0,.2),
+    0 20px 20px rgba(0,0,0,.15);
+}
+
+@utility text-3d-glow {
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.8),
+    0 0 20px rgba(37,99,235,0.8),
+    0 0 30px rgba(37,99,235,0.6),
+    0 0 40px rgba(37,99,235,0.4);
+}
+
+.snap-container {
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  perspective: 1px;
+  transform-style: preserve-3d;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100vh;
+  width: 100vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+.starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 40px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.9), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 160px 120px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 200px 190px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 240px 20px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 280px 70px, rgba(255,255,255,0.6), rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  opacity: 0.4;
+  animation: twinkle 10s infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+
+.shape-3d {
+  position: absolute;
+  background: linear-gradient(45deg, rgba(37,99,235,0.2), rgba(249,115,22,0.2));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 2px 2px rgba(255,255,255,0.2);
+  animation: float-3d 12s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.shape-sphere {
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), rgba(37,99,235,0.1) 60%, transparent 80%);
+  box-shadow: 
+    -20px 20px 40px rgba(0,0,0,0.5) inset,
+    10px -10px 20px rgba(255,255,255,0.1) inset,
+    0 0 20px rgba(37,99,235,0.3);
+}
+
+.shape-cube {
+  border-radius: 24px;
+  transform: rotateX(45deg) rotateY(45deg);
+}
+
+@keyframes float-3d {
+  0%, 100% { transform: translateY(0) rotateX(45deg) rotateY(45deg); }
+  50% { transform: translateY(-30px) rotateX(55deg) rotateY(35deg); }
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.parallax-back {
+  transform: translateZ(-1px) scale(2);
+  z-index: -2;
+}
+
+.parallax-mid {
+  transform: translateZ(-0.5px) scale(1.5);
+  z-index: -1;
+}
+
+/* ========== TEXT & TYPOGRAPHY ========== */
 
 /* ========== RESPONSIVE ========== */
 
