@@ -146,6 +146,34 @@ const OUTREACH_CARDS = [
   },
 ];
 
+// ─── SPONSOR LOGOS ──────────────────────────────────────────────
+const SPONSOR_LOGOS = [
+  "/sponsors/hawthorne_valley.png",
+  "/sponsors/swaying_pine.png",
+  "/sponsors/bank_greene_county.png",
+  "/sponsors/sei_design.png",
+  "/sponsors/craftech.png",
+  "/sponsors/kneller_insurance.png",
+  "/sponsors/samascott.png",
+  "/sponsors/gene_haas.png",
+  "/sponsors/chatham_lions.png",
+  "/sponsors/taconic_engineering.png",
+  "/sponsors/stewarts.png",
+  "/sponsors/metzwood_insurance.png",
+  "/sponsors/herringtons.png",
+  "/sponsors/gould_martial_arts.png",
+  "/sponsors/simmons_automotive.png",
+  "/sponsors/ghent_one_stop.png",
+  "/sponsors/chatham_pub.png",
+  "/sponsors/spencertown_academy.png",
+  "/sponsors/meltz_lumber.png",
+  "/sponsors/checkered_flag.png",
+  "/sponsors/roots_holistic.png",
+  "/sponsors/stonykill_coffee.png",
+  "/sponsors/new_concord_bnb.png",
+  "/sponsors/chatham_bookstore.png",
+];
+
 // ═══════════════════════════════════════════════════════════════
 // COMPONENT
 // ═══════════════════════════════════════════════════════════════
@@ -974,6 +1002,33 @@ export default function Home() {
               ◆ Hermes Partners ◆ Apollo Champions ◆ ZEUS Titans ◆ Become a Sponsor
               ◆ FRC Team 6621 ◆ Chatham NY ◆ Deep Space Deep Time
             </span>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════
+           SPONSORS MARQUEE
+           ══════════════════════════════════════════════════════ */}
+      <section className="relative z-10 py-16 bg-[#030508]/80 backdrop-blur-md border-b border-white/[0.04]">
+        <div className="text-center mb-8">
+          <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/30">
+            Powered By Our Sponsors
+          </span>
+        </div>
+        <div className="marquee-container py-3">
+          <div className="marquee-content" style={{ animationDuration: "60s" }}>
+            {[1, 2, 3].map((set) => (
+              <div key={set} className="flex items-center gap-12 px-6 flex-shrink-0">
+                {SPONSOR_LOGOS.map((logo, idx) => (
+                  <img
+                    key={idx}
+                    src={logo}
+                    alt="Sponsor Logo"
+                    className="h-12 md:h-16 w-auto object-contain opacity-50 hover:opacity-100 transition-opacity duration-300 filter grayscale hover:grayscale-0"
+                  />
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </section>
