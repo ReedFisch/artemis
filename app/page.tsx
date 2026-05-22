@@ -303,45 +303,120 @@ export default function Home() {
 
 
       {/* ══════════════════════════════════════════════════════
-           4. ACHIEVEMENTS
+           ACHIEVEMENTS — HORIZONTAL TIMELINE
            ══════════════════════════════════════════════════════ */}
-      <section id="achievements" className="snap-section relative z-10">
-        <div className="max-w-7xl mx-auto px-6 w-full text-center mb-16">
-          <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-stellar-orange mb-2 block">
-            03 / History
-          </span>
-          <h2 className="text-4xl md:text-6xl font-header font-black text-3d-glow">
-            Team Achievements
-          </h2>
+      <section id="achievements" className="snap-section relative z-10 overflow-hidden">
+        {/* Section background gradient */}
+        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute w-[500px] h-[500px] top-[20%] -right-[200px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
+          <div className="absolute w-[600px] h-[600px] bottom-[10%] -left-[200px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} />
         </div>
-        <div className="max-w-5xl mx-auto px-6 w-full grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="glass-panel-deep p-8 text-center flex flex-col gap-4 transform hover:-translate-y-4 transition-transform duration-500">
-            <h3 className="text-5xl font-header font-black text-white/20">2024</h3>
-            <div className="w-12 h-1 bg-white/10 mx-auto rounded-full" />
-            <ul className="text-sm text-white/60 space-y-3 font-light">
-              <li>Creativity Award</li>
-              <li>Dean's List Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></li>
-            </ul>
+
+        <div className="relative z-10 flex flex-col justify-center h-full">
+          <div className="text-center mb-12 px-6">
+            <h2 className="text-4xl md:text-6xl font-header font-black text-white">
+              Our Timeline
+            </h2>
           </div>
-          <div className="glass-panel-deep p-8 text-center flex flex-col gap-4 transform hover:-translate-y-4 transition-transform duration-500 border-artemis-blue/30 shadow-[0_0_30px_rgba(37,99,235,0.1)]">
-            <h3 className="text-5xl font-header font-black text-artemis-blue text-3d-glow">2025</h3>
-            <div className="w-12 h-1 bg-artemis-blue mx-auto rounded-full" />
-            <ul className="text-sm text-white/80 space-y-3 font-light">
-              <li className="font-bold text-white">Tech Valley Regional Winner</li>
-              <li>World Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division, Alliance 3/4)</span></li>
-              <li>#3 in New York State</li>
-              <li>Ballston Spa Off-season Finalists</li>
-            </ul>
+
+          {/* Horizontal scrolling timeline */}
+          <div className="relative w-full overflow-x-auto hide-scrollbars pb-8 px-4">
+            <div className="flex items-start gap-0 px-[10vw] min-w-max">
+
+              {/* 2016 — Founded */}
+              <div className="flex flex-col items-center w-[280px] shrink-0">
+                <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
+                  <h3 className="text-3xl font-header font-black text-white/30 mb-2">2016</h3>
+                  <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)' }} />
+                  <p className="text-sm text-white/50 font-light">Team 6621 Founded</p>
+                  <p className="text-xs text-white/30 mt-1">Chatham High School</p>
+                </div>
+                {/* Node */}
+                <div className="w-4 h-4 rounded-full border-2 border-white/20 bg-[#05070B] z-10" />
+                {/* Line right */}
+                <div className="absolute" style={{ top: 'calc(100% - 8px)' }} />
+              </div>
+
+              {/* Connector line */}
+              <div className="flex items-center self-end mb-[6px] shrink-0">
+                <div className="w-16 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))' }} />
+              </div>
+
+              {/* 2023 — First competitions */}
+              <div className="flex flex-col items-center w-[280px] shrink-0">
+                <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
+                  <h3 className="text-3xl font-header font-black text-white/30 mb-2">2023</h3>
+                  <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)' }} />
+                  <p className="text-sm text-white/50 font-light">Growing Momentum</p>
+                  <p className="text-xs text-white/30 mt-1">Building foundations</p>
+                </div>
+                <div className="w-4 h-4 rounded-full border-2 border-white/20 bg-[#05070B] z-10" />
+              </div>
+
+              {/* Connector */}
+              <div className="flex items-center self-end mb-[6px] shrink-0">
+                <div className="w-16 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.05), rgba(37,99,235,0.2))' }} />
+              </div>
+
+              {/* 2024 */}
+              <div className="flex flex-col items-center w-[280px] shrink-0">
+                <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
+                  <h3 className="text-3xl font-header font-black text-white/40 mb-2">2024</h3>
+                  <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }} />
+                  <ul className="text-sm text-white/60 space-y-2 font-light">
+                    <li>Creativity Award</li>
+                    <li>Dean&apos;s List Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></li>
+                  </ul>
+                </div>
+                <div className="w-4 h-4 rounded-full border-2 border-white/30 bg-[#05070B] z-10" />
+              </div>
+
+              {/* Connector */}
+              <div className="flex items-center self-end mb-[6px] shrink-0">
+                <div className="w-16 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.1), rgba(37,99,235,0.3))' }} />
+              </div>
+
+              {/* 2025 — Breakout year */}
+              <div className="flex flex-col items-center w-[320px] shrink-0">
+                <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(37,99,235,0.1) 0%, rgba(37,99,235,0.03) 100%)', border: '1px solid rgba(37,99,235,0.2)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(37,99,235,0.06)' }}>
+                  <h3 className="text-3xl font-header font-black text-artemis-blue mb-2">2025</h3>
+                  <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.5), transparent)' }} />
+                  <ul className="text-sm text-white/70 space-y-2 font-light">
+                    <li className="font-bold text-white">Tech Valley Regional Winner</li>
+                    <li>World Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division, Alliance 3/4)</span></li>
+                    <li>#3 in New York State</li>
+                    <li>Ballston Spa Off-season Finalists</li>
+                  </ul>
+                </div>
+                <div className="w-5 h-5 rounded-full border-2 border-artemis-blue bg-[#05070B] z-10" style={{ boxShadow: '0 0 12px rgba(37,99,235,0.4)' }} />
+              </div>
+
+              {/* Connector */}
+              <div className="flex items-center self-end mb-[8px] shrink-0">
+                <div className="w-16 h-px" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3), rgba(249,115,22,0.3))' }} />
+              </div>
+
+              {/* 2026 — Current */}
+              <div className="flex flex-col items-center w-[320px] shrink-0">
+                <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(249,115,22,0.1) 0%, rgba(249,115,22,0.03) 100%)', border: '1px solid rgba(249,115,22,0.2)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(249,115,22,0.06)' }}>
+                  <h3 className="text-3xl font-header font-black text-stellar-orange mb-2">2026</h3>
+                  <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(249,115,22,0.5), transparent)' }} />
+                  <ul className="text-sm text-white/70 space-y-2 font-light">
+                    <li className="font-bold text-white">Hudson Valley Playoffs <br/><span className="text-[10px] text-white/40">(First Pick, Alliance 3)</span></li>
+                    <li>Tech Valley Alliance 5</li>
+                    <li>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></li>
+                  </ul>
+                </div>
+                <div className="w-5 h-5 rounded-full border-2 border-stellar-orange bg-[#05070B] z-10" style={{ boxShadow: '0 0 12px rgba(249,115,22,0.4)' }} />
+              </div>
+
+            </div>
+
+            {/* Continuous timeline line behind nodes */}
+            <div className="absolute left-0 right-0 bottom-[30px] h-px z-0" style={{ background: 'linear-gradient(90deg, transparent 5%, rgba(255,255,255,0.06) 15%, rgba(37,99,235,0.15) 50%, rgba(249,115,22,0.15) 80%, transparent 95%)' }} />
           </div>
-          <div className="glass-panel-deep p-8 text-center flex flex-col gap-4 transform hover:-translate-y-4 transition-transform duration-500 border-stellar-orange/30 shadow-[0_0_30px_rgba(249,115,22,0.1)]">
-            <h3 className="text-5xl font-header font-black text-stellar-orange text-3d-glow">2026</h3>
-            <div className="w-12 h-1 bg-stellar-orange mx-auto rounded-full" />
-            <ul className="text-sm text-white/80 space-y-3 font-light">
-              <li className="font-bold text-white">Hudson Valley Playoffs <br/><span className="text-[10px] text-white/40">(First Pick, Alliance 3)</span></li>
-              <li>Tech Valley Alliance 5</li>
-              <li>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></li>
-            </ul>
-          </div>
+
+          <p className="text-center text-[10px] text-white/30 uppercase tracking-widest mt-2">Scroll horizontally to explore</p>
         </div>
       </section>
 
