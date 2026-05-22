@@ -188,31 +188,40 @@ export default function Home() {
     <main ref={containerRef} className="snap-container text-white font-sans overflow-x-hidden">
 
       {/* ══════════════════════════════════════════════════════
-           AMBIENT BACKGROUND GRADIENTS
+           AMBIENT BACKGROUND GRADIENTS & STARS
            ══════════════════════════════════════════════════════ */}
-      <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        {/* Faint Star Background */}
+        <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 200px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
+        
         {/* Top-left blue nebula */}
-        <div className="absolute w-[800px] h-[800px] -top-[200px] -left-[200px] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.2) 40%, transparent 70%)' }} />
+        <div className="absolute w-[800px] h-[800px] -top-[200px] -left-[200px] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.2) 40%, transparent 70%)' }} />
         {/* Top-right orange glow */}
-        <div className="absolute w-[600px] h-[600px] -top-[100px] -right-[150px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 45%, transparent 70%)' }} />
+        <div className="absolute w-[600px] h-[600px] -top-[100px] -right-[150px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 45%, transparent 70%)' }} />
         {/* Mid-left orange drift */}
-        <div className="absolute w-[700px] h-[700px] top-[25%] -left-[300px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, rgba(249,115,22,0.1) 50%, transparent 75%)' }} />
+        <div className="absolute w-[700px] h-[700px] top-[25%] -left-[300px] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, rgba(249,115,22,0.1) 50%, transparent 75%)' }} />
         {/* Center-right blue wash */}
-        <div className="absolute w-[900px] h-[900px] top-[35%] -right-[350px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, rgba(37,99,235,0.15) 40%, transparent 70%)' }} />
+        <div className="absolute w-[900px] h-[900px] top-[35%] -right-[350px] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, rgba(37,99,235,0.15) 40%, transparent 70%)' }} />
         {/* Mid blue-orange blend */}
-        <div className="absolute w-[500px] h-[500px] top-[50%] left-[30%] rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} />
+        <div className="absolute w-[500px] h-[500px] top-[50%] left-[30%] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} />
         {/* Lower-left blue pool */}
-        <div className="absolute w-[800px] h-[800px] top-[65%] -left-[250px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(37,99,235,0.1) 45%, transparent 70%)' }} />
+        <div className="absolute w-[800px] h-[800px] top-[65%] -left-[250px] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(37,99,235,0.1) 45%, transparent 70%)' }} />
         {/* Lower-right orange haze */}
-        <div className="absolute w-[650px] h-[650px] top-[70%] -right-[200px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 40%, transparent 70%)' }} />
+        <div className="absolute w-[650px] h-[650px] top-[70%] -right-[200px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 40%, transparent 70%)' }} />
         {/* Bottom sweep — wide blue-to-orange */}
-        <div className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.04]" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} />
+        <div className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.05]" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} />
         {/* Deep center glow */}
-        <div className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.03]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} />
+        <div className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} />
         {/* Scatter orbs */}
-        <div className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
-        <div className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} />
-        <div className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} />
+        <div className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
+        <div className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} />
+        <div className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} />
+
+        {/* 3D Floating Geometric Shapes */}
+        <div className="absolute top-[20%] left-[10%] w-32 h-32 opacity-20 transform-gpu rotate-45 rotate-x-45 rotate-y-45 rounded-2xl glass-panel animate-float" style={{ animationDelay: '0s', animationDuration: '10s' }} />
+        <div className="absolute top-[60%] right-[15%] w-48 h-48 opacity-10 transform-gpu rotate-12 rotate-x-60 rotate-y-12 rounded-full glass-panel animate-float" style={{ animationDelay: '2s', animationDuration: '14s' }} />
+        <div className="absolute bottom-[20%] left-[25%] w-24 h-24 opacity-20 transform-gpu rotate-[-20deg] rotate-x-[-30deg] rotate-y-[45deg] rounded-lg glass-panel animate-float" style={{ animationDelay: '4s', animationDuration: '12s' }} />
+        <div className="absolute top-[10%] right-[30%] w-40 h-40 opacity-15 transform-gpu rotate-[30deg] rotate-x-[15deg] rotate-y-[60deg] rounded-[2rem] glass-panel animate-float" style={{ animationDelay: '1s', animationDuration: '15s' }} />
       </div>
 
       {/* ══════════════════════════════════════════════════════
@@ -243,7 +252,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            2. ABOUT & TIMELINE (HORIZONTAL SCROLL)
            ══════════════════════════════════════════════════════ */}
-      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '200vh', scrollSnapAlign: 'start' }}>
+      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '350vh', scrollSnapAlign: 'start' }}>
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
           
@@ -357,6 +366,8 @@ export default function Home() {
                     <h3 className="text-3xl font-header font-black text-white/40 mb-2">2024</h3>
                     <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }} />
                     <ul className="text-sm text-white/60 space-y-2 font-light">
+                      <li>Creativity Award</li>
+                      <li>First Leadership Award Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></li>
                       <li>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></li>
                     </ul>
                   </div>
@@ -369,8 +380,10 @@ export default function Home() {
                     <h3 className="text-3xl font-header font-black text-artemis-blue mb-2">2025</h3>
                     <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.5), transparent)' }} />
                     <ul className="text-sm text-white/70 space-y-2 font-light">
-                      <li>Ranked third in all of New York State</li>
-                      <li>Ballston Spa Off-Season Competition Finalists</li>
+                      <li>Ranked #3 in New York State</li>
+                      <li>New York Tech Valley Regional Winner</li>
+                      <li>Worlds Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division)</span></li>
+                      <li>Ballston Spa Off-Season Competition Finalist</li>
                     </ul>
                   </div>
                   <div className="w-5 h-5 rounded-full border-2 border-artemis-blue bg-[#05070B]" style={{ boxShadow: '0 0 12px rgba(37,99,235,0.4)' }} />
