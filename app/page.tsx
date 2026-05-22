@@ -178,10 +178,34 @@ export default function Home() {
 
   return (
     <main ref={containerRef} className="snap-container text-white font-sans overflow-x-hidden">
-      <div className="starfield" />
-      <div className="shape-3d shape-sphere w-64 h-64 top-[10%] left-[10%]" />
-      <div className="shape-3d shape-cube w-48 h-48 top-[40%] right-[10%] animation-delay-2000" />
-      <div className="shape-3d shape-sphere w-96 h-96 top-[80%] left-[-10%] animation-delay-4000 opacity-50" />
+
+      {/* ══════════════════════════════════════════════════════
+           AMBIENT BACKGROUND GRADIENTS
+           ══════════════════════════════════════════════════════ */}
+      <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+        {/* Top-left blue nebula */}
+        <div className="absolute w-[800px] h-[800px] -top-[200px] -left-[200px] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.2) 40%, transparent 70%)' }} />
+        {/* Top-right orange glow */}
+        <div className="absolute w-[600px] h-[600px] -top-[100px] -right-[150px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 45%, transparent 70%)' }} />
+        {/* Mid-left orange drift */}
+        <div className="absolute w-[700px] h-[700px] top-[25%] -left-[300px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, rgba(249,115,22,0.1) 50%, transparent 75%)' }} />
+        {/* Center-right blue wash */}
+        <div className="absolute w-[900px] h-[900px] top-[35%] -right-[350px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, rgba(37,99,235,0.15) 40%, transparent 70%)' }} />
+        {/* Mid blue-orange blend */}
+        <div className="absolute w-[500px] h-[500px] top-[50%] left-[30%] rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} />
+        {/* Lower-left blue pool */}
+        <div className="absolute w-[800px] h-[800px] top-[65%] -left-[250px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(37,99,235,0.1) 45%, transparent 70%)' }} />
+        {/* Lower-right orange haze */}
+        <div className="absolute w-[650px] h-[650px] top-[70%] -right-[200px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 40%, transparent 70%)' }} />
+        {/* Bottom sweep — wide blue-to-orange */}
+        <div className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.04]" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} />
+        {/* Deep center glow */}
+        <div className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.03]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} />
+        {/* Scatter orbs */}
+        <div className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
+        <div className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} />
+        <div className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} />
+      </div>
 
       {/* ══════════════════════════════════════════════════════
            1. HERO
@@ -214,47 +238,73 @@ export default function Home() {
       <section id="about" className="snap-section relative z-10">
         <div className="max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row gap-12 items-center">
           <div className="lg:w-1/2 space-y-8 glass-panel-deep p-10 transform-style preserve-3d shadow-2xl">
-            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue">
-              01 / Foundation
-            </span>
-            <h2 className="text-4xl md:text-5xl font-header font-black text-3d-glow">
+            <h2 className="text-4xl md:text-5xl font-header font-black" style={{
+              color: '#e8edf5',
+              textShadow: `
+                0 1px 0 #b8c4d8,
+                0 2px 0 #a8b4c8,
+                0 3px 0 #98a4b8,
+                0 4px 0 #8894a8,
+                0 5px 0 #788498,
+                0 6px 0 #687488,
+                0 0 10px rgba(255,255,255,0.15),
+                0 -1px 2px rgba(255,255,255,0.4),
+                0 8px 15px rgba(0,0,0,0.4),
+                0 12px 25px rgba(0,0,0,0.2)
+              `,
+              WebkitTextStroke: '0.5px rgba(255,255,255,0.15)',
+              letterSpacing: '0.02em',
+            }}>
               About Us
             </h2>
             <p className="text-base text-white/60 leading-relaxed font-light">
               Founded in 2016, Team 6621 Artemis Robotics is the only FRC team in Columbia County. We represent Chatham High School not only as the only robotics team but as the sole technology and STEAM-centered club for the entire school. We allow students to learn as they desire, advance their STEAM interests, whether that be art, business, or stem there is a place for anyone and everyone at ARTEMIS.
             </p>
+            {/* Gradient divider between About and Mission */}
+            <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4) 30%, rgba(249,115,22,0.4) 70%, transparent)' }} />
             <div className="p-6 bg-white/[0.02] border-l-2 border-stellar-orange">
               <h3 className="text-xl font-header font-bold mb-2">Our Mission</h3>
               <p className="text-sm text-white/50 italic">
-                "Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background."
+                &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
               </p>
             </div>
           </div>
 
-          <div className="lg:w-1/2 grid grid-cols-2 gap-6 w-full">
-            <div className="glass-panel p-8 text-center flex flex-col justify-center transform hover:translate-z-10 transition-transform">
-              <h4 className="text-4xl font-header font-black text-white">
-                <Counter to={2016} duration={1.5} />
-              </h4>
-              <p className="text-[9px] uppercase tracking-widest text-white/40 mt-2">Year Founded</p>
+          <div className="lg:w-1/2 w-full flex flex-col gap-6">
+            {/* Team Photo */}
+            <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] group" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+              <img src="/photos/hero/team_with_robot.jpg" alt="Team 6621 Artemis with their robot" className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-between items-end">
+                <div>
+                  <p className="text-[9px] uppercase tracking-widest text-white/40">Team 6621</p>
+                  <p className="text-lg font-header font-bold">Artemis Robotics</p>
+                </div>
+                <span className="text-[9px] uppercase tracking-widest text-white/30">Chatham, NY</span>
+              </div>
             </div>
-            <div className="glass-panel p-8 text-center flex flex-col justify-center">
-              <h4 className="text-4xl font-header font-black text-artemis-blue text-3d-glow">
-                <Counter to={20} duration={2} />
-              </h4>
-              <p className="text-[9px] uppercase tracking-widest text-white/40 mt-2">Active Members</p>
-            </div>
-            <div className="glass-panel p-8 text-center flex flex-col justify-center">
-              <h4 className="text-4xl font-header font-black text-stellar-orange text-3d-glow">
-                <Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} />
-              </h4>
-              <p className="text-[9px] uppercase tracking-widest text-white/40 mt-2">Hours Logged</p>
-            </div>
-            <div className="glass-panel p-8 text-center flex flex-col justify-center">
-              <h4 className="text-4xl font-header font-black text-white">
-                <Counter to={600} duration={3} format={(v) => `${v}%`} />
-              </h4>
-              <p className="text-[9px] uppercase tracking-widest text-white/40 mt-2">Growth in Girls</p>
+            {/* Compact stat row */}
+            <div className="grid grid-cols-4 gap-3" style={{ perspective: '800px' }}>
+              <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.04) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(255,255,255,0.03), inset 2px 0 8px rgba(255,255,255,0.02), inset -2px 0 8px rgba(255,255,255,0.02)' }}>
+                <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
+                <h4 className="text-2xl font-header font-black text-white relative z-10"><Counter to={2016} duration={1.5} /></h4>
+                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Founded</p>
+              </div>
+              <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(37,99,235,0.12) 0%, rgba(37,99,235,0.03) 50%, rgba(37,99,235,0.06) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(37,99,235,0.18)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(37,99,235,0.2), inset 0 -1px 0 rgba(37,99,235,0.04), inset 2px 0 8px rgba(37,99,235,0.03), inset -2px 0 8px rgba(37,99,235,0.03)' }}>
+                <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(37,99,235,0.15) 0%, transparent 100%)' }} />
+                <h4 className="text-2xl font-header font-black text-artemis-blue relative z-10"><Counter to={20} duration={2} /></h4>
+                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Members</p>
+              </div>
+              <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0.03) 50%, rgba(249,115,22,0.06) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(249,115,22,0.18)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(249,115,22,0.2), inset 0 -1px 0 rgba(249,115,22,0.04), inset 2px 0 8px rgba(249,115,22,0.03), inset -2px 0 8px rgba(249,115,22,0.03)' }}>
+                <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(249,115,22,0.15) 0%, transparent 100%)' }} />
+                <h4 className="text-2xl font-header font-black text-stellar-orange relative z-10"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
+                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Hours</p>
+              </div>
+              <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.04) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(255,255,255,0.03), inset 2px 0 8px rgba(255,255,255,0.02), inset -2px 0 8px rgba(255,255,255,0.02)' }}>
+                <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
+                <h4 className="text-2xl font-header font-black text-white relative z-10"><Counter to={600} duration={3} format={(v) => `${v}%`} /></h4>
+                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Girl Growth</p>
+              </div>
             </div>
           </div>
         </div>
