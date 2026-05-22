@@ -239,23 +239,6 @@ export default function Home() {
         <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.2]" />
         <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.15]" />
 
-        {/* 3D Floating Geometric Shapes Interacting with Cursor */}
-        <motion.div style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '0s', animationDuration: '10s' }} className="shape-3d shape-cube absolute top-[20%] left-[10%] w-32 h-32 opacity-80" />
-        <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '2s', animationDuration: '14s' }} className="shape-3d shape-sphere absolute top-[60%] right-[15%] w-48 h-48 opacity-90" />
-        <motion.div style={{ x: smoothX, y: smoothY, animationDelay: '4s', animationDuration: '12s' }} className="shape-3d shape-sphere absolute bottom-[20%] left-[25%] w-24 h-24 opacity-70" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, animationDelay: '1s', animationDuration: '15s' }} className="shape-3d shape-cube absolute top-[10%] right-[30%] w-40 h-40 opacity-80" />
-        {/* 3D Star shape with SVG */}
-        <motion.div style={{ x: smoothX, y: smoothYFast, animationDelay: '5s', animationDuration: '16s' }} className="absolute top-[30%] left-[40%] w-24 h-24 opacity-80 animate-float drop-shadow-[0_10px_20px_rgba(249,115,22,0.4)]">
-          <svg viewBox="0 0 24 24" fill="url(#star-gradient-1)" className="w-full h-full drop-shadow-[0_0_15px_rgba(249,115,22,0.5)]">
-            <defs>
-              <linearGradient id="star-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FBBF24" />
-                <stop offset="100%" stopColor="#F97316" />
-              </linearGradient>
-            </defs>
-            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-          </svg>
-        </motion.div>
       </div>
 
       {/* ══════════════════════════════════════════════════════
@@ -286,7 +269,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            2. ABOUT & TIMELINE (HORIZONTAL SCROLL)
            ══════════════════════════════════════════════════════ */}
-      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '350vh', scrollSnapAlign: 'start' }}>
+      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '450vh', scrollSnapAlign: 'start' }}>
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
           
@@ -303,24 +286,17 @@ export default function Home() {
               <motion.div style={{ x: smoothX, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} className="absolute w-[900px] h-[900px] top-[20%] left-[60%] rounded-full opacity-[0.15]" />
               <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} className="absolute w-[800px] h-[800px] bottom-[10%] right-[10%] rounded-full opacity-[0.15]" />
               
-              {/* 3D Floating Shapes across the 200vw canvas interacting with cursor */}
+              {/* 3D Floating Shapes spread randomly across the 200vw canvas */}
               <motion.div style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '0s', animationDuration: '12s' }} className="shape-3d shape-cube absolute top-[15%] left-[5%] w-40 h-40 opacity-70" />
               <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '3s', animationDuration: '10s' }} className="shape-3d shape-sphere absolute bottom-[20%] left-[20%] w-24 h-24 opacity-80" />
-              <motion.div style={{ x: smoothX, y: smoothY, animationDelay: '1s', animationDuration: '14s' }} className="shape-3d shape-sphere absolute top-[40%] left-[45%] w-32 h-32 opacity-90" />
-              <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '4s', animationDuration: '15s' }} className="shape-3d shape-cube absolute top-[25%] left-[70%] w-48 h-48 opacity-60" />
-              <motion.div style={{ x: smoothXFast, y: smoothYFast, animationDelay: '2s', animationDuration: '11s' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-28 h-28 opacity-80" />
-              {/* 3D Star shape */}
-              <motion.div style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '6s', animationDuration: '13s' }} className="absolute top-[10%] left-[80%] w-32 h-32 opacity-80 animate-float drop-shadow-[0_15px_30px_rgba(37,99,235,0.5)]">
-                <svg viewBox="0 0 24 24" fill="url(#star-gradient-2)" className="w-full h-full drop-shadow-[0_0_20px_rgba(37,99,235,0.6)]">
-                  <defs>
-                    <linearGradient id="star-gradient-2" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#60A5FA" />
-                      <stop offset="100%" stopColor="#2563EB" />
-                    </linearGradient>
-                  </defs>
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                </svg>
-              </motion.div>
+              <motion.div style={{ x: smoothX, y: smoothY, animationDelay: '1s', animationDuration: '14s' }} className="shape-3d shape-sphere absolute top-[60%] left-[40%] w-32 h-32 opacity-90" />
+              <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '4s', animationDuration: '15s' }} className="shape-3d shape-cube absolute top-[25%] left-[60%] w-48 h-48 opacity-60" />
+              <motion.div style={{ x: smoothXFast, y: smoothYFast, animationDelay: '2s', animationDuration: '11s' }} className="shape-3d shape-sphere absolute bottom-[10%] left-[80%] w-28 h-28 opacity-80" />
+              
+              <motion.div style={{ x: smoothX, y: smoothYFast, animationDelay: '5s', animationDuration: '16s' }} className="shape-3d shape-cube absolute top-[50%] left-[110%] w-36 h-36 opacity-70" />
+              <motion.div style={{ x: smoothXSlow, y: smoothYSlow, animationDelay: '1s', animationDuration: '13s' }} className="shape-3d shape-sphere absolute bottom-[30%] left-[130%] w-20 h-20 opacity-80" />
+              <motion.div style={{ x: smoothXFast, y: smoothY, animationDelay: '6s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[20%] left-[160%] w-44 h-44 opacity-60" />
+              <motion.div style={{ x: smoothX, y: smoothYFast, animationDelay: '2s', animationDuration: '11s' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[185%] w-32 h-32 opacity-90" />
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
@@ -479,7 +455,11 @@ export default function Home() {
            5. OUTREACH CAROUSEL
            ══════════════════════════════════════════════════════ */}
       <section id="outreach" className="snap-section relative z-10 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 w-full text-center mb-12">
+        {/* Scattered 3D Shapes Interacting with Cursor */}
+        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, animationDelay: '1s', animationDuration: '13s' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-none" />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast, animationDelay: '4s', animationDuration: '15s' }} className="shape-3d shape-cube absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-6 w-full text-center mb-12 relative z-10">
           <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue mb-2 block">
             04 / Community
           </span>
@@ -511,8 +491,12 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" className="snap-section relative z-10">
-        <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col lg:flex-row gap-12 items-center justify-center">
+      <section id="budget" className="snap-section relative z-10 overflow-hidden">
+        {/* Scattered 3D Shapes Interacting with Cursor */}
+        <motion.div style={{ x: smoothX, y: smoothY, animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
+        <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '0s', animationDuration: '12s' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-36 h-36 opacity-60 z-0 pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col lg:flex-row gap-12 items-center justify-center relative z-10">
           
           {/* Budget Breakdown 3D Visual */}
           <div className="lg:w-1/2 w-full space-y-8">
