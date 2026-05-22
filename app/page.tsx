@@ -161,9 +161,18 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: containerRef });
 
-  // Parallax Values
+  // Parallax Values for Hero
   const yHeroText = useTransform(scrollYProgress, [0, 0.2], [0, 200]);
   const opacityHero = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+
+  // Horizontal Scroll for About Us -> Timeline
+  const horizontalScrollRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: horizontalScrollYProgress } = useScroll({
+    target: horizontalScrollRef,
+    container: containerRef,
+    offset: ["start start", "end end"]
+  });
+  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 1], ["0%", "-50%"]);
 
   // Form submission mock
   const handleContactSubmit = async (e: React.FormEvent) => {
@@ -232,191 +241,159 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-           2. ABOUT & MISSION
+           2. ABOUT & TIMELINE (HORIZONTAL SCROLL)
            ══════════════════════════════════════════════════════ */}
-      <section id="about" className="snap-section relative z-10">
-        {/* Section background gradient */}
-        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute w-[600px] h-[600px] -top-[100px] -left-[200px] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} />
-          <div className="absolute w-[500px] h-[500px] bottom-[10%] -right-[150px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
-          <div className="absolute w-[400px] h-[300px] top-[50%] left-[40%] rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 50%, transparent 75%)' }} />
-        </div>
-        <div className="max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row gap-12 items-center relative z-10">
-          <div className="lg:w-1/2 space-y-8 glass-panel-deep p-10 transform-style preserve-3d shadow-2xl">
-            <h2 className="text-4xl md:text-5xl font-header font-black text-white">
-              About Us
-            </h2>
-            <p className="text-base text-white/60 leading-relaxed font-light">
-              Founded in 2016, Team 6621 Artemis Robotics is the only FRC team in Columbia County. We represent Chatham High School not only as the only robotics team but as the sole technology and STEAM-centered club for the entire school. We allow students to learn as they desire, advance their STEAM interests, whether that be art, business, or stem there is a place for anyone and everyone at ARTEMIS.
-            </p>
-            {/* Gradient divider between About and Mission */}
-            <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4) 30%, rgba(249,115,22,0.4) 70%, transparent)' }} />
-            <div className="p-6 rounded-xl" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(37,99,235,0.06) 50%, rgba(249,115,22,0.04) 100%)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <h3 className="text-xl font-header font-bold mb-2">Our Mission</h3>
-              <p className="text-sm text-white/50 italic">
-                &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              <p className="text-xs text-white/40 font-light">We compete in FIRST Robotics Competition — the world's largest high school robotics program.</p>
-              <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-400 hover:-translate-y-0.5" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(249,115,22,0.1) 100%)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}>About FRC →</a>
-            </div>
+      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '200vh', scrollSnapAlign: 'start' }}>
+        {/* Sticky container that holds the horizontal sliding content */}
+        <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
+          
+          {/* Section background gradient (shared for both) */}
+          <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+            <div className="absolute w-[600px] h-[600px] -top-[100px] -left-[200px] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} />
+            <div className="absolute w-[500px] h-[500px] bottom-[10%] -right-[150px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
+            <div className="absolute w-[400px] h-[300px] top-[50%] left-[40%] rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 50%, transparent 75%)' }} />
           </div>
 
-          <div className="lg:w-1/2 w-full flex flex-col gap-6">
-            {/* Team Photo */}
-            <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] group" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
-              <img src="/photos/hero/team_with_robot.jpg" alt="Team 6621 Artemis with their robot" className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/40 to-transparent" />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.12) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.1) 100%)' }} />
-              <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 80%, rgba(37,99,235,0.15) 0%, transparent 50%)' }} />
-              <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-between items-end">
-                <div>
-                  <p className="text-[9px] uppercase tracking-widest text-white/40">Team 6621</p>
-                  <p className="text-lg font-header font-bold">Artemis Robotics</p>
+          <motion.div style={{ x: xAboutToTimeline }} className="flex w-[200vw] h-full relative z-10">
+            
+            {/* --- ABOUT US PANE (100vw) --- */}
+            <div className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24">
+              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-12 items-stretch h-[80vh]">
+                
+                {/* Left Side: About Text */}
+                <div className="lg:w-1/2 flex flex-col space-y-8 glass-panel-deep p-10 transform-style preserve-3d shadow-2xl justify-between h-full">
+                  <div>
+                    <h2 className="text-4xl md:text-5xl font-header font-black text-white">
+                      About Us
+                    </h2>
+                    <p className="text-base text-white/60 leading-relaxed font-light mt-8">
+                      Founded in 2016, Team 6621 Artemis Robotics is the only FRC team in Columbia County. We represent Chatham High School not only as the only robotics team but as the sole technology and STEAM-centered club for the entire school. We allow students to learn as they desire, advance their STEAM interests, whether that be art, business, or stem there is a place for anyone and everyone at ARTEMIS.
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-8">
+                    {/* Gradient divider between About and Mission */}
+                    <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4) 30%, rgba(249,115,22,0.4) 70%, transparent)' }} />
+                    <div className="p-6 rounded-xl" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(37,99,235,0.06) 50%, rgba(249,115,22,0.04) 100%)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                      <h3 className="text-xl font-header font-bold mb-2">Our Mission</h3>
+                      <p className="text-sm text-white/50 italic">
+                        &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <p className="text-xs text-white/40 font-light">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
+                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-400 hover:-translate-y-0.5" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(249,115,22,0.1) 100%)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}>About FRC →</a>
+                    </div>
+                  </div>
                 </div>
-                <span className="text-[9px] uppercase tracking-widest text-white/30">Chatham, NY</span>
+
+                {/* Right Side: Photo and Stats */}
+                <div className="lg:w-1/2 w-full flex flex-col gap-6 h-full">
+                  {/* Team Photo */}
+                  <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] group flex-grow" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+                    <img src="/photos/hero/team_with_robot.jpg" alt="Team 6621 Artemis with their robot" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/40 to-transparent" />
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.12) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.1) 100%)' }} />
+                    <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 80%, rgba(37,99,235,0.15) 0%, transparent 50%)' }} />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-between items-end">
+                      <div>
+                        <p className="text-[9px] uppercase tracking-widest text-white/40">Team 6621</p>
+                        <p className="text-lg font-header font-bold">Artemis Robotics</p>
+                      </div>
+                      <span className="text-[9px] uppercase tracking-widest text-white/30">Chatham, NY</span>
+                    </div>
+                  </div>
+                  {/* Compact stat row */}
+                  <div className="grid grid-cols-3 gap-3 shrink-0" style={{ perspective: '800px' }}>
+                    <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.04) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(255,255,255,0.03), inset 2px 0 8px rgba(255,255,255,0.02), inset -2px 0 8px rgba(255,255,255,0.02)' }}>
+                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
+                      <h4 className="text-2xl font-header font-black text-white relative z-10"><Counter to={2016} duration={1.5} /></h4>
+                      <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Founded</p>
+                    </div>
+                    <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(37,99,235,0.12) 0%, rgba(37,99,235,0.03) 50%, rgba(37,99,235,0.06) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(37,99,235,0.18)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(37,99,235,0.2), inset 0 -1px 0 rgba(37,99,235,0.04), inset 2px 0 8px rgba(37,99,235,0.03), inset -2px 0 8px rgba(37,99,235,0.03)' }}>
+                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(37,99,235,0.15) 0%, transparent 100%)' }} />
+                      <h4 className="text-2xl font-header font-black text-artemis-blue relative z-10"><Counter to={60} duration={2} format={(v) => `${v}%`} /></h4>
+                      <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">New Members</p>
+                    </div>
+                    <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0.03) 50%, rgba(249,115,22,0.06) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(249,115,22,0.18)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(249,115,22,0.2), inset 0 -1px 0 rgba(249,115,22,0.04), inset 2px 0 8px rgba(249,115,22,0.03), inset -2px 0 8px rgba(249,115,22,0.03)' }}>
+                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(249,115,22,0.15) 0%, transparent 100%)' }} />
+                      <h4 className="text-2xl font-header font-black text-stellar-orange relative z-10"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
+                      <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Hours This Season</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            {/* Compact stat row */}
-            <div className="grid grid-cols-3 gap-3" style={{ perspective: '800px' }}>
-              <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.04) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(255,255,255,0.03), inset 2px 0 8px rgba(255,255,255,0.02), inset -2px 0 8px rgba(255,255,255,0.02)' }}>
-                <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
-                <h4 className="text-2xl font-header font-black text-white relative z-10"><Counter to={2016} duration={1.5} /></h4>
-                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Founded</p>
+
+            {/* --- TIMELINE PANE (100vw) --- */}
+            <div id="timeline" className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-6xl font-header font-black text-white">
+                  Our Timeline
+                </h2>
               </div>
-              <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(37,99,235,0.12) 0%, rgba(37,99,235,0.03) 50%, rgba(37,99,235,0.06) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(37,99,235,0.18)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(37,99,235,0.2), inset 0 -1px 0 rgba(37,99,235,0.04), inset 2px 0 8px rgba(37,99,235,0.03), inset -2px 0 8px rgba(37,99,235,0.03)' }}>
-                <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(37,99,235,0.15) 0%, transparent 100%)' }} />
-                <h4 className="text-2xl font-header font-black text-artemis-blue relative z-10"><Counter to={60} duration={2} format={(v) => `${v}%`} /></h4>
-                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">New Members</p>
-              </div>
-              <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0.03) 50%, rgba(249,115,22,0.06) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(249,115,22,0.18)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(249,115,22,0.2), inset 0 -1px 0 rgba(249,115,22,0.04), inset 2px 0 8px rgba(249,115,22,0.03), inset -2px 0 8px rgba(249,115,22,0.03)' }}>
-                <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(249,115,22,0.15) 0%, transparent 100%)' }} />
-                <h4 className="text-2xl font-header font-black text-stellar-orange relative z-10"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
-                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Hours This Season</p>
+
+              {/* Centered Timeline layout */}
+              <div className="relative w-full max-w-6xl mx-auto flex justify-between items-start mt-10">
+                
+                {/* Continuous timeline line behind nodes */}
+                <div className="absolute left-0 right-0 top-[100px] h-px z-0" style={{ background: 'linear-gradient(90deg, transparent 5%, rgba(255,255,255,0.06) 15%, rgba(37,99,235,0.15) 50%, rgba(249,115,22,0.15) 80%, transparent 95%)' }} />
+
+                {/* 2016 — Founded */}
+                <div className="flex flex-col items-center w-[25%] px-4 z-10 relative">
+                  <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
+                    <h3 className="text-3xl font-header font-black text-white/30 mb-2">2016</h3>
+                    <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)' }} />
+                    <p className="text-sm text-white/50 font-light">Team 6621 Founded</p>
+                    <p className="text-xs text-white/30 mt-1">Chatham High School</p>
+                  </div>
+                  {/* Node */}
+                  <div className="w-4 h-4 rounded-full border-2 border-white/20 bg-[#05070B]" />
+                </div>
+
+                {/* 2024 */}
+                <div className="flex flex-col items-center w-[25%] px-4 z-10 relative">
+                  <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
+                    <h3 className="text-3xl font-header font-black text-white/40 mb-2">2024</h3>
+                    <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }} />
+                    <ul className="text-sm text-white/60 space-y-2 font-light">
+                      <li>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></li>
+                    </ul>
+                  </div>
+                  <div className="w-4 h-4 rounded-full border-2 border-white/30 bg-[#05070B]" />
+                </div>
+
+                {/* 2025 — Breakout year */}
+                <div className="flex flex-col items-center w-[25%] px-4 z-10 relative">
+                  <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(37,99,235,0.1) 0%, rgba(37,99,235,0.03) 100%)', border: '1px solid rgba(37,99,235,0.2)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(37,99,235,0.06)' }}>
+                    <h3 className="text-3xl font-header font-black text-artemis-blue mb-2">2025</h3>
+                    <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.5), transparent)' }} />
+                    <ul className="text-sm text-white/70 space-y-2 font-light">
+                      <li>Ranked third in all of New York State</li>
+                      <li>Ballston Spa Off-Season Competition Finalists</li>
+                    </ul>
+                  </div>
+                  <div className="w-5 h-5 rounded-full border-2 border-artemis-blue bg-[#05070B]" style={{ boxShadow: '0 0 12px rgba(37,99,235,0.4)' }} />
+                </div>
+
+                {/* 2026 — Current */}
+                <div className="flex flex-col items-center w-[25%] px-4 z-10 relative">
+                  <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(249,115,22,0.1) 0%, rgba(249,115,22,0.03) 100%)', border: '1px solid rgba(249,115,22,0.2)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(249,115,22,0.06)' }}>
+                    <h3 className="text-3xl font-header font-black text-stellar-orange mb-2">2026</h3>
+                    <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(249,115,22,0.5), transparent)' }} />
+                    <ul className="text-sm text-white/70 space-y-2 font-light">
+                      <li>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></li>
+                      <li>Tech Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 5</span></li>
+                      <li>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></li>
+                    </ul>
+                  </div>
+                  <div className="w-5 h-5 rounded-full border-2 border-stellar-orange bg-[#05070B]" style={{ boxShadow: '0 0 12px rgba(249,115,22,0.4)' }} />
+                </div>
+
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* ══════════════════════════════════════════════════════
-           ACHIEVEMENTS — HORIZONTAL TIMELINE
-           ══════════════════════════════════════════════════════ */}
-      <section id="achievements" className="snap-section relative z-10 overflow-hidden">
-        {/* Section background gradient */}
-        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute w-[500px] h-[500px] top-[20%] -right-[200px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
-          <div className="absolute w-[600px] h-[600px] bottom-[10%] -left-[200px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} />
-        </div>
-
-        <div className="relative z-10 flex flex-col justify-center h-full">
-          <div className="text-center mb-12 px-6">
-            <h2 className="text-4xl md:text-6xl font-header font-black text-white">
-              Our Timeline
-            </h2>
-          </div>
-
-          {/* Horizontal scrolling timeline */}
-          <div className="relative w-full overflow-x-auto hide-scrollbars pb-8 px-4">
-            <div className="flex items-start gap-0 px-[10vw] min-w-max">
-
-              {/* 2016 — Founded */}
-              <div className="flex flex-col items-center w-[280px] shrink-0">
-                <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
-                  <h3 className="text-3xl font-header font-black text-white/30 mb-2">2016</h3>
-                  <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)' }} />
-                  <p className="text-sm text-white/50 font-light">Team 6621 Founded</p>
-                  <p className="text-xs text-white/30 mt-1">Chatham High School</p>
-                </div>
-                {/* Node */}
-                <div className="w-4 h-4 rounded-full border-2 border-white/20 bg-[#05070B] z-10" />
-                {/* Line right */}
-                <div className="absolute" style={{ top: 'calc(100% - 8px)' }} />
-              </div>
-
-              {/* Connector line */}
-              <div className="flex items-center self-end mb-[6px] shrink-0">
-                <div className="w-16 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))' }} />
-              </div>
-
-              {/* 2023 — First competitions */}
-              <div className="flex flex-col items-center w-[280px] shrink-0">
-                <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
-                  <h3 className="text-3xl font-header font-black text-white/30 mb-2">2023</h3>
-                  <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)' }} />
-                  <p className="text-sm text-white/50 font-light">Growing Momentum</p>
-                  <p className="text-xs text-white/30 mt-1">Building foundations</p>
-                </div>
-                <div className="w-4 h-4 rounded-full border-2 border-white/20 bg-[#05070B] z-10" />
-              </div>
-
-              {/* Connector */}
-              <div className="flex items-center self-end mb-[6px] shrink-0">
-                <div className="w-16 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.05), rgba(37,99,235,0.2))' }} />
-              </div>
-
-              {/* 2024 */}
-              <div className="flex flex-col items-center w-[280px] shrink-0">
-                <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
-                  <h3 className="text-3xl font-header font-black text-white/40 mb-2">2024</h3>
-                  <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }} />
-                  <ul className="text-sm text-white/60 space-y-2 font-light">
-                    <li>Creativity Award</li>
-                    <li>Dean&apos;s List Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></li>
-                  </ul>
-                </div>
-                <div className="w-4 h-4 rounded-full border-2 border-white/30 bg-[#05070B] z-10" />
-              </div>
-
-              {/* Connector */}
-              <div className="flex items-center self-end mb-[6px] shrink-0">
-                <div className="w-16 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.1), rgba(37,99,235,0.3))' }} />
-              </div>
-
-              {/* 2025 — Breakout year */}
-              <div className="flex flex-col items-center w-[320px] shrink-0">
-                <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(37,99,235,0.1) 0%, rgba(37,99,235,0.03) 100%)', border: '1px solid rgba(37,99,235,0.2)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(37,99,235,0.06)' }}>
-                  <h3 className="text-3xl font-header font-black text-artemis-blue mb-2">2025</h3>
-                  <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.5), transparent)' }} />
-                  <ul className="text-sm text-white/70 space-y-2 font-light">
-                    <li className="font-bold text-white">Tech Valley Regional Winner</li>
-                    <li>World Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division, Alliance 3/4)</span></li>
-                    <li>#3 in New York State</li>
-                    <li>Ballston Spa Off-season Finalists</li>
-                  </ul>
-                </div>
-                <div className="w-5 h-5 rounded-full border-2 border-artemis-blue bg-[#05070B] z-10" style={{ boxShadow: '0 0 12px rgba(37,99,235,0.4)' }} />
-              </div>
-
-              {/* Connector */}
-              <div className="flex items-center self-end mb-[8px] shrink-0">
-                <div className="w-16 h-px" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3), rgba(249,115,22,0.3))' }} />
-              </div>
-
-              {/* 2026 — Current */}
-              <div className="flex flex-col items-center w-[320px] shrink-0">
-                <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(249,115,22,0.1) 0%, rgba(249,115,22,0.03) 100%)', border: '1px solid rgba(249,115,22,0.2)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(249,115,22,0.06)' }}>
-                  <h3 className="text-3xl font-header font-black text-stellar-orange mb-2">2026</h3>
-                  <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(249,115,22,0.5), transparent)' }} />
-                  <ul className="text-sm text-white/70 space-y-2 font-light">
-                    <li className="font-bold text-white">Hudson Valley Playoffs <br/><span className="text-[10px] text-white/40">(First Pick, Alliance 3)</span></li>
-                    <li>Tech Valley Alliance 5</li>
-                    <li>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></li>
-                  </ul>
-                </div>
-                <div className="w-5 h-5 rounded-full border-2 border-stellar-orange bg-[#05070B] z-10" style={{ boxShadow: '0 0 12px rgba(249,115,22,0.4)' }} />
-              </div>
-
-            </div>
-
-            {/* Continuous timeline line behind nodes */}
-            <div className="absolute left-0 right-0 bottom-[30px] h-px z-0" style={{ background: 'linear-gradient(90deg, transparent 5%, rgba(255,255,255,0.06) 15%, rgba(37,99,235,0.15) 50%, rgba(249,115,22,0.15) 80%, transparent 95%)' }} />
-          </div>
-
-          <p className="text-center text-[10px] text-white/30 uppercase tracking-widest mt-2">Scroll horizontally to explore</p>
+            
+          </motion.div>
         </div>
       </section>
 
