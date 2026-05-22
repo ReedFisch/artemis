@@ -256,42 +256,61 @@ export default function Home() {
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
           
-          {/* Section background gradient (shared for both) */}
-          <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
-            <div className="absolute w-[600px] h-[600px] -top-[100px] -left-[200px] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} />
-            <div className="absolute w-[500px] h-[500px] bottom-[10%] -right-[150px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
-            <div className="absolute w-[400px] h-[300px] top-[50%] left-[40%] rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 50%, transparent 75%)' }} />
-          </div>
-
           <motion.div style={{ x: xAboutToTimeline }} className="flex w-[200vw] h-full relative z-10">
             
+            {/* Section background gradient & floating shapes (scrolling with the content) */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ width: '200vw' }}>
+              {/* Starfield */}
+              <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
+              
+              {/* Deep Gradients */}
+              <div className="absolute w-[800px] h-[800px] top-[-100px] left-[10%] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, transparent 70%)' }} />
+              <div className="absolute w-[700px] h-[700px] bottom-[-20%] left-[30%] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, transparent 70%)' }} />
+              <div className="absolute w-[900px] h-[900px] top-[20%] left-[60%] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} />
+              <div className="absolute w-[800px] h-[800px] bottom-[10%] right-[10%] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} />
+              
+              {/* 3D Floating Shapes across the 200vw canvas */}
+              <div className="absolute top-[15%] left-[5%] w-40 h-40 opacity-20 transform-gpu rotate-12 rotate-x-45 rotate-y-12 rounded-3xl glass-panel animate-float" style={{ animationDelay: '0s', animationDuration: '12s' }} />
+              <div className="absolute bottom-[20%] left-[20%] w-24 h-24 opacity-15 transform-gpu rotate-[30deg] rotate-x-[-20deg] rotate-y-[45deg] rounded-full glass-panel animate-float" style={{ animationDelay: '3s', animationDuration: '10s' }} />
+              <div className="absolute top-[40%] left-[45%] w-32 h-32 opacity-25 transform-gpu rotate-[-15deg] rotate-x-[60deg] rotate-y-[30deg] rounded-xl glass-panel animate-float" style={{ animationDelay: '1s', animationDuration: '14s' }} />
+              <div className="absolute top-[25%] left-[70%] w-48 h-48 opacity-15 transform-gpu rotate-[45deg] rotate-x-[20deg] rotate-y-[60deg] rounded-[2.5rem] glass-panel animate-float" style={{ animationDelay: '4s', animationDuration: '15s' }} />
+              <div className="absolute bottom-[15%] left-[85%] w-28 h-28 opacity-20 transform-gpu rotate-[-30deg] rotate-x-[-45deg] rotate-y-[-15deg] rounded-full glass-panel animate-float" style={{ animationDelay: '2s', animationDuration: '11s' }} />
+            </div>
+
             {/* --- ABOUT US PANE (100vw) --- */}
-            <div className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24">
+            <div className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24 relative z-10">
               <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-12 items-stretch h-[80vh]">
                 
                 {/* Left Side: About Text */}
-                <div className="lg:w-1/2 flex flex-col space-y-8 glass-panel-deep p-10 transform-style preserve-3d shadow-2xl justify-between h-full">
-                  <div>
+                <div className="lg:w-1/2 flex flex-col space-y-6 glass-panel-deep p-10 transform-style preserve-3d shadow-2xl justify-between h-full relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-artemis-blue/10 rounded-full blur-3xl" />
+                  
+                  <div className="relative z-10">
                     <h2 className="text-4xl md:text-5xl font-header font-black text-white">
                       About Us
                     </h2>
-                    <p className="text-base text-white/60 leading-relaxed font-light mt-8">
+                    <p className="text-base text-white/60 leading-relaxed font-light mt-6">
                       Founded in 2016, Team 6621 Artemis Robotics is the only FRC team in Columbia County. We represent Chatham High School not only as the only robotics team but as the sole technology and STEAM-centered club for the entire school. We allow students to learn as they desire, advance their STEAM interests, whether that be art, business, or stem there is a place for anyone and everyone at ARTEMIS.
                     </p>
                   </div>
                   
-                  <div className="space-y-8">
+                  <div className="space-y-6 relative z-10 mt-auto">
                     {/* Gradient divider between About and Mission */}
                     <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4) 30%, rgba(249,115,22,0.4) 70%, transparent)' }} />
-                    <div className="p-6 rounded-xl" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(37,99,235,0.06) 50%, rgba(249,115,22,0.04) 100%)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                      <h3 className="text-xl font-header font-bold mb-2">Our Mission</h3>
-                      <p className="text-sm text-white/50 italic">
+                    
+                    {/* Mission Box (Bigger) */}
+                    <div className="p-8 rounded-2xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(37,99,235,0.08) 50%, rgba(249,115,22,0.05) 100%)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <h3 className="text-2xl font-header font-bold mb-3 text-white">Our Mission</h3>
+                      <p className="text-base text-white/70 italic leading-relaxed">
                         &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
                       </p>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <p className="text-xs text-white/40 font-light">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
-                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-400 hover:-translate-y-0.5" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(249,115,22,0.1) 100%)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}>About FRC →</a>
+                    
+                    {/* About FRC Chip & Text */}
+                    <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors duration-300">
+                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>About FRC →</a>
+                      <p className="text-[11px] text-white/50 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
                     </div>
                   </div>
                 </div>
