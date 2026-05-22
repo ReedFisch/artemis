@@ -17,7 +17,6 @@ interface SponsorshipInterestPayload {
 // ─── NAV LINKS ──────────────────────────────────────────────────
 const NAV_LINKS = [
   { href: "#about", label: "About" },
-  { href: "#build", label: "Build Season" },
   { href: "#achievements", label: "Achievements" },
   { href: "#outreach", label: "Outreach" },
   { href: "#budget", label: "Budget & Sponsors" },
@@ -258,6 +257,10 @@ export default function Home() {
                 &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
               </p>
             </div>
+            <div className="flex items-center gap-4">
+              <p className="text-xs text-white/40 font-light">We compete in FIRST Robotics Competition — the world's largest high school robotics program.</p>
+              <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-400 hover:-translate-y-0.5" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(249,115,22,0.1) 100%)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}>About FRC →</a>
+            </div>
           </div>
 
           <div className="lg:w-1/2 w-full flex flex-col gap-6">
@@ -297,41 +300,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════
-           3. BUILD SEASON
-           ══════════════════════════════════════════════════════ */}
-      <section id="build" className="snap-section relative z-10">
-        <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col justify-center">
-          <div className="mb-12 text-center">
-             <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/30 mb-2 block">
-              02 / Engineering
-            </span>
-            <h2 className="text-4xl md:text-6xl font-header font-black text-3d-glow">
-              Build Season
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[50vh]">
-            <div className="md:col-span-2 glass-panel overflow-hidden relative group">
-              <img src="/photos/about/workshop_build.jpg" alt="Workshop Build" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
-                <h3 className="text-2xl font-header font-bold text-3d">Workshop Assembly</h3>
-              </div>
-            </div>
-            <div className="flex flex-col gap-6">
-              <div className="glass-panel h-1/2 overflow-hidden relative group">
-                <img src="/photos/about/prototyping_session.jpg" alt="Prototyping" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
-                  <h3 className="text-lg font-header font-bold text-3d">Prototyping</h3>
-                </div>
-              </div>
-              <div className="glass-panel h-1/2 p-8 flex flex-col justify-center items-center text-center bg-artemis-blue/10">
-                <span className="text-5xl font-header font-black text-artemis-blue text-3d-glow mb-2">6</span>
-                <span className="text-xs uppercase tracking-widest text-white/50">Weeks to Build</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* ══════════════════════════════════════════════════════
            4. ACHIEVEMENTS
