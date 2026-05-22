@@ -220,30 +220,42 @@ export default function Home() {
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 200px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
         
         {/* Deep Organic Liquid Gradients Interacting with Cursor */}
-        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.2) 40%, transparent 70%)' }} className="absolute w-[800px] h-[800px] -top-[200px] -left-[200px] rounded-full opacity-[0.08]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 45%, transparent 70%)' }} className="absolute w-[600px] h-[600px] -top-[100px] -right-[150px] rounded-full opacity-[0.06]" />
-        <motion.div style={{ x: smoothX, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, rgba(249,115,22,0.1) 50%, transparent 75%)' }} className="absolute w-[700px] h-[700px] top-[25%] -left-[300px] rounded-full opacity-[0.07]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, rgba(37,99,235,0.15) 40%, transparent 70%)' }} className="absolute w-[900px] h-[900px] top-[35%] -right-[350px] rounded-full opacity-[0.07]" />
-        <motion.div style={{ x: smoothX, y: smoothY, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} className="absolute w-[500px] h-[500px] top-[50%] left-[30%] rounded-full opacity-[0.05]" />
-        <motion.div style={{ x: smoothXSlow, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(37,99,235,0.1) 45%, transparent 70%)' }} className="absolute w-[800px] h-[800px] top-[65%] -left-[250px] rounded-full opacity-[0.08]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 40%, transparent 70%)' }} className="absolute w-[650px] h-[650px] top-[70%] -right-[200px] rounded-full opacity-[0.06]" />
+        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.2) 40%, transparent 70%)' }} className="absolute w-[800px] h-[800px] -top-[200px] -left-[200px] rounded-full opacity-[0.25]" />
+        <motion.div style={{ x: smoothXFast, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 45%, transparent 70%)' }} className="absolute w-[600px] h-[600px] -top-[100px] -right-[150px] rounded-full opacity-[0.2]" />
+        <motion.div style={{ x: smoothX, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, rgba(249,115,22,0.1) 50%, transparent 75%)' }} className="absolute w-[700px] h-[700px] top-[25%] -left-[300px] rounded-full opacity-[0.2]" />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, rgba(37,99,235,0.15) 40%, transparent 70%)' }} className="absolute w-[900px] h-[900px] top-[35%] -right-[350px] rounded-full opacity-[0.25]" />
+        <motion.div style={{ x: smoothX, y: smoothY, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} className="absolute w-[500px] h-[500px] top-[50%] left-[30%] rounded-full opacity-[0.15]" />
+        <motion.div style={{ x: smoothXSlow, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(37,99,235,0.1) 45%, transparent 70%)' }} className="absolute w-[800px] h-[800px] top-[65%] -left-[250px] rounded-full opacity-[0.2]" />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 40%, transparent 70%)' }} className="absolute w-[650px] h-[650px] top-[70%] -right-[200px] rounded-full opacity-[0.2]" />
         
         {/* Bottom sweep — wide blue-to-orange */}
-        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.05]" />
+        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.15]" />
         
         {/* Deep center glow */}
-        <motion.div style={{ x: smoothXFast, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.04]" />
+        <motion.div style={{ x: smoothXFast, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.15]" />
         
         {/* Scatter orbs */}
-        <motion.div style={{ x: smoothX, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.08]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.07]" />
-        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.06]" />
+        <motion.div style={{ x: smoothX, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.2]" />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.2]" />
+        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.15]" />
 
         {/* 3D Floating Geometric Shapes Interacting with Cursor */}
-        <motion.div style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '0s', animationDuration: '10s' }} className="absolute top-[20%] left-[10%] w-32 h-32 opacity-20 transform-gpu rotate-45 rotate-x-45 rotate-y-45 rounded-2xl glass-panel animate-float" />
-        <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '2s', animationDuration: '14s' }} className="absolute top-[60%] right-[15%] w-48 h-48 opacity-10 transform-gpu rotate-12 rotate-x-60 rotate-y-12 rounded-full glass-panel animate-float" />
-        <motion.div style={{ x: smoothX, y: smoothY, animationDelay: '4s', animationDuration: '12s' }} className="absolute bottom-[20%] left-[25%] w-24 h-24 opacity-20 transform-gpu rotate-[-20deg] rotate-x-[-30deg] rotate-y-[45deg] rounded-lg glass-panel animate-float" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, animationDelay: '1s', animationDuration: '15s' }} className="absolute top-[10%] right-[30%] w-40 h-40 opacity-15 transform-gpu rotate-[30deg] rotate-x-[15deg] rotate-y-[60deg] rounded-[2rem] glass-panel animate-float" />
+        <motion.div style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '0s', animationDuration: '10s' }} className="shape-3d shape-cube absolute top-[20%] left-[10%] w-32 h-32 opacity-80" />
+        <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '2s', animationDuration: '14s' }} className="shape-3d shape-sphere absolute top-[60%] right-[15%] w-48 h-48 opacity-90" />
+        <motion.div style={{ x: smoothX, y: smoothY, animationDelay: '4s', animationDuration: '12s' }} className="shape-3d shape-sphere absolute bottom-[20%] left-[25%] w-24 h-24 opacity-70" />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast, animationDelay: '1s', animationDuration: '15s' }} className="shape-3d shape-cube absolute top-[10%] right-[30%] w-40 h-40 opacity-80" />
+        {/* 3D Star shape with SVG */}
+        <motion.div style={{ x: smoothX, y: smoothYFast, animationDelay: '5s', animationDuration: '16s' }} className="absolute top-[30%] left-[40%] w-24 h-24 opacity-80 animate-float drop-shadow-[0_10px_20px_rgba(249,115,22,0.4)]">
+          <svg viewBox="0 0 24 24" fill="url(#star-gradient-1)" className="w-full h-full drop-shadow-[0_0_15px_rgba(249,115,22,0.5)]">
+            <defs>
+              <linearGradient id="star-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#FBBF24" />
+                <stop offset="100%" stopColor="#F97316" />
+              </linearGradient>
+            </defs>
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+          </svg>
+        </motion.div>
       </div>
 
       {/* ══════════════════════════════════════════════════════
@@ -286,17 +298,29 @@ export default function Home() {
               <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
               
               {/* Deep Organic Liquid Gradients Interacting with Cursor */}
-              <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, transparent 70%)' }} className="absolute w-[800px] h-[800px] top-[-100px] left-[10%] rounded-full opacity-[0.08]" />
-              <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, transparent 70%)' }} className="absolute w-[700px] h-[700px] bottom-[-20%] left-[30%] rounded-full opacity-[0.06]" />
-              <motion.div style={{ x: smoothX, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} className="absolute w-[900px] h-[900px] top-[20%] left-[60%] rounded-full opacity-[0.05]" />
-              <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} className="absolute w-[800px] h-[800px] bottom-[10%] right-[10%] rounded-full opacity-[0.07]" />
+              <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, transparent 70%)' }} className="absolute w-[800px] h-[800px] top-[-100px] left-[10%] rounded-full opacity-[0.2]" />
+              <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, transparent 70%)' }} className="absolute w-[700px] h-[700px] bottom-[-20%] left-[30%] rounded-full opacity-[0.2]" />
+              <motion.div style={{ x: smoothX, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} className="absolute w-[900px] h-[900px] top-[20%] left-[60%] rounded-full opacity-[0.15]" />
+              <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} className="absolute w-[800px] h-[800px] bottom-[10%] right-[10%] rounded-full opacity-[0.15]" />
               
               {/* 3D Floating Shapes across the 200vw canvas interacting with cursor */}
-              <motion.div style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '0s', animationDuration: '12s' }} className="absolute top-[15%] left-[5%] w-40 h-40 opacity-20 transform-gpu rotate-12 rotate-x-45 rotate-y-12 rounded-3xl glass-panel animate-float" />
-              <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '3s', animationDuration: '10s' }} className="absolute bottom-[20%] left-[20%] w-24 h-24 opacity-15 transform-gpu rotate-[30deg] rotate-x-[-20deg] rotate-y-[45deg] rounded-full glass-panel animate-float" />
-              <motion.div style={{ x: smoothX, y: smoothY, animationDelay: '1s', animationDuration: '14s' }} className="absolute top-[40%] left-[45%] w-32 h-32 opacity-25 transform-gpu rotate-[-15deg] rotate-x-[60deg] rotate-y-[30deg] rounded-xl glass-panel animate-float" />
-              <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '4s', animationDuration: '15s' }} className="absolute top-[25%] left-[70%] w-48 h-48 opacity-15 transform-gpu rotate-[45deg] rotate-x-[20deg] rotate-y-[60deg] rounded-[2.5rem] glass-panel animate-float" />
-              <motion.div style={{ x: smoothXFast, y: smoothYFast, animationDelay: '2s', animationDuration: '11s' }} className="absolute bottom-[15%] left-[85%] w-28 h-28 opacity-20 transform-gpu rotate-[-30deg] rotate-x-[-45deg] rotate-y-[-15deg] rounded-full glass-panel animate-float" />
+              <motion.div style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '0s', animationDuration: '12s' }} className="shape-3d shape-cube absolute top-[15%] left-[5%] w-40 h-40 opacity-70" />
+              <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '3s', animationDuration: '10s' }} className="shape-3d shape-sphere absolute bottom-[20%] left-[20%] w-24 h-24 opacity-80" />
+              <motion.div style={{ x: smoothX, y: smoothY, animationDelay: '1s', animationDuration: '14s' }} className="shape-3d shape-sphere absolute top-[40%] left-[45%] w-32 h-32 opacity-90" />
+              <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '4s', animationDuration: '15s' }} className="shape-3d shape-cube absolute top-[25%] left-[70%] w-48 h-48 opacity-60" />
+              <motion.div style={{ x: smoothXFast, y: smoothYFast, animationDelay: '2s', animationDuration: '11s' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-28 h-28 opacity-80" />
+              {/* 3D Star shape */}
+              <motion.div style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '6s', animationDuration: '13s' }} className="absolute top-[10%] left-[80%] w-32 h-32 opacity-80 animate-float drop-shadow-[0_15px_30px_rgba(37,99,235,0.5)]">
+                <svg viewBox="0 0 24 24" fill="url(#star-gradient-2)" className="w-full h-full drop-shadow-[0_0_20px_rgba(37,99,235,0.6)]">
+                  <defs>
+                    <linearGradient id="star-gradient-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#60A5FA" />
+                      <stop offset="100%" stopColor="#2563EB" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                </svg>
+              </motion.div>
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
