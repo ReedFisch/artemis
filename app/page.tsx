@@ -236,25 +236,15 @@ export default function Home() {
            2. ABOUT & MISSION
            ══════════════════════════════════════════════════════ */}
       <section id="about" className="snap-section relative z-10">
-        <div className="max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row gap-12 items-center">
+        {/* Section background gradient */}
+        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute w-[600px] h-[600px] -top-[100px] -left-[200px] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} />
+          <div className="absolute w-[500px] h-[500px] bottom-[10%] -right-[150px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
+          <div className="absolute w-[400px] h-[300px] top-[50%] left-[40%] rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 50%, transparent 75%)' }} />
+        </div>
+        <div className="max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row gap-12 items-center relative z-10">
           <div className="lg:w-1/2 space-y-8 glass-panel-deep p-10 transform-style preserve-3d shadow-2xl">
-            <h2 className="text-4xl md:text-5xl font-header font-black" style={{
-              color: '#e8edf5',
-              textShadow: `
-                0 1px 0 #b8c4d8,
-                0 2px 0 #a8b4c8,
-                0 3px 0 #98a4b8,
-                0 4px 0 #8894a8,
-                0 5px 0 #788498,
-                0 6px 0 #687488,
-                0 0 10px rgba(255,255,255,0.15),
-                0 -1px 2px rgba(255,255,255,0.4),
-                0 8px 15px rgba(0,0,0,0.4),
-                0 12px 25px rgba(0,0,0,0.2)
-              `,
-              WebkitTextStroke: '0.5px rgba(255,255,255,0.15)',
-              letterSpacing: '0.02em',
-            }}>
+            <h2 className="text-4xl md:text-5xl font-header font-black text-white">
               About Us
             </h2>
             <p className="text-base text-white/60 leading-relaxed font-light">
@@ -262,7 +252,7 @@ export default function Home() {
             </p>
             {/* Gradient divider between About and Mission */}
             <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4) 30%, rgba(249,115,22,0.4) 70%, transparent)' }} />
-            <div className="p-6 bg-white/[0.02] border-l-2 border-stellar-orange">
+            <div className="p-6 rounded-xl" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(37,99,235,0.06) 50%, rgba(249,115,22,0.04) 100%)', border: '1px solid rgba(255,255,255,0.06)' }}>
               <h3 className="text-xl font-header font-bold mb-2">Our Mission</h3>
               <p className="text-sm text-white/50 italic">
                 &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
@@ -274,7 +264,9 @@ export default function Home() {
             {/* Team Photo */}
             <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] group" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
               <img src="/photos/hero/team_with_robot.jpg" alt="Team 6621 Artemis with their robot" className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/40 to-transparent" />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.12) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.1) 100%)' }} />
+              <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 80%, rgba(37,99,235,0.15) 0%, transparent 50%)' }} />
               <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-between items-end">
                 <div>
                   <p className="text-[9px] uppercase tracking-widest text-white/40">Team 6621</p>
@@ -284,7 +276,7 @@ export default function Home() {
               </div>
             </div>
             {/* Compact stat row */}
-            <div className="grid grid-cols-4 gap-3" style={{ perspective: '800px' }}>
+            <div className="grid grid-cols-3 gap-3" style={{ perspective: '800px' }}>
               <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.04) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(255,255,255,0.03), inset 2px 0 8px rgba(255,255,255,0.02), inset -2px 0 8px rgba(255,255,255,0.02)' }}>
                 <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
                 <h4 className="text-2xl font-header font-black text-white relative z-10"><Counter to={2016} duration={1.5} /></h4>
@@ -292,18 +284,13 @@ export default function Home() {
               </div>
               <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(37,99,235,0.12) 0%, rgba(37,99,235,0.03) 50%, rgba(37,99,235,0.06) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(37,99,235,0.18)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(37,99,235,0.2), inset 0 -1px 0 rgba(37,99,235,0.04), inset 2px 0 8px rgba(37,99,235,0.03), inset -2px 0 8px rgba(37,99,235,0.03)' }}>
                 <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(37,99,235,0.15) 0%, transparent 100%)' }} />
-                <h4 className="text-2xl font-header font-black text-artemis-blue relative z-10"><Counter to={20} duration={2} /></h4>
-                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Members</p>
+                <h4 className="text-2xl font-header font-black text-artemis-blue relative z-10"><Counter to={60} duration={2} format={(v) => `${v}%`} /></h4>
+                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">New Members</p>
               </div>
               <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0.03) 50%, rgba(249,115,22,0.06) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(249,115,22,0.18)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(249,115,22,0.2), inset 0 -1px 0 rgba(249,115,22,0.04), inset 2px 0 8px rgba(249,115,22,0.03), inset -2px 0 8px rgba(249,115,22,0.03)' }}>
                 <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(249,115,22,0.15) 0%, transparent 100%)' }} />
                 <h4 className="text-2xl font-header font-black text-stellar-orange relative z-10"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
-                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Hours</p>
-              </div>
-              <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.04) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(255,255,255,0.03), inset 2px 0 8px rgba(255,255,255,0.02), inset -2px 0 8px rgba(255,255,255,0.02)' }}>
-                <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
-                <h4 className="text-2xl font-header font-black text-white relative z-10"><Counter to={600} duration={3} format={(v) => `${v}%`} /></h4>
-                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Girl Growth</p>
+                <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Hours This Season</p>
               </div>
             </div>
           </div>
