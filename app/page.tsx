@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import Counter from "./components/Counter";
 
 // ─── Types ──────────────────────────
@@ -161,6 +161,31 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: containerRef });
 
+  // Organic Liquid Mouse Tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 25, stiffness: 80, mass: 0.5 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+  const smoothXSlow = useSpring(useTransform(mouseX, v => v * 0.5), springConfig);
+  const smoothYSlow = useSpring(useTransform(mouseY, v => v * 0.5), springConfig);
+  const smoothXFast = useSpring(useTransform(mouseX, v => v * 1.5), springConfig);
+  const smoothYFast = useSpring(useTransform(mouseY, v => v * 1.5), springConfig);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // Calculate normalized mouse position (-1 to 1)
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = (e.clientY / window.innerHeight) * 2 - 1;
+      // Convert to pixel offsets (e.g. max 100px movement)
+      mouseX.set(x * 100);
+      mouseY.set(y * 100);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
   // Parallax Values for Hero
   const yHeroText = useTransform(scrollYProgress, [0, 0.2], [0, 200]);
   const opacityHero = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
@@ -194,34 +219,31 @@ export default function Home() {
         {/* Faint Star Background */}
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 200px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
         
-        {/* Top-left blue nebula */}
-        <div className="absolute w-[800px] h-[800px] -top-[200px] -left-[200px] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.2) 40%, transparent 70%)' }} />
-        {/* Top-right orange glow */}
-        <div className="absolute w-[600px] h-[600px] -top-[100px] -right-[150px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 45%, transparent 70%)' }} />
-        {/* Mid-left orange drift */}
-        <div className="absolute w-[700px] h-[700px] top-[25%] -left-[300px] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, rgba(249,115,22,0.1) 50%, transparent 75%)' }} />
-        {/* Center-right blue wash */}
-        <div className="absolute w-[900px] h-[900px] top-[35%] -right-[350px] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, rgba(37,99,235,0.15) 40%, transparent 70%)' }} />
-        {/* Mid blue-orange blend */}
-        <div className="absolute w-[500px] h-[500px] top-[50%] left-[30%] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} />
-        {/* Lower-left blue pool */}
-        <div className="absolute w-[800px] h-[800px] top-[65%] -left-[250px] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(37,99,235,0.1) 45%, transparent 70%)' }} />
-        {/* Lower-right orange haze */}
-        <div className="absolute w-[650px] h-[650px] top-[70%] -right-[200px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 40%, transparent 70%)' }} />
+        {/* Deep Organic Liquid Gradients Interacting with Cursor */}
+        <motion.div style={{ x: smoothXSlow, y: smoothYSlow }} className="absolute w-[800px] h-[800px] -top-[200px] -left-[200px] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.2) 40%, transparent 70%)' }} />
+        <motion.div style={{ x: smoothXFast, y: smoothYSlow }} className="absolute w-[600px] h-[600px] -top-[100px] -right-[150px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 45%, transparent 70%)' }} />
+        <motion.div style={{ x: smoothX, y: smoothYFast }} className="absolute w-[700px] h-[700px] top-[25%] -left-[300px] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, rgba(249,115,22,0.1) 50%, transparent 75%)' }} />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast }} className="absolute w-[900px] h-[900px] top-[35%] -right-[350px] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, rgba(37,99,235,0.15) 40%, transparent 70%)' }} />
+        <motion.div style={{ x: smoothX, y: smoothY }} className="absolute w-[500px] h-[500px] top-[50%] left-[30%] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} />
+        <motion.div style={{ x: smoothXSlow, y: smoothYFast }} className="absolute w-[800px] h-[800px] top-[65%] -left-[250px] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(37,99,235,0.1) 45%, transparent 70%)' }} />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast }} className="absolute w-[650px] h-[650px] top-[70%] -right-[200px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 40%, transparent 70%)' }} />
+        
         {/* Bottom sweep — wide blue-to-orange */}
-        <div className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.05]" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} />
+        <motion.div style={{ x: smoothXSlow, y: smoothYSlow }} className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.05]" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} />
+        
         {/* Deep center glow */}
-        <div className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} />
+        <motion.div style={{ x: smoothXFast, y: smoothY }} className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.04]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} />
+        
         {/* Scatter orbs */}
-        <div className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
-        <div className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} />
-        <div className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} />
+        <motion.div style={{ x: smoothX, y: smoothYSlow }} className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} />
+        <motion.div style={{ x: smoothXSlow, y: smoothYSlow }} className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} />
 
-        {/* 3D Floating Geometric Shapes */}
-        <div className="absolute top-[20%] left-[10%] w-32 h-32 opacity-20 transform-gpu rotate-45 rotate-x-45 rotate-y-45 rounded-2xl glass-panel animate-float" style={{ animationDelay: '0s', animationDuration: '10s' }} />
-        <div className="absolute top-[60%] right-[15%] w-48 h-48 opacity-10 transform-gpu rotate-12 rotate-x-60 rotate-y-12 rounded-full glass-panel animate-float" style={{ animationDelay: '2s', animationDuration: '14s' }} />
-        <div className="absolute bottom-[20%] left-[25%] w-24 h-24 opacity-20 transform-gpu rotate-[-20deg] rotate-x-[-30deg] rotate-y-[45deg] rounded-lg glass-panel animate-float" style={{ animationDelay: '4s', animationDuration: '12s' }} />
-        <div className="absolute top-[10%] right-[30%] w-40 h-40 opacity-15 transform-gpu rotate-[30deg] rotate-x-[15deg] rotate-y-[60deg] rounded-[2rem] glass-panel animate-float" style={{ animationDelay: '1s', animationDuration: '15s' }} />
+        {/* 3D Floating Geometric Shapes Interacting with Cursor */}
+        <motion.div style={{ x: smoothXFast, y: smoothYSlow }} className="absolute top-[20%] left-[10%] w-32 h-32 opacity-20 transform-gpu rotate-45 rotate-x-45 rotate-y-45 rounded-2xl glass-panel animate-float" style={{ animationDelay: '0s', animationDuration: '10s' }} />
+        <motion.div style={{ x: smoothXSlow, y: smoothYFast }} className="absolute top-[60%] right-[15%] w-48 h-48 opacity-10 transform-gpu rotate-12 rotate-x-60 rotate-y-12 rounded-full glass-panel animate-float" style={{ animationDelay: '2s', animationDuration: '14s' }} />
+        <motion.div style={{ x: smoothX, y: smoothY }} className="absolute bottom-[20%] left-[25%] w-24 h-24 opacity-20 transform-gpu rotate-[-20deg] rotate-x-[-30deg] rotate-y-[45deg] rounded-lg glass-panel animate-float" style={{ animationDelay: '4s', animationDuration: '12s' }} />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast }} className="absolute top-[10%] right-[30%] w-40 h-40 opacity-15 transform-gpu rotate-[30deg] rotate-x-[15deg] rotate-y-[60deg] rounded-[2rem] glass-panel animate-float" style={{ animationDelay: '1s', animationDuration: '15s' }} />
       </div>
 
       {/* ══════════════════════════════════════════════════════
@@ -263,18 +285,18 @@ export default function Home() {
               {/* Starfield */}
               <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
               
-              {/* Deep Gradients */}
-              <div className="absolute w-[800px] h-[800px] top-[-100px] left-[10%] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, transparent 70%)' }} />
-              <div className="absolute w-[700px] h-[700px] bottom-[-20%] left-[30%] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, transparent 70%)' }} />
-              <div className="absolute w-[900px] h-[900px] top-[20%] left-[60%] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} />
-              <div className="absolute w-[800px] h-[800px] bottom-[10%] right-[10%] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} />
+              {/* Deep Organic Liquid Gradients Interacting with Cursor */}
+              <motion.div style={{ x: smoothXSlow, y: smoothYSlow }} className="absolute w-[800px] h-[800px] top-[-100px] left-[10%] rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, transparent 70%)' }} />
+              <motion.div style={{ x: smoothXFast, y: smoothYFast }} className="absolute w-[700px] h-[700px] bottom-[-20%] left-[30%] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, transparent 70%)' }} />
+              <motion.div style={{ x: smoothX, y: smoothY }} className="absolute w-[900px] h-[900px] top-[20%] left-[60%] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(ellipse, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} />
+              <motion.div style={{ x: smoothXSlow, y: smoothYSlow }} className="absolute w-[800px] h-[800px] bottom-[10%] right-[10%] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} />
               
-              {/* 3D Floating Shapes across the 200vw canvas */}
-              <div className="absolute top-[15%] left-[5%] w-40 h-40 opacity-20 transform-gpu rotate-12 rotate-x-45 rotate-y-12 rounded-3xl glass-panel animate-float" style={{ animationDelay: '0s', animationDuration: '12s' }} />
-              <div className="absolute bottom-[20%] left-[20%] w-24 h-24 opacity-15 transform-gpu rotate-[30deg] rotate-x-[-20deg] rotate-y-[45deg] rounded-full glass-panel animate-float" style={{ animationDelay: '3s', animationDuration: '10s' }} />
-              <div className="absolute top-[40%] left-[45%] w-32 h-32 opacity-25 transform-gpu rotate-[-15deg] rotate-x-[60deg] rotate-y-[30deg] rounded-xl glass-panel animate-float" style={{ animationDelay: '1s', animationDuration: '14s' }} />
-              <div className="absolute top-[25%] left-[70%] w-48 h-48 opacity-15 transform-gpu rotate-[45deg] rotate-x-[20deg] rotate-y-[60deg] rounded-[2.5rem] glass-panel animate-float" style={{ animationDelay: '4s', animationDuration: '15s' }} />
-              <div className="absolute bottom-[15%] left-[85%] w-28 h-28 opacity-20 transform-gpu rotate-[-30deg] rotate-x-[-45deg] rotate-y-[-15deg] rounded-full glass-panel animate-float" style={{ animationDelay: '2s', animationDuration: '11s' }} />
+              {/* 3D Floating Shapes across the 200vw canvas interacting with cursor */}
+              <motion.div style={{ x: smoothXFast, y: smoothYSlow }} className="absolute top-[15%] left-[5%] w-40 h-40 opacity-20 transform-gpu rotate-12 rotate-x-45 rotate-y-12 rounded-3xl glass-panel animate-float" style={{ animationDelay: '0s', animationDuration: '12s' }} />
+              <motion.div style={{ x: smoothXSlow, y: smoothYFast }} className="absolute bottom-[20%] left-[20%] w-24 h-24 opacity-15 transform-gpu rotate-[30deg] rotate-x-[-20deg] rotate-y-[45deg] rounded-full glass-panel animate-float" style={{ animationDelay: '3s', animationDuration: '10s' }} />
+              <motion.div style={{ x: smoothX, y: smoothY }} className="absolute top-[40%] left-[45%] w-32 h-32 opacity-25 transform-gpu rotate-[-15deg] rotate-x-[60deg] rotate-y-[30deg] rounded-xl glass-panel animate-float" style={{ animationDelay: '1s', animationDuration: '14s' }} />
+              <motion.div style={{ x: smoothXSlow, y: smoothYFast }} className="absolute top-[25%] left-[70%] w-48 h-48 opacity-15 transform-gpu rotate-[45deg] rotate-x-[20deg] rotate-y-[60deg] rounded-[2.5rem] glass-panel animate-float" style={{ animationDelay: '4s', animationDuration: '15s' }} />
+              <motion.div style={{ x: smoothXFast, y: smoothYFast }} className="absolute bottom-[15%] left-[85%] w-28 h-28 opacity-20 transform-gpu rotate-[-30deg] rotate-x-[-45deg] rotate-y-[-15deg] rounded-full glass-panel animate-float" style={{ animationDelay: '2s', animationDuration: '11s' }} />
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
