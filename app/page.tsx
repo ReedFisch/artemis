@@ -243,6 +243,10 @@ export default function Home() {
   const cursorY = useMotionValue(-1000);
   const smoothCursorX = useSpring(cursorX, { stiffness: 40, damping: 20 });
   const smoothCursorY = useSpring(cursorY, { stiffness: 40, damping: 20 });
+  const smoothCursorX2 = useSpring(cursorX, { stiffness: 20, damping: 30 }); // Trail 1
+  const smoothCursorY2 = useSpring(cursorY, { stiffness: 20, damping: 30 });
+  const smoothCursorX3 = useSpring(cursorX, { stiffness: 10, damping: 40 }); // Trail 2
+  const smoothCursorY3 = useSpring(cursorY, { stiffness: 10, damping: 40 });
 
   const springConfig = { damping: 25, stiffness: 80, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
@@ -299,28 +303,12 @@ export default function Home() {
     <main ref={containerRef} className="snap-container text-white font-sans overflow-x-hidden">
 
       {/* ══════════════════════════════════════════════════════
-           AMBIENT BACKGROUND GRADIENTS & SHAPES (Fades in after Hero)
+           AMBIENT LIQUID BACKGROUND (Follows Cursor & Extends Across Site)
            ══════════════════════════════════════════════════════ */}
       <motion.div className="fixed inset-0 z-0 pointer-events-none overflow-hidden h-screen w-full" aria-hidden="true">
         {/* Faint Star Background */}
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 200px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
         
-        {/* Deep Organic Liquid Gradients Interacting with Cursor */}
-        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.2) 40%, transparent 70%)' }} className="absolute w-[800px] h-[800px] -top-[200px] -left-[200px] rounded-full opacity-[0.25]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 45%, transparent 70%)' }} className="absolute w-[600px] h-[600px] -top-[100px] -right-[150px] rounded-full opacity-[0.2]" />
-        <motion.div style={{ x: smoothX, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, rgba(249,115,22,0.1) 50%, transparent 75%)' }} className="absolute w-[700px] h-[700px] top-[25%] -left-[300px] rounded-full opacity-[0.2]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, rgba(37,99,235,0.15) 40%, transparent 70%)' }} className="absolute w-[900px] h-[900px] top-[35%] -right-[350px] rounded-full opacity-[0.25]" />
-        <motion.div style={{ x: smoothX, y: smoothY, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} className="absolute w-[500px] h-[500px] top-[50%] left-[30%] rounded-full opacity-[0.15]" />
-        <motion.div style={{ x: smoothXSlow, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(37,99,235,0.1) 45%, transparent 70%)' }} className="absolute w-[800px] h-[800px] top-[65%] -left-[250px] rounded-full opacity-[0.2]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 40%, transparent 70%)' }} className="absolute w-[650px] h-[650px] top-[70%] -right-[200px] rounded-full opacity-[0.2]" />
-        
-        {/* Bottom sweep — wide blue-to-orange */}
-        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.15]" />
-        
-        {/* Deep center glow */}
-        <motion.div style={{ x: smoothXFast, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.15]" />
-        
-        {/* Scatter orbs */}
         <motion.div style={{ x: smoothX, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.2]" />
         <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.2]" />
         <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.15]" />
@@ -409,16 +397,15 @@ export default function Home() {
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ width: '200vw' }}>
               {/* Starfield */}
               <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
-              
-              {/* Deep Organic Liquid Gradients Interacting with Cursor */}
-              <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, transparent 70%)' }} className="absolute w-[800px] h-[800px] top-[-100px] left-[10%] rounded-full opacity-[0.2]" />
-              <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, transparent 70%)' }} className="absolute w-[700px] h-[700px] bottom-[-20%] left-[30%] rounded-full opacity-[0.2]" />
-              <motion.div style={{ x: smoothX, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} className="absolute w-[900px] h-[900px] top-[20%] left-[60%] rounded-full opacity-[0.15]" />
-              <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} className="absolute w-[800px] h-[800px] bottom-[10%] right-[10%] rounded-full opacity-[0.15]" />
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
             <div className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24 relative z-10">
+              
+              {/* Scattered 3D Shapes */}
+              <motion.div style={{ x: smoothXSlow, y: smoothYSlow }} animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
+              <motion.div style={{ x: smoothXFast, y: smoothYFast }} animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
+              
               <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-12 items-stretch h-[80vh]">
                 
                 {/* Left Side: About Text */}
@@ -494,7 +481,12 @@ export default function Home() {
             </div>
 
             {/* --- TIMELINE PANE (100vw) --- */}
-            <div id="timeline" className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24">
+            <div id="timeline" className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24 relative z-10">
+              
+              {/* Scattered 3D Shapes */}
+              <motion.div style={{ x: smoothXFast, y: smoothYSlow }} animate={{ rotateX: 360, rotateY: -360 }} transition={{ duration: 35, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-cube absolute top-[30%] right-[10%] w-40 h-40 opacity-30 z-0 pointer-events-none" />
+              <motion.div style={{ x: smoothXSlow, y: smoothYFast }} animate={{ rotateZ: -360 }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-pill absolute bottom-[20%] left-[10%] w-24 h-64 opacity-20 z-0 pointer-events-none" />
+              
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-6xl font-header font-black text-white">
                   Our Timeline
@@ -574,8 +566,9 @@ export default function Home() {
            ══════════════════════════════════════════════════════ */}
       <section id="outreach" className="snap-section relative z-10 overflow-hidden">
         {/* Scattered 3D Shapes Interacting with Cursor and scrolling vertically */}
-        <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0] }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYSlow, animationDelay: '1s', animationDuration: '13s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-auto" />
-        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXFast, y: smoothYFast, animationDelay: '4s', animationDuration: '15s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-auto" />
+        <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0], rotateX: 360 }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYSlow }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-auto" />
+        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], rotateY: 360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXFast, y: smoothYFast }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-auto" />
+        <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} style={{ x: smoothX, y: smoothY }} className="shape-3d shape-pill absolute top-[50%] right-[5%] w-20 h-56 opacity-30 z-0 pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-6 w-full text-center mb-12 relative z-10">
           <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue mb-2 block">
