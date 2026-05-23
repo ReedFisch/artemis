@@ -187,35 +187,10 @@ export default function Home() {
   }, [mouseX, mouseY]);
 
   // Parallax Values for Hero
-  const yHeroText = useTransform(scrollYProgress, [0, 0.2], [0, 200]);
-  const opacityHero = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
-
-  // Horizontal Scroll for About Us -> Timeline
-  const horizontalScrollRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: horizontalScrollYProgress } = useScroll({
-    target: horizontalScrollRef,
-    container: containerRef,
-    offset: ["start start", "end end"]
-  });
-  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 1], ["0%", "-50%"]);
-
-  // Form submission mock
-  const handleContactSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmittingContact(true);
-    setTimeout(() => {
-      setIsSubmittingContact(false);
-      setContactSuccess(true);
-    }, 1500);
-  };
-
-  return (
-    <main ref={containerRef} className="snap-container text-white font-sans overflow-x-hidden">
-
-      {/* ══════════════════════════════════════════════════════
-           AMBIENT BACKGROUND GRADIENTS & STARS
+  const yHeroText = useTransform(scrollYProgress, [0, 0.2], [0, 20      {/* ══════════════════════════════════════════════════════
+           AMBIENT BACKGROUND GRADIENTS & SHAPES (Fades in after Hero)
            ══════════════════════════════════════════════════════ */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <motion.div style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]) }} className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {/* Faint Star Background */}
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 200px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
         
@@ -232,6 +207,20 @@ export default function Home() {
         <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.15]" />
         
         {/* Deep center glow */}
+        <motion.div style={{ x: smoothXFast, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.15]" />
+        
+        {/* Scatter orbs */}
+        <motion.div style={{ x: smoothX, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.2]" />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.2]" />
+        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.15]" />
+
+        {/* Floating 3D Geometric Shapes that drift organically */}
+        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '0s', animationDuration: '10s' }} className="shape-3d shape-cube absolute top-[20%] left-[10%] w-32 h-32 opacity-80" />
+        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '2s', animationDuration: '14s' }} className="shape-3d shape-sphere absolute top-[60%] right-[15%] w-48 h-48 opacity-90" />
+        <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ x: smoothX, y: smoothY, animationDelay: '4s', animationDuration: '12s' }} className="shape-3d shape-sphere absolute bottom-[20%] left-[25%] w-24 h-24 opacity-70" />
+        <motion.div animate={{ x: [0, -20, 40, 0], y: [0, -40, 20, 0] }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXFast, y: smoothYFast, animationDelay: '1s', animationDuration: '15s' }} className="shape-3d shape-cube absolute top-[10%] right-[30%] w-40 h-40 opacity-80" />
+        <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0] }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYSlow, animationDelay: '3s', animationDuration: '11s' }} className="shape-3d shape-sphere absolute top-[40%] left-[70%] w-36 h-36 opacity-75" />
+      </motion.div> */}
         <motion.div style={{ x: smoothXFast, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.15]" />
         
         {/* Scatter orbs */}
@@ -285,18 +274,6 @@ export default function Home() {
               <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, transparent 70%)' }} className="absolute w-[700px] h-[700px] bottom-[-20%] left-[30%] rounded-full opacity-[0.2]" />
               <motion.div style={{ x: smoothX, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} className="absolute w-[900px] h-[900px] top-[20%] left-[60%] rounded-full opacity-[0.15]" />
               <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, transparent 70%)' }} className="absolute w-[800px] h-[800px] bottom-[10%] right-[10%] rounded-full opacity-[0.15]" />
-              
-              {/* 3D Floating Shapes spread randomly across the 200vw canvas */}
-              <motion.div style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '0s', animationDuration: '12s' }} className="shape-3d shape-cube absolute top-[15%] left-[5%] w-40 h-40 opacity-70" />
-              <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '3s', animationDuration: '10s' }} className="shape-3d shape-sphere absolute bottom-[20%] left-[20%] w-24 h-24 opacity-80" />
-              <motion.div style={{ x: smoothX, y: smoothY, animationDelay: '1s', animationDuration: '14s' }} className="shape-3d shape-sphere absolute top-[60%] left-[40%] w-32 h-32 opacity-90" />
-              <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '4s', animationDuration: '15s' }} className="shape-3d shape-cube absolute top-[25%] left-[60%] w-48 h-48 opacity-60" />
-              <motion.div style={{ x: smoothXFast, y: smoothYFast, animationDelay: '2s', animationDuration: '11s' }} className="shape-3d shape-sphere absolute bottom-[10%] left-[80%] w-28 h-28 opacity-80" />
-              
-              <motion.div style={{ x: smoothX, y: smoothYFast, animationDelay: '5s', animationDuration: '16s' }} className="shape-3d shape-cube absolute top-[50%] left-[110%] w-36 h-36 opacity-70" />
-              <motion.div style={{ x: smoothXSlow, y: smoothYSlow, animationDelay: '1s', animationDuration: '13s' }} className="shape-3d shape-sphere absolute bottom-[30%] left-[130%] w-20 h-20 opacity-80" />
-              <motion.div style={{ x: smoothXFast, y: smoothY, animationDelay: '6s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[20%] left-[160%] w-44 h-44 opacity-60" />
-              <motion.div style={{ x: smoothX, y: smoothYFast, animationDelay: '2s', animationDuration: '11s' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[185%] w-32 h-32 opacity-90" />
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
@@ -455,10 +432,6 @@ export default function Home() {
            5. OUTREACH CAROUSEL
            ══════════════════════════════════════════════════════ */}
       <section id="outreach" className="snap-section relative z-10 overflow-hidden">
-        {/* Scattered 3D Shapes Interacting with Cursor */}
-        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, animationDelay: '1s', animationDuration: '13s' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-none" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, animationDelay: '4s', animationDuration: '15s' }} className="shape-3d shape-cube absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-none" />
-        
         <div className="max-w-7xl mx-auto px-6 w-full text-center mb-12 relative z-10">
           <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue mb-2 block">
             04 / Community
@@ -492,10 +465,6 @@ export default function Home() {
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
       <section id="budget" className="snap-section relative z-10 overflow-hidden">
-        {/* Scattered 3D Shapes Interacting with Cursor */}
-        <motion.div style={{ x: smoothX, y: smoothY, animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
-        <motion.div style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '0s', animationDuration: '12s' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-36 h-36 opacity-60 z-0 pointer-events-none" />
-        
         <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col lg:flex-row gap-12 items-center justify-center relative z-10">
           
           {/* Budget Breakdown 3D Visual */}
