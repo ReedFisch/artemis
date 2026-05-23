@@ -169,13 +169,34 @@ export default function Home() {
     offset: ["start start", "end end"]
   });
   
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const imagesRef = useRef<HTMLImageElement[]>([]);
   
-  useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
-    if (videoRef.current && videoRef.current.duration) {
-      videoRef.current.currentTime = latest * videoRef.current.duration;
+  // Preload images on mount
+  useEffect(() => {
+    const frameCount = 290;
+    const currentImages: HTMLImageElement[] = [];
+
+    for (let i = 1; i <= frameCount; i++) {
+      const img = new Image();
+      const paddedIndex = i.toString().padStart(3, '0');
+      img.src = `/hero_frames/${paddedIndex}.jpg`;
+      
+      // Draw first frame immediately
+      if (i === 1) {
+        img.onload = () => {
+          if (canvasRef.current) {
+            const ctx = canvasRef.current.getContext('2d');
+            if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080);
+          }
+        };
+      }
+      currentImages.push(img);
     }
-  });
+    imagesRef.current = currentImages;
+  }, []);
+
+  useMotionValueEvent(heroScrollYProgress, "change", (latest) => { const frameIndex = Math.min(289, Math.floor(latest * 290)); if (canvasRef.current && imagesRef.current[frameIndex]) { const ctx = canvasRef.current.getContext('2d'); const img = imagesRef.current[frameIndex]; if (img.complete && img.naturalHeight !== 0) { requestAnimationFrame(() => { if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080); }); } } });
 
   // Organic Liquid Mouse Tracking
   const mouseX = useMotionValue(0);
@@ -290,15 +311,7 @@ export default function Home() {
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
           
           <div className="absolute inset-0 z-0">
-            <video
-              ref={videoRef}
-              src="/hero.mp4"
-              poster="/hero_poster.png"
-              muted
-              playsInline
-              preload="auto"
-              className="w-full h-full object-cover opacity-60"
-            />
+            <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-60" />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#05070B]/50 to-[#05070B]" />
           </div>
           
