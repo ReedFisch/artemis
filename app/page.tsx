@@ -320,12 +320,6 @@ export default function Home() {
            1. HERO
            ══════════════════════════════════════════════════════ */}
       <section id="hero" ref={heroScrollRef} className="relative w-full z-10" style={{ height: '300vh' }}>
-        {/* Native Scrolling Hero Shapes */}
-        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[5%] left-[10%] w-32 h-32 opacity-70 pointer-events-auto z-20" />
-        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[15%] right-[15%] w-48 h-48 opacity-80 pointer-events-auto z-20" />
-        <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[50%] left-[25%] w-24 h-24 opacity-60 pointer-events-auto z-20" />
-        <motion.div animate={{ x: [0, -20, 40, 0], y: [0, -40, 20, 0] }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[80%] right-[30%] w-40 h-40 opacity-70 pointer-events-auto z-20" />
-
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
           
           <div className="absolute inset-0 z-0">
@@ -337,14 +331,11 @@ export default function Home() {
             <span className="text-[10px] md:text-xs font-bold tracking-[0.5em] uppercase text-white/40 mb-6 drop-shadow-lg">
               FRC Team 6621 - Chatham NY
             </span>
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-header font-black tracking-tighter leading-none text-3d mb-6">
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-header font-black tracking-tighter leading-none text-white/50 mb-10">
               ARTEMIS
             </h1>
-            <p className="text-sm md:text-base text-white/50 max-w-xl font-light tracking-wide mb-12">
-              Deep Space. Deep Time. Building the future of engineering.
-            </p>
-            <a href="#about" className="glass-panel px-8 py-4 uppercase text-[10px] font-bold tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 rounded-full pointer-events-auto">
-              Begin Journey
+            <a href="#sponsorship" className="shrink-0 px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 pointer-events-auto" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>
+              Sponsor Now
             </a>
           </motion.div>
         </div>
