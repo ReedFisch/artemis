@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionValueEvent, useMotionTemplate } from "framer-motion";
 import Counter from "./components/Counter";
 
 // ─── Types ──────────────────────────
@@ -158,59 +158,9 @@ export default function Home() {
   const [selectedTier, setSelectedTier] = useState<"Hermes" | "Apollo" | "ZEUS" | "Other">("Apollo");
   const [contactSuccess, setContactSuccess] = useState(false);
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
+  const [isMoving, setIsMoving] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: containerRef });
-
-  // Hero Scroll Scrubbing
-  const heroScrollRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: heroScrollYProgress } = useScroll({
-    target: heroScrollRef,
-    container: containerRef,
-    offset: ["start start", "end end"]
-  });
-  
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
-  
-  // Preload images on mount
-  useEffect(() => {
-    const frameCount = 290;
-    const currentImages: HTMLImageElement[] = [];
-
-    for (let i = 1; i <= frameCount; i++) {
-      const img = new Image();
-      const paddedIndex = i.toString().padStart(3, '0');
-      img.src = i === 1 ? '/hero_poster.png' : `/hero_frames/${paddedIndex}.jpg`;
-      
-      // Draw first frame immediately
-      if (i === 1) {
-        img.onload = () => {
-          if (canvasRef.current) {
-            const ctx = canvasRef.current.getContext('2d');
-            if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080);
-          }
-        };
-      }
-      currentImages.push(img);
-    }
-    imagesRef.current = currentImages;
-  }, []);
-
-  const rafRef = useRef<number | null>(null);
-
-  useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
-    const frameIndex = Math.min(289, Math.floor(latest * 290));
-    if (canvasRef.current && imagesRef.current[frameIndex]) {
-      const ctx = canvasRef.current.getContext('2d');
-      const img = imagesRef.current[frameIndex];
-      if (img.complete && img.naturalHeight !== 0) {
-        if (rafRef.current) cancelAnimationFrame(rafRef.current);
-        rafRef.current = requestAnimationFrame(() => {
-          if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080);
-        });
-      }
-    }
-  });
 
   const handleFastScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
@@ -241,12 +191,13 @@ export default function Home() {
   const mouseY = useMotionValue(0);
   const cursorX = useMotionValue(-1000);
   const cursorY = useMotionValue(-1000);
-  const smoothCursorX = useSpring(cursorX, { stiffness: 40, damping: 20 });
-  const smoothCursorY = useSpring(cursorY, { stiffness: 40, damping: 20 });
-  const smoothCursorX2 = useSpring(cursorX, { stiffness: 20, damping: 30 }); // Trail 1
-  const smoothCursorY2 = useSpring(cursorY, { stiffness: 20, damping: 30 });
-  const smoothCursorX3 = useSpring(cursorX, { stiffness: 10, damping: 40 }); // Trail 2
-  const smoothCursorY3 = useSpring(cursorY, { stiffness: 10, damping: 40 });
+  // Underdamped springs to overshoot like liquid sliding past cursor
+  const smoothCursorX = useSpring(cursorX, { stiffness: 150, damping: 12, mass: 1 });
+  const smoothCursorY = useSpring(cursorY, { stiffness: 150, damping: 12, mass: 1 });
+  const smoothCursorX2 = useSpring(cursorX, { stiffness: 100, damping: 10, mass: 1 }); // Trail 1
+  const smoothCursorY2 = useSpring(cursorY, { stiffness: 100, damping: 10, mass: 1 });
+  const smoothCursorX3 = useSpring(cursorX, { stiffness: 60, damping: 8, mass: 1 }); // Trail 2
+  const smoothCursorY3 = useSpring(cursorY, { stiffness: 60, damping: 8, mass: 1 });
 
   const springConfig = { damping: 25, stiffness: 80, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
@@ -257,7 +208,14 @@ export default function Home() {
   const smoothYFast = useSpring(useTransform(mouseY, v => v * 1.5), springConfig);
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
     const handleMouseMove = (e: MouseEvent) => {
+      setIsMoving(true);
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        setIsMoving(false);
+      }, 200);
+
       // Calculate normalized mouse position (-1 to 1)
       const x = (e.clientX / window.innerWidth) * 2 - 1;
       const y = (e.clientY / window.innerHeight) * 2 - 1;
@@ -268,12 +226,18 @@ export default function Home() {
       cursorY.set(e.clientY);
     };
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(timeout);
+    };
   }, [mouseX, mouseY, cursorX, cursorY]);
 
+  // Mask templates for hover trails
+  const mask1 = useMotionTemplate`radial-gradient(circle 250px at ${smoothCursorX}px ${smoothCursorY}px, black 30%, transparent 80%)`;
+  const mask2 = useMotionTemplate`radial-gradient(circle 200px at ${smoothCursorX2}px ${smoothCursorY2}px, black 30%, transparent 80%)`;
+  const mask3 = useMotionTemplate`radial-gradient(circle 150px at ${smoothCursorX3}px ${smoothCursorY3}px, black 30%, transparent 80%)`;
+
   // Parallax Values for Hero
-  const yHeroText = useTransform(heroScrollYProgress, [0, 0.2], [0, 200], { clamp: true });
-  const opacityHero = useTransform(heroScrollYProgress, [0, 0.15], [1, 0], { clamp: true });
   const opacityShapes = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
   const yShapesFast = useTransform(scrollYProgress, [0, 1], ["0vh", "-150vh"]);
   const yShapesSlow = useTransform(scrollYProgress, [0, 1], ["0vh", "-80vh"]);
@@ -354,40 +318,110 @@ export default function Home() {
       </motion.div>
 
       {/* ══════════════════════════════════════════════════════
-           1. HERO
+           1. HERO (Lando Norris Style Reveal Effect)
            ══════════════════════════════════════════════════════ */}
-      <section id="hero" ref={heroScrollRef} className="relative w-full z-10" style={{ height: '300vh' }}>
-        <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
-          
-          <motion.header style={{ opacity: opacityHero }} className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto">
-            <div className="flex items-center gap-4">
-              <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-10 h-10 opacity-80 mix-blend-screen object-contain" />
-              <span className="font-header font-bold text-white/50 tracking-widest text-sm">ARTEMIS</span>
-            </div>
-            <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
-              <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-colors">About</a>
-              <a href="#impact" onClick={(e) => handleFastScroll(e, '#impact')} className="hover:text-white transition-colors">Impact</a>
-              <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="hover:text-white transition-colors">Sponsor</a>
-              <a href="#footer" onClick={(e) => handleFastScroll(e, '#footer')} className="hover:text-white transition-colors">Contact</a>
-            </nav>
-          </motion.header>
-
-          <div className="absolute inset-0 z-0">
-            <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-60" />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#05070B]/50 to-[#05070B]" />
+      <section id="hero" className="relative w-full h-[100svh] z-10 bg-[#05070B] overflow-hidden">
+        
+        {/* HEADER */}
+        <header className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto">
+          <div className="flex items-center gap-4">
+            <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-12 h-12 opacity-80 mix-blend-screen object-contain" />
+            <span className="font-header font-black text-white tracking-widest text-3xl md:text-5xl">ARTEMIS</span>
           </div>
-          
-          <motion.div style={{ y: yHeroText, opacity: opacityHero }} className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center pointer-events-none">
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-header font-black tracking-tighter leading-none text-white/20 mb-4">
-              ARTEMIS
-            </h1>
-            <span className="text-[10px] md:text-xs font-bold tracking-[0.5em] uppercase text-white/40 mb-16 drop-shadow-lg">
-              FRC Team 6621 - Chatham NY
-            </span>
-            <a href="#sponsorship" className="shrink-0 px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 pointer-events-auto" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>
-              Sponsor Now
-            </a>
-          </motion.div>
+          <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
+            <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-colors">About</a>
+            <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="hover:text-white transition-colors">Timeline</a>
+            <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-colors">Impact</a>
+            <a href="#budget" onClick={(e) => handleFastScroll(e, '#budget')} className="hover:text-white transition-colors">Sponsor</a>
+          </nav>
+        </header>
+
+        {/* Topographic White Line Moving Background */}
+        <motion.div 
+          className="absolute inset-0 z-0 opacity-[0.15]"
+          style={{
+             backgroundImage: 'repeating-radial-gradient(circle at center, transparent 0, transparent 40px, rgba(255,255,255,0.4) 41px, rgba(255,255,255,0.4) 42px)',
+             backgroundSize: '150% 150%'
+          }}
+          animate={{ scale: [1, 1.2, 1], backgroundPosition: ["0px 0px", "100px 100px", "0px 0px"] }}
+          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        />
+
+        {/* Base Layer: Ghost/Wireframe Robot */}
+        <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10">
+           <img src="/robot_cad.png" alt="Robot Base" className="w-[85vw] max-w-5xl object-contain opacity-20 grayscale brightness-150 contrast-125" />
+        </div>
+
+        {/* --- HOVER REVEAL TRAILS --- */}
+        {/* Trail 3 (Farthest back) */}
+        <motion.div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10" 
+          style={{ WebkitMaskImage: mask3, maskImage: mask3 }}
+          animate={{ opacity: isMoving ? 0.3 : 0 }}
+          transition={{ duration: isMoving ? 0.2 : 1.5, ease: "easeOut" }}
+        >
+           <img src="/robot_cad.png" alt="Robot CAD" className="w-[85vw] max-w-5xl object-contain blur-[4px]" />
+        </motion.div>
+        
+        {/* Trail 2 */}
+        <motion.div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10" 
+          style={{ WebkitMaskImage: mask2, maskImage: mask2 }}
+          animate={{ opacity: isMoving ? 0.6 : 0 }}
+          transition={{ duration: isMoving ? 0.1 : 1.2, ease: "easeOut" }}
+        >
+           <img src="/robot_cad.png" alt="Robot CAD" className="w-[85vw] max-w-5xl object-contain blur-[2px]" />
+        </motion.div>
+        
+        {/* Main Hover Reveal Layer */}
+        <motion.div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none mt-10" 
+          style={{ WebkitMaskImage: mask1, maskImage: mask1 }}
+          animate={{ opacity: isMoving ? 1 : 0 }}
+          transition={{ duration: isMoving ? 0 : 0.8, ease: "easeOut" }}
+        >
+           <img src="/robot_cad.png" alt="Robot CAD" className="w-[85vw] max-w-5xl object-contain drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
+        </motion.div>
+
+        {/* --- RANDOM SLIDING ANIMATIONS REVEALING CAD --- */}
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 mt-10"
+          initial={{ clipPath: "circle(10% at -10% 20%)" }}
+          animate={{ clipPath: "circle(10% at 110% 80%)" }}
+          transition={{ duration: 8, delay: 0, repeat: Infinity, ease: "linear" }}
+        >
+          <img src="/robot_cad.png" alt="Robot CAD Slider" className="w-[85vw] max-w-5xl object-contain opacity-60" />
+        </motion.div>
+
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 mt-10"
+          initial={{ clipPath: "circle(15% at 110% 70%)" }}
+          animate={{ clipPath: "circle(15% at -10% 30%)" }}
+          transition={{ duration: 12, delay: 3, repeat: Infinity, ease: "linear" }}
+        >
+          <img src="/robot_cad.png" alt="Robot CAD Slider" className="w-[85vw] max-w-5xl object-contain opacity-70" />
+        </motion.div>
+
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 mt-10"
+          initial={{ clipPath: "circle(8% at 40% -10%)" }}
+          animate={{ clipPath: "circle(8% at 60% 110%)" }}
+          transition={{ duration: 10, delay: 1, repeat: Infinity, ease: "linear" }}
+        >
+          <img src="/robot_cad.png" alt="Robot CAD Slider" className="w-[85vw] max-w-5xl object-contain opacity-80" />
+        </motion.div>
+
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 mt-10"
+          initial={{ clipPath: "polygon(0 0, 10% 0, 0 100%, -10% 100%)" }}
+          animate={{ clipPath: "polygon(100% 0, 110% 0, 110% 100%, 100% 100%)" }}
+          transition={{ duration: 6, delay: 2, repeat: Infinity, ease: "linear" }}
+        >
+          <img src="/robot_cad.png" alt="Robot CAD Slider" className="w-[85vw] max-w-5xl object-contain opacity-40 grayscale" />
+        </motion.div>
+
+        {/* Sponsor Button */}
+        <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto">
+          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 backdrop-blur-md" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.4)', boxShadow: '0 4px 16px rgba(0,0,0,0.3), 0 0 20px rgba(37,99,235,0.2)' }}>
+            Sponsor Now
+          </a>
         </div>
       </section>
 
