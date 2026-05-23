@@ -196,7 +196,45 @@ export default function Home() {
     imagesRef.current = currentImages;
   }, []);
 
-  useMotionValueEvent(heroScrollYProgress, "change", (latest) => { const frameIndex = Math.min(289, Math.floor(latest * 290)); if (canvasRef.current && imagesRef.current[frameIndex]) { const ctx = canvasRef.current.getContext('2d'); const img = imagesRef.current[frameIndex]; if (img.complete && img.naturalHeight !== 0) { requestAnimationFrame(() => { if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080); }); } } });
+  const rafRef = useRef<number | null>(null);
+
+  useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
+    const frameIndex = Math.min(289, Math.floor(latest * 290));
+    if (canvasRef.current && imagesRef.current[frameIndex]) {
+      const ctx = canvasRef.current.getContext('2d');
+      const img = imagesRef.current[frameIndex];
+      if (img.complete && img.naturalHeight !== 0) {
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        rafRef.current = requestAnimationFrame(() => {
+          if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080);
+        });
+      }
+    }
+  });
+
+  const handleFastScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const target = document.querySelector(targetId);
+    if (!target) return;
+    
+    const targetPosition = target.getBoundingClientRect().top + window.scrollY;
+    const startPosition = window.scrollY;
+    const distance = targetPosition - startPosition;
+    const duration = 250; // Very fast 250ms scroll
+    let start: number | null = null;
+    
+    const step = (timestamp: number) => {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+      const easeOutCubic = 1 - Math.pow(1 - progress / duration, 3);
+        
+      window.scrollTo(0, startPosition + distance * Math.min(easeOutCubic, 1));
+      if (progress < duration) {
+        requestAnimationFrame(step);
+      }
+    };
+    requestAnimationFrame(step);
+  };
 
   // Organic Liquid Mouse Tracking
   const mouseX = useMotionValue(0);
@@ -328,10 +366,10 @@ export default function Home() {
               <span className="font-header font-bold text-white/50 tracking-widest text-sm">ARTEMIS</span>
             </div>
             <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
-              <a href="#about" className="hover:text-white transition-colors">About</a>
-              <a href="#impact" className="hover:text-white transition-colors">Impact</a>
-              <a href="#sponsorship" className="hover:text-white transition-colors">Sponsor</a>
-              <a href="#footer" className="hover:text-white transition-colors">Contact</a>
+              <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-colors">About</a>
+              <a href="#impact" onClick={(e) => handleFastScroll(e, '#impact')} className="hover:text-white transition-colors">Impact</a>
+              <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="hover:text-white transition-colors">Sponsor</a>
+              <a href="#footer" onClick={(e) => handleFastScroll(e, '#footer')} className="hover:text-white transition-colors">Contact</a>
             </nav>
           </motion.header>
 
