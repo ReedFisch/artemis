@@ -303,44 +303,55 @@ export default function Home() {
     <main ref={containerRef} className="snap-container text-white font-sans overflow-x-hidden">
 
       {/* ══════════════════════════════════════════════════════
-           AMBIENT LIQUID BACKGROUND (Follows Cursor & Extends Across Site)
+           AMBIENT BACKGROUND GRADIENTS (Continous across entire site)
            ══════════════════════════════════════════════════════ */}
       <motion.div className="fixed inset-0 z-0 pointer-events-none overflow-hidden h-screen w-full" aria-hidden="true">
         {/* Faint Star Background */}
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 200px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
         
+        {/* Deep Organic Liquid Gradients Interacting with Cursor */}
+        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.2) 40%, transparent 70%)' }} className="absolute w-[800px] h-[800px] -top-[200px] -left-[200px] rounded-full opacity-[0.25]" />
+        <motion.div style={{ x: smoothXFast, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 45%, transparent 70%)' }} className="absolute w-[600px] h-[600px] -top-[100px] -right-[150px] rounded-full opacity-[0.2]" />
+        <motion.div style={{ x: smoothX, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, rgba(249,115,22,0.1) 50%, transparent 75%)' }} className="absolute w-[700px] h-[700px] top-[25%] -left-[300px] rounded-full opacity-[0.2]" />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, rgba(37,99,235,0.15) 40%, transparent 70%)' }} className="absolute w-[900px] h-[900px] top-[35%] -right-[350px] rounded-full opacity-[0.25]" />
+        <motion.div style={{ x: smoothX, y: smoothY, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} className="absolute w-[500px] h-[500px] top-[50%] left-[30%] rounded-full opacity-[0.15]" />
+        <motion.div style={{ x: smoothXSlow, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(37,99,235,0.1) 45%, transparent 70%)' }} className="absolute w-[800px] h-[800px] top-[65%] -left-[250px] rounded-full opacity-[0.2]" />
+        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 40%, transparent 70%)' }} className="absolute w-[650px] h-[650px] top-[70%] -right-[200px] rounded-full opacity-[0.2]" />
+        
+        {/* Bottom sweep — wide blue-to-orange */}
+        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.15]" />
+        
+        {/* Deep center glow */}
+        <motion.div style={{ x: smoothXFast, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.15]" />
+        
+        {/* Scatter orbs */}
         <motion.div style={{ x: smoothX, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.2]" />
         <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.2]" />
-        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.15]" />
+        
+        {/* Liquid Organic Cursor Trails */}
+        <motion.div 
+          className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full pointer-events-none mix-blend-screen opacity-50 z-0"
+          style={{ 
+            x: smoothCursorX, 
+            y: smoothCursorY,
+            translateX: "-50%",
+            translateY: "-50%",
+            background: "radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(249,115,22,0.3) 40%, transparent 70%)",
+            filter: "blur(40px)"
+          }}
+        />
+        <motion.div 
+          className="absolute top-0 left-0 w-[800px] h-[800px] rounded-full pointer-events-none mix-blend-screen opacity-30 z-0"
+          style={{ 
+            x: smoothCursorX3, 
+            y: smoothCursorY3,
+            translateX: "-50%",
+            translateY: "-50%",
+            background: "radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 60%)",
+            filter: "blur(60px)"
+          }}
+        />
       </motion.div>
-
-      {/* Global Interactive 3D Shapes (Fades in after Hero) */}
-      <motion.div style={{ opacity: opacityShapes }} className="fixed inset-0 z-10 pointer-events-none h-screen w-full" aria-hidden="true">
-        <motion.div style={{ y: yShapesFast }} className="absolute inset-0">
-          <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[20%] left-[10%] w-32 h-32 opacity-70 pointer-events-auto" />
-          <motion.div animate={{ x: [0, -20, 40, 0], y: [0, -40, 20, 0] }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[60%] right-[15%] w-40 h-40 opacity-70 pointer-events-auto" />
-          <motion.div animate={{ x: [0, 30, -30, 0], y: [0, -20, 40, 0] }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[110%] left-[20%] w-24 h-24 opacity-60 pointer-events-auto" />
-          <motion.div animate={{ x: [0, -40, 20, 0], y: [0, 30, -30, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[160%] right-[25%] w-36 h-36 opacity-75 pointer-events-auto" />
-        </motion.div>
-        <motion.div style={{ y: yShapesSlow }} className="absolute inset-0">
-          <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[40%] right-[30%] w-48 h-48 opacity-80 pointer-events-auto" />
-          <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[85%] left-[15%] w-28 h-28 opacity-65 pointer-events-auto" />
-          <motion.div animate={{ x: [0, -25, 15, 0], y: [0, 25, -15, 0] }} transition={{ duration: 19, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[135%] right-[10%] w-20 h-20 opacity-70 pointer-events-auto" />
-        </motion.div>
-      </motion.div>
-
-      {/* Liquid Organic Cursor Blob */}
-      <motion.div 
-        className="fixed top-0 left-0 w-[500px] h-[500px] rounded-full pointer-events-none mix-blend-screen opacity-50 z-0"
-        style={{ 
-          x: smoothCursorX, 
-          y: smoothCursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-          background: "radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(249,115,22,0.3) 40%, transparent 70%)",
-          filter: "blur(40px)"
-        }}
-      />
 
       {/* ══════════════════════════════════════════════════════
            1. HERO
@@ -367,12 +378,12 @@ export default function Home() {
           </div>
           
           <motion.div style={{ y: yHeroText, opacity: opacityHero }} className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center pointer-events-none">
-            <span className="text-[10px] md:text-xs font-bold tracking-[0.5em] uppercase text-white/40 mb-6 drop-shadow-lg">
-              FRC Team 6621 - Chatham NY
-            </span>
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-header font-black tracking-tighter leading-none text-white/20 mb-10">
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-header font-black tracking-tighter leading-none text-white/20 mb-4">
               ARTEMIS
             </h1>
+            <span className="text-[10px] md:text-xs font-bold tracking-[0.5em] uppercase text-white/40 mb-16 drop-shadow-lg">
+              FRC Team 6621 - Chatham NY
+            </span>
             <a href="#sponsorship" className="shrink-0 px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 pointer-events-auto" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>
               Sponsor Now
             </a>
