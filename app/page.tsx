@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionValueEvent } from "framer-motion";
 import Counter from "./components/Counter";
 
 // ─── Types ──────────────────────────
@@ -203,7 +203,32 @@ export default function Home() {
   }, [mouseX, mouseY]);
 
   // Parallax Values for Hero
-  const yHeroText = useTransform(scrollYProgress, [0, 0.2], [0, 20      {/* ══════════════════════════════════════════════════════
+  const yHeroText = useTransform(scrollYProgress, [0, 0.2], [0, 200]);
+  const opacityHero = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+
+  // Horizontal Scroll for About Us -> Timeline
+  const horizontalScrollRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: horizontalScrollYProgress } = useScroll({
+    target: horizontalScrollRef,
+    container: containerRef,
+    offset: ["start start", "end end"]
+  });
+  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 1], ["0%", "-50%"]);
+
+  // Form submission mock
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingContact(true);
+    setTimeout(() => {
+      setIsSubmittingContact(false);
+      setContactSuccess(true);
+    }, 1500);
+  };
+
+  return (
+    <main ref={containerRef} className="snap-container text-white font-sans overflow-x-hidden">
+
+      {/* ══════════════════════════════════════════════════════
            AMBIENT BACKGROUND GRADIENTS & SHAPES (Fades in after Hero)
            ══════════════════════════════════════════════════════ */}
       <motion.div style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]) }} className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
@@ -236,15 +261,7 @@ export default function Home() {
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ x: smoothX, y: smoothY, animationDelay: '4s', animationDuration: '12s' }} className="shape-3d shape-sphere absolute bottom-[20%] left-[25%] w-24 h-24 opacity-70" />
         <motion.div animate={{ x: [0, -20, 40, 0], y: [0, -40, 20, 0] }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXFast, y: smoothYFast, animationDelay: '1s', animationDuration: '15s' }} className="shape-3d shape-cube absolute top-[10%] right-[30%] w-40 h-40 opacity-80" />
         <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0] }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYSlow, animationDelay: '3s', animationDuration: '11s' }} className="shape-3d shape-sphere absolute top-[40%] left-[70%] w-36 h-36 opacity-75" />
-      </motion.div> */}
-        <motion.div style={{ x: smoothXFast, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.15]" />
-        
-        {/* Scatter orbs */}
-        <motion.div style={{ x: smoothX, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.2]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.2]" />
-        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.15]" />
-
-      </div>
+      </motion.div>
 
       {/* ══════════════════════════════════════════════════════
            1. HERO
