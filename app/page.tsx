@@ -268,8 +268,8 @@ export default function Home() {
   }, [mouseX, mouseY, cursorX, cursorY]);
 
   // Parallax Values for Hero
-  const yHeroText = useTransform(scrollYProgress, [0, 0.2], [0, 200]);
-  const opacityHero = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
+  const yHeroText = useTransform(heroScrollYProgress, [0, 0.2], [0, 200]);
+  const opacityHero = useTransform(heroScrollYProgress, [0, 0.2], [1, 0]);
   const opacityShapes = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
   const yShapesFast = useTransform(scrollYProgress, [0, 1], ["0vh", "-150vh"]);
   const yShapesSlow = useTransform(scrollYProgress, [0, 1], ["0vh", "-80vh"]);
@@ -390,15 +390,16 @@ export default function Home() {
             </a>
           </motion.div>
         </div>
-        
-        {/* Seamless Fade into Next Section */}
-        <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-b from-transparent via-[#05070B]/50 to-[#05070B] pointer-events-none z-20" />
       </section>
 
       {/* ══════════════════════════════════════════════════════
            2. ABOUT & TIMELINE (HORIZONTAL SCROLL)
            ══════════════════════════════════════════════════════ */}
       <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '450vh', scrollSnapAlign: 'start' }}>
+        
+        {/* Seamless Fade FROM Hero Section */}
+        <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#05070B] to-transparent pointer-events-none z-30" />
+        
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
           
