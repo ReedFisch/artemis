@@ -166,7 +166,7 @@ export default function Home() {
   const { scrollYProgress: heroScrollYProgress } = useScroll({
     target: heroScrollRef,
     container: containerRef,
-    offset: ["start start", "end start"]
+    offset: ["start start", "end end"]
   });
   
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -239,7 +239,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            AMBIENT BACKGROUND GRADIENTS & SHAPES (Fades in after Hero)
            ══════════════════════════════════════════════════════ */}
-      <motion.div style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]), y: bgParallaxY }} className="fixed inset-0 z-0 pointer-events-none overflow-hidden h-[150vh] w-full" aria-hidden="true">
+      <motion.div style={{ opacity: 1, y: bgParallaxY }} className="fixed inset-0 z-0 pointer-events-none overflow-hidden h-[150vh] w-full" aria-hidden="true">
         {/* Faint Star Background */}
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 200px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
         
@@ -281,12 +281,19 @@ export default function Home() {
            1. HERO
            ══════════════════════════════════════════════════════ */}
       <section id="hero" ref={heroScrollRef} className="relative w-full z-10" style={{ height: '300vh' }}>
+        {/* Native Scrolling Hero Shapes */}
+        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[5%] left-[10%] w-32 h-32 opacity-70 pointer-events-auto z-20" />
+        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[15%] right-[15%] w-48 h-48 opacity-80 pointer-events-auto z-20" />
+        <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[50%] left-[25%] w-24 h-24 opacity-60 pointer-events-auto z-20" />
+        <motion.div animate={{ x: [0, -20, 40, 0], y: [0, -40, 20, 0] }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[80%] right-[30%] w-40 h-40 opacity-70 pointer-events-auto z-20" />
+
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
           
           <div className="absolute inset-0 z-0">
-            <video 
+            <video
               ref={videoRef}
-              src="/hero.webm"
+              src="/hero.mp4"
+              poster="/hero_poster.png"
               muted
               playsInline
               preload="auto"
