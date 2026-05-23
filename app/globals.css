@@ -294,14 +294,11 @@ body {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  scroll-snap-type: y mandatory;
   perspective: 1px;
   transform-style: preserve-3d;
 }
 
 .snap-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   min-height: 100vh;
   width: 100vw;
   position: relative;
