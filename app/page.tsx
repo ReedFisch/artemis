@@ -180,6 +180,10 @@ export default function Home() {
   // Organic Liquid Mouse Tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const cursorX = useMotionValue(-1000);
+  const cursorY = useMotionValue(-1000);
+  const smoothCursorX = useSpring(cursorX, { stiffness: 40, damping: 20 });
+  const smoothCursorY = useSpring(cursorY, { stiffness: 40, damping: 20 });
 
   const springConfig = { damping: 25, stiffness: 80, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
@@ -197,14 +201,18 @@ export default function Home() {
       // Convert to pixel offsets (e.g. max 100px movement)
       mouseX.set(x * 100);
       mouseY.set(y * 100);
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, cursorX, cursorY]);
 
   // Parallax Values for Hero
   const yHeroText = useTransform(scrollYProgress, [0, 0.2], [0, 200]);
   const opacityHero = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+
+  const bgParallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
 
   // Horizontal Scroll for About Us -> Timeline
   const horizontalScrollRef = useRef<HTMLDivElement>(null);
@@ -231,7 +239,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            AMBIENT BACKGROUND GRADIENTS & SHAPES (Fades in after Hero)
            ══════════════════════════════════════════════════════ */}
-      <motion.div style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]) }} className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <motion.div style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]), y: bgParallaxY }} className="fixed inset-0 z-0 pointer-events-none overflow-hidden h-[150vh] w-full" aria-hidden="true">
         {/* Faint Star Background */}
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 200px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
         
@@ -254,14 +262,20 @@ export default function Home() {
         <motion.div style={{ x: smoothX, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.2]" />
         <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.2]" />
         <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.15]" />
-
-        {/* Floating 3D Geometric Shapes that drift organically */}
-        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXFast, y: smoothYSlow, animationDelay: '0s', animationDuration: '10s' }} className="shape-3d shape-cube absolute top-[20%] left-[10%] w-32 h-32 opacity-80" />
-        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '2s', animationDuration: '14s' }} className="shape-3d shape-sphere absolute top-[60%] right-[15%] w-48 h-48 opacity-90" />
-        <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ x: smoothX, y: smoothY, animationDelay: '4s', animationDuration: '12s' }} className="shape-3d shape-sphere absolute bottom-[20%] left-[25%] w-24 h-24 opacity-70" />
-        <motion.div animate={{ x: [0, -20, 40, 0], y: [0, -40, 20, 0] }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXFast, y: smoothYFast, animationDelay: '1s', animationDuration: '15s' }} className="shape-3d shape-cube absolute top-[10%] right-[30%] w-40 h-40 opacity-80" />
-        <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0] }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYSlow, animationDelay: '3s', animationDuration: '11s' }} className="shape-3d shape-sphere absolute top-[40%] left-[70%] w-36 h-36 opacity-75" />
       </motion.div>
+
+      {/* Liquid Organic Cursor Blob */}
+      <motion.div 
+        className="fixed top-0 left-0 w-[500px] h-[500px] rounded-full pointer-events-none mix-blend-screen opacity-50 z-0"
+        style={{ 
+          x: smoothCursorX, 
+          y: smoothCursorY,
+          translateX: "-50%",
+          translateY: "-50%",
+          background: "radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(249,115,22,0.3) 40%, transparent 70%)",
+          filter: "blur(40px)"
+        }}
+      />
 
       {/* ══════════════════════════════════════════════════════
            1. HERO
@@ -475,6 +489,10 @@ export default function Home() {
            5. OUTREACH CAROUSEL
            ══════════════════════════════════════════════════════ */}
       <section id="outreach" className="snap-section relative z-10 overflow-hidden">
+        {/* Scattered 3D Shapes Interacting with Cursor and scrolling vertically */}
+        <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0] }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYSlow, animationDelay: '1s', animationDuration: '13s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-auto" />
+        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXFast, y: smoothYFast, animationDelay: '4s', animationDuration: '15s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-auto" />
+        
         <div className="max-w-7xl mx-auto px-6 w-full text-center mb-12 relative z-10">
           <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue mb-2 block">
             04 / Community
@@ -508,6 +526,10 @@ export default function Home() {
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
       <section id="budget" className="snap-section relative z-10 overflow-hidden">
+        {/* Scattered 3D Shapes Interacting with Cursor and scrolling vertically */}
+        <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ x: smoothX, y: smoothY, animationDelay: '3s', animationDuration: '14s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-auto" />
+        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '0s', animationDuration: '12s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-36 h-36 opacity-60 z-0 pointer-events-auto" />
+        
         <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col lg:flex-row gap-12 items-center justify-center relative z-10">
           
           {/* Budget Breakdown 3D Visual */}
