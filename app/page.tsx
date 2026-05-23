@@ -230,14 +230,6 @@ export default function Home() {
   }, [mouseX, mouseY, cursorX, cursorY]);
 
   // Parallax Values for Hero
-  const [heroVisible, setHeroVisible] = useState(true);
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest > 0.1 && heroVisible) {
-      setHeroVisible(false);
-    }
-  });
-
-  // Parallax Values for Hero
   const yHeroText = useTransform(scrollYProgress, [0, 0.2], [0, 200]);
   const opacityHero = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
   const opacityShapes = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
@@ -330,42 +322,39 @@ export default function Home() {
       <section id="hero" ref={heroScrollRef} className="relative w-full z-10" style={{ height: '300vh' }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
           
-          {heroVisible && (
-            <motion.header style={{ opacity: opacityHero }} className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto">
-              <div className="flex items-center gap-4">
-                <img src="/branding/logo_1.jpeg" alt="Artemis Logo" className="w-10 h-10 opacity-80 mix-blend-screen rounded-full" />
-                <span className="font-header font-bold text-white/50 tracking-widest text-sm">ARTEMIS</span>
-              </div>
-              <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
-                <a href="#about" className="hover:text-white transition-colors">About</a>
-                <a href="#impact" className="hover:text-white transition-colors">Impact</a>
-                <a href="#sponsorship" className="hover:text-white transition-colors">Sponsor</a>
-                <a href="#footer" className="hover:text-white transition-colors">Contact</a>
-              </nav>
-            </motion.header>
-          )}
+          <motion.header style={{ opacity: opacityHero }} className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto">
+            <div className="flex items-center gap-4">
+              <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-10 h-10 opacity-80 mix-blend-screen rounded-full" />
+              <span className="font-header font-bold text-white/50 tracking-widest text-sm">ARTEMIS</span>
+            </div>
+            <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
+              <a href="#about" className="hover:text-white transition-colors">About</a>
+              <a href="#impact" className="hover:text-white transition-colors">Impact</a>
+              <a href="#sponsorship" className="hover:text-white transition-colors">Sponsor</a>
+              <a href="#footer" className="hover:text-white transition-colors">Contact</a>
+            </nav>
+          </motion.header>
 
           <div className="absolute inset-0 z-0">
             <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-60" />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#05070B]/50 to-[#05070B]" />
-            {/* Gradient blur into About section */}
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#05070B] via-[#05070B]/80 to-transparent pointer-events-none" />
           </div>
           
-          {heroVisible && (
-            <motion.div style={{ y: yHeroText, opacity: opacityHero }} className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center pointer-events-none">
-              <span className="text-[10px] md:text-xs font-bold tracking-[0.5em] uppercase text-white/40 mb-6 drop-shadow-lg">
-                FRC Team 6621 - Chatham NY
-              </span>
-              <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-header font-black tracking-tighter leading-none text-white/20 mb-10">
-                ARTEMIS
-              </h1>
-              <a href="#sponsorship" className="shrink-0 px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 pointer-events-auto" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>
-                Sponsor Now
-              </a>
-            </motion.div>
-          )}
+          <motion.div style={{ y: yHeroText, opacity: opacityHero }} className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center pointer-events-none">
+            <span className="text-[10px] md:text-xs font-bold tracking-[0.5em] uppercase text-white/40 mb-6 drop-shadow-lg">
+              FRC Team 6621 - Chatham NY
+            </span>
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-header font-black tracking-tighter leading-none text-white/20 mb-10">
+              ARTEMIS
+            </h1>
+            <a href="#sponsorship" className="shrink-0 px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 pointer-events-auto" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>
+              Sponsor Now
+            </a>
+          </motion.div>
         </div>
+        
+        {/* Seamless Fade into Next Section */}
+        <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-b from-transparent via-[#05070B]/50 to-[#05070B] pointer-events-none z-20" />
       </section>
 
       {/* ══════════════════════════════════════════════════════
