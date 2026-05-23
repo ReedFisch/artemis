@@ -161,6 +161,22 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: containerRef });
 
+  // Hero Scroll Scrubbing
+  const heroScrollRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroScrollYProgress } = useScroll({
+    target: heroScrollRef,
+    container: containerRef,
+    offset: ["start start", "end start"]
+  });
+  
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
+    if (videoRef.current && videoRef.current.duration) {
+      videoRef.current.currentTime = latest * videoRef.current.duration;
+    }
+  });
+
   // Organic Liquid Mouse Tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -233,26 +249,36 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            1. HERO
            ══════════════════════════════════════════════════════ */}
-      <section id="hero" className="snap-section">
-        <div className="absolute inset-0 z-0">
-          <img src="/photos/hero/alliance_photo.jpg" alt="Alliance" className="w-full h-full object-cover opacity-20 filter grayscale" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#05070B]/80 to-[#05070B]" />
+      <section id="hero" ref={heroScrollRef} className="relative w-full z-10" style={{ height: '300vh' }}>
+        <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
+          
+          <div className="absolute inset-0 z-0">
+            <video 
+              ref={videoRef}
+              src="/hero.webm"
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover opacity-60"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#05070B]/50 to-[#05070B]" />
+          </div>
+          
+          <motion.div style={{ y: yHeroText, opacity: opacityHero }} className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center pointer-events-none">
+            <span className="text-[10px] md:text-xs font-bold tracking-[0.5em] uppercase text-white/40 mb-6 drop-shadow-lg">
+              FRC Team 6621 - Chatham NY
+            </span>
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-header font-black tracking-tighter leading-none text-3d mb-6">
+              ARTEMIS
+            </h1>
+            <p className="text-sm md:text-base text-white/50 max-w-xl font-light tracking-wide mb-12">
+              Deep Space. Deep Time. Building the future of engineering.
+            </p>
+            <a href="#about" className="glass-panel px-8 py-4 uppercase text-[10px] font-bold tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 rounded-full pointer-events-auto">
+              Begin Journey
+            </a>
+          </motion.div>
         </div>
-        
-        <motion.div style={{ y: yHeroText, opacity: opacityHero }} className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center">
-          <span className="text-[10px] md:text-xs font-bold tracking-[0.5em] uppercase text-white/40 mb-6 drop-shadow-lg">
-            FRC Team 6621 - Chatham NY
-          </span>
-          <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-header font-black tracking-tighter leading-none text-3d mb-6">
-            ARTEMIS
-          </h1>
-          <p className="text-sm md:text-base text-white/50 max-w-xl font-light tracking-wide mb-12">
-            Deep Space. Deep Time. Building the future of engineering.
-          </p>
-          <a href="#about" className="glass-panel px-8 py-4 uppercase text-[10px] font-bold tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 rounded-full">
-            Begin Journey
-          </a>
-        </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
