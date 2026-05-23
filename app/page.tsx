@@ -268,8 +268,8 @@ export default function Home() {
   }, [mouseX, mouseY, cursorX, cursorY]);
 
   // Parallax Values for Hero
-  const yHeroText = useTransform(heroScrollYProgress, [0, 0.2], [0, 200]);
-  const opacityHero = useTransform(heroScrollYProgress, [0, 0.2], [1, 0]);
+  const yHeroText = useTransform(heroScrollYProgress, [0, 0.2], [0, 200], { clamp: true });
+  const opacityHero = useTransform(heroScrollYProgress, [0, 0.15], [1, 0], { clamp: true });
   const opacityShapes = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
   const yShapesFast = useTransform(scrollYProgress, [0, 1], ["0vh", "-150vh"]);
   const yShapesSlow = useTransform(scrollYProgress, [0, 1], ["0vh", "-80vh"]);
@@ -362,7 +362,7 @@ export default function Home() {
           
           <motion.header style={{ opacity: opacityHero }} className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto">
             <div className="flex items-center gap-4">
-              <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-10 h-10 opacity-80 mix-blend-screen rounded-full" />
+              <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-10 h-10 opacity-80 mix-blend-screen object-contain" />
               <span className="font-header font-bold text-white/50 tracking-widest text-sm">ARTEMIS</span>
             </div>
             <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
