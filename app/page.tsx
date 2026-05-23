@@ -180,7 +180,7 @@ export default function Home() {
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
       const paddedIndex = i.toString().padStart(3, '0');
-      img.src = `/hero_frames/${paddedIndex}.jpg`;
+      img.src = i === 1 ? '/hero_poster.png' : `/hero_frames/${paddedIndex}.jpg`;
       
       // Draw first frame immediately
       if (i === 1) {
@@ -232,6 +232,9 @@ export default function Home() {
   // Parallax Values for Hero
   const yHeroText = useTransform(scrollYProgress, [0, 0.2], [0, 200]);
   const opacityHero = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const opacityShapes = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
+  const yShapesFast = useTransform(scrollYProgress, [0, 1], ["0vh", "-150vh"]);
+  const yShapesSlow = useTransform(scrollYProgress, [0, 1], ["0vh", "-80vh"]);
 
   const bgParallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
 
@@ -260,7 +263,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            AMBIENT BACKGROUND GRADIENTS & SHAPES (Fades in after Hero)
            ══════════════════════════════════════════════════════ */}
-      <motion.div style={{ opacity: 1, y: bgParallaxY }} className="fixed inset-0 z-0 pointer-events-none overflow-hidden h-[150vh] w-full" aria-hidden="true">
+      <motion.div className="fixed inset-0 z-0 pointer-events-none overflow-hidden h-screen w-full" aria-hidden="true">
         {/* Faint Star Background */}
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 200px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
         
@@ -283,6 +286,21 @@ export default function Home() {
         <motion.div style={{ x: smoothX, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.2]" />
         <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.2]" />
         <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.4) 0%, transparent 65%)' }} className="absolute w-[250px] h-[250px] top-[10%] left-[60%] rounded-full opacity-[0.15]" />
+      </motion.div>
+
+      {/* Global Interactive 3D Shapes (Fades in after Hero) */}
+      <motion.div style={{ opacity: opacityShapes }} className="fixed inset-0 z-10 pointer-events-none h-screen w-full" aria-hidden="true">
+        <motion.div style={{ y: yShapesFast }} className="absolute inset-0">
+          <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[20%] left-[10%] w-32 h-32 opacity-70 pointer-events-auto" />
+          <motion.div animate={{ x: [0, -20, 40, 0], y: [0, -40, 20, 0] }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[60%] right-[15%] w-40 h-40 opacity-70 pointer-events-auto" />
+          <motion.div animate={{ x: [0, 30, -30, 0], y: [0, -20, 40, 0] }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[110%] left-[20%] w-24 h-24 opacity-60 pointer-events-auto" />
+          <motion.div animate={{ x: [0, -40, 20, 0], y: [0, 30, -30, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[160%] right-[25%] w-36 h-36 opacity-75 pointer-events-auto" />
+        </motion.div>
+        <motion.div style={{ y: yShapesSlow }} className="absolute inset-0">
+          <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[40%] right-[30%] w-48 h-48 opacity-80 pointer-events-auto" />
+          <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute top-[85%] left-[15%] w-28 h-28 opacity-65 pointer-events-auto" />
+          <motion.div animate={{ x: [0, -25, 15, 0], y: [0, 25, -15, 0] }} transition={{ duration: 19, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[135%] right-[10%] w-20 h-20 opacity-70 pointer-events-auto" />
+        </motion.div>
       </motion.div>
 
       {/* Liquid Organic Cursor Blob */}
