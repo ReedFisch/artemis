@@ -343,7 +343,7 @@ export default function Home() {
     container: containerRef,
     offset: ["start start", "end end"]
   });
-  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 1], ["0%", "-50%"]);
+  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 1], ["0%", "-80%"]);
 
   // Form submission mock
   const handleContactSubmit = async (e: React.FormEvent) => {
@@ -546,10 +546,10 @@ export default function Home() {
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
           
-          <motion.div style={{ x: xAboutToTimeline }} className="flex w-[200vw] h-full relative z-10">
+          <motion.div style={{ x: xAboutToTimeline }} className="flex w-[500vw] h-full relative z-10">
             
             {/* Section background gradient & floating shapes (scrolling with the content) */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ width: '200vw' }}>
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ width: '500vw' }}>
               {/* Starfield */}
               <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
             </div>
@@ -636,83 +636,50 @@ export default function Home() {
             </div>
 
             {/* --- TIMELINE PANE (100vw) --- */}
-            <div id="timeline" className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24 relative z-10" style={{ backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
+            <div id="timeline" className="w-[400vw] h-full flex flex-col justify-center relative z-10 overflow-hidden" style={{ backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
               
-              {/* Scattered 3D Shapes */}
-              <motion.div style={{ x: smoothXFast, y: smoothYSlow }} animate={{ rotateX: 360, rotateY: -360 }} transition={{ duration: 35, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-cube absolute top-[30%] right-[10%] w-40 h-40 opacity-30 z-0 pointer-events-none" />
-              <motion.div style={{ x: smoothXSlow, y: smoothYFast }} animate={{ rotateZ: -360 }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-pill absolute bottom-[20%] left-[10%] w-24 h-64 opacity-20 z-0 pointer-events-none" />
-              
-              <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-6xl font-header font-black text-white">
-                  Our Timeline
-                </h2>
+              <div className="absolute top-12 left-12 lg:left-24 z-20">
+                <h2 className="text-4xl md:text-6xl lg:text-8xl font-header font-black tracking-[0.15em] opacity-30 mix-blend-screen text-white">JOURNEY</h2>
               </div>
 
-              {/* Centered Timeline layout */}
-              <div className="relative w-full max-w-6xl mx-auto flex justify-between items-start mt-10">
-                
-                {/* Continuous timeline line behind nodes */}
-                <div className="absolute left-0 right-0 top-[100px] h-px z-0" style={{ background: 'linear-gradient(90deg, transparent 5%, rgba(255,255,255,0.06) 15%, rgba(37,99,235,0.15) 50%, rgba(249,115,22,0.15) 80%, transparent 95%)' }} />
-
-                {/* 2016 — Founded */}
-                <div className="flex flex-col items-center w-[25%] px-4 z-10 relative">
-                  <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
-                    <h3 className="text-3xl font-header font-black text-white/30 mb-2">2016</h3>
-                    <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)' }} />
-                    <p className="text-sm text-white/50 font-light">Team 6621 Founded</p>
-                    <p className="text-xs text-white/30 mt-1">Chatham High School</p>
+              {/* Scattered Images Container */}
+              <div className="flex w-full h-full items-center pl-[20vw] pr-[20vw]">
+                <div className="flex items-center gap-[20vw]">
+                  
+                  {/* 1 */}
+                  <div className="flex flex-col items-center transform -translate-y-24 group">
+                    <img src="/timeline/1.jpg" alt="Timeline 1" className="w-[40vw] max-w-[500px] h-auto rounded-xl border border-white/20 shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover mb-6 group-hover:scale-105 group-hover:rotate-2 transition-all duration-500" />
+                    <p className="text-white/70 font-mono text-sm max-w-[400px] text-center bg-black/40 p-4 backdrop-blur-md rounded-lg border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity">Winning the $2,500 Gene Haas Foundation Grant for our continuous efforts in robotics manufacturing and outreach.</p>
                   </div>
-                  {/* Node */}
-                  <div className="w-4 h-4 rounded-full border-2 border-white/20 bg-[#05070B]" />
-                </div>
-
-                {/* 2024 */}
-                <div className="flex flex-col items-center w-[25%] px-4 z-10 relative">
-                  <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
-                    <h3 className="text-3xl font-header font-black text-white/40 mb-2">2024</h3>
-                    <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }} />
-                    <ul className="text-sm text-white/60 space-y-2 font-light">
-                      <li>Creativity Award</li>
-                      <li>First Leadership Award Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></li>
-                      <li>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></li>
-                    </ul>
+                  
+                  {/* 2 */}
+                  <div className="flex flex-col items-center transform translate-y-32 group">
+                    <img src="/timeline/2.jpg" alt="Timeline 2" className="w-[45vw] max-w-[600px] h-auto rounded-xl border border-white/20 shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover mb-6 group-hover:scale-105 group-hover:-rotate-2 transition-all duration-500" />
+                    <p className="text-white/70 font-mono text-sm max-w-[400px] text-center bg-black/40 p-4 backdrop-blur-md rounded-lg border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity">The entire Team 6621 Artemis gathered around our competition robot, ready for the New York Tech Valley Regional.</p>
                   </div>
-                  <div className="w-4 h-4 rounded-full border-2 border-white/30 bg-[#05070B]" />
-                </div>
 
-                {/* 2025 — Breakout year */}
-                <div className="flex flex-col items-center w-[25%] px-4 z-10 relative">
-                  <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(37,99,235,0.1) 0%, rgba(37,99,235,0.03) 100%)', border: '1px solid rgba(37,99,235,0.2)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(37,99,235,0.06)' }}>
-                    <h3 className="text-3xl font-header font-black text-artemis-blue mb-2">2025</h3>
-                    <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.5), transparent)' }} />
-                    <ul className="text-sm text-white/70 space-y-2 font-light">
-                      <li>Ranked #3 in New York State</li>
-                      <li>New York Tech Valley Regional Winner</li>
-                      <li>Worlds Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division)</span></li>
-                      <li>Ballston Spa Off-Season Competition Finalist</li>
-                    </ul>
+                  {/* 3 */}
+                  <div className="flex flex-col items-center transform -translate-y-16 group">
+                    <img src="/timeline/3.jpg" alt="Timeline 3" className="w-[35vw] max-w-[500px] h-auto rounded-xl border border-white/20 shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover mb-6 group-hover:scale-105 group-hover:rotate-1 transition-all duration-500" />
+                    <p className="text-white/70 font-mono text-sm max-w-[400px] text-center bg-black/40 p-4 backdrop-blur-md rounded-lg border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity">Celebrating our success with our mentors and community sponsors at the regional event.</p>
                   </div>
-                  <div className="w-5 h-5 rounded-full border-2 border-artemis-blue bg-[#05070B]" style={{ boxShadow: '0 0 12px rgba(37,99,235,0.4)' }} />
-                </div>
 
-                {/* 2026 — Current */}
-                <div className="flex flex-col items-center w-[25%] px-4 z-10 relative">
-                  <div className="relative p-6 rounded-xl mb-6 text-center w-full" style={{ background: 'linear-gradient(145deg, rgba(249,115,22,0.1) 0%, rgba(249,115,22,0.03) 100%)', border: '1px solid rgba(249,115,22,0.2)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(249,115,22,0.06)' }}>
-                    <h3 className="text-3xl font-header font-black text-stellar-orange mb-2">2026</h3>
-                    <div className="w-8 h-px mx-auto mb-3" style={{ background: 'linear-gradient(90deg, transparent, rgba(249,115,22,0.5), transparent)' }} />
-                    <ul className="text-sm text-white/70 space-y-2 font-light">
-                      <li>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></li>
-                      <li>Tech Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 5</span></li>
-                      <li>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></li>
-                    </ul>
+                  {/* 4 */}
+                  <div className="flex flex-col items-center transform translate-y-24 group">
+                    <img src="/timeline/4.jpg" alt="Timeline 4" className="w-[45vw] max-w-[600px] h-auto rounded-xl border border-white/20 shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover mb-6 group-hover:scale-105 group-hover:-rotate-1 transition-all duration-500" />
+                    <p className="text-white/70 font-mono text-sm max-w-[400px] text-center bg-black/40 p-4 backdrop-blur-md rounded-lg border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity">Working hard in the pit area, tuning the robot mechanisms before our next match.</p>
                   </div>
-                  <div className="w-5 h-5 rounded-full border-2 border-stellar-orange bg-[#05070B]" style={{ boxShadow: '0 0 12px rgba(249,115,22,0.4)' }} />
-                </div>
 
+                  {/* 5 */}
+                  <div className="flex flex-col items-center transform -translate-y-8 group">
+                    <img src="/timeline/5.jpg" alt="Timeline 5" className="w-[30vw] max-w-[450px] h-[30vw] max-h-[450px] rounded-xl border border-white/20 shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover mb-6 group-hover:scale-105 group-hover:rotate-3 transition-all duration-500" />
+                    <p className="text-white/70 font-mono text-sm max-w-[400px] text-center bg-black/40 p-4 backdrop-blur-md rounded-lg border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity">Our robot performing autonomously during the Crescendo competition matches.</p>
+                  </div>
+
+                </div>
               </div>
             </div>
-            
-          </motion.div>
+            </motion.div>
         </div>
       </section>
 
