@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionValueEvent, useMotionTemplate } from "framer-motion";
 import Counter from "./components/Counter";
 
@@ -154,12 +154,15 @@ const SPONSOR_LOGOS = [
 // LIQUID ANIMATION HELPERS
 // ═══════════════════════════════════════════════════════════════
 
-const AutonomousBlob = ({ startX, startY, endX, endY, radius, duration, delay = 0 }: any) => {
+const AutonomousBlob = ({ radius, duration, delay = 0 }: any) => {
+  // Generate random corner-to-corner path points to shoot across randomly
+  const pathX = useMemo(() => Array.from({ length: 6 }, () => `${Math.random() * 120 - 10}%`), []);
+  const pathY = useMemo(() => Array.from({ length: 6 }, () => `${Math.random() * 120 - 10}%`), []);
+
   return (
     <motion.g
-      initial={{ x: startX, y: startY }}
-      animate={{ x: [startX, endX], y: [startY, endY] }}
-      transition={{ repeat: Infinity, duration, repeatType: "mirror", ease: "easeInOut", delay }}
+      animate={{ x: pathX, y: pathY }}
+      transition={{ repeat: Infinity, duration, ease: "linear", delay }}
     >
       <motion.g animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 10 + delay, ease: "linear" }}>
         <motion.ellipse cx="0" cy="0" rx={radius * 1.6} ry={radius * 0.4} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
@@ -445,14 +448,14 @@ export default function Home() {
                 </motion.g>
 
                 {/* Autonomous Liquid Blobs revealing CAD */}
-                <AutonomousBlob startX="10%" startY="20%" endX="90%" endY="80%" radius={80} duration={15} />
-                <AutonomousBlob startX="80%" startY="80%" endX="20%" endY="10%" radius={60} duration={20} delay={2} />
-                <AutonomousBlob startX="30%" startY="-10%" endX="60%" endY="110%" radius={90} duration={25} delay={5} />
-                <AutonomousBlob startX="110%" startY="40%" endX="-10%" endY="60%" radius={70} duration={18} delay={1} />
-                <AutonomousBlob startX="0%" startY="100%" endX="100%" endY="0%" radius={110} duration={22} delay={3} />
-                <AutonomousBlob startX="50%" startY="50%" endX="120%" endY="20%" radius={100} duration={28} delay={4} />
-                <AutonomousBlob startX="-20%" startY="50%" endX="120%" endY="70%" radius={75} duration={19} delay={6} />
-                <AutonomousBlob startX="70%" startY="-20%" endX="30%" endY="120%" radius={85} duration={24} delay={7} />
+                <AutonomousBlob radius={80} duration={15} />
+                <AutonomousBlob radius={60} duration={20} delay={2} />
+                <AutonomousBlob radius={90} duration={25} delay={5} />
+                <AutonomousBlob radius={70} duration={18} delay={1} />
+                <AutonomousBlob radius={110} duration={22} delay={3} />
+                <AutonomousBlob radius={100} duration={28} delay={4} />
+                <AutonomousBlob radius={75} duration={19} delay={6} />
+                <AutonomousBlob radius={85} duration={24} delay={7} />
               </g>
             </mask>
           </defs>
@@ -471,7 +474,10 @@ export default function Home() {
 
 
           {/* 3. Overlays (Header and Sponsor) */}
-          <header className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto bg-black">
+          <motion.header 
+            className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto"
+            style={{ backgroundColor: useTransform(heroScrollYProgress, [0, 0.05], ["rgba(0,0,0,0)", "rgba(5,7,11,1)"]) }}
+          >
           <div className="flex items-center gap-4">
             <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-12 h-12 opacity-80 mix-blend-screen object-contain" />
             <span className="font-header font-black text-white/60 tracking-widest text-3xl md:text-5xl">ARTEMIS</span>
@@ -482,10 +488,10 @@ export default function Home() {
             <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-colors">Impact</a>
             <a href="#budget" onClick={(e) => handleFastScroll(e, '#budget')} className="hover:text-white transition-colors">Sponsor</a>
           </nav>
-        </header>
+          </motion.header>
           {/* Sponsor Button */}
         <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto">
-          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 backdrop-blur-md opacity-50 hover:opacity-100" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.4)', boxShadow: '0 4px 16px rgba(0,0,0,0.3), 0 0 20px rgba(37,99,235,0.2)' }}>
+          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 backdrop-blur-md hover:opacity-100" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.6) 0%, rgba(249,115,22,0.5) 100%)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 4px 24px rgba(37,99,235,0.4), 0 0 20px rgba(249,115,22,0.3)' }}>
             Sponsor Now
           </a>
         </div>
