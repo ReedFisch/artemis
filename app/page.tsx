@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef, useMemo } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionValueEvent, useMotionTemplate } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionValueEvent, useMotionTemplate, AnimatePresence } from "framer-motion";
 import Counter from "./components/Counter";
 
 // ─── Types ──────────────────────────
@@ -156,8 +156,8 @@ const SPONSOR_LOGOS = [
 
 const AutonomousBlob = ({ radius, duration, delay = 0 }: any) => {
   // Generate random corner-to-corner path points to shoot across randomly
-  const pathX = useMemo(() => Array.from({ length: 6 }, () => `${Math.random() * 120 - 10}%`), []);
-  const pathY = useMemo(() => Array.from({ length: 6 }, () => `${Math.random() * 120 - 10}%`), []);
+  const pathX = useMemo(() => Array.from({ length: 12 }, () => `${Math.random() * 160 - 30}%`), []);
+  const pathY = useMemo(() => Array.from({ length: 12 }, () => `${Math.random() * 160 - 30}%`), []);
 
   return (
     <motion.g
@@ -181,6 +181,8 @@ export default function Home() {
   const [contactSuccess, setContactSuccess] = useState(false);
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAtTop, setIsAtTop] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: containerRef });
 
@@ -280,20 +282,23 @@ export default function Home() {
     const frameCount = 290;
     const currentImages: HTMLImageElement[] = [];
 
+    let loadedCount = 0;
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
       const paddedIndex = i.toString().padStart(3, '0');
       img.src = i === 1 ? '/hero_starting_frame.jpeg' : `/hero_frames/${paddedIndex}.jpg`;
       
-      // Draw first frame immediately
-      if (i === 1) {
-        img.onload = () => {
-          if (canvasRef.current) {
-            const ctx = canvasRef.current.getContext('2d');
-            if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080);
-          }
-        };
-      }
+      img.onload = () => {
+        loadedCount++;
+        if (i === 1 && canvasRef.current) {
+          const ctx = canvasRef.current.getContext('2d');
+          if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080);
+        }
+        if (loadedCount === frameCount) {
+          setIsLoading(false);
+        }
+      };
+      
       currentImages.push(img);
     }
     imagesRef.current = currentImages;
@@ -323,6 +328,10 @@ export default function Home() {
   const fadeOutHeroLiquid = useTransform(heroScrollYProgress, [0, 0.0001], [1, 0]);
 
   const bgParallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+
+  useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
+    setIsAtTop(latest < 0.001);
+  });
 
   // Horizontal Scroll for About Us -> Timeline
   const horizontalScrollRef = useRef<HTMLDivElement>(null);
@@ -400,6 +409,19 @@ export default function Home() {
             {/* ══════════════════════════════════════════════════════
            1. HERO & ZIP ANIMATION (Combined Sticky Scrolling)
            ══════════════════════════════════════════════════════ */}
+            <AnimatePresence>
+        {isLoading && (
+          <motion.div 
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#05070B] text-white"
+          >
+            <img src="/branding/logo_4.jpeg" alt="Artemis Loading" className="w-24 h-24 mb-8 animate-pulse mix-blend-screen object-contain" />
+            <div className="font-header font-black tracking-[0.3em] text-sm uppercase text-white/50">Loading Assets...</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <section id="hero" ref={heroScrollRef} className="relative w-full z-10" style={{ height: '300vh' }}>
         <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
           
@@ -431,31 +453,40 @@ export default function Home() {
                   {/* Main Cursor Blob */}
                   <motion.g style={{ x: smoothCursorX, y: smoothCursorY }}>
                     <motion.g animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }}>
-                      <motion.ellipse cx="0" cy="0" rx={120} ry={80} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
-                      <motion.ellipse cx="0" cy="0" rx={90} ry={110} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7, ease: "linear" }} />
+                      <motion.ellipse cx="0" cy="0" rx={200} ry={130} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
+                      <motion.ellipse cx="0" cy="0" rx={150} ry={180} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7, ease: "linear" }} />
                     </motion.g>
                   </motion.g>
 
                   {/* Trailing Blob 1 */}
                   <motion.g style={{ x: smoothCursorX2, y: smoothCursorY2 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 9, ease: "linear" }}>
-                    <motion.ellipse cx="0" cy="0" rx={100} ry={60} fill="white" />
+                    <motion.ellipse cx="0" cy="0" rx={160} ry={100} fill="white" />
                   </motion.g>
                   
                   {/* Trailing Blob 2 */}
                   <motion.g style={{ x: smoothCursorX3, y: smoothCursorY3 }} animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 10, ease: "linear" }}>
-                    <motion.ellipse cx="0" cy="0" rx={80} ry={50} fill="white" />
+                    <motion.ellipse cx="0" cy="0" rx={130} ry={80} fill="white" />
+                  </motion.g>
+
+                  {/* Trailing Blob 3 */}
+                  <motion.g style={{ x: smoothCursorX4, y: smoothCursorY4 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 11, ease: "linear" }}>
+                    <motion.ellipse cx="0" cy="0" rx={90} ry={60} fill="white" />
                   </motion.g>
                 </motion.g>
 
                 {/* Autonomous Liquid Blobs revealing CAD */}
-                <AutonomousBlob radius={80} duration={15} />
-                <AutonomousBlob radius={60} duration={20} delay={2} />
-                <AutonomousBlob radius={90} duration={25} delay={5} />
-                <AutonomousBlob radius={70} duration={18} delay={1} />
-                <AutonomousBlob radius={110} duration={22} delay={3} />
-                <AutonomousBlob radius={100} duration={28} delay={4} />
-                <AutonomousBlob radius={75} duration={19} delay={6} />
-                <AutonomousBlob radius={85} duration={24} delay={7} />
+                {isAtTop && (
+                  <>
+                    <AutonomousBlob radius={80} duration={15} />
+                    <AutonomousBlob radius={60} duration={20} delay={2} />
+                    <AutonomousBlob radius={90} duration={25} delay={5} />
+                    <AutonomousBlob radius={70} duration={18} delay={1} />
+                    <AutonomousBlob radius={110} duration={22} delay={3} />
+                    <AutonomousBlob radius={100} duration={28} delay={4} />
+                    <AutonomousBlob radius={75} duration={19} delay={6} />
+                    <AutonomousBlob radius={85} duration={24} delay={7} />
+                  </>
+                )}
               </g>
             </mask>
           </defs>
@@ -475,7 +506,6 @@ export default function Home() {
           {/* 3. Overlays (Header and Sponsor) */}
           <motion.header 
             className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto"
-            style={{ backgroundColor: useTransform(heroScrollYProgress, [0, 0.05], ["rgba(0,0,0,0)", "rgba(5,7,11,1)"]) }}
           >
           <div className="flex items-center gap-4">
             <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-12 h-12 opacity-80 mix-blend-screen object-contain" />
@@ -490,7 +520,7 @@ export default function Home() {
           </motion.header>
           {/* Sponsor Button */}
         <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto">
-          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 backdrop-blur-md hover:opacity-100" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.6) 0%, rgba(249,115,22,0.5) 100%)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 4px 24px rgba(37,99,235,0.4), 0 0 20px rgba(249,115,22,0.3)' }}>
+          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 backdrop-blur-xl bg-white/10 hover:bg-white/20 text-white" style={{ border: '1px solid rgba(255,255,255,0.3)', boxShadow: '0 4px 30px rgba(0,0,0,0.5)' }}>
             Sponsor Now
           </a>
         </div>
@@ -599,7 +629,7 @@ export default function Home() {
             </div>
 
             {/* --- TIMELINE PANE (100vw) --- */}
-            <div id="timeline" className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24 relative z-10">
+            <div id="timeline" className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24 relative z-10" style={{ backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
               
               {/* Scattered 3D Shapes */}
               <motion.div style={{ x: smoothXFast, y: smoothYSlow }} animate={{ rotateX: 360, rotateY: -360 }} transition={{ duration: 35, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-cube absolute top-[30%] right-[10%] w-40 h-40 opacity-30 z-0 pointer-events-none" />
