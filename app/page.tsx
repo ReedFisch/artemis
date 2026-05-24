@@ -161,9 +161,10 @@ const AutonomousBlob = ({ startX, startY, endX, endY, radius, duration, delay = 
       animate={{ x: [startX, endX], y: [startY, endY] }}
       transition={{ repeat: Infinity, duration, repeatType: "mirror", ease: "easeInOut", delay }}
     >
-      <motion.circle cx="0" cy="0" r={radius} fill="white" />
-      <motion.circle cx="0" cy="0" r={radius * 0.7} fill="white" animate={{ x: [-20, 20, -10, 20, -20], y: [-20, 20, 10, -20, -20] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }} />
-      <motion.circle cx="0" cy="0" r={radius * 0.5} fill="white" animate={{ x: [15, -15, 10, -15, 15], y: [15, -10, -20, 15, 15] }} transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }} />
+      <motion.g animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 10 + delay, ease: "linear" }}>
+        <motion.ellipse cx="0" cy="0" rx={radius * 1.6} ry={radius * 0.4} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
+        <motion.ellipse cx="0" cy="0" rx={radius * 0.5} ry={radius * 1.3} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7.5, ease: "linear" }} />
+      </motion.g>
     </motion.g>
   );
 };
@@ -379,15 +380,13 @@ export default function Home() {
             </filter>
             <mask id="liquidMask">
               <g filter="url(#goo)">
-                {/* Main Cursor Blob */}
-                <motion.g>
-                  <motion.circle cx={smoothCursorX} cy={smoothCursorY} r={100} fill="white" />
-                  <motion.circle cx={smoothCursorX2} cy={smoothCursorY2} r={80} fill="white" />
-                  <motion.circle cx={smoothCursorX3} cy={smoothCursorY3} r={60} fill="white" />
-                  
-                  {/* Orbiting Wobbles around the main cursor to make it liquid even when still */}
-                  <motion.circle cx={smoothCursorX} cy={smoothCursorY} r={70} fill="white" animate={{ x: [-15, 15, -10, 15, -15], y: [-15, -10, 15, -15, -15] }} transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }} />
-                  <motion.circle cx={smoothCursorX} cy={smoothCursorY} r={50} fill="white" animate={{ x: [10, -20, 10, -10, 10], y: [15, -15, -10, 15, 15] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }} />
+                {/* Main Cursor Blob: Amoeba/Line Liquid Shape */}
+                <motion.g style={{ x: smoothCursorX, y: smoothCursorY }}>
+                  <motion.g animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }}>
+                    <motion.ellipse cx="0" cy="0" rx={140} ry={40} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
+                    <motion.ellipse cx="0" cy="0" rx={50} ry={110} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7, ease: "linear" }} />
+                    <motion.ellipse cx="20" cy="-20" rx={80} ry={30} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 8, ease: "linear" }} />
+                  </motion.g>
                 </motion.g>
 
                 {/* Autonomous Liquid Blobs revealing CAD */}
@@ -402,7 +401,7 @@ export default function Home() {
 
         {/* Base Layer: Ghost/Wireframe Robot */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10">
-           <img src="/robot_cad.png" alt="Robot Base" className="w-full h-full object-cover opacity-20 grayscale brightness-150 contrast-125" />
+           <img src="/robot_cad.png" alt="Robot Base" className="w-full h-full object-cover" />
         </div>
 
         {/* Main Hover Reveal Layer using Liquid Mask */}
@@ -411,7 +410,7 @@ export default function Home() {
           animate={{ opacity: isMoving ? 1 : 0 }}
           transition={{ duration: isMoving ? 0.1 : 1.2, ease: "easeOut" }}
         >
-           <img src="/robot_cad.png" alt="Robot CAD" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
+           <img src="/robot_drawing.jpg" alt="Robot Drawing" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
         </motion.div>
 
         {/* Sponsor Button */}
