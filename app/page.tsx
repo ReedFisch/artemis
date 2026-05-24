@@ -151,6 +151,24 @@ const SPONSOR_LOGOS = [
 ];
 
 // ═══════════════════════════════════════════════════════════════
+// LIQUID ANIMATION HELPERS
+// ═══════════════════════════════════════════════════════════════
+
+const AutonomousBlob = ({ startX, startY, endX, endY, radius, duration, delay = 0 }: any) => {
+  return (
+    <motion.g
+      initial={{ x: startX, y: startY }}
+      animate={{ x: [startX, endX], y: [startY, endY] }}
+      transition={{ repeat: Infinity, duration, repeatType: "mirror", ease: "easeInOut", delay }}
+    >
+      <motion.circle cx="0" cy="0" r={radius} fill="white" />
+      <motion.circle cx="0" cy="0" r={radius * 0.7} fill="white" animate={{ x: [-20, 20, -10, 20, -20], y: [-20, 20, 10, -20, -20] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }} />
+      <motion.circle cx="0" cy="0" r={radius * 0.5} fill="white" animate={{ x: [15, -15, 10, -15, 15], y: [15, -10, -20, 15, 15] }} transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }} />
+    </motion.g>
+  );
+};
+
+// ═══════════════════════════════════════════════════════════════
 // COMPONENT
 // ═══════════════════════════════════════════════════════════════
 
@@ -329,7 +347,7 @@ export default function Home() {
         <header className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto">
           <div className="flex items-center gap-4">
             <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-12 h-12 opacity-80 mix-blend-screen object-contain" />
-            <span className="font-header font-black text-white tracking-widest text-3xl md:text-5xl">ARTEMIS</span>
+            <span className="font-header font-black text-white/60 tracking-widest text-3xl md:text-5xl">ARTEMIS</span>
           </div>
           <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
             <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-colors">About</a>
@@ -349,9 +367,22 @@ export default function Home() {
             </filter>
             <mask id="liquidMask">
               <g filter="url(#goo)">
-                <motion.circle cx={smoothCursorX} cy={smoothCursorY} r={180} fill="white" />
-                <motion.circle cx={smoothCursorX2} cy={smoothCursorY2} r={130} fill="white" />
-                <motion.circle cx={smoothCursorX3} cy={smoothCursorY3} r={90} fill="white" />
+                {/* Main Cursor Blob */}
+                <motion.g>
+                  <motion.circle cx={smoothCursorX} cy={smoothCursorY} r={100} fill="white" />
+                  <motion.circle cx={smoothCursorX2} cy={smoothCursorY2} r={80} fill="white" />
+                  <motion.circle cx={smoothCursorX3} cy={smoothCursorY3} r={60} fill="white" />
+                  
+                  {/* Orbiting Wobbles around the main cursor to make it liquid even when still */}
+                  <motion.circle cx={smoothCursorX} cy={smoothCursorY} r={70} fill="white" animate={{ x: [-15, 15, -10, 15, -15], y: [-15, -10, 15, -15, -15] }} transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }} />
+                  <motion.circle cx={smoothCursorX} cy={smoothCursorY} r={50} fill="white" animate={{ x: [10, -20, 10, -10, 10], y: [15, -15, -10, 15, 15] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }} />
+                </motion.g>
+
+                {/* Autonomous Liquid Blobs revealing CAD */}
+                <AutonomousBlob startX="10%" startY="20%" endX="90%" endY="80%" radius={80} duration={15} />
+                <AutonomousBlob startX="80%" startY="80%" endX="20%" endY="10%" radius={60} duration={20} delay={2} />
+                <AutonomousBlob startX="30%" startY="-10%" endX="60%" endY="110%" radius={90} duration={25} delay={5} />
+                <AutonomousBlob startX="110%" startY="40%" endX="-10%" endY="60%" radius={70} duration={18} delay={1} />
               </g>
             </mask>
           </defs>
