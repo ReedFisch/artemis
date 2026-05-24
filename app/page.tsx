@@ -305,8 +305,11 @@ export default function Home() {
   }, []);
 
   const rafRef = useRef<number | null>(null);
+  
+  // Apply a stiff spring to completely eliminate any scroll jitter/jumping back and forth
+  const smoothFrameProgress = useSpring(heroScrollYProgress, { stiffness: 400, damping: 90, mass: 0.1 });
 
-  useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
+  useMotionValueEvent(smoothFrameProgress, "change", (latest) => {
     const frameIndex = Math.min(289, Math.floor(latest * 290));
     if (canvasRef.current && imagesRef.current[frameIndex]) {
       const ctx = canvasRef.current.getContext('2d');
@@ -496,7 +499,11 @@ export default function Home() {
 
         {/* Main Hover Reveal Layer using Liquid Mask */}
         <motion.div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none" 
-          style={{ mask: 'url(#liquidMask)', WebkitMask: 'url(#liquidMask)' }}
+          style={{ 
+            mask: 'url(#liquidMask)', 
+            WebkitMask: 'url(#liquidMask)',
+            filter: 'drop-shadow(0px 0px 2px rgba(255,255,255,0.8)) drop-shadow(0px 0px 8px rgba(37,99,235,0.5))'
+          }}
         >
            <img src="/robot_drawing_new.jpg" alt="Robot Drawing" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
         </motion.div>
