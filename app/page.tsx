@@ -401,8 +401,8 @@ export default function Home() {
         <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
           
           {/* 1. Canvas Zip Animation Layer (Bottom) */}
-          <div className="absolute inset-0 z-0">
-            <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 z-0 bg-black">
+            <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.75]" />
           </div>
 
           {/* 2. Liquid Hero Mask Layer (Fades out immediately when scrolling starts) */}
