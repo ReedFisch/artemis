@@ -222,8 +222,16 @@ export default function Home() {
       // Convert to pixel offsets (e.g. max 100px movement)
       mouseX.set(x * 100);
       mouseY.set(y * 100);
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
+      
+      const hero = document.getElementById('hero');
+      if (hero) {
+        const rect = hero.getBoundingClientRect();
+        cursorX.set(e.clientX - rect.left);
+        cursorY.set(e.clientY - rect.top);
+      } else {
+        cursorX.set(e.clientX);
+        cursorY.set(e.clientY);
+      }
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
@@ -231,11 +239,6 @@ export default function Home() {
       clearTimeout(timeout);
     };
   }, [mouseX, mouseY, cursorX, cursorY]);
-
-  // Mask templates for hover trails
-  const mask1 = useMotionTemplate`radial-gradient(circle 250px at ${smoothCursorX}px ${smoothCursorY}px, black 30%, transparent 80%)`;
-  const mask2 = useMotionTemplate`radial-gradient(circle 200px at ${smoothCursorX2}px ${smoothCursorY2}px, black 30%, transparent 80%)`;
-  const mask3 = useMotionTemplate`radial-gradient(circle 150px at ${smoothCursorX3}px ${smoothCursorY3}px, black 30%, transparent 80%)`;
 
   // Parallax Values for Hero
   const opacityShapes = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
@@ -336,85 +339,36 @@ export default function Home() {
           </nav>
         </header>
 
-        {/* Topographic White Line Moving Background */}
-        <motion.div 
-          className="absolute inset-0 z-0 opacity-[0.15]"
-          style={{
-             backgroundImage: 'repeating-radial-gradient(circle at center, transparent 0, transparent 40px, rgba(255,255,255,0.4) 41px, rgba(255,255,255,0.4) 42px)',
-             backgroundSize: '150% 150%'
-          }}
-          animate={{ scale: [1, 1.2, 1], backgroundPosition: ["0px 0px", "100px 100px", "0px 0px"] }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-        />
+        {/* Liquid Reveal Mask Definition */}
+        <svg className="absolute w-0 h-0 pointer-events-none">
+          <defs>
+            <filter id="goo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="25" result="blur" />
+              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 25 -10" result="goo" />
+              <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+            <mask id="liquidMask">
+              <g filter="url(#goo)">
+                <motion.circle cx={smoothCursorX} cy={smoothCursorY} r={180} fill="white" />
+                <motion.circle cx={smoothCursorX2} cy={smoothCursorY2} r={130} fill="white" />
+                <motion.circle cx={smoothCursorX3} cy={smoothCursorY3} r={90} fill="white" />
+              </g>
+            </mask>
+          </defs>
+        </svg>
 
         {/* Base Layer: Ghost/Wireframe Robot */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10">
            <img src="/robot_cad.png" alt="Robot Base" className="w-[85vw] max-w-5xl object-contain opacity-20 grayscale brightness-150 contrast-125" />
         </div>
 
-        {/* --- HOVER REVEAL TRAILS --- */}
-        {/* Trail 3 (Farthest back) */}
-        <motion.div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10" 
-          style={{ WebkitMaskImage: mask3, maskImage: mask3 }}
-          animate={{ opacity: isMoving ? 0.3 : 0 }}
-          transition={{ duration: isMoving ? 0.2 : 1.5, ease: "easeOut" }}
-        >
-           <img src="/robot_cad.png" alt="Robot CAD" className="w-[85vw] max-w-5xl object-contain blur-[4px]" />
-        </motion.div>
-        
-        {/* Trail 2 */}
-        <motion.div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10" 
-          style={{ WebkitMaskImage: mask2, maskImage: mask2 }}
-          animate={{ opacity: isMoving ? 0.6 : 0 }}
+        {/* Main Hover Reveal Layer using Liquid Mask */}
+        <motion.div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none mt-10" 
+          style={{ mask: 'url(#liquidMask)', WebkitMask: 'url(#liquidMask)' }}
+          animate={{ opacity: isMoving ? 1 : 0 }}
           transition={{ duration: isMoving ? 0.1 : 1.2, ease: "easeOut" }}
         >
-           <img src="/robot_cad.png" alt="Robot CAD" className="w-[85vw] max-w-5xl object-contain blur-[2px]" />
-        </motion.div>
-        
-        {/* Main Hover Reveal Layer */}
-        <motion.div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none mt-10" 
-          style={{ WebkitMaskImage: mask1, maskImage: mask1 }}
-          animate={{ opacity: isMoving ? 1 : 0 }}
-          transition={{ duration: isMoving ? 0 : 0.8, ease: "easeOut" }}
-        >
            <img src="/robot_cad.png" alt="Robot CAD" className="w-[85vw] max-w-5xl object-contain drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
-        </motion.div>
-
-        {/* --- RANDOM SLIDING ANIMATIONS REVEALING CAD --- */}
-        <motion.div 
-          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 mt-10"
-          initial={{ clipPath: "circle(10% at -10% 20%)" }}
-          animate={{ clipPath: "circle(10% at 110% 80%)" }}
-          transition={{ duration: 8, delay: 0, repeat: Infinity, ease: "linear" }}
-        >
-          <img src="/robot_cad.png" alt="Robot CAD Slider" className="w-[85vw] max-w-5xl object-contain opacity-60" />
-        </motion.div>
-
-        <motion.div 
-          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 mt-10"
-          initial={{ clipPath: "circle(15% at 110% 70%)" }}
-          animate={{ clipPath: "circle(15% at -10% 30%)" }}
-          transition={{ duration: 12, delay: 3, repeat: Infinity, ease: "linear" }}
-        >
-          <img src="/robot_cad.png" alt="Robot CAD Slider" className="w-[85vw] max-w-5xl object-contain opacity-70" />
-        </motion.div>
-
-        <motion.div 
-          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 mt-10"
-          initial={{ clipPath: "circle(8% at 40% -10%)" }}
-          animate={{ clipPath: "circle(8% at 60% 110%)" }}
-          transition={{ duration: 10, delay: 1, repeat: Infinity, ease: "linear" }}
-        >
-          <img src="/robot_cad.png" alt="Robot CAD Slider" className="w-[85vw] max-w-5xl object-contain opacity-80" />
-        </motion.div>
-
-        <motion.div 
-          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 mt-10"
-          initial={{ clipPath: "polygon(0 0, 10% 0, 0 100%, -10% 100%)" }}
-          animate={{ clipPath: "polygon(100% 0, 110% 0, 110% 100%, 100% 100%)" }}
-          transition={{ duration: 6, delay: 2, repeat: Infinity, ease: "linear" }}
-        >
-          <img src="/robot_cad.png" alt="Robot CAD Slider" className="w-[85vw] max-w-5xl object-contain opacity-40 grayscale" />
         </motion.div>
 
         {/* Sponsor Button */}
