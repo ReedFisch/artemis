@@ -317,7 +317,7 @@ export default function Home() {
   const yShapesFast = useTransform(scrollYProgress, [0, 1], ["0vh", "-150vh"]);
   const yShapesSlow = useTransform(scrollYProgress, [0, 1], ["0vh", "-80vh"]);
 
-  const fadeOutHeroLiquid = useTransform(heroScrollYProgress, [0, 0.05], [1, 0]);
+  const fadeOutHeroLiquid = useTransform(heroScrollYProgress, [0, 0.005], [1, 0]);
 
   const bgParallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
 
