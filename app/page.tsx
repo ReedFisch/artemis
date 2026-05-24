@@ -343,7 +343,7 @@ export default function Home() {
     container: containerRef,
     offset: ["start start", "end end"]
   });
-  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 1], ["0%", "-80%"]);
+  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 1], ["0%", "-87.5%"]);
 
   // Form submission mock
   const handleContactSubmit = async (e: React.FormEvent) => {
@@ -538,7 +538,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            2. ABOUT & TIMELINE (HORIZONTAL SCROLL)
            ══════════════════════════════════════════════════════ */}
-      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '450vh', scrollSnapAlign: 'start' }}>
+      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '750vh', scrollSnapAlign: 'start' }}>
         
         {/* Seamless Fade FROM Hero Section */}
         <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#05070B] to-transparent pointer-events-none z-30" />
@@ -546,10 +546,10 @@ export default function Home() {
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
           
-          <motion.div style={{ x: xAboutToTimeline }} className="flex w-[500vw] h-full relative z-10">
+          <motion.div style={{ x: xAboutToTimeline }} className="flex w-[800vw] h-full relative z-10">
             
             {/* Section background gradient & floating shapes (scrolling with the content) */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ width: '500vw' }}>
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ width: '800vw' }}>
               {/* Starfield */}
               <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
             </div>
@@ -636,44 +636,86 @@ export default function Home() {
             </div>
 
             {/* --- TIMELINE PANE (100vw) --- */}
-            <div id="timeline" className="w-[400vw] h-full flex flex-col justify-center relative z-10 overflow-hidden" style={{ backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
+            <div id="timeline" className="w-[700vw] h-full flex flex-col justify-center relative z-10 overflow-hidden" style={{ backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
               
-              <div className="absolute top-12 left-12 lg:left-24 z-20">
+              <div className="absolute top-12 left-12 lg:left-24 z-20 pointer-events-none">
                 <h2 className="text-4xl md:text-6xl lg:text-8xl font-header font-black tracking-[0.15em] opacity-30 mix-blend-screen text-white">JOURNEY</h2>
               </div>
 
               {/* Scattered Images Container */}
-              <div className="flex w-full h-full items-center pl-[20vw] pr-[20vw]">
+              <div className="flex w-full h-full items-center pl-[15vw] pr-[20vw]">
                 <div className="flex items-center gap-[20vw]">
                   
                   {/* 1 */}
-                  <div className="flex flex-col items-center transform -translate-y-24 group">
-                    <img src="/timeline/1.jpg" alt="Timeline 1" className="w-[40vw] max-w-[500px] h-auto rounded-xl border border-white/20 shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover mb-6 group-hover:scale-105 group-hover:rotate-2 transition-all duration-500" />
-                    <p className="text-white/70 font-mono text-sm max-w-[400px] text-center bg-black/40 p-4 backdrop-blur-md rounded-lg border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity">Winning the $2,500 Gene Haas Foundation Grant for our continuous efforts in robotics manufacturing and outreach.</p>
+                  <div className="flex flex-col items-center transform -translate-y-24 group shrink-0">
+                    <img src="/timeline/1.jpg" alt="Timeline 1" className="w-[45vw] max-w-[500px] h-[45vw] max-h-[500px] border-4 border-white/20 shadow-[0_0_40px_rgba(37,99,235,0.3)] object-cover mb-8 group-hover:scale-105 group-hover:rotate-2 transition-all duration-700" style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }} />
+                    <div className="text-center bg-black/40 p-5 backdrop-blur-md rounded-2xl border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity max-w-[450px]">
+                      <h4 className="text-artemis-blue font-header font-bold text-xl mb-2 tracking-widest">2024</h4>
+                      <p className="text-white/70 font-mono text-sm leading-relaxed">Creativity Award, FIRST Leadership Award Finalist (Eion Henchey), and Safety All-Star (Reed Fisch).</p>
+                    </div>
                   </div>
                   
                   {/* 2 */}
-                  <div className="flex flex-col items-center transform translate-y-32 group">
-                    <img src="/timeline/2.jpg" alt="Timeline 2" className="w-[45vw] max-w-[600px] h-auto rounded-xl border border-white/20 shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover mb-6 group-hover:scale-105 group-hover:-rotate-2 transition-all duration-500" />
-                    <p className="text-white/70 font-mono text-sm max-w-[400px] text-center bg-black/40 p-4 backdrop-blur-md rounded-lg border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity">The entire Team 6621 Artemis gathered around our competition robot, ready for the New York Tech Valley Regional.</p>
+                  <div className="flex flex-col items-center transform translate-y-32 group shrink-0">
+                    <img src="/timeline/3.jpg" alt="Timeline 2" className="w-[45vw] max-w-[500px] h-[45vw] max-h-[500px] border-4 border-white/20 shadow-[0_0_40px_rgba(249,115,22,0.3)] object-cover mb-8 group-hover:scale-105 group-hover:-rotate-2 transition-all duration-700" style={{ borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' }} />
+                    <div className="text-center bg-black/40 p-5 backdrop-blur-md rounded-2xl border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity max-w-[450px]">
+                      <h4 className="text-stellar-orange font-header font-bold text-xl mb-2 tracking-widest">2024</h4>
+                      <p className="text-white/70 font-mono text-sm leading-relaxed">Celebrating our success with our incredible mentors and community sponsors at the regional event.</p>
+                    </div>
                   </div>
 
                   {/* 3 */}
-                  <div className="flex flex-col items-center transform -translate-y-16 group">
-                    <img src="/timeline/3.jpg" alt="Timeline 3" className="w-[35vw] max-w-[500px] h-auto rounded-xl border border-white/20 shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover mb-6 group-hover:scale-105 group-hover:rotate-1 transition-all duration-500" />
-                    <p className="text-white/70 font-mono text-sm max-w-[400px] text-center bg-black/40 p-4 backdrop-blur-md rounded-lg border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity">Celebrating our success with our mentors and community sponsors at the regional event.</p>
+                  <div className="flex flex-col items-center transform -translate-y-16 group shrink-0">
+                    <img src="/timeline/5.jpg" alt="Timeline 3" className="w-[45vw] max-w-[500px] h-[45vw] max-h-[500px] border-4 border-white/20 shadow-[0_0_40px_rgba(37,99,235,0.3)] object-cover mb-8 group-hover:scale-105 group-hover:rotate-1 transition-all duration-700" style={{ borderRadius: '50% 50% 20% 80% / 25% 80% 20% 75%' }} />
+                    <div className="text-center bg-black/40 p-5 backdrop-blur-md rounded-2xl border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity max-w-[450px]">
+                      <h4 className="text-artemis-blue font-header font-bold text-xl mb-2 tracking-widest">2025</h4>
+                      <p className="text-white/70 font-mono text-sm leading-relaxed">Ranked #3 in New York State, Tech Valley Regional Winner, and Worlds Alliance Captain (Hopper Division).</p>
+                    </div>
                   </div>
 
                   {/* 4 */}
-                  <div className="flex flex-col items-center transform translate-y-24 group">
-                    <img src="/timeline/4.jpg" alt="Timeline 4" className="w-[45vw] max-w-[600px] h-auto rounded-xl border border-white/20 shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover mb-6 group-hover:scale-105 group-hover:-rotate-1 transition-all duration-500" />
-                    <p className="text-white/70 font-mono text-sm max-w-[400px] text-center bg-black/40 p-4 backdrop-blur-md rounded-lg border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity">Working hard in the pit area, tuning the robot mechanisms before our next match.</p>
+                  <div className="flex flex-col items-center transform translate-y-24 group shrink-0">
+                    <img src="/timeline/2.jpg" alt="Timeline 4" className="w-[45vw] max-w-[500px] h-[45vw] max-h-[500px] border-4 border-white/20 shadow-[0_0_40px_rgba(249,115,22,0.3)] object-cover mb-8 group-hover:scale-105 group-hover:-rotate-1 transition-all duration-700" style={{ borderRadius: '40% 60% 60% 40% / 60% 30% 70% 40%' }} />
+                    <div className="text-center bg-black/40 p-5 backdrop-blur-md rounded-2xl border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity max-w-[450px]">
+                      <h4 className="text-stellar-orange font-header font-bold text-xl mb-2 tracking-widest">2025</h4>
+                      <p className="text-white/70 font-mono text-sm leading-relaxed">Ballston Spa Off-Season Competition Finalist. The entire team gathered around the robot!</p>
+                    </div>
                   </div>
 
                   {/* 5 */}
-                  <div className="flex flex-col items-center transform -translate-y-8 group">
-                    <img src="/timeline/5.jpg" alt="Timeline 5" className="w-[30vw] max-w-[450px] h-[30vw] max-h-[450px] rounded-xl border border-white/20 shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover mb-6 group-hover:scale-105 group-hover:rotate-3 transition-all duration-500" />
-                    <p className="text-white/70 font-mono text-sm max-w-[400px] text-center bg-black/40 p-4 backdrop-blur-md rounded-lg border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity">Our robot performing autonomously during the Crescendo competition matches.</p>
+                  <div className="flex flex-col items-center transform -translate-y-8 group shrink-0">
+                    <img src="/timeline/4.jpg" alt="Timeline 5" className="w-[45vw] max-w-[500px] h-[45vw] max-h-[500px] border-4 border-white/20 shadow-[0_0_40px_rgba(37,99,235,0.3)] object-cover mb-8 group-hover:scale-105 group-hover:rotate-3 transition-all duration-700" style={{ borderRadius: '70% 30% 50% 50% / 30% 50% 50% 70%' }} />
+                    <div className="text-center bg-black/40 p-5 backdrop-blur-md rounded-2xl border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity max-w-[450px]">
+                      <h4 className="text-artemis-blue font-header font-bold text-xl mb-2 tracking-widest">2026</h4>
+                      <p className="text-white/70 font-mono text-sm leading-relaxed">Hudson Valley Regional Alliance 3 & Safety All-Star (Josiah Eugenio).</p>
+                    </div>
+                  </div>
+
+                  {/* 6 */}
+                  <div className="flex flex-col items-center transform translate-y-20 group shrink-0">
+                    <img src="/timeline/6.jpg" alt="Timeline 6" className="w-[45vw] max-w-[500px] h-[45vw] max-h-[500px] border-4 border-white/20 shadow-[0_0_40px_rgba(249,115,22,0.3)] object-cover mb-8 group-hover:scale-105 group-hover:-rotate-3 transition-all duration-700" style={{ borderRadius: '40% 60% 40% 60% / 50% 40% 60% 50%' }} />
+                    <div className="text-center bg-black/40 p-5 backdrop-blur-md rounded-2xl border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity max-w-[450px]">
+                      <h4 className="text-stellar-orange font-header font-bold text-xl mb-2 tracking-widest">2026</h4>
+                      <p className="text-white/70 font-mono text-sm leading-relaxed">New York Tech Valley Regional Alliance 5. Taking a selfie with the community!</p>
+                    </div>
+                  </div>
+
+                  {/* 7 */}
+                  <div className="flex flex-col items-center transform -translate-y-28 group shrink-0">
+                    <img src="/timeline/7.jpg" alt="Timeline 7" className="w-[45vw] max-w-[500px] h-[45vw] max-h-[500px] border-4 border-white/20 shadow-[0_0_40px_rgba(37,99,235,0.3)] object-cover mb-8 group-hover:scale-105 group-hover:rotate-6 transition-all duration-700" style={{ borderRadius: '64% 36% 27% 73% / 55% 58% 42% 45%' }} />
+                    <div className="text-center bg-black/40 p-5 backdrop-blur-md rounded-2xl border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity max-w-[450px]">
+                      <h4 className="text-artemis-blue font-header font-bold text-xl mb-2 tracking-widest">2026</h4>
+                      <p className="text-white/70 font-mono text-sm leading-relaxed">Hanging out in the pits and getting the robot tuned for the next intense match.</p>
+                    </div>
+                  </div>
+
+                  {/* 8 */}
+                  <div className="flex flex-col items-center transform translate-y-16 group shrink-0">
+                    <img src="/timeline/8.jpg" alt="Timeline 8" className="w-[45vw] max-w-[500px] h-[45vw] max-h-[500px] border-4 border-white/20 shadow-[0_0_40px_rgba(249,115,22,0.3)] object-cover mb-8 group-hover:scale-105 group-hover:-rotate-6 transition-all duration-700" style={{ borderRadius: '43% 57% 59% 41% / 46% 36% 64% 54%' }} />
+                    <div className="text-center bg-black/40 p-5 backdrop-blur-md rounded-2xl border border-white/5 opacity-80 group-hover:opacity-100 transition-opacity max-w-[450px]">
+                      <h4 className="text-stellar-orange font-header font-bold text-xl mb-2 tracking-widest">2026</h4>
+                      <p className="text-white/70 font-mono text-sm leading-relaxed">Showcasing our spirit and dedication as we head towards another victorious regional!</p>
+                    </div>
                   </div>
 
                 </div>
