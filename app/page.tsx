@@ -280,7 +280,7 @@ export default function Home() {
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
       const paddedIndex = i.toString().padStart(3, '0');
-      img.src = i === 1 ? '/hero_poster.png' : `/hero_frames/${paddedIndex}.jpg`;
+      img.src = i === 1 ? '/robot_cad_new.jpg' : `/hero_frames/${paddedIndex}.jpg`;
       
       // Draw first frame immediately
       if (i === 1) {
@@ -316,6 +316,8 @@ export default function Home() {
   const opacityShapes = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
   const yShapesFast = useTransform(scrollYProgress, [0, 1], ["0vh", "-150vh"]);
   const yShapesSlow = useTransform(scrollYProgress, [0, 1], ["0vh", "-80vh"]);
+
+  const fadeOutHeroLiquid = useTransform(heroScrollYProgress, [0, 0.05], [1, 0]);
 
   const bgParallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
 
@@ -392,24 +394,23 @@ export default function Home() {
         />
       </motion.div>
 
-      {/* ══════════════════════════════════════════════════════
-           1. HERO (Lando Norris Style Reveal Effect)
+            {/* ══════════════════════════════════════════════════════
+           1. HERO & ZIP ANIMATION (Combined Sticky Scrolling)
            ══════════════════════════════════════════════════════ */}
-      <section id="hero" className="relative w-full h-[100svh] z-10 bg-[#05070B] overflow-hidden">
-        
-        {/* HEADER */}
-        <header className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto">
-          <div className="flex items-center gap-4">
-            <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-12 h-12 opacity-80 mix-blend-screen object-contain" />
-            <span className="font-header font-black text-white/60 tracking-widest text-3xl md:text-5xl">ARTEMIS</span>
+      <section id="hero" ref={heroScrollRef} className="relative w-full z-10" style={{ height: '300vh' }}>
+        <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
+          
+          {/* 1. Canvas Zip Animation Layer (Bottom) */}
+          <div className="absolute inset-0 z-0">
+            <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#05070B]/40 via-transparent to-[#05070B]" />
           </div>
-          <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
-            <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-colors">About</a>
-            <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="hover:text-white transition-colors">Timeline</a>
-            <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-colors">Impact</a>
-            <a href="#budget" onClick={(e) => handleFastScroll(e, '#budget')} className="hover:text-white transition-colors">Sponsor</a>
-          </nav>
-        </header>
+
+          {/* 2. Liquid Hero Mask Layer (Fades out immediately when scrolling starts) */}
+
+          <motion.div className="absolute inset-0 z-10" style={{ opacity: fadeOutHeroLiquid }}>
+            {/* HEADER */}
+        
 
         {/* Liquid Reveal Mask Definition */}
         <svg className="absolute w-0 h-0 pointer-events-none">
@@ -424,21 +425,21 @@ export default function Home() {
                 {/* Main Cursor Blob: Amoeba/Line Liquid Shape (Longer and Bigger) */}
                 <motion.g style={{ x: smoothCursorX, y: smoothCursorY }}>
                   <motion.g animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }}>
-                    <motion.ellipse cx="0" cy="0" rx={240} ry={60} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
-                    <motion.ellipse cx="0" cy="0" rx={80} ry={180} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7, ease: "linear" }} />
-                    <motion.ellipse cx="30" cy="-30" rx={140} ry={50} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 8, ease: "linear" }} />
+                    <motion.ellipse cx="0" cy="0" rx={400} ry={40} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
+                        <motion.ellipse cx="0" cy="0" rx={50} ry={300} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7, ease: "linear" }} />
+                        <motion.ellipse cx="30" cy="-30" rx={350} ry={50} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 8, ease: "linear" }} />
                   </motion.g>
                 </motion.g>
 
                 {/* Additional Trailing Blobs to make the tail longer */}
                 <motion.g style={{ x: smoothCursorX2, y: smoothCursorY2 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 9, ease: "linear" }}>
-                  <motion.ellipse cx="0" cy="0" rx={150} ry={40} fill="white" />
+                  <motion.ellipse cx="0" cy="0" rx={250} ry={60} fill="white" />
                 </motion.g>
                 <motion.g style={{ x: smoothCursorX3, y: smoothCursorY3 }} animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 10, ease: "linear" }}>
-                  <motion.ellipse cx="0" cy="0" rx={100} ry={30} fill="white" />
+                  <motion.ellipse cx="0" cy="0" rx={200} ry={50} fill="white" />
                 </motion.g>
                 <motion.g style={{ x: smoothCursorX4, y: smoothCursorY4 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 11, ease: "linear" }}>
-                  <motion.ellipse cx="0" cy="0" rx={70} ry={20} fill="white" />
+                  <motion.ellipse cx="0" cy="0" rx={150} ry={40} fill="white" />
                 </motion.g>
 
                 {/* Autonomous Liquid Blobs revealing CAD */}
@@ -457,7 +458,7 @@ export default function Home() {
 
         {/* Base Layer: Ghost/Wireframe Robot */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10">
-           <img src="/robot_cad_new.jpg" alt="Robot Base" className="w-full h-full object-cover" />
+           <img src="/robot_cad_new.jpg" alt="Robot Base" className="w-full h-full object-cover opacity-[0.75]" />
         </div>
 
         {/* Main Hover Reveal Layer using Liquid Mask */}
@@ -468,24 +469,29 @@ export default function Home() {
         >
            <img src="/robot_drawing_new.jpg" alt="Robot Drawing" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
         </motion.div>
+          </motion.div>
 
-        {/* Sponsor Button */}
+
+          {/* 3. Overlays (Header and Sponsor) */}
+          <header className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto bg-black">
+          <div className="flex items-center gap-4">
+            <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-12 h-12 opacity-80 mix-blend-screen object-contain" />
+            <span className="font-header font-black text-white/60 tracking-widest text-3xl md:text-5xl">ARTEMIS</span>
+          </div>
+          <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
+            <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-colors">About</a>
+            <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="hover:text-white transition-colors">Timeline</a>
+            <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-colors">Impact</a>
+            <a href="#budget" onClick={(e) => handleFastScroll(e, '#budget')} className="hover:text-white transition-colors">Sponsor</a>
+          </nav>
+        </header>
+          {/* Sponsor Button */}
         <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto">
-          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 backdrop-blur-md" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.4)', boxShadow: '0 4px 16px rgba(0,0,0,0.3), 0 0 20px rgba(37,99,235,0.2)' }}>
+          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 backdrop-blur-md opacity-50 hover:opacity-100" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.4)', boxShadow: '0 4px 16px rgba(0,0,0,0.3), 0 0 20px rgba(37,99,235,0.2)' }}>
             Sponsor Now
           </a>
         </div>
-      </section>
 
-      {/* ══════════════════════════════════════════════════════
-           1.5 ZIP ANIMATION (Canvas Scrubbing)
-           ══════════════════════════════════════════════════════ */}
-      <section id="zip-animation" ref={heroScrollRef} className="relative w-full z-10" style={{ height: '300vh' }}>
-        <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
-          <div className="absolute inset-0 z-0">
-            <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-60" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#05070B] via-transparent to-[#05070B]" />
-          </div>
         </div>
       </section>
 
