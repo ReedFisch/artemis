@@ -258,6 +258,18 @@ export default function Home() {
     };
   }, [mouseX, mouseY, cursorX, cursorY]);
 
+  // Scroll Zip to Timeline on wheel down
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (window.scrollY < window.innerHeight / 2 && e.deltaY > 0) {
+        e.preventDefault();
+        document.getElementById('timeline')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, []);
+
   // Parallax Values for Hero
   const opacityShapes = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
   const yShapesFast = useTransform(scrollYProgress, [0, 1], ["0vh", "-150vh"]);
@@ -390,7 +402,7 @@ export default function Home() {
 
         {/* Base Layer: Ghost/Wireframe Robot */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10">
-           <img src="/robot_cad.png" alt="Robot Base" className="w-[85vw] max-w-5xl object-contain opacity-20 grayscale brightness-150 contrast-125" />
+           <img src="/robot_cad.png" alt="Robot Base" className="w-full h-full object-cover opacity-20 grayscale brightness-150 contrast-125" />
         </div>
 
         {/* Main Hover Reveal Layer using Liquid Mask */}
@@ -399,7 +411,7 @@ export default function Home() {
           animate={{ opacity: isMoving ? 1 : 0 }}
           transition={{ duration: isMoving ? 0.1 : 1.2, ease: "easeOut" }}
         >
-           <img src="/robot_cad.png" alt="Robot CAD" className="w-[85vw] max-w-5xl object-contain drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
+           <img src="/robot_cad.png" alt="Robot CAD" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
         </motion.div>
 
         {/* Sponsor Button */}
