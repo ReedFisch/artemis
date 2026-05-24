@@ -343,7 +343,7 @@ export default function Home() {
     container: containerRef,
     offset: ["start start", "end end"]
   });
-  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 1], ["0%", "-81.8181%"]);
+  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 0.15, 0.85, 1], ["0%", "0%", "-81.8181%", "-81.8181%"]);
 
   // Form submission mock
   const handleContactSubmit = async (e: React.FormEvent) => {
