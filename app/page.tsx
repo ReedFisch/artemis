@@ -261,17 +261,56 @@ export default function Home() {
     };
   }, [mouseX, mouseY, cursorX, cursorY]);
 
-  // Scroll Zip to Timeline on wheel down
+  // Hero Scroll Scrubbing (Zip Animation)
+  const heroScrollRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroScrollYProgress } = useScroll({
+    target: heroScrollRef,
+    container: containerRef,
+    offset: ["start start", "end end"]
+  });
+  
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const imagesRef = useRef<HTMLImageElement[]>([]);
+  
+  // Preload images on mount
   useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (window.scrollY < window.innerHeight / 2 && e.deltaY > 0) {
-        e.preventDefault();
-        document.getElementById('timeline')?.scrollIntoView({ behavior: 'smooth' });
+    const frameCount = 290;
+    const currentImages: HTMLImageElement[] = [];
+
+    for (let i = 1; i <= frameCount; i++) {
+      const img = new Image();
+      const paddedIndex = i.toString().padStart(3, '0');
+      img.src = i === 1 ? '/hero_poster.png' : `/hero_frames/${paddedIndex}.jpg`;
+      
+      // Draw first frame immediately
+      if (i === 1) {
+        img.onload = () => {
+          if (canvasRef.current) {
+            const ctx = canvasRef.current.getContext('2d');
+            if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080);
+          }
+        };
       }
-    };
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => window.removeEventListener('wheel', handleWheel);
+      currentImages.push(img);
+    }
+    imagesRef.current = currentImages;
   }, []);
+
+  const rafRef = useRef<number | null>(null);
+
+  useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
+    const frameIndex = Math.min(289, Math.floor(latest * 290));
+    if (canvasRef.current && imagesRef.current[frameIndex]) {
+      const ctx = canvasRef.current.getContext('2d');
+      const img = imagesRef.current[frameIndex];
+      if (img.complete && img.naturalHeight !== 0) {
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        rafRef.current = requestAnimationFrame(() => {
+          if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080);
+        });
+      }
+    }
+  });
 
   // Parallax Values for Hero
   const opacityShapes = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
@@ -418,7 +457,7 @@ export default function Home() {
 
         {/* Base Layer: Ghost/Wireframe Robot */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10">
-           <img src="/robot_cad.png" alt="Robot Base" className="w-full h-full object-cover" />
+           <img src="/robot_cad_new.jpg" alt="Robot Base" className="w-full h-full object-cover" />
         </div>
 
         {/* Main Hover Reveal Layer using Liquid Mask */}
@@ -427,7 +466,7 @@ export default function Home() {
           animate={{ opacity: isMoving ? 1 : 0 }}
           transition={{ duration: isMoving ? 0.1 : 1.2, ease: "easeOut" }}
         >
-           <img src="/robot_drawing.jpg" alt="Robot Drawing" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
+           <img src="/robot_drawing_new.jpg" alt="Robot Drawing" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
         </motion.div>
 
         {/* Sponsor Button */}
@@ -435,6 +474,18 @@ export default function Home() {
           <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 backdrop-blur-md" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.4)', boxShadow: '0 4px 16px rgba(0,0,0,0.3), 0 0 20px rgba(37,99,235,0.2)' }}>
             Sponsor Now
           </a>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════
+           1.5 ZIP ANIMATION (Canvas Scrubbing)
+           ══════════════════════════════════════════════════════ */}
+      <section id="zip-animation" ref={heroScrollRef} className="relative w-full z-10" style={{ height: '300vh' }}>
+        <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
+          <div className="absolute inset-0 z-0">
+            <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#05070B] via-transparent to-[#05070B]" />
+          </div>
         </div>
       </section>
 
