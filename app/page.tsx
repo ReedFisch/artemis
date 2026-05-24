@@ -217,6 +217,8 @@ export default function Home() {
   const smoothCursorY2 = useSpring(cursorY, { stiffness: 100, damping: 10, mass: 1 });
   const smoothCursorX3 = useSpring(cursorX, { stiffness: 60, damping: 8, mass: 1 }); // Trail 2
   const smoothCursorY3 = useSpring(cursorY, { stiffness: 60, damping: 8, mass: 1 });
+  const smoothCursorX4 = useSpring(cursorX, { stiffness: 35, damping: 6, mass: 1 }); // Trail 3
+  const smoothCursorY4 = useSpring(cursorY, { stiffness: 35, damping: 6, mass: 1 });
 
   const springConfig = { damping: 25, stiffness: 80, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
@@ -380,13 +382,24 @@ export default function Home() {
             </filter>
             <mask id="liquidMask">
               <g filter="url(#goo)">
-                {/* Main Cursor Blob: Amoeba/Line Liquid Shape */}
+                {/* Main Cursor Blob: Amoeba/Line Liquid Shape (Longer and Bigger) */}
                 <motion.g style={{ x: smoothCursorX, y: smoothCursorY }}>
                   <motion.g animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }}>
-                    <motion.ellipse cx="0" cy="0" rx={140} ry={40} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
-                    <motion.ellipse cx="0" cy="0" rx={50} ry={110} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7, ease: "linear" }} />
-                    <motion.ellipse cx="20" cy="-20" rx={80} ry={30} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 8, ease: "linear" }} />
+                    <motion.ellipse cx="0" cy="0" rx={240} ry={60} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
+                    <motion.ellipse cx="0" cy="0" rx={80} ry={180} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7, ease: "linear" }} />
+                    <motion.ellipse cx="30" cy="-30" rx={140} ry={50} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 8, ease: "linear" }} />
                   </motion.g>
+                </motion.g>
+
+                {/* Additional Trailing Blobs to make the tail longer */}
+                <motion.g style={{ x: smoothCursorX2, y: smoothCursorY2 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 9, ease: "linear" }}>
+                  <motion.ellipse cx="0" cy="0" rx={150} ry={40} fill="white" />
+                </motion.g>
+                <motion.g style={{ x: smoothCursorX3, y: smoothCursorY3 }} animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 10, ease: "linear" }}>
+                  <motion.ellipse cx="0" cy="0" rx={100} ry={30} fill="white" />
+                </motion.g>
+                <motion.g style={{ x: smoothCursorX4, y: smoothCursorY4 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 11, ease: "linear" }}>
+                  <motion.ellipse cx="0" cy="0" rx={70} ry={20} fill="white" />
                 </motion.g>
 
                 {/* Autonomous Liquid Blobs revealing CAD */}
@@ -394,6 +407,10 @@ export default function Home() {
                 <AutonomousBlob startX="80%" startY="80%" endX="20%" endY="10%" radius={60} duration={20} delay={2} />
                 <AutonomousBlob startX="30%" startY="-10%" endX="60%" endY="110%" radius={90} duration={25} delay={5} />
                 <AutonomousBlob startX="110%" startY="40%" endX="-10%" endY="60%" radius={70} duration={18} delay={1} />
+                <AutonomousBlob startX="0%" startY="100%" endX="100%" endY="0%" radius={110} duration={22} delay={3} />
+                <AutonomousBlob startX="50%" startY="50%" endX="120%" endY="20%" radius={100} duration={28} delay={4} />
+                <AutonomousBlob startX="-20%" startY="50%" endX="120%" endY="70%" radius={75} duration={19} delay={6} />
+                <AutonomousBlob startX="70%" startY="-20%" endX="30%" endY="120%" radius={85} duration={24} delay={7} />
               </g>
             </mask>
           </defs>
