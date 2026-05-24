@@ -403,7 +403,6 @@ export default function Home() {
           {/* 1. Canvas Zip Animation Layer (Bottom) */}
           <div className="absolute inset-0 z-0">
             <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#05070B]/40 via-transparent to-[#05070B]" />
           </div>
 
           {/* 2. Liquid Hero Mask Layer (Fades out immediately when scrolling starts) */}
@@ -456,13 +455,11 @@ export default function Home() {
           </defs>
         </svg>
 
-        {/* Base Layer: Ghost/Wireframe Robot */}
-        <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10">
-           <img src="/hero_starting_frame.jpeg" alt="Robot Base" className="w-full h-full object-cover opacity-[0.75]" />
-        </div>
+        {/* Base Layer: Black overlay to dim the canvas by 25% for the hero phase */}
+        <div className="absolute inset-0 z-10 pointer-events-none bg-black/25" />
 
         {/* Main Hover Reveal Layer using Liquid Mask */}
-        <motion.div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none mt-10" 
+        <motion.div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none" 
           style={{ mask: 'url(#liquidMask)', WebkitMask: 'url(#liquidMask)' }}
           animate={{ opacity: isMoving ? 1 : 0 }}
           transition={{ duration: isMoving ? 0.1 : 1.2, ease: "easeOut" }}
