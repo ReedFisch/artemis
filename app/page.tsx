@@ -421,24 +421,27 @@ export default function Home() {
             </filter>
             <mask id="liquidMask">
               <g filter="url(#goo)">
-                {/* Main Cursor Blob: Amoeba/Line Liquid Shape (Longer and Bigger) */}
-                <motion.g style={{ x: smoothCursorX, y: smoothCursorY }}>
-                  <motion.g animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }}>
-                    <motion.ellipse cx="0" cy="0" rx={400} ry={40} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
-                        <motion.ellipse cx="0" cy="0" rx={50} ry={300} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7, ease: "linear" }} />
-                        <motion.ellipse cx="30" cy="-30" rx={350} ry={50} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 8, ease: "linear" }} />
+                <motion.g 
+                  animate={{ opacity: isMoving ? 1 : 0, scale: isMoving ? 1 : 0.5 }} 
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                >
+                  {/* Main Cursor Blob */}
+                  <motion.g style={{ x: smoothCursorX, y: smoothCursorY }}>
+                    <motion.g animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }}>
+                      <motion.ellipse cx="0" cy="0" rx={120} ry={80} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
+                      <motion.ellipse cx="0" cy="0" rx={90} ry={110} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7, ease: "linear" }} />
+                    </motion.g>
                   </motion.g>
-                </motion.g>
 
-                {/* Additional Trailing Blobs to make the tail longer */}
-                <motion.g style={{ x: smoothCursorX2, y: smoothCursorY2 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 9, ease: "linear" }}>
-                  <motion.ellipse cx="0" cy="0" rx={250} ry={60} fill="white" />
-                </motion.g>
-                <motion.g style={{ x: smoothCursorX3, y: smoothCursorY3 }} animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 10, ease: "linear" }}>
-                  <motion.ellipse cx="0" cy="0" rx={200} ry={50} fill="white" />
-                </motion.g>
-                <motion.g style={{ x: smoothCursorX4, y: smoothCursorY4 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 11, ease: "linear" }}>
-                  <motion.ellipse cx="0" cy="0" rx={150} ry={40} fill="white" />
+                  {/* Trailing Blob 1 */}
+                  <motion.g style={{ x: smoothCursorX2, y: smoothCursorY2 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 9, ease: "linear" }}>
+                    <motion.ellipse cx="0" cy="0" rx={100} ry={60} fill="white" />
+                  </motion.g>
+                  
+                  {/* Trailing Blob 2 */}
+                  <motion.g style={{ x: smoothCursorX3, y: smoothCursorY3 }} animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 10, ease: "linear" }}>
+                    <motion.ellipse cx="0" cy="0" rx={80} ry={50} fill="white" />
+                  </motion.g>
                 </motion.g>
 
                 {/* Autonomous Liquid Blobs revealing CAD */}
@@ -461,8 +464,6 @@ export default function Home() {
         {/* Main Hover Reveal Layer using Liquid Mask */}
         <motion.div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none" 
           style={{ mask: 'url(#liquidMask)', WebkitMask: 'url(#liquidMask)' }}
-          animate={{ opacity: isMoving ? 1 : 0 }}
-          transition={{ duration: isMoving ? 0.1 : 1.2, ease: "easeOut" }}
         >
            <img src="/robot_drawing_new.jpg" alt="Robot Drawing" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
         </motion.div>
