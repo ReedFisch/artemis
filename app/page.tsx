@@ -280,7 +280,7 @@ export default function Home() {
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
       const paddedIndex = i.toString().padStart(3, '0');
-      img.src = i === 1 ? '/robot_cad_new.jpg' : `/hero_frames/${paddedIndex}.jpg`;
+      img.src = i === 1 ? '/hero_starting_frame.jpeg' : `/hero_frames/${paddedIndex}.jpg`;
       
       // Draw first frame immediately
       if (i === 1) {
@@ -458,7 +458,7 @@ export default function Home() {
 
         {/* Base Layer: Ghost/Wireframe Robot */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none mt-10">
-           <img src="/robot_cad_new.jpg" alt="Robot Base" className="w-full h-full object-cover opacity-[0.75]" />
+           <img src="/hero_starting_frame.jpeg" alt="Robot Base" className="w-full h-full object-cover opacity-[0.75]" />
         </div>
 
         {/* Main Hover Reveal Layer using Liquid Mask */}
