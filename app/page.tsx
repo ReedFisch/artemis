@@ -320,7 +320,7 @@ export default function Home() {
   const yShapesFast = useTransform(scrollYProgress, [0, 1], ["0vh", "-150vh"]);
   const yShapesSlow = useTransform(scrollYProgress, [0, 1], ["0vh", "-80vh"]);
 
-  const fadeOutHeroLiquid = useTransform(heroScrollYProgress, [0, 0.005], [1, 0]);
+  const fadeOutHeroLiquid = useTransform(heroScrollYProgress, [0, 0.0001], [1, 0]);
 
   const bgParallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
 
@@ -461,8 +461,7 @@ export default function Home() {
           </defs>
         </svg>
 
-        {/* Base Layer: Black overlay to dim the canvas by 25% for the hero phase */}
-        <div className="absolute inset-0 z-10 pointer-events-none bg-black/25" />
+        {/* Base Layer was removed to match exact canvas dimness */}
 
         {/* Main Hover Reveal Layer using Liquid Mask */}
         <motion.div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none" 
