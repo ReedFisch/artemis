@@ -379,7 +379,7 @@ export default function Home() {
   const yAboutToTimeline = useTransform(
     horizontalScrollYProgress,
     [0, 0.15, 0.85, 1],
-    ["10vh", "0vh", "0vh", "-10vh"]
+    ["100vh", "0vh", "0vh", "-10vh"]
   );
 
   // Form submission mock
@@ -429,58 +429,70 @@ export default function Home() {
               <div className="relative z-20 w-16 h-16 rounded-full animate-pulse" style={{ background: 'radial-gradient(circle at 50% 50%, #ffffff 0%, #fef08a 40%, #eab308 100%)', boxShadow: '0 0 80px 20px rgba(250,204,21,0.4)' }} />
 
               {/* Orbit 1: Inner Planet */}
-              <motion.div 
-                initial={{ rotateX: 70, rotateZ: 0 }}
-                animate={{ rotateZ: 360 }} 
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[250px] h-[250px] border border-white/20 rounded-full transform-style preserve-3d"
-              >
+              <div className="absolute w-[250px] h-[250px] transform-style preserve-3d" style={{ transform: 'rotateX(70deg)' }}>
                 <motion.div 
-                  initial={{ rotateZ: 0, rotateX: -70 }}
-                  animate={{ rotateZ: -360 }}
+                  animate={{ rotateZ: 360 }} 
                   transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                  className="absolute top-0 left-1/2 -ml-2 -mt-2 w-4 h-4 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8),inset_-2px_-2px_6px_rgba(0,0,0,0.6)]" 
-                  style={{ background: 'radial-gradient(circle at 30% 30%, #60a5fa 0%, #1d4ed8 70%, #020617 100%)' }} 
-                />
-              </motion.div>
+                  className="w-full h-full border border-white/20 rounded-full transform-style preserve-3d"
+                >
+                  <motion.div 
+                    animate={{ rotateZ: -360 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-0 left-1/2 -ml-3 -mt-3 w-6 h-6 transform-style preserve-3d" 
+                  >
+                    <div className="w-full h-full rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8),inset_-2px_-2px_6px_rgba(0,0,0,0.6)] transform-style preserve-3d" style={{ transform: 'rotateX(-70deg)', background: 'radial-gradient(circle at 30% 30%, #60a5fa 0%, #1d4ed8 70%, #020617 100%)' }}>
+                      <motion.div animate={{ rotateY: 360 }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
+                      <motion.div animate={{ rotateX: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </div>
 
               {/* Orbit 2: Middle Planet */}
-              <motion.div 
-                initial={{ rotateX: 70, rotateZ: 0 }}
-                animate={{ rotateZ: -360 }} 
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[400px] h-[400px] border border-white/10 rounded-full transform-style preserve-3d"
-              >
+              <div className="absolute w-[400px] h-[400px] transform-style preserve-3d" style={{ transform: 'rotateX(70deg)' }}>
                 <motion.div 
-                  initial={{ rotateZ: 0, rotateX: -70 }}
-                  animate={{ rotateZ: 360 }}
+                  animate={{ rotateZ: -360 }} 
                   transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                  className="absolute top-0 left-1/2 -ml-2.5 -mt-2.5 w-5 h-5 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.8),inset_-2px_-2px_6px_rgba(0,0,0,0.6)]" 
-                  style={{ background: 'radial-gradient(circle at 30% 30%, #c084fc 0%, #7e22ce 70%, #020617 100%)' }} 
-                />
-              </motion.div>
+                  className="w-full h-full border border-white/10 rounded-full transform-style preserve-3d"
+                >
+                  <motion.div 
+                    animate={{ rotateZ: 360 }}
+                    transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-0 left-1/2 -ml-4 -mt-4 w-8 h-8 transform-style preserve-3d" 
+                  >
+                    <div className="w-full h-full rounded-full shadow-[0_0_15px_rgba(168,85,247,0.8),inset_-2px_-2px_6px_rgba(0,0,0,0.6)] transform-style preserve-3d" style={{ transform: 'rotateX(-70deg)', background: 'radial-gradient(circle at 30% 30%, #c084fc 0%, #7e22ce 70%, #020617 100%)' }}>
+                      <motion.div animate={{ rotateY: -360 }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
+                      <motion.div animate={{ rotateX: -360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </div>
 
               {/* Orbit 3: Outer Planet */}
-              <motion.div 
-                initial={{ rotateX: 70, rotateZ: 0 }}
-                animate={{ rotateZ: 360 }} 
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[550px] h-[550px] border border-white/5 rounded-full transform-style preserve-3d"
-              >
+              <div className="absolute w-[550px] h-[550px] transform-style preserve-3d" style={{ transform: 'rotateX(70deg)' }}>
                 <motion.div 
-                  initial={{ rotateZ: 0, rotateX: -70 }}
-                  animate={{ rotateZ: -360 }}
+                  animate={{ rotateZ: 360 }} 
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="absolute top-0 left-1/2 -ml-3 -mt-3 w-6 h-6 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.8),inset_-3px_-3px_8px_rgba(0,0,0,0.6)]" 
-                  style={{ background: 'radial-gradient(circle at 30% 30%, #fb923c 0%, #c2410c 70%, #020617 100%)' }} 
-                />
-              </motion.div>
+                  className="w-full h-full border border-white/5 rounded-full transform-style preserve-3d"
+                >
+                  <motion.div 
+                    animate={{ rotateZ: -360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-0 left-1/2 -ml-5 -mt-5 w-10 h-10 transform-style preserve-3d" 
+                  >
+                    <div className="w-full h-full rounded-full shadow-[0_0_20px_rgba(249,115,22,0.8),inset_-3px_-3px_8px_rgba(0,0,0,0.6)] transform-style preserve-3d" style={{ transform: 'rotateX(-70deg)', background: 'radial-gradient(circle at 30% 30%, #fb923c 0%, #c2410c 70%, #020617 100%)' }}>
+                      <motion.div animate={{ rotateY: 360 }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
+                      <motion.div animate={{ rotateX: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </div>
 
             </div>
 
             {/* Loading Text */}
             <div className="absolute bottom-20 z-10 flex flex-col items-center">
-              <div className="font-header font-black tracking-[0.4em] text-lg lg:text-xl uppercase text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-400 animate-pulse">Initializing System</div>
+              <div className="font-header font-black tracking-[0.4em] text-lg lg:text-xl uppercase text-white/90 animate-pulse">Initializing System</div>
               <p className="text-white/40 font-mono text-xs mt-4 tracking-widest">ESTABLISHING CONNECTION...</p>
             </div>
           </motion.div>
@@ -549,44 +561,44 @@ export default function Home() {
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
-            <div className="w-[100vw] h-full flex flex-col pt-64 pb-12 px-6 md:px-12 relative z-10">
+            <div className="w-[100vw] h-full flex flex-col pt-32 pb-12 px-6 md:px-12 relative z-10">
               
               {/* Scattered 3D Shapes */}
               <motion.div animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
               <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
               
-              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-16 items-stretch h-auto mt-24">
+              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-10 items-stretch h-auto mt-8">
                 
                 {/* Left Side: About Text */}
-                <div className="lg:w-1/2 flex flex-col space-y-8 glass-panel-deep p-12 transform-style preserve-3d shadow-2xl justify-between h-full relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-artemis-blue/10 rounded-full blur-3xl" />
+                <div className="lg:w-1/2 flex flex-col space-y-6 glass-panel-deep p-8 transform-style preserve-3d shadow-2xl justify-between h-full relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-artemis-blue/10 rounded-full blur-3xl" />
                   
                   <div className="relative z-10">
-                    <h2 className="text-4xl md:text-5xl font-header font-black text-white">
+                    <h2 className="text-3xl md:text-4xl font-header font-black text-white">
                       About Us
                     </h2>
-                    <p className="text-lg text-white/70 leading-relaxed font-light mt-8">
+                    <p className="text-sm text-white/70 leading-relaxed font-light mt-6">
                       Founded in 2016, Team 6621 Artemis Robotics is the only FRC team in Columbia County. We represent Chatham High School not only as the only robotics team but as the sole technology and STEAM-centered club for the entire school. We allow students to learn as they desire, advance their STEAM interests, whether that be art, business, or stem there is a place for anyone and everyone at ARTEMIS.
                     </p>
                   </div>
                   
-                  <div className="space-y-6 relative z-10 mt-auto">
+                  <div className="space-y-5 relative z-10 mt-auto">
                     {/* Gradient divider between About and Mission */}
                     <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4) 30%, rgba(249,115,22,0.4) 70%, transparent)' }} />
                     
                     {/* Mission Box (Bigger) */}
-                    <div className="p-10 rounded-2xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(37,99,235,0.08) 50%, rgba(249,115,22,0.05) 100%)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
+                    <div className="p-6 rounded-2xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(37,99,235,0.08) 50%, rgba(249,115,22,0.05) 100%)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
                       <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <h3 className="text-2xl font-header font-bold mb-3 text-white">Our Mission</h3>
-                      <p className="text-lg text-white/70 italic leading-relaxed">
+                      <h3 className="text-xl font-header font-bold mb-2 text-white">Our Mission</h3>
+                      <p className="text-sm text-white/70 italic leading-relaxed">
                         &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
                       </p>
                     </div>
                     
                     {/* About FRC Chip & Text */}
-                    <div className="flex items-center gap-6 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors duration-300">
-                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>About FRC →</a>
-                      <p className="text-xs text-white/60 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
+                    <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors duration-300">
+                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>About FRC →</a>
+                      <p className="text-[11px] text-white/60 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
                     </div>
                   </div>
                 </div>
