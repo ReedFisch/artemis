@@ -230,61 +230,7 @@ export default function Home() {
     requestAnimationFrame(step);
   };
 
-  // Organic Liquid Mouse Tracking
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const cursorX = useMotionValue(-1000);
-  const cursorY = useMotionValue(-1000);
-  // Underdamped springs to overshoot like liquid sliding past cursor
-  const smoothCursorX = useSpring(cursorX, { stiffness: 150, damping: 12, mass: 1 });
-  const smoothCursorY = useSpring(cursorY, { stiffness: 150, damping: 12, mass: 1 });
-  const smoothCursorX2 = useSpring(cursorX, { stiffness: 100, damping: 10, mass: 1 }); // Trail 1
-  const smoothCursorY2 = useSpring(cursorY, { stiffness: 100, damping: 10, mass: 1 });
-  const smoothCursorX3 = useSpring(cursorX, { stiffness: 60, damping: 8, mass: 1 }); // Trail 2
-  const smoothCursorY3 = useSpring(cursorY, { stiffness: 60, damping: 8, mass: 1 });
-  const smoothCursorX4 = useSpring(cursorX, { stiffness: 35, damping: 6, mass: 1 }); // Trail 3
-  const smoothCursorY4 = useSpring(cursorY, { stiffness: 35, damping: 6, mass: 1 });
-
-  const springConfig = { damping: 25, stiffness: 80, mass: 0.5 };
-  const smoothX = useSpring(mouseX, springConfig);
-  const smoothY = useSpring(mouseY, springConfig);
-  const smoothXSlow = useSpring(useTransform(mouseX, v => v * 0.5), springConfig);
-  const smoothYSlow = useSpring(useTransform(mouseY, v => v * 0.5), springConfig);
-  const smoothXFast = useSpring(useTransform(mouseX, v => v * 1.5), springConfig);
-  const smoothYFast = useSpring(useTransform(mouseY, v => v * 1.5), springConfig);
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    const handleMouseMove = (e: MouseEvent) => {
-      setIsMoving(true);
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        setIsMoving(false);
-      }, 200);
-
-      // Calculate normalized mouse position (-1 to 1)
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = (e.clientY / window.innerHeight) * 2 - 1;
-      // Convert to pixel offsets (e.g. max 100px movement)
-      mouseX.set(x * 100);
-      mouseY.set(y * 100);
-      
-      const hero = document.getElementById('hero');
-      if (hero) {
-        const rect = hero.getBoundingClientRect();
-        cursorX.set(e.clientX - rect.left);
-        cursorY.set(e.clientY - rect.top);
-      } else {
-        cursorX.set(e.clientX);
-        cursorY.set(e.clientY);
-      }
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      clearTimeout(timeout);
-    };
-  }, [mouseX, mouseY, cursorX, cursorY]);
+  // Removed cursor tracking hooks to drastically improve performance
 
   // Hero Scroll Scrubbing (Zip Animation)
   const heroScrollRef = useRef<HTMLElement>(null);
@@ -387,56 +333,10 @@ export default function Home() {
   return (
     <main ref={containerRef} className={`${isLoading ? 'fixed inset-0 overflow-hidden pointer-events-none' : 'snap-container'} text-white font-sans overflow-x-hidden w-full h-screen`}>
 
-      {/* ══════════════════════════════════════════════════════
-           AMBIENT BACKGROUND GRADIENTS (Continous across entire site)
-           ══════════════════════════════════════════════════════ */}
-      <motion.div className="fixed inset-0 z-0 pointer-events-none overflow-hidden h-screen w-full" aria-hidden="true">
-        {/* Faint Star Background */}
+      {/* Faint Star Background */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 200px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
-        
-        {/* Deep Organic Liquid Gradients Interacting with Cursor */}
-        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.2) 40%, transparent 70%)' }} className="absolute w-[800px] h-[800px] -top-[200px] -left-[200px] rounded-full opacity-[0.25]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 45%, transparent 70%)' }} className="absolute w-[600px] h-[600px] -top-[100px] -right-[150px] rounded-full opacity-[0.2]" />
-        <motion.div style={{ x: smoothX, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.6) 0%, rgba(249,115,22,0.1) 50%, transparent 75%)' }} className="absolute w-[700px] h-[700px] top-[25%] -left-[300px] rounded-full opacity-[0.2]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.7) 0%, rgba(37,99,235,0.15) 40%, transparent 70%)' }} className="absolute w-[900px] h-[900px] top-[35%] -right-[350px] rounded-full opacity-[0.25]" />
-        <motion.div style={{ x: smoothX, y: smoothY, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(249,115,22,0.3) 50%, transparent 75%)' }} className="absolute w-[500px] h-[500px] top-[50%] left-[30%] rounded-full opacity-[0.15]" />
-        <motion.div style={{ x: smoothXSlow, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(37,99,235,0.1) 45%, transparent 70%)' }} className="absolute w-[800px] h-[800px] top-[65%] -left-[250px] rounded-full opacity-[0.2]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(249,115,22,0.15) 40%, transparent 70%)' }} className="absolute w-[650px] h-[650px] top-[70%] -right-[200px] rounded-full opacity-[0.2]" />
-        
-        {/* Bottom sweep — wide blue-to-orange */}
-        <motion.div style={{ x: smoothXSlow, y: smoothYSlow, background: 'linear-gradient(135deg, rgba(37,99,235,0.5) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.4) 100%)' }} className="absolute w-full h-[400px] bottom-0 left-0 opacity-[0.15]" />
-        
-        {/* Deep center glow */}
-        <motion.div style={{ x: smoothXFast, y: smoothY, background: 'radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, rgba(249,115,22,0.2) 35%, transparent 65%)' }} className="absolute w-[1200px] h-[1200px] top-[15%] left-[50%] -translate-x-1/2 rounded-full opacity-[0.15]" />
-        
-        {/* Scatter orbs */}
-        <motion.div style={{ x: smoothX, y: smoothYSlow, background: 'radial-gradient(circle, rgba(249,115,22,0.5) 0%, transparent 70%)' }} className="absolute w-[300px] h-[300px] top-[45%] left-[15%] rounded-full opacity-[0.2]" />
-        <motion.div style={{ x: smoothXFast, y: smoothYFast, background: 'radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 70%)' }} className="absolute w-[350px] h-[350px] top-[80%] left-[55%] rounded-full opacity-[0.2]" />
-        
-        {/* Liquid Organic Cursor Trails */}
-        <motion.div 
-          className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full pointer-events-none mix-blend-screen opacity-50 z-0"
-          style={{ 
-            x: smoothCursorX, 
-            y: smoothCursorY,
-            translateX: "-50%",
-            translateY: "-50%",
-            background: "radial-gradient(circle, rgba(37,99,235,0.6) 0%, rgba(249,115,22,0.3) 40%, transparent 70%)",
-            filter: "blur(40px)"
-          }}
-        />
-        <motion.div 
-          className="absolute top-0 left-0 w-[800px] h-[800px] rounded-full pointer-events-none mix-blend-screen opacity-30 z-0"
-          style={{ 
-            x: smoothCursorX3, 
-            y: smoothCursorY3,
-            translateX: "-50%",
-            translateY: "-50%",
-            background: "radial-gradient(circle, rgba(37,99,235,0.5) 0%, transparent 60%)",
-            filter: "blur(60px)"
-          }}
-        />
-      </motion.div>
+      </div>
 
             {/* ══════════════════════════════════════════════════════
            1. HERO & ZIP ANIMATION (Combined Sticky Scrolling)
@@ -639,8 +539,8 @@ export default function Home() {
             <div className="w-[100vw] h-full flex flex-col pt-32 pb-12 px-6 md:px-12 relative z-10">
               
               {/* Scattered 3D Shapes */}
-              <motion.div style={{ x: smoothXSlow, y: smoothYSlow }} animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
-              <motion.div style={{ x: smoothXFast, y: smoothYFast }} animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
+              <motion.div animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
+              <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
               
               <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-12 items-stretch h-auto mt-12">
                 
@@ -728,8 +628,8 @@ export default function Home() {
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></div></li>
                 </ul>
               </div>
-              <img src="/photos/competition/team_huddle.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
-              <img src="/photos/competition/safety_captains.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/1.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+              <img src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
               {/* 2025 SECTION (80vw to 150vw) */}
               <div className="absolute top-[25%] left-[80vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
