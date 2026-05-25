@@ -788,7 +788,7 @@ export default function Home() {
           </div>
           
           {/* Parallax Grid Container */}
-          <div className="max-w-7xl mx-auto px-6 w-full flex-grow relative z-10 mb-8">
+          <div className="max-w-7xl mx-auto px-6 w-full h-[65vh] md:h-[70vh] relative z-10 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 w-full h-full relative">
               {[0, 1, 2].map(colIndex => (
                 <div key={colIndex} className="relative w-full h-full" style={{ perspective: '1000px' }}>
