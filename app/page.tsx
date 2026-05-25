@@ -134,6 +134,61 @@ const OUTREACH_CARDS = [
   }
 ];
 
+// ─── OUTREACH PARALLAX COMPONENT ────────────────────────────────
+const OutreachParallaxCard = ({ 
+  card, 
+  index, 
+  totalCards, 
+  scrollYProgress 
+}: { 
+  card: any, 
+  index: number, 
+  totalCards: number, 
+  scrollYProgress: any 
+}) => {
+  const itemsPerRow = 3;
+  const totalRows = Math.ceil(totalCards / itemsPerRow);
+  const rowIndex = Math.floor(index / itemsPerRow);
+  const colIndex = index % itemsPerRow;
+  
+  const L = 1.0 / totalRows;
+  const R_start = rowIndex * L;
+  
+  const startPop = R_start + colIndex * (0.15 * L);
+  const endPop = startPop + (0.15 * L);
+  
+  const startExit = R_start + 0.75 * L;
+  const endExit = R_start + 1.0 * L;
+
+  const y = useTransform(
+    scrollYProgress,
+    [0, startPop, endPop, startExit, endExit, 1],
+    ["100vh", "100vh", "0vh", "0vh", "-100vh", "-100vh"]
+  );
+  
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, startPop, startPop + 0.01, endExit - 0.01, endExit, 1],
+    [0, 0, 1, 1, 0, 0]
+  );
+
+  return (
+    <motion.div 
+      style={{ y, opacity }} 
+      className="absolute inset-0 w-full h-full flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group"
+    >
+      <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/50 to-transparent opacity-90" />
+      
+      <div className="relative z-10 p-8 backdrop-blur-md bg-white/[0.03] border-t border-white/10">
+        <span className="text-[10px] font-bold tracking-widest uppercase text-stellar-orange mb-3 block">{card.tag}</span>
+        <h3 className="text-2xl md:text-3xl font-header font-bold mb-4 text-white">{card.title}</h3>
+        <p className="text-xs md:text-sm text-white/70 leading-relaxed font-light">{card.desc}</p>
+      </div>
+    </motion.div>
+  );
+};
+
 // ─── SPONSOR LOGOS ──────────────────────────────────────────────
 const SPONSOR_LOGOS = [
   "Hawthorne Valley Farmstore", "Swaying Pine Software", "Bank of Greene County", 
@@ -387,6 +442,13 @@ export default function Home() {
     container: containerRef,
     offset: ["start start", "end end"]
   });
+  
+  // Vertical Scroll for Outreach Parallax
+  const outreachScrollRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: outreachScrollYProgress } = useScroll({
+    target: outreachScrollRef,
+    offset: ["start start", "end end"]
+  });
   const xAboutToTimeline = useTransform(
     horizontalScrollYProgress, 
     [0, 0.15, 0.85, 1], 
@@ -577,14 +639,14 @@ export default function Home() {
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
-            <div className="w-[100vw] h-full flex flex-col pt-32 pb-12 px-6 md:px-12 relative z-10">
+            <div className="w-[100vw] h-full flex flex-col pt-24 pb-6 px-6 md:px-12 relative z-10">
               
               {/* Scattered 3D Shapes */}
               <motion.div animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
               <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
               
               {/* Offset removed to center it normally now that x-axis isn't shifting early */}
-              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-20 items-stretch h-auto mt-12">
+              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-10 lg:gap-16 items-stretch h-auto mt-6">
                 
                 {/* Left Side: About Text */}
                 <div className="lg:w-1/2 flex flex-col space-y-10 p-12 md:p-16 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] justify-between h-full relative overflow-hidden backdrop-blur-3xl border border-white/10" style={{ background: 'rgba(255,255,255,0.02)' }}>
@@ -604,7 +666,7 @@ export default function Home() {
                     <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.1) 70%, transparent)' }} />
                     
                     {/* Mission Box (Glassy, No colors) */}
-                    <div className="p-8 md:p-10 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                    <div className="p-8 md:p-10 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl border border-white/10" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(249,115,22,0.05) 100%)', boxShadow: '0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <h3 className="text-2xl font-header font-bold mb-3 text-white tracking-wide">Our Mission</h3>
                       <p className="text-base text-white/70 italic leading-relaxed font-light">
@@ -613,8 +675,8 @@ export default function Home() {
                     </div>
                     
                     {/* About FRC Chip & Text */}
-                    <div className="flex items-center gap-6 bg-white/[0.02] p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.05] transition-colors duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
-                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
+                    <div className="flex items-center gap-6 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.3)]" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
+                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
                       <p className="text-xs text-white/50 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
                     </div>
                   </div>
@@ -705,39 +767,37 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            5. OUTREACH CAROUSEL
            ══════════════════════════════════════════════════════ */}
-      <section id="outreach" className="snap-section relative z-10 overflow-hidden">
-        {/* Scattered 3D Shapes Interacting with Cursor and scrolling vertically */}
-        <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0], rotateX: 360 }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-auto" />
-        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], rotateY: 360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-auto" />
-        <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-pill absolute top-[50%] right-[5%] w-20 h-56 opacity-30 z-0 pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto px-6 w-full text-center mb-12 relative z-10">
-          <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue mb-2 block">
-            04 / Community
-          </span>
-          <h2 className="text-4xl md:text-6xl font-header font-black text-white/60 tracking-wide">
-            Outreach Programs
-          </h2>
-        </div>
-        
-        {/* Infinite CSS horizontal scroller */}
-        <div className="relative w-full flex items-center h-[50vh] overflow-x-auto snap-x snap-mandatory hide-scrollbars py-8 px-4" style={{ perspective: '1000px' }}>
-          <div className="flex gap-8 px-[10vw]">
-            {OUTREACH_CARDS.map((card, idx) => (
-              <div key={idx} className="snap-center shrink-0 w-[80vw] md:w-[400px] h-full glass-panel-deep group relative overflow-hidden transform-style preserve-3d hover:translate-z-[50px] transition-transform duration-700 flex flex-col">
-                <div className="h-48 w-full overflow-hidden shrink-0">
-                  <img src={card.image} alt={card.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+      <section id="outreach" ref={outreachScrollRef} className="relative z-10" style={{ height: '700vh' }}>
+        <div className="sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12">
+          {/* Background Elements */}
+          <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0], rotateX: 360 }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-auto" />
+          <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], rotateY: 360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-auto" />
+          
+          <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
+            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue mb-2 block">
+              04 / Community
+            </span>
+            <h2 className="text-4xl md:text-6xl font-header font-black text-white/60 tracking-wide">
+              Outreach Programs
+            </h2>
+          </div>
+          
+          {/* Parallax Grid Container */}
+          <div className="max-w-7xl mx-auto px-6 w-full flex-grow relative z-10 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 w-full h-full relative">
+              {OUTREACH_CARDS.map((card, idx) => (
+                <div key={idx} className="relative w-full h-full" style={{ perspective: '1000px' }}>
+                  <OutreachParallaxCard 
+                    card={card} 
+                    index={idx} 
+                    totalCards={OUTREACH_CARDS.length} 
+                    scrollYProgress={outreachScrollYProgress} 
+                  />
                 </div>
-                <div className="p-8 flex flex-col flex-grow">
-                  <span className="text-[9px] font-bold tracking-widest uppercase text-stellar-orange mb-3">{card.tag}</span>
-                  <h3 className="text-2xl font-header font-bold mb-4">{card.title}</h3>
-                  <p className="text-xs text-white/50 leading-relaxed font-light flex-grow">{card.desc}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-        <p className="text-center text-[10px] text-white/30 uppercase tracking-widest mt-4">Scroll Horizontally to explore</p>
       </section>
 
       {/* ══════════════════════════════════════════════════════
