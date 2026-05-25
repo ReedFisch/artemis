@@ -420,76 +420,9 @@ export default function Home() {
             {/* HEADER */}
         
 
-        {/* Liquid Reveal Mask Definition */}
-        <svg className="absolute w-0 h-0 pointer-events-none">
-          <defs>
-            <filter id="goo">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="25" result="blur" />
-              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 25 -10" result="goo" />
-              <feBlend in="SourceGraphic" in2="goo" />
-            </filter>
-            <mask id="liquidMask">
-              <g filter="url(#goo)">
-                <motion.g 
-                  animate={{ opacity: isMoving ? 1 : 0, scale: isMoving ? 1 : 0.5 }} 
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                >
-                  {/* Main Cursor Blob */}
-                  <motion.g style={{ x: smoothCursorX, y: smoothCursorY }}>
-                    <motion.g animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }}>
-                      <motion.ellipse cx="0" cy="0" rx={200} ry={130} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
-                      <motion.ellipse cx="0" cy="0" rx={150} ry={180} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7, ease: "linear" }} />
-                    </motion.g>
-                  </motion.g>
 
-                  {/* Trailing Blob 1 */}
-                  <motion.g style={{ x: smoothCursorX2, y: smoothCursorY2 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 9, ease: "linear" }}>
-                    <motion.ellipse cx="0" cy="0" rx={160} ry={100} fill="white" />
-                  </motion.g>
-                  
-                  {/* Trailing Blob 2 */}
-                  <motion.g style={{ x: smoothCursorX3, y: smoothCursorY3 }} animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 10, ease: "linear" }}>
-                    <motion.ellipse cx="0" cy="0" rx={130} ry={80} fill="white" />
-                  </motion.g>
 
-                  {/* Trailing Blob 3 */}
-                  <motion.g style={{ x: smoothCursorX4, y: smoothCursorY4 }} animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 11, ease: "linear" }}>
-                    <motion.ellipse cx="0" cy="0" rx={90} ry={60} fill="white" />
-                  </motion.g>
-                </motion.g>
-
-                {/* Autonomous Liquid Blobs revealing CAD */}
-                {isAtTop && (
-                  <>
-                    <AutonomousBlob radius={80} duration={15} />
-                    <AutonomousBlob radius={60} duration={20} delay={2} />
-                    <AutonomousBlob radius={90} duration={25} delay={5} />
-                    <AutonomousBlob radius={70} duration={18} delay={1} />
-                    <AutonomousBlob radius={110} duration={22} delay={3} />
-                    <AutonomousBlob radius={100} duration={28} delay={4} />
-                    <AutonomousBlob radius={75} duration={19} delay={6} />
-                    <AutonomousBlob radius={85} duration={24} delay={7} />
-                  </>
-                )}
-              </g>
-            </mask>
-          </defs>
-        </svg>
-
-        {/* Base Layer was removed to match exact canvas dimness */}
-
-        {/* Main Hover Reveal Layer using Liquid Mask */}
-        <motion.div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none" 
-          style={{ 
-            mask: 'url(#liquidMask)', 
-            WebkitMask: 'url(#liquidMask)',
-            filter: 'drop-shadow(0px 0px 2px rgba(255,255,255,0.8)) drop-shadow(0px 0px 8px rgba(37,99,235,0.5))'
-          }}
-        >
-           <img src="/robot_drawing_new.webp" alt="Robot Drawing" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
-        </motion.div>
           </motion.div>
-
 
           {/* 3. Overlays (Header and Sponsor) */}
           <motion.header 
@@ -665,9 +598,9 @@ export default function Home() {
            ══════════════════════════════════════════════════════ */}
       <section id="outreach" className="snap-section relative z-10 overflow-hidden">
         {/* Scattered 3D Shapes Interacting with Cursor and scrolling vertically */}
-        <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0], rotateX: 360 }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYSlow }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-auto" />
-        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], rotateY: 360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXFast, y: smoothYFast }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-auto" />
-        <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} style={{ x: smoothX, y: smoothY }} className="shape-3d shape-pill absolute top-[50%] right-[5%] w-20 h-56 opacity-30 z-0 pointer-events-none" />
+        <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0], rotateX: 360 }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-auto" />
+        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], rotateY: 360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-auto" />
+        <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-pill absolute top-[50%] right-[5%] w-20 h-56 opacity-30 z-0 pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-6 w-full text-center mb-12 relative z-10">
           <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue mb-2 block">
@@ -703,8 +636,8 @@ export default function Home() {
            ══════════════════════════════════════════════════════ */}
       <section id="budget" className="snap-section relative z-10 overflow-hidden">
         {/* Scattered 3D Shapes Interacting with Cursor and scrolling vertically */}
-        <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ x: smoothX, y: smoothY, animationDelay: '3s', animationDuration: '14s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-auto" />
-        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} style={{ x: smoothXSlow, y: smoothYFast, animationDelay: '0s', animationDuration: '12s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-36 h-36 opacity-60 z-0 pointer-events-auto" />
+        <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-auto" />
+        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '0s', animationDuration: '12s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-36 h-36 opacity-60 z-0 pointer-events-auto" />
         
         <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col lg:flex-row gap-12 items-center justify-center relative z-10">
           
