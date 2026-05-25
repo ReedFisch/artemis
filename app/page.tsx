@@ -662,50 +662,42 @@ export default function Home() {
             {/* --- TIMELINE PANE (270vw) --- */}
             <div id="timeline" className="w-[270vw] h-full relative z-10 overflow-hidden topography-bg">
               
-              {/* Glass Text 1 (2024) */}
-              <div className="absolute top-[55%] left-[5vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
-                <h4 className="text-artemis-blue font-header font-bold text-2xl mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
-                <p className="text-white/80 font-mono text-sm leading-relaxed">Creativity Award, FIRST Leadership Award Finalist, and Safety All-Star. Celebrating our success with our mentors and community sponsors!</p>
+              {/* 2024 SECTION (0vw to 70vw) */}
+              <div className="absolute top-[30%] left-[5vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
+                <h4 className="text-artemis-blue font-header font-bold text-2xl mb-4 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
+                <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
+                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> Creativity Award</li>
+                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> FIRST Leadership Award Finalist (Eion Henchey)</li>
+                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> Safety All-Star (Reed Fisch)</li>
+                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> Celebrating our success with our mentors and community sponsors!</li>
+                </ul>
               </div>
-              
-              {/* Image 1 (2024 Haas) */}
-              <img src="/timeline/1.webp" alt="2024 Event" className="absolute top-[35%] left-[10vw] w-[35vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
-              
-              {/* Image 3 (2024 Mentors) */}
-              <img src="/timeline/3.webp" alt="2024 Event" className="absolute top-[15%] left-[30vw] w-[40vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/1.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+              <img src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
-              {/* Glass Text 2 (2025) */}
-              <div className="absolute bottom-[15%] left-[45vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
-                <h4 className="text-stellar-orange font-header font-bold text-2xl mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
-                <p className="text-white/80 font-mono text-sm leading-relaxed">Ranked #3 in New York State, Tech Valley Regional Winner, Worlds Alliance Captain (Hopper Division).</p>
+              {/* 2025 SECTION (80vw to 150vw) */}
+              <div className="absolute top-[20%] left-[80vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
+                <h4 className="text-stellar-orange font-header font-bold text-2xl mb-4 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
+                <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
+                  <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> Winner, New York Tech Valley Regional</li>
+                  <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> Finalist, Ballston Spa Offseason Event</li>
+                </ul>
               </div>
+              <img src="/timeline/10.webp" alt="2025 Winner" className="absolute bottom-[15%] left-[90vw] w-[45vw] max-w-[600px] rounded-sm shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
+              <img src="/timeline/11.webp" alt="2025 Celebration" className="absolute top-[10%] left-[115vw] w-[35vw] max-w-[500px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
-              {/* Image 9 (BIG FIRST LOGO) */}
-              <img src="/timeline/9.webp" alt="FIRST Logo" className="absolute top-[20%] left-[65vw] w-[50vw] max-w-[700px] rounded-sm shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
-
-              {/* Glass Text 3 (2026) */}
-              <div className="absolute top-[10%] left-[125vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
-                <h4 className="text-artemis-blue font-header font-bold text-2xl mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
-                <p className="text-white/80 font-mono text-sm leading-relaxed">Hudson Valley Regional Alliance 3. New York Tech Valley Regional Alliance 5. An unforgettable year of community, teamwork, and pushing our limits.</p>
+              {/* 2026 SECTION (160vw to 270vw) */}
+              <div className="absolute top-[40%] left-[150vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
+                <h4 className="text-artemis-blue font-header font-bold text-2xl mb-4 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
+                <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
+                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> Spirit Award, New York Tech Valley Regional</li>
+                </ul>
               </div>
-
-              {/* Image 4 (2026 Hudson) */}
-              <img src="/timeline/4.webp" alt="2026 Event" className="absolute bottom-[20%] left-[105vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
-
-              {/* Image 6 (2026 Selfie) */}
-              <img src="/timeline/6.webp" alt="2026 Event" className="absolute top-[40%] left-[145vw] w-[30vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
-
-              {/* Image 7 (2026 Pits) */}
-              <img src="/timeline/7.webp" alt="2026 Event" className="absolute top-[10%] left-[180vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
-
-              {/* Glass Text 4 (Spirit) */}
-              <div className="absolute bottom-[15%] left-[200vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
-                <h4 className="text-stellar-orange font-header font-bold text-2xl mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>Our Spirit</h4>
-                <p className="text-white/80 font-mono text-sm leading-relaxed">Showcasing our spirit and dedication as we head towards another victorious regional! We are Artemis.</p>
-              </div>
-
-              {/* Image 8 (2026 Spirit) */}
-              <img src="/timeline/8.webp" alt="2026 Event" className="absolute top-[25%] left-[230vw] w-[40vw] max-w-[500px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-3" />
+              <img src="/timeline/9.webp" alt="FIRST Logo" className="absolute top-[5%] left-[175vw] w-[30vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+              <img src="/timeline/4.webp" alt="2026 Event" className="absolute bottom-[15%] left-[180vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
+              <img src="/timeline/6.webp" alt="2026 Event" className="absolute top-[45%] left-[205vw] w-[30vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/7.webp" alt="2026 Event" className="absolute top-[10%] left-[225vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+              <img src="/timeline/8.webp" alt="2026 Event" className="absolute bottom-[20%] left-[240vw] w-[35vw] max-w-[500px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-3" />
 
             </div>
             </motion.div>
