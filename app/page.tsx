@@ -385,7 +385,7 @@ export default function Home() {
   };
 
   return (
-    <main ref={containerRef} className={`snap-container text-white font-sans overflow-x-hidden ${isLoading ? 'h-screen overflow-hidden' : ''}`}>
+    <main ref={containerRef} className={`${isLoading ? 'fixed inset-0 overflow-hidden pointer-events-none' : 'snap-container'} text-white font-sans overflow-x-hidden w-full h-screen`}>
 
       {/* ══════════════════════════════════════════════════════
            AMBIENT BACKGROUND GRADIENTS (Continous across entire site)
@@ -457,14 +457,14 @@ export default function Home() {
             
             {/* Artemis Logo Floating Above */}
             <div className="relative z-20 mb-8 w-40 h-40 flex items-center justify-center">
-              <img src="/branding/logo_4.webp" alt="Artemis Loading" className="w-full h-full animate-pulse object-contain drop-shadow-[0_0_40px_rgba(37,99,235,0.8)]" />
+              <img src="/branding/logo_4.webp" alt="Artemis Loading" className="w-full h-full animate-pulse object-contain" />
             </div>
 
             {/* 3D Solar System Container */}
             <div className="relative z-10 w-full max-w-[600px] h-[300px] flex items-center justify-center perspective-[1000px]">
               
               {/* The Sun */}
-              <div className="relative z-20 w-16 h-16 rounded-full bg-white shadow-[0_0_60px_rgba(255,255,255,1)] animate-pulse" />
+              <div className="relative z-20 w-16 h-16 rounded-full animate-pulse" style={{ background: 'radial-gradient(circle at 50% 50%, #ffffff 0%, #fef08a 40%, #eab308 100%)', boxShadow: '0 0 80px 20px rgba(250,204,21,0.4)' }} />
 
               {/* Orbit 1: Inner Planet */}
               <motion.div 
@@ -473,7 +473,7 @@ export default function Home() {
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 className="absolute w-[250px] h-[250px] border border-white/20 rounded-full"
               >
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8)]" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8)]" style={{ background: 'radial-gradient(circle at 30% 30%, #60a5fa 0%, #1d4ed8 70%, #1e3a8a 100%)' }} />
               </motion.div>
 
               {/* Orbit 2: Middle Planet */}
@@ -483,7 +483,7 @@ export default function Home() {
                 transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
                 className="absolute w-[400px] h-[400px] border border-white/10 rounded-full"
               >
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-purple-500 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.8)]" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.8)]" style={{ background: 'radial-gradient(circle at 30% 30%, #c084fc 0%, #7e22ce 70%, #581c87 100%)' }} />
               </motion.div>
 
               {/* Orbit 3: Outer Planet */}
@@ -493,7 +493,7 @@ export default function Home() {
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 className="absolute w-[550px] h-[550px] border border-white/5 rounded-full"
               >
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-orange-500 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.8)]" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.8)]" style={{ background: 'radial-gradient(circle at 30% 30%, #fb923c 0%, #c2410c 70%, #7c2d12 100%)' }} />
               </motion.div>
 
             </div>
