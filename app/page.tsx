@@ -728,8 +728,8 @@ export default function Home() {
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></div></li>
                 </ul>
               </div>
-              <img src="/timeline/1.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
-              <img src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/photos/competition/team_huddle.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+              <img src="/photos/competition/safety_captains.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
               {/* 2025 SECTION (80vw to 150vw) */}
               <div className="absolute top-[25%] left-[80vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
@@ -741,8 +741,8 @@ export default function Home() {
                   <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ballston Spa Off-Season Competition Finalist</div></li>
                 </ul>
               </div>
-              <img src="/timeline/12.webp" alt="2025 Winner" className="absolute bottom-[15%] left-[90vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
-              <img src="/timeline/13.webp" alt="2025 Celebration" className="absolute top-[10%] left-[115vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/2025_1.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[90vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
+              <img src="/timeline/2025_2.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[115vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
               {/* 2026 SECTION (160vw to 270vw) */}
               <div className="absolute top-[45%] left-[150vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
@@ -753,10 +753,7 @@ export default function Home() {
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></div></li>
                 </ul>
               </div>
-              <img src="/timeline/4.webp" alt="2026 Event" className="absolute bottom-[15%] left-[180vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
-              <img src="/timeline/6.webp" alt="2026 Event" className="absolute top-[45%] left-[205vw] w-[30vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
-              <img src="/timeline/7.webp" alt="2026 Event" className="absolute top-[10%] left-[225vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
-              <img src="/timeline/8.webp" alt="2026 Event" className="absolute bottom-[20%] left-[240vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-3" />
+              <img src="/timeline/2026_1.jpg" alt="2026 Event" className="absolute bottom-[15%] left-[180vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
 
             </div>
             </motion.div>
