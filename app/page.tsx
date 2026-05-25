@@ -160,15 +160,23 @@ const OutreachParallaxCard = ({
   const startExit = R_start + 0.75 * L;
   const endExit = R_start + 1.0 * L;
 
+  // Ensure strict monotonically increasing inputs for Framer Motion
+  const i0 = 0;
+  const i1 = Math.max(0.0001, startPop);
+  const i2 = Math.max(i1 + 0.0001, endPop);
+  const i3 = Math.max(i2 + 0.0001, startExit);
+  const i4 = Math.min(0.9998, Math.max(i3 + 0.0001, endExit));
+  const i5 = 1;
+
   const y = useTransform(
     scrollYProgress,
-    [0, startPop, endPop, startExit, endExit, 1],
+    [i0, i1, i2, i3, i4, i5],
     ["100vh", "100vh", "0vh", "0vh", "-100vh", "-100vh"]
   );
   
   const opacity = useTransform(
     scrollYProgress,
-    [0, startPop, startPop + 0.01, endExit - 0.01, endExit, 1],
+    [i0, i1, i2, i3, i4, i5],
     [0, 0, 1, 1, 0, 0]
   );
 
@@ -639,17 +647,17 @@ export default function Home() {
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
-            <div className="w-[100vw] h-full flex flex-col pt-24 pb-6 px-6 md:px-12 relative z-10">
+            <div className="w-[100vw] h-full flex flex-col pt-16 md:pt-20 pb-4 px-6 md:px-12 relative z-10">
               
               {/* Scattered 3D Shapes */}
               <motion.div animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
               <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
               
               {/* Offset removed to center it normally now that x-axis isn't shifting early */}
-              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-10 lg:gap-16 items-stretch h-auto mt-6">
+              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-6 lg:gap-10 items-stretch h-auto mt-4">
                 
                 {/* Left Side: About Text */}
-                <div className="lg:w-1/2 flex flex-col space-y-10 p-12 md:p-16 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] justify-between h-full relative overflow-hidden backdrop-blur-3xl border border-white/10" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                <div className="lg:w-1/2 flex flex-col space-y-6 p-8 md:p-10 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] justify-between h-full relative overflow-hidden backdrop-blur-3xl border border-white/10" style={{ background: 'rgba(255,255,255,0.02)' }}>
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                   
                   <div className="relative z-10">
@@ -666,7 +674,7 @@ export default function Home() {
                     <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.1) 70%, transparent)' }} />
                     
                     {/* Mission Box (Glassy, No colors) */}
-                    <div className="p-8 md:p-10 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl border border-white/10" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(249,115,22,0.05) 100%)', boxShadow: '0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                    <div className="p-6 md:p-8 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl border border-white/10" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(249,115,22,0.05) 100%)', boxShadow: '0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <h3 className="text-2xl font-header font-bold mb-3 text-white tracking-wide">Our Mission</h3>
                       <p className="text-base text-white/70 italic leading-relaxed font-light">
@@ -683,7 +691,7 @@ export default function Home() {
                 </div>
 
                 {/* Right Side: Photo and Stats */}
-                <div className="lg:w-1/2 w-full flex flex-col gap-8 h-full">
+                <div className="lg:w-1/2 w-full flex flex-col gap-6 h-full">
                   {/* Team Photo */}
                   <div className="relative rounded-[2rem] overflow-hidden border border-white/10 group flex-grow" style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                     <img src="/photos/hero/team_with_robot.webp" alt="Team 6621 Artemis with their robot" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
