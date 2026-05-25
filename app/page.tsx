@@ -189,10 +189,21 @@ export default function Home() {
   useEffect(() => {
     if (isLoading) {
       document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      
+      const preventDefault = (e: Event) => e.preventDefault();
+      window.addEventListener('wheel', preventDefault, { passive: false });
+      window.addEventListener('touchmove', preventDefault, { passive: false });
+      
+      return () => { 
+        document.body.style.overflow = ''; 
+        document.documentElement.style.overflow = '';
+        document.body.style.touchAction = '';
+        window.removeEventListener('wheel', preventDefault);
+        window.removeEventListener('touchmove', preventDefault);
+      };
     }
-    return () => { document.body.style.overflow = ''; };
   }, [isLoading]);
 
   const handleFastScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -352,7 +363,16 @@ export default function Home() {
     container: containerRef,
     offset: ["start start", "end end"]
   });
-  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 0.1, 0.3, 0.5, 0.7, 0.9, 1], ["0%", "-1.45%", "-13.13%", "-36.48%", "-59.83%", "-71.51%", "-72.97%"]);
+  const xAboutToTimeline = useTransform(
+    horizontalScrollYProgress, 
+    [0, 0.15, 0.5, 0.85, 1], 
+    ["0%", "-5%", "-36%", "-67%", "-72.97%"]
+  );
+  const yAboutToTimeline = useTransform(
+    horizontalScrollYProgress,
+    [0, 0.15, 0.85, 1],
+    ["15vh", "0vh", "0vh", "-15vh"]
+  );
 
   // Form submission mock
   const handleContactSubmit = async (e: React.FormEvent) => {
@@ -435,13 +455,16 @@ export default function Home() {
             {/* Plain Starry Background */}
             <div className="absolute inset-0 z-0 opacity-40 starfield" />
             
+            {/* Artemis Logo Floating Above */}
+            <div className="relative z-20 mb-8 w-40 h-40 flex items-center justify-center">
+              <img src="/branding/logo_4.webp" alt="Artemis Loading" className="w-full h-full animate-pulse object-contain drop-shadow-[0_0_40px_rgba(37,99,235,0.8)]" />
+            </div>
+
             {/* 3D Solar System Container */}
-            <div className="relative z-10 w-full max-w-[600px] h-[600px] flex items-center justify-center perspective-[1000px]">
+            <div className="relative z-10 w-full max-w-[600px] h-[300px] flex items-center justify-center perspective-[1000px]">
               
-              {/* The Sun (Artemis Logo) */}
-              <div className="relative z-20 w-32 h-32 flex items-center justify-center">
-                <img src="/branding/logo_4.webp" alt="Artemis Loading" className="w-full h-full animate-pulse mix-blend-screen object-contain drop-shadow-[0_0_40px_rgba(249,115,22,0.8)]" />
-              </div>
+              {/* The Sun */}
+              <div className="relative z-20 w-16 h-16 rounded-full bg-white shadow-[0_0_60px_rgba(255,255,255,1)] animate-pulse" />
 
               {/* Orbit 1: Inner Planet */}
               <motion.div 
@@ -453,14 +476,14 @@ export default function Home() {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8)]" />
               </motion.div>
 
-              {/* Orbit 2: Rocket */}
+              {/* Orbit 2: Middle Planet */}
               <motion.div 
                 initial={{ rotateX: 70 }}
                 animate={{ rotateZ: -360 }} 
                 transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
                 className="absolute w-[400px] h-[400px] border border-white/10 rounded-full"
               >
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl rotate-90" style={{ filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.8))' }}>🚀</div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-purple-500 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.8)]" />
               </motion.div>
 
               {/* Orbit 3: Outer Planet */}
@@ -604,7 +627,7 @@ export default function Home() {
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
           
-          <motion.div style={{ x: xAboutToTimeline }} className="flex w-[370vw] h-full relative z-10">
+          <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className="flex w-[370vw] h-full relative z-10">
             
             {/* Section background gradient & floating shapes (scrolling with the content) */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ width: '370vw' }}>
@@ -703,11 +726,10 @@ export default function Home() {
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> Creativity Award</li>
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> FIRST Leadership Award Finalist (Eion Henchey)</li>
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> Safety All-Star (Reed Fisch)</li>
-                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> Celebrating our success with our mentors and community sponsors!</li>
                 </ul>
               </div>
-              <img src="/timeline/1.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
-              <img src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/1.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+              <img src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
               {/* 2025 SECTION (80vw to 150vw) */}
               <div className="absolute top-[20%] left-[80vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
@@ -717,8 +739,8 @@ export default function Home() {
                   <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> Finalist, Ballston Spa Offseason Event</li>
                 </ul>
               </div>
-              <img src="/timeline/10.webp" alt="2025 Winner" className="absolute bottom-[15%] left-[90vw] w-[45vw] max-w-[600px] rounded-sm shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
-              <img src="/timeline/11.webp" alt="2025 Celebration" className="absolute top-[10%] left-[115vw] w-[35vw] max-w-[500px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/10.webp" alt="2025 Winner" className="absolute bottom-[15%] left-[90vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
+              <img src="/timeline/11.webp" alt="2025 Celebration" className="absolute top-[10%] left-[115vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
               {/* 2026 SECTION (160vw to 270vw) */}
               <div className="absolute top-[40%] left-[150vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
@@ -727,11 +749,10 @@ export default function Home() {
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> Spirit Award, New York Tech Valley Regional</li>
                 </ul>
               </div>
-              <img src="/timeline/9.webp" alt="FIRST Logo" className="absolute top-[5%] left-[175vw] w-[30vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
-              <img src="/timeline/4.webp" alt="2026 Event" className="absolute bottom-[15%] left-[180vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
-              <img src="/timeline/6.webp" alt="2026 Event" className="absolute top-[45%] left-[205vw] w-[30vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
-              <img src="/timeline/7.webp" alt="2026 Event" className="absolute top-[10%] left-[225vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
-              <img src="/timeline/8.webp" alt="2026 Event" className="absolute bottom-[20%] left-[240vw] w-[35vw] max-w-[500px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-3" />
+              <img src="/timeline/4.webp" alt="2026 Event" className="absolute bottom-[15%] left-[180vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
+              <img src="/timeline/6.webp" alt="2026 Event" className="absolute top-[45%] left-[205vw] w-[30vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/7.webp" alt="2026 Event" className="absolute top-[10%] left-[225vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+              <img src="/timeline/8.webp" alt="2026 Event" className="absolute bottom-[20%] left-[240vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-3" />
 
             </div>
             </motion.div>
