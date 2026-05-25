@@ -365,7 +365,7 @@ export default function Home() {
   };
 
   return (
-    <main ref={containerRef} className="snap-container text-white font-sans overflow-x-hidden">
+    <main ref={containerRef} className={`snap-container text-white font-sans overflow-x-hidden ${isLoading ? 'h-screen overflow-hidden' : ''}`}>
 
       {/* ══════════════════════════════════════════════════════
            AMBIENT BACKGROUND GRADIENTS (Continous across entire site)
@@ -432,17 +432,51 @@ export default function Home() {
             onWheel={(e) => e.stopPropagation()}
             onTouchMove={(e) => e.stopPropagation()}
           >
-            {/* Space Background */}
-            <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-[#05070B] to-[#05070B]" />
-            <div className="absolute inset-0 z-0 opacity-50 starfield" />
+            {/* Plain Starry Background */}
+            <div className="absolute inset-0 z-0 opacity-40 starfield" />
             
-            {/* 3D Shapes */}
-            <motion.div animate={{ rotateX: 360, rotateY: 180 }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} className="shape-3d shape-sphere absolute w-64 h-64 opacity-40 z-0 top-[15%] left-[20%]" />
-            <motion.div animate={{ rotateY: 360, rotateZ: -180 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="shape-3d shape-cube absolute w-48 h-48 opacity-30 z-0 bottom-[15%] right-[20%]" />
-            <motion.div animate={{ rotateZ: 360, rotateX: 180 }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }} className="shape-3d shape-pill absolute w-24 h-64 opacity-20 z-0 top-[40%] right-[10%]" />
+            {/* 3D Solar System Container */}
+            <div className="relative z-10 w-full max-w-[600px] h-[600px] flex items-center justify-center perspective-[1000px]">
+              
+              {/* The Sun (Artemis Logo) */}
+              <div className="relative z-20 w-32 h-32 flex items-center justify-center">
+                <img src="/branding/logo_4.webp" alt="Artemis Loading" className="w-full h-full animate-pulse mix-blend-screen object-contain drop-shadow-[0_0_40px_rgba(249,115,22,0.8)]" />
+              </div>
 
-            <div className="relative z-10 flex flex-col items-center bg-black/40 backdrop-blur-3xl p-12 rounded-3xl border border-white/10 shadow-[0_0_80px_rgba(37,99,235,0.2)]">
-              <img src="/branding/logo_4.webp" alt="Artemis Loading" className="w-32 h-32 mb-8 animate-pulse mix-blend-screen object-contain drop-shadow-[0_0_30px_rgba(37,99,235,0.8)]" />
+              {/* Orbit 1: Inner Planet */}
+              <motion.div 
+                initial={{ rotateX: 70 }}
+                animate={{ rotateZ: 360 }} 
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute w-[250px] h-[250px] border border-white/20 rounded-full"
+              >
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8)]" />
+              </motion.div>
+
+              {/* Orbit 2: Rocket */}
+              <motion.div 
+                initial={{ rotateX: 70 }}
+                animate={{ rotateZ: -360 }} 
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                className="absolute w-[400px] h-[400px] border border-white/10 rounded-full"
+              >
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl rotate-90" style={{ filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.8))' }}>🚀</div>
+              </motion.div>
+
+              {/* Orbit 3: Outer Planet */}
+              <motion.div 
+                initial={{ rotateX: 70 }}
+                animate={{ rotateZ: 360 }} 
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="absolute w-[550px] h-[550px] border border-white/5 rounded-full"
+              >
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-orange-500 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.8)]" />
+              </motion.div>
+
+            </div>
+
+            {/* Loading Text */}
+            <div className="absolute bottom-20 z-10 flex flex-col items-center">
               <div className="font-header font-black tracking-[0.4em] text-lg lg:text-xl uppercase text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-400 animate-pulse">Initializing System</div>
               <p className="text-white/40 font-mono text-xs mt-4 tracking-widest">ESTABLISHING CONNECTION...</p>
             </div>
