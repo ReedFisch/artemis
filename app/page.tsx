@@ -230,7 +230,36 @@ export default function Home() {
     requestAnimationFrame(step);
   };
 
-  // Removed cursor tracking hooks to drastically improve performance
+  const cursorX = useMotionValue(-1000);
+  const cursorY = useMotionValue(-1000);
+  const smoothCursorX = useSpring(cursorX, { stiffness: 150, damping: 12, mass: 1 });
+  const smoothCursorY = useSpring(cursorY, { stiffness: 150, damping: 12, mass: 1 });
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    const handleMouseMove = (e: MouseEvent) => {
+      setIsMoving(true);
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        setIsMoving(false);
+      }, 200);
+
+      const hero = document.getElementById('hero');
+      if (hero) {
+        const rect = hero.getBoundingClientRect();
+        cursorX.set(e.clientX - rect.left);
+        cursorY.set(e.clientY - rect.top);
+      } else {
+        cursorX.set(e.clientX);
+        cursorY.set(e.clientY);
+      }
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(timeout);
+    };
+  }, [cursorX, cursorY]);
 
   // Hero Scroll Scrubbing (Zip Animation)
   const heroScrollRef = useRef<HTMLElement>(null);
@@ -246,28 +275,61 @@ export default function Home() {
   // Preload images on mount
   useEffect(() => {
     const frameCount = 290;
-    const currentImages: HTMLImageElement[] = [];
-
+    
+    // Add additional critical images to preload
+    const additionalImages = [
+      '/robot_drawing_new.webp',
+      '/timeline/1.webp',
+      '/timeline/3.webp',
+      '/timeline/2025_1_new.jpg',
+      '/timeline/2025_2_new.jpg',
+      '/timeline/2026_1.jpg',
+      '/branding/logo_4.webp'
+    ];
+    
+    const totalToLoad = frameCount + additionalImages.length;
     let loadedCount = 0;
+    
+    const currentImages: HTMLImageElement[] = [];
+    
+    const onAssetLoaded = () => {
+      loadedCount++;
+      if (loadedCount >= totalToLoad) {
+        setIsLoading(false);
+      }
+    };
+
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
       const paddedIndex = i.toString().padStart(3, '0');
       img.src = i === 1 ? '/hero_starting_frame.webp' : `/hero_frames/${paddedIndex}.webp`;
       
       img.onload = () => {
-        loadedCount++;
+        onAssetLoaded();
         if (i === 1 && canvasRef.current) {
           const ctx = canvasRef.current.getContext('2d');
           if (ctx) ctx.drawImage(img, 0, 0, 1920, 1080);
         }
-        if (loadedCount === frameCount) {
-          setIsLoading(false);
-        }
       };
-      
+      img.onerror = onAssetLoaded;
       currentImages.push(img);
     }
+
+    additionalImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = onAssetLoaded;
+      img.onerror = onAssetLoaded;
+    });
+
     imagesRef.current = currentImages;
+
+    // Fallback timeout to ensure we don't get stuck forever
+    const fallbackTimeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 8000);
+
+    return () => clearTimeout(fallbackTimeout);
   }, []);
 
   const rafRef = useRef<number | null>(null);
@@ -574,8 +636,8 @@ export default function Home() {
                   <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ballston Spa Off-Season Competition Finalist</div></li>
                 </ul>
               </div>
-              <img src="/timeline/2025_1.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[90vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
-              <img src="/timeline/2025_2.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[115vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[90vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
+              <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[115vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
               {/* 2026 SECTION (160vw to 270vw) */}
               <div className="absolute top-[45%] left-[150vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
