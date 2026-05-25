@@ -371,7 +371,7 @@ export default function Home() {
   const yAboutToTimeline = useTransform(
     horizontalScrollYProgress,
     [0, 0.15, 0.85, 1],
-    ["15vh", "0vh", "0vh", "-15vh"]
+    ["10vh", "0vh", "0vh", "-10vh"]
   );
 
   // Form submission mock
@@ -636,13 +636,13 @@ export default function Home() {
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
-            <div className="w-[100vw] h-full flex flex-col justify-center px-6 py-12 md:py-24 relative z-10">
+            <div className="w-[100vw] h-full flex flex-col pt-32 pb-12 px-6 md:px-12 relative z-10">
               
               {/* Scattered 3D Shapes */}
               <motion.div style={{ x: smoothXSlow, y: smoothYSlow }} animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
               <motion.div style={{ x: smoothXFast, y: smoothYFast }} animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
               
-              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-12 items-stretch h-[80vh]">
+              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-12 items-stretch h-auto mt-12">
                 
                 {/* Left Side: About Text */}
                 <div className="lg:w-1/2 flex flex-col space-y-6 glass-panel-deep p-10 transform-style preserve-3d shadow-2xl justify-between h-full relative overflow-hidden">
@@ -720,7 +720,7 @@ export default function Home() {
             <div id="timeline" className="w-[270vw] h-full relative z-10 overflow-hidden topography-bg">
               
               {/* 2024 SECTION (0vw to 70vw) */}
-              <div className="absolute top-[30%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
+              <div className="absolute top-[35%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
                 <h4 className="text-artemis-blue font-header font-bold text-2xl mb-4 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
                 <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Creativity Award</div></li>
@@ -732,7 +732,7 @@ export default function Home() {
               <img src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
               {/* 2025 SECTION (80vw to 150vw) */}
-              <div className="absolute top-[20%] left-[80vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
+              <div className="absolute top-[25%] left-[80vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
                 <h4 className="text-stellar-orange font-header font-bold text-2xl mb-4 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
                 <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
                   <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ranked #3 in New York State</div></li>
@@ -745,7 +745,7 @@ export default function Home() {
               <img src="/timeline/13.webp" alt="2025 Celebration" className="absolute top-[10%] left-[115vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
               {/* 2026 SECTION (160vw to 270vw) */}
-              <div className="absolute top-[40%] left-[150vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
+              <div className="absolute top-[45%] left-[150vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
                 <h4 className="text-artemis-blue font-header font-bold text-2xl mb-4 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
                 <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></div></li>
