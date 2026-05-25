@@ -567,30 +567,31 @@ export default function Home() {
               <motion.div animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
               <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
               
-              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-10 items-stretch h-auto mt-8">
+              {/* Offset right to prevent cutoff */}
+              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-12 items-stretch h-auto mt-12 translate-x-4 md:translate-x-12">
                 
                 {/* Left Side: About Text */}
-                <div className="lg:w-1/2 flex flex-col space-y-6 glass-panel-deep p-8 transform-style preserve-3d shadow-2xl justify-between h-full relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-48 h-48 bg-artemis-blue/10 rounded-full blur-3xl" />
+                <div className="lg:w-1/2 flex flex-col space-y-6 glass-panel-deep p-10 transform-style preserve-3d shadow-2xl justify-between h-full relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-artemis-blue/10 rounded-full blur-3xl" />
                   
                   <div className="relative z-10">
-                    <h2 className="text-3xl md:text-4xl font-header font-black text-white">
+                    <h2 className="text-4xl md:text-5xl font-header font-black text-white">
                       About Us
                     </h2>
-                    <p className="text-sm text-white/70 leading-relaxed font-light mt-6">
+                    <p className="text-base text-white/60 leading-relaxed font-light mt-6">
                       Founded in 2016, Team 6621 Artemis Robotics is the only FRC team in Columbia County. We represent Chatham High School not only as the only robotics team but as the sole technology and STEAM-centered club for the entire school. We allow students to learn as they desire, advance their STEAM interests, whether that be art, business, or stem there is a place for anyone and everyone at ARTEMIS.
                     </p>
                   </div>
                   
-                  <div className="space-y-5 relative z-10 mt-auto">
+                  <div className="space-y-6 relative z-10 mt-auto">
                     {/* Gradient divider between About and Mission */}
                     <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4) 30%, rgba(249,115,22,0.4) 70%, transparent)' }} />
                     
                     {/* Mission Box (Bigger) */}
-                    <div className="p-6 rounded-2xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(37,99,235,0.08) 50%, rgba(249,115,22,0.05) 100%)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
+                    <div className="p-8 rounded-2xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(37,99,235,0.08) 50%, rgba(249,115,22,0.05) 100%)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
                       <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <h3 className="text-xl font-header font-bold mb-2 text-white">Our Mission</h3>
-                      <p className="text-sm text-white/70 italic leading-relaxed">
+                      <h3 className="text-2xl font-header font-bold mb-3 text-white">Our Mission</h3>
+                      <p className="text-base text-white/70 italic leading-relaxed">
                         &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
                       </p>
                     </div>
@@ -598,7 +599,7 @@ export default function Home() {
                     {/* About FRC Chip & Text */}
                     <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors duration-300">
                       <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>About FRC →</a>
-                      <p className="text-[11px] text-white/60 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
+                      <p className="text-[11px] text-white/50 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
                     </div>
                   </div>
                 </div>
@@ -679,7 +680,7 @@ export default function Home() {
                 </ul>
               </div>
               <img src="/timeline/2026_1.jpg" alt="2026 Event" className="absolute bottom-[15%] left-[180vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
-              <img src="/timeline/12.webp" alt="2026 Robot" className="absolute top-[15%] left-[215vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_50px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/2026_2.jpg" alt="2026 Team" className="absolute top-[15%] left-[215vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_50px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
             </div>
             </motion.div>
