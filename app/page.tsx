@@ -88,49 +88,49 @@ const OUTREACH_CARDS = [
     tag: "Origami for Good",
     title: "1,000 Cranes Initiative",
     desc: "We folded over 1,000 origami cranes to donate to local hospitals and created custom team-colored origami kits for every team at our competitions - forging meaningful connections across the FRC community.",
-    image: "/photos/outreach/origami_for_good.jpg",
+    image: "/photos/outreach/origami_for_good.webp",
   },
   {
     tag: "STEAM Advocacy",
     title: "NY State STEAM Day",
     desc: "Advocated for STEAM grants at New York State STEAM Day alongside Assembly Member Didi Barrett. We demonstrated our robot in action and networked with teams statewide to champion the importance of STEAM education.",
-    image: "/photos/outreach/steam_day_assembly.png",
+    image: "/photos/outreach/steam_day_assembly.webp",
   },
   {
     tag: "Safety First",
     title: "Community Safety Kits",
     desc: "At every competition, we distribute free safety kits to every team - a commitment that earned Safety All-Star awards for Josiah Eugenio (2026) and Reed Fisch (2024).",
-    image: "/photos/outreach/community_fair_booth.png",
+    image: "/photos/outreach/community_fair_booth.webp",
   },
   {
     tag: "Mentorship",
     title: "Team 7504 Cybearbots",
     desc: "Met with Cybearbots to advise on fundraising, lead acquisition, and strategy. Helped increase their funding from $15k to $30k in one year. Shared scouting and strategic data at Tech Valley.",
-    image: "/photos/outreach/mentorship_growth.png",
+    image: "/photos/outreach/mentorship_growth.webp",
   },
   {
     tag: "Hardware Fixes",
     title: "Battery Clips",
     desc: "At each competition we handed out battery clips to prevent batteries from disconnecting after we experienced that issue at one of our competitions.",
-    image: "/photos/outreach/community_fair_booth.png",
+    image: "/photos/outreach/community_fair_booth.webp",
   },
   {
     tag: "Community",
     title: "Wellness & Science Fairs",
     desc: "Gave demonstrations to our community and illustrated the importance of robotics at the Chatham Wellness Fair, Science Fair, and Learning Fair.",
-    image: "/photos/outreach/steam_day_assembly.png",
+    image: "/photos/outreach/steam_day_assembly.webp",
   },
   {
     tag: "Pipeline",
     title: "Middle School FTC",
     desc: "Continuous partnership, assistance, and advising with our local middle school FTC team (a younger feeder robotics team) to help them with their robot and prepare them for competition.",
-    image: "/photos/outreach/mentorship_growth.png",
+    image: "/photos/outreach/mentorship_growth.webp",
   },
   {
     tag: "Networking",
     title: "Ravena STEM Fair",
     desc: "Representation and demonstration at Ravena STEM fair where we network and demonstrate the importance of FRC with other robotics teams from around the state.",
-    image: "/photos/outreach/origami_for_good.jpg",
+    image: "/photos/outreach/origami_for_good.webp",
   }
 ];
 
@@ -295,7 +295,7 @@ export default function Home() {
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
       const paddedIndex = i.toString().padStart(3, '0');
-      img.src = i === 1 ? '/hero_starting_frame.jpeg' : `/hero_frames/${paddedIndex}.jpg`;
+      img.src = i === 1 ? '/hero_starting_frame.webp' : `/hero_frames/${paddedIndex}.webp`;
       
       img.onload = () => {
         loadedCount++;
@@ -442,7 +442,7 @@ export default function Home() {
             <motion.div animate={{ rotateZ: 360, rotateX: 180 }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }} className="shape-3d shape-pill absolute w-24 h-64 opacity-20 z-0 top-[40%] right-[10%]" />
 
             <div className="relative z-10 flex flex-col items-center bg-black/40 backdrop-blur-3xl p-12 rounded-3xl border border-white/10 shadow-[0_0_80px_rgba(37,99,235,0.2)]">
-              <img src="/branding/logo_4.jpeg" alt="Artemis Loading" className="w-32 h-32 mb-8 animate-pulse mix-blend-screen object-contain drop-shadow-[0_0_30px_rgba(37,99,235,0.8)]" />
+              <img src="/branding/logo_4.webp" alt="Artemis Loading" className="w-32 h-32 mb-8 animate-pulse mix-blend-screen object-contain drop-shadow-[0_0_30px_rgba(37,99,235,0.8)]" />
               <div className="font-header font-black tracking-[0.4em] text-lg lg:text-xl uppercase text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-400 animate-pulse">Initializing System</div>
               <p className="text-white/40 font-mono text-xs mt-4 tracking-widest">ESTABLISHING CONNECTION...</p>
             </div>
@@ -529,7 +529,7 @@ export default function Home() {
             filter: 'drop-shadow(0px 0px 2px rgba(255,255,255,0.8)) drop-shadow(0px 0px 8px rgba(37,99,235,0.5))'
           }}
         >
-           <img src="/robot_drawing_new.jpg" alt="Robot Drawing" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
+           <img src="/robot_drawing_new.webp" alt="Robot Drawing" className="w-full h-full object-cover drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
         </motion.div>
           </motion.div>
 
@@ -539,7 +539,7 @@ export default function Home() {
             className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto"
           >
           <div className="flex items-center gap-4">
-            <img src="/branding/logo_4.jpeg" alt="Artemis Logo" className="w-12 h-12 opacity-80 mix-blend-screen object-contain" />
+            <img src="/branding/logo_4.webp" alt="Artemis Logo" className="w-12 h-12 opacity-80 mix-blend-screen object-contain" />
             <span className="font-header font-black text-white/60 tracking-widest text-3xl md:text-5xl">ARTEMIS</span>
           </div>
           <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
@@ -625,7 +625,7 @@ export default function Home() {
                 <div className="lg:w-1/2 w-full flex flex-col gap-6 h-full">
                   {/* Team Photo */}
                   <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] group flex-grow" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
-                    <img src="/photos/hero/team_with_robot.jpg" alt="Team 6621 Artemis with their robot" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <img src="/photos/hero/team_with_robot.webp" alt="Team 6621 Artemis with their robot" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/40 to-transparent" />
                     <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.12) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.1) 100%)' }} />
                     <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 80%, rgba(37,99,235,0.15) 0%, transparent 50%)' }} />
@@ -669,10 +669,10 @@ export default function Home() {
               </div>
               
               {/* Image 1 (2024 Haas) */}
-              <img src="/timeline/1.jpg" alt="2024 Event" className="absolute top-[35%] left-[10vw] w-[35vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+              <img src="/timeline/1.webp" alt="2024 Event" className="absolute top-[35%] left-[10vw] w-[35vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
               
               {/* Image 3 (2024 Mentors) */}
-              <img src="/timeline/3.jpg" alt="2024 Event" className="absolute top-[15%] left-[30vw] w-[40vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/3.webp" alt="2024 Event" className="absolute top-[15%] left-[30vw] w-[40vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
               {/* Glass Text 2 (2025) */}
               <div className="absolute bottom-[15%] left-[45vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
@@ -681,7 +681,7 @@ export default function Home() {
               </div>
 
               {/* Image 9 (BIG FIRST LOGO) */}
-              <img src="/timeline/9.jpg" alt="FIRST Logo" className="absolute top-[20%] left-[65vw] w-[50vw] max-w-[700px] rounded-sm shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
+              <img src="/timeline/9.webp" alt="FIRST Logo" className="absolute top-[20%] left-[65vw] w-[50vw] max-w-[700px] rounded-sm shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
 
               {/* Glass Text 3 (2026) */}
               <div className="absolute top-[10%] left-[125vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
@@ -690,13 +690,13 @@ export default function Home() {
               </div>
 
               {/* Image 4 (2026 Hudson) */}
-              <img src="/timeline/4.jpg" alt="2026 Event" className="absolute bottom-[20%] left-[105vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
+              <img src="/timeline/4.webp" alt="2026 Event" className="absolute bottom-[20%] left-[105vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
 
               {/* Image 6 (2026 Selfie) */}
-              <img src="/timeline/6.jpg" alt="2026 Event" className="absolute top-[40%] left-[145vw] w-[30vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/6.webp" alt="2026 Event" className="absolute top-[40%] left-[145vw] w-[30vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
               {/* Image 7 (2026 Pits) */}
-              <img src="/timeline/7.jpg" alt="2026 Event" className="absolute top-[10%] left-[180vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+              <img src="/timeline/7.webp" alt="2026 Event" className="absolute top-[10%] left-[180vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
 
               {/* Glass Text 4 (Spirit) */}
               <div className="absolute bottom-[15%] left-[200vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
@@ -705,7 +705,7 @@ export default function Home() {
               </div>
 
               {/* Image 8 (2026 Spirit) */}
-              <img src="/timeline/8.jpg" alt="2026 Event" className="absolute top-[25%] left-[230vw] w-[40vw] max-w-[500px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-3" />
+              <img src="/timeline/8.webp" alt="2026 Event" className="absolute top-[25%] left-[230vw] w-[40vw] max-w-[500px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-3" />
 
             </div>
             </motion.div>
@@ -873,7 +873,7 @@ export default function Home() {
             
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-4">
-                <img src="/branding/logo_4.jpeg" alt="Logo" className="w-10 h-10 object-contain mix-blend-screen" />
+                <img src="/branding/logo_4.webp" alt="Logo" className="w-10 h-10 object-contain mix-blend-screen" />
                 <div>
                   <h3 className="font-header font-black text-xl tracking-widest text-3d">ARTEMIS.6621</h3>
                   <p className="text-[9px] uppercase tracking-widest text-white/40">Chatham High School Robotics</p>
