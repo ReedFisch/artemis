@@ -186,6 +186,15 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: containerRef });
 
+  useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isLoading]);
+
   const handleFastScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     const target = document.querySelector(targetId);
@@ -343,7 +352,7 @@ export default function Home() {
     container: containerRef,
     offset: ["start start", "end end"]
   });
-  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 0.1, 0.95, 1], ["0%", "0%", "-81.8181%", "-81.8181%"]);
+  const xAboutToTimeline = useTransform(horizontalScrollYProgress, [0, 0.1, 0.3, 0.5, 0.7, 0.9, 1], ["0%", "-1.45%", "-13.13%", "-36.48%", "-59.83%", "-71.51%", "-72.97%"]);
 
   // Form submission mock
   const handleContactSubmit = async (e: React.FormEvent) => {
@@ -416,12 +425,27 @@ export default function Home() {
         {isLoading && (
           <motion.div 
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#05070B] text-white"
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#05070B] text-white pointer-events-auto"
+            style={{ touchAction: 'none' }}
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
           >
-            <img src="/branding/logo_4.jpeg" alt="Artemis Loading" className="w-24 h-24 mb-8 animate-pulse mix-blend-screen object-contain" />
-            <div className="font-header font-black tracking-[0.3em] text-sm uppercase text-white/50">Loading Assets...</div>
+            {/* Space Background */}
+            <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-[#05070B] to-[#05070B]" />
+            <div className="absolute inset-0 z-0 opacity-50 starfield" />
+            
+            {/* 3D Shapes */}
+            <motion.div animate={{ rotateX: 360, rotateY: 180 }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} className="shape-3d shape-sphere absolute w-64 h-64 opacity-40 z-0 top-[15%] left-[20%]" />
+            <motion.div animate={{ rotateY: 360, rotateZ: -180 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="shape-3d shape-cube absolute w-48 h-48 opacity-30 z-0 bottom-[15%] right-[20%]" />
+            <motion.div animate={{ rotateZ: 360, rotateX: 180 }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }} className="shape-3d shape-pill absolute w-24 h-64 opacity-20 z-0 top-[40%] right-[10%]" />
+
+            <div className="relative z-10 flex flex-col items-center bg-black/40 backdrop-blur-3xl p-12 rounded-3xl border border-white/10 shadow-[0_0_80px_rgba(37,99,235,0.2)]">
+              <img src="/branding/logo_4.jpeg" alt="Artemis Loading" className="w-32 h-32 mb-8 animate-pulse mix-blend-screen object-contain drop-shadow-[0_0_30px_rgba(37,99,235,0.8)]" />
+              <div className="font-header font-black tracking-[0.4em] text-lg lg:text-xl uppercase text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-400 animate-pulse">Initializing System</div>
+              <p className="text-white/40 font-mono text-xs mt-4 tracking-widest">ESTABLISHING CONNECTION...</p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -538,7 +562,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            2. ABOUT & TIMELINE (HORIZONTAL SCROLL)
            ══════════════════════════════════════════════════════ */}
-      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '550vh', scrollSnapAlign: 'start' }}>
+      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '400vh', scrollSnapAlign: 'start' }}>
         
         {/* Seamless Fade FROM Hero Section */}
         <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#05070B] to-transparent pointer-events-none z-30" />
@@ -546,10 +570,10 @@ export default function Home() {
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
           
-          <motion.div style={{ x: xAboutToTimeline }} className="flex w-[550vw] h-full relative z-10">
+          <motion.div style={{ x: xAboutToTimeline }} className="flex w-[370vw] h-full relative z-10">
             
             {/* Section background gradient & floating shapes (scrolling with the content) */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ width: '550vw' }}>
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ width: '370vw' }}>
               {/* Starfield */}
               <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
             </div>
@@ -635,54 +659,54 @@ export default function Home() {
               </div>
             </div>
 
-            {/* --- TIMELINE PANE (100vw) --- */}
-            <div id="timeline" className="w-[450vw] h-full flex flex-col justify-center relative z-10 overflow-hidden topography-bg">
-              <div className="flex w-full h-full items-center pl-[10vw] pr-[5vw] gap-[10vw] z-10 relative">
-                
-                {/* GROUP 2024 */}
-                <div className="flex items-center gap-[4vw] shrink-0">
-                  <div className="w-[300px] shrink-0 bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-xl shadow-2xl relative z-20">
-                    <h4 className="text-artemis-blue font-header font-bold text-2xl mb-3 tracking-widest uppercase">2024 Season</h4>
-                    <p className="text-white/70 font-mono text-sm leading-relaxed">Creativity Award, FIRST Leadership Award Finalist (Eion Henchey), and Safety All-Star (Reed Fisch). Celebrating our success with our mentors and community sponsors!</p>
-                  </div>
-                  <div className="flex items-center relative z-10">
-                    <img src="/timeline/1.jpg" alt="2024 Event" className="w-[35vw] max-w-[400px] rounded-lg shadow-xl object-cover transform translate-x-12 -translate-y-8 hover:scale-[1.02] transition-transform duration-500" />
-                    <img src="/timeline/3.jpg" alt="2024 Event" className="w-[40vw] max-w-[450px] rounded-lg shadow-xl object-cover transform -translate-x-8 translate-y-8 hover:scale-[1.02] transition-transform duration-500" />
-                  </div>
-                </div>
-
-                {/* GROUP 2025 */}
-                <div className="flex items-center gap-[4vw] shrink-0">
-                  <div className="w-[300px] shrink-0 bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-xl shadow-2xl relative z-20">
-                    <h4 className="text-stellar-orange font-header font-bold text-2xl mb-3 tracking-widest uppercase">2025 Season</h4>
-                    <p className="text-white/70 font-mono text-sm leading-relaxed">Ranked #3 in New York State, Tech Valley Regional Winner, Worlds Alliance Captain (Hopper Division), and Ballston Spa Off-Season Finalist!</p>
-                  </div>
-                  <div className="flex items-center relative z-10">
-                    <img src="/timeline/5.jpg" alt="2025 Event" className="w-[35vw] max-w-[450px] rounded-lg shadow-xl object-cover transform translate-x-8 -translate-y-12 hover:scale-[1.02] transition-transform duration-500" />
-                    <img src="/timeline/2.jpg" alt="2025 Event" className="w-[45vw] max-w-[500px] rounded-lg shadow-xl object-cover transform -translate-x-12 translate-y-4 hover:scale-[1.02] transition-transform duration-500" />
-                  </div>
-                </div>
-
-                {/* GROUP 2026 */}
-                <div className="flex items-center gap-[4vw] shrink-0 pr-[5vw]">
-                  <div className="w-[350px] shrink-0 bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-xl shadow-2xl relative z-20 self-start mt-[10vh]">
-                    <h4 className="text-artemis-blue font-header font-bold text-2xl mb-3 tracking-widest uppercase">2026 Season</h4>
-                    <p className="text-white/70 font-mono text-sm leading-relaxed">Hudson Valley Regional Alliance 3 & Safety All-Star. New York Tech Valley Regional Alliance 5. An unforgettable year of community, teamwork, and pushing our limits on the FIRST field.</p>
-                  </div>
-                  <div className="flex relative z-10 items-center">
-                    <div className="flex flex-col gap-[6vh]">
-                      <img src="/timeline/4.jpg" alt="2026 Event" className="w-[30vw] max-w-[350px] rounded-lg shadow-xl object-cover transform translate-y-12 hover:scale-[1.02] transition-transform duration-500" />
-                      <img src="/timeline/7.jpg" alt="2026 Event" className="w-[35vw] max-w-[400px] rounded-lg shadow-xl object-cover transform translate-x-4 -translate-y-4 hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                    <div className="flex flex-col gap-[4vh] ml-[-4vw]">
-                      <img src="/timeline/6.jpg" alt="2026 Event" className="w-[35vw] max-w-[400px] rounded-lg shadow-xl object-cover transform -translate-y-12 hover:scale-[1.02] transition-transform duration-500" />
-                      <img src="/timeline/9.jpg" alt="2026 FIRST" className="w-[45vw] max-w-[550px] rounded-lg shadow-xl object-cover transform translate-x-8 z-10 hover:scale-[1.02] transition-transform duration-500" />
-                      <img src="/timeline/8.jpg" alt="2026 Event" className="w-[30vw] max-w-[350px] rounded-lg shadow-xl object-cover transform translate-y-8 hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                  </div>
-                </div>
-
+            {/* --- TIMELINE PANE (270vw) --- */}
+            <div id="timeline" className="w-[270vw] h-full relative z-10 overflow-hidden topography-bg">
+              
+              {/* Glass Text 1 (2024) */}
+              <div className="absolute top-[55%] left-[5vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
+                <h4 className="text-artemis-blue font-header font-bold text-2xl mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
+                <p className="text-white/80 font-mono text-sm leading-relaxed">Creativity Award, FIRST Leadership Award Finalist, and Safety All-Star. Celebrating our success with our mentors and community sponsors!</p>
               </div>
+              
+              {/* Image 1 (2024 Haas) */}
+              <img src="/timeline/1.jpg" alt="2024 Event" className="absolute top-[35%] left-[10vw] w-[35vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+              
+              {/* Image 3 (2024 Mentors) */}
+              <img src="/timeline/3.jpg" alt="2024 Event" className="absolute top-[15%] left-[30vw] w-[40vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+
+              {/* Glass Text 2 (2025) */}
+              <div className="absolute bottom-[15%] left-[45vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
+                <h4 className="text-stellar-orange font-header font-bold text-2xl mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
+                <p className="text-white/80 font-mono text-sm leading-relaxed">Ranked #3 in New York State, Tech Valley Regional Winner, Worlds Alliance Captain (Hopper Division).</p>
+              </div>
+
+              {/* Image 9 (BIG FIRST LOGO) */}
+              <img src="/timeline/9.jpg" alt="FIRST Logo" className="absolute top-[20%] left-[65vw] w-[50vw] max-w-[700px] rounded-sm shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
+
+              {/* Glass Text 3 (2026) */}
+              <div className="absolute top-[10%] left-[125vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
+                <h4 className="text-artemis-blue font-header font-bold text-2xl mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
+                <p className="text-white/80 font-mono text-sm leading-relaxed">Hudson Valley Regional Alliance 3. New York Tech Valley Regional Alliance 5. An unforgettable year of community, teamwork, and pushing our limits.</p>
+              </div>
+
+              {/* Image 4 (2026 Hudson) */}
+              <img src="/timeline/4.jpg" alt="2026 Event" className="absolute bottom-[20%] left-[105vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
+
+              {/* Image 6 (2026 Selfie) */}
+              <img src="/timeline/6.jpg" alt="2026 Event" className="absolute top-[40%] left-[145vw] w-[30vw] max-w-[400px] rounded-sm shadow-[0_0_40px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+
+              {/* Image 7 (2026 Pits) */}
+              <img src="/timeline/7.jpg" alt="2026 Event" className="absolute top-[10%] left-[180vw] w-[35vw] max-w-[450px] rounded-sm shadow-[0_0_40px_rgba(249,115,22,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+
+              {/* Glass Text 4 (Spirit) */}
+              <div className="absolute bottom-[15%] left-[200vw] w-[25vw] max-w-[350px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
+                <h4 className="text-stellar-orange font-header font-bold text-2xl mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>Our Spirit</h4>
+                <p className="text-white/80 font-mono text-sm leading-relaxed">Showcasing our spirit and dedication as we head towards another victorious regional! We are Artemis.</p>
+              </div>
+
+              {/* Image 8 (2026 Spirit) */}
+              <img src="/timeline/8.jpg" alt="2026 Event" className="absolute top-[25%] left-[230vw] w-[40vw] max-w-[500px] rounded-sm shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-3" />
+
             </div>
             </motion.div>
         </div>
