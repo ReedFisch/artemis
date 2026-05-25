@@ -715,7 +715,7 @@ export default function Home() {
           <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue mb-2 block">
             04 / Community
           </span>
-          <h2 className="text-4xl md:text-6xl font-header font-black text-3d-glow">
+          <h2 className="text-4xl md:text-6xl font-header font-black text-white/60 tracking-wide">
             Outreach Programs
           </h2>
         </div>
