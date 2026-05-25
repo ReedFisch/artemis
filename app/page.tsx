@@ -782,9 +782,6 @@ export default function Home() {
           <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], rotateY: 360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} whileHover={{ scale: 1.2, cursor: 'pointer' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-auto" />
           
           <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
-            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-artemis-blue mb-2 block">
-              04 / Community
-            </span>
             <h2 className="text-4xl md:text-6xl font-header font-black text-white/60 tracking-wide">
               Outreach Programs
             </h2>
@@ -793,14 +790,20 @@ export default function Home() {
           {/* Parallax Grid Container */}
           <div className="max-w-7xl mx-auto px-6 w-full flex-grow relative z-10 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 w-full h-full relative">
-              {OUTREACH_CARDS.map((card, idx) => (
-                <div key={idx} className="relative w-full h-full" style={{ perspective: '1000px' }}>
-                  <OutreachParallaxCard 
-                    card={card} 
-                    index={idx} 
-                    totalCards={OUTREACH_CARDS.length} 
-                    scrollYProgress={outreachScrollYProgress} 
-                  />
+              {[0, 1, 2].map(colIndex => (
+                <div key={colIndex} className="relative w-full h-full" style={{ perspective: '1000px' }}>
+                  {OUTREACH_CARDS.map((card, idx) => {
+                    if (idx % 3 !== colIndex) return null;
+                    return (
+                      <OutreachParallaxCard 
+                        key={idx}
+                        card={card} 
+                        index={idx} 
+                        totalCards={OUTREACH_CARDS.length} 
+                        scrollYProgress={outreachScrollYProgress} 
+                      />
+                    );
+                  })}
                 </div>
               ))}
             </div>
