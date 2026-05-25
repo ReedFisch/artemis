@@ -208,21 +208,37 @@ export default function Home() {
 
   const handleFastScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
-    const target = document.querySelector(targetId);
-    if (!target) return;
     
-    const targetPosition = target.getBoundingClientRect().top + window.scrollY;
+    // Correct ID for Sponsor button mismatch
+    const actualTargetId = targetId === '#sponsorship' ? '#budget' : targetId;
+    
+    let targetPosition = 0;
+    
+    // Special handling for the horizontal timeline section
+    if (actualTargetId === '#timeline') {
+      const aboutSection = document.querySelector('#about') as HTMLElement;
+      if (!aboutSection) return;
+      // Scroll to 41% progress of the 400vh section to align timeline to the left edge
+      targetPosition = aboutSection.getBoundingClientRect().top + window.scrollY + 0.41 * (3 * window.innerHeight);
+    } else {
+      const target = document.querySelector(actualTargetId);
+      if (!target) return;
+      targetPosition = target.getBoundingClientRect().top + window.scrollY;
+    }
+    
     const startPosition = window.scrollY;
     const distance = targetPosition - startPosition;
-    const duration = 250; // Very fast 250ms scroll
+    const duration = 600; // Smooth but fast scroll (600ms)
     let start: number | null = null;
     
     const step = (timestamp: number) => {
       if (!start) start = timestamp;
       const progress = timestamp - start;
-      const easeOutCubic = 1 - Math.pow(1 - progress / duration, 3);
+      const easeInOutCubic = progress < duration / 2 
+        ? 4 * Math.pow(progress / duration, 3) 
+        : 1 - Math.pow(-2 * (progress / duration) + 2, 3) / 2;
         
-      window.scrollTo(0, startPosition + distance * Math.min(easeOutCubic, 1));
+      window.scrollTo(0, startPosition + distance * Math.min(easeInOutCubic, 1));
       if (progress < duration) {
         requestAnimationFrame(step);
       }
@@ -555,9 +571,9 @@ export default function Home() {
           <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className="flex w-[370vw] h-full relative z-10">
             
             {/* Section background gradient & floating shapes (scrolling with the content) */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ width: '370vw' }}>
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden topography-bg opacity-40" aria-hidden="true" style={{ width: '370vw' }}>
               {/* Starfield */}
-              <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
+              <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
@@ -568,11 +584,11 @@ export default function Home() {
               <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
               
               {/* Offset right to prevent cutoff */}
-              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-12 items-stretch h-auto mt-12 translate-x-4 md:translate-x-12">
+              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-20 items-stretch h-auto mt-12 translate-x-4 md:translate-x-12">
                 
                 {/* Left Side: About Text */}
-                <div className="lg:w-1/2 flex flex-col space-y-6 glass-panel-deep p-10 transform-style preserve-3d shadow-2xl justify-between h-full relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-artemis-blue/10 rounded-full blur-3xl" />
+                <div className="lg:w-1/2 flex flex-col space-y-10 p-12 md:p-16 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] justify-between h-full relative overflow-hidden backdrop-blur-3xl border border-white/10" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                   
                   <div className="relative z-10">
                     <h2 className="text-4xl md:text-5xl font-header font-black text-white">
@@ -583,59 +599,58 @@ export default function Home() {
                     </p>
                   </div>
                   
-                  <div className="space-y-6 relative z-10 mt-auto">
-                    {/* Gradient divider between About and Mission */}
-                    <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4) 30%, rgba(249,115,22,0.4) 70%, transparent)' }} />
+                  <div className="space-y-8 relative z-10 mt-auto">
+                    {/* Sleek white divider */}
+                    <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.1) 70%, transparent)' }} />
                     
-                    {/* Mission Box (Bigger) */}
-                    <div className="p-8 rounded-2xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(37,99,235,0.08) 50%, rgba(249,115,22,0.05) 100%)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <h3 className="text-2xl font-header font-bold mb-3 text-white">Our Mission</h3>
-                      <p className="text-base text-white/70 italic leading-relaxed">
+                    {/* Mission Box (Glassy, No colors) */}
+                    <div className="p-8 md:p-10 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <h3 className="text-2xl font-header font-bold mb-3 text-white tracking-wide">Our Mission</h3>
+                      <p className="text-base text-white/70 italic leading-relaxed font-light">
                         &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
                       </p>
                     </div>
                     
                     {/* About FRC Chip & Text */}
-                    <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors duration-300">
-                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>About FRC →</a>
-                      <p className="text-[11px] text-white/50 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
+                    <div className="flex items-center gap-6 bg-white/[0.02] p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.05] transition-colors duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
+                      <p className="text-xs text-white/50 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Right Side: Photo and Stats */}
-                <div className="lg:w-1/2 w-full flex flex-col gap-6 h-full">
+                <div className="lg:w-1/2 w-full flex flex-col gap-8 h-full">
                   {/* Team Photo */}
-                  <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] group flex-grow" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+                  <div className="relative rounded-[2rem] overflow-hidden border border-white/10 group flex-grow" style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                     <img src="/photos/hero/team_with_robot.webp" alt="Team 6621 Artemis with their robot" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/40 to-transparent" />
-                    <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.12) 0%, transparent 40%, transparent 60%, rgba(249,115,22,0.1) 100%)' }} />
-                    <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 80%, rgba(37,99,235,0.15) 0%, transparent 50%)' }} />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-between items-end">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%)' }} />
+                    <div className="absolute bottom-0 left-0 right-0 p-8 flex justify-between items-end">
                       <div>
-                        <p className="text-[9px] uppercase tracking-widest text-white/40">Team 6621</p>
-                        <p className="text-lg font-header font-bold">Artemis Robotics</p>
+                        <p className="text-[10px] uppercase tracking-widest text-white/50 mb-1">Team 6621</p>
+                        <p className="text-2xl font-header font-bold text-white">Artemis Robotics</p>
                       </div>
-                      <span className="text-[9px] uppercase tracking-widest text-white/30">Chatham, NY</span>
+                      <span className="text-[10px] uppercase tracking-widest text-white/40">Chatham, NY</span>
                     </div>
                   </div>
                   {/* Compact stat row */}
-                  <div className="grid grid-cols-3 gap-3 shrink-0" style={{ perspective: '800px' }}>
-                    <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.04) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(255,255,255,0.03), inset 2px 0 8px rgba(255,255,255,0.02), inset -2px 0 8px rgba(255,255,255,0.02)' }}>
-                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)' }} />
-                      <h4 className="text-2xl font-header font-black text-white relative z-10"><Counter to={2016} duration={1.5} /></h4>
-                      <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Founded</p>
+                  <div className="grid grid-cols-3 gap-5 shrink-0" style={{ perspective: '800px' }}>
+                    <div className="relative p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
+                      <h4 className="text-3xl font-header font-black text-white relative z-10"><Counter to={2016} duration={1.5} /></h4>
+                      <p className="text-[9px] uppercase tracking-widest text-white/50 mt-2 relative z-10">Founded</p>
                     </div>
-                    <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(37,99,235,0.12) 0%, rgba(37,99,235,0.03) 50%, rgba(37,99,235,0.06) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(37,99,235,0.18)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(37,99,235,0.2), inset 0 -1px 0 rgba(37,99,235,0.04), inset 2px 0 8px rgba(37,99,235,0.03), inset -2px 0 8px rgba(37,99,235,0.03)' }}>
-                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(37,99,235,0.15) 0%, transparent 100%)' }} />
-                      <h4 className="text-2xl font-header font-black text-artemis-blue relative z-10"><Counter to={60} duration={2} format={(v) => `${v}%`} /></h4>
-                      <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">New Members</p>
+                    <div className="relative p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
+                      <h4 className="text-3xl font-header font-black text-white relative z-10"><Counter to={60} duration={2} format={(v) => `${v}%`} /></h4>
+                      <p className="text-[9px] uppercase tracking-widest text-white/50 mt-2 relative z-10">New Members</p>
                     </div>
-                    <div className="relative p-4 text-center rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'linear-gradient(145deg, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0.03) 50%, rgba(249,115,22,0.06) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(249,115,22,0.18)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(249,115,22,0.2), inset 0 -1px 0 rgba(249,115,22,0.04), inset 2px 0 8px rgba(249,115,22,0.03), inset -2px 0 8px rgba(249,115,22,0.03)' }}>
-                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(249,115,22,0.15) 0%, transparent 100%)' }} />
-                      <h4 className="text-2xl font-header font-black text-stellar-orange relative z-10"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
-                      <p className="text-[8px] uppercase tracking-widest text-white/40 mt-1 relative z-10">Hours This Season</p>
+                    <div className="relative p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
+                      <h4 className="text-3xl font-header font-black text-white relative z-10"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
+                      <p className="text-[9px] uppercase tracking-widest text-white/50 mt-2 relative z-10">Hours This Season</p>
                     </div>
                   </div>
                 </div>
@@ -643,7 +658,7 @@ export default function Home() {
             </div>
 
             {/* --- TIMELINE PANE (270vw) --- */}
-            <div id="timeline" className="w-[270vw] h-full relative z-10 overflow-hidden topography-bg">
+            <div id="timeline" className="w-[270vw] h-full relative z-10 overflow-hidden">
               
               {/* 2024 SECTION (0vw to 70vw) */}
               <div className="absolute top-[35%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
