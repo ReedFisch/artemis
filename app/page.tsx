@@ -171,7 +171,7 @@ const OutreachParallaxCard = ({
   const y = useTransform(
     scrollYProgress,
     [i0, i1, i2, i3, i4, i5],
-    ["100vh", "100vh", "0vh", "0vh", "-100vh", "-100vh"]
+    ["120%", "120%", "0%", "0%", "-120%", "-120%"]
   );
   
   const opacity = useTransform(
@@ -460,7 +460,7 @@ export default function Home() {
   const xAboutToTimeline = useTransform(
     horizontalScrollYProgress, 
     [0, 0.15, 0.85, 1], 
-    ["0vw", "0vw", "-270vw", "-270vw"]
+    ["0vw", "-5vw", "-270vw", "-270vw"]
   );
   const yAboutToTimeline = useTransform(
     horizontalScrollYProgress,
