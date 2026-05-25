@@ -389,13 +389,13 @@ export default function Home() {
   });
   const xAboutToTimeline = useTransform(
     horizontalScrollYProgress, 
-    [0, 0.15, 0.5, 0.85, 1], 
-    ["0%", "-5%", "-36%", "-67%", "-72.97%"]
+    [0, 0.15, 0.85, 1], 
+    ["0vw", "0vw", "-270vw", "-270vw"]
   );
   const yAboutToTimeline = useTransform(
     horizontalScrollYProgress,
-    [0, 0.15, 0.85, 1],
-    ["100vh", "0vh", "0vh", "-10vh"]
+    [0, 0.85, 1],
+    ["0vh", "0vh", "-10vh"]
   );
 
   // Form submission mock
@@ -583,8 +583,8 @@ export default function Home() {
               <motion.div animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
               <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
               
-              {/* Offset right to prevent cutoff */}
-              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-20 items-stretch h-auto mt-12 translate-x-4 md:translate-x-12">
+              {/* Offset removed to center it normally now that x-axis isn't shifting early */}
+              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-20 items-stretch h-auto mt-12">
                 
                 {/* Left Side: About Text */}
                 <div className="lg:w-1/2 flex flex-col space-y-10 p-12 md:p-16 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] justify-between h-full relative overflow-hidden backdrop-blur-3xl border border-white/10" style={{ background: 'rgba(255,255,255,0.02)' }}>
