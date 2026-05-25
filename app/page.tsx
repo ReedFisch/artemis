@@ -633,7 +633,7 @@ export default function Home() {
       <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '400vh', scrollSnapAlign: 'start' }}>
         
         {/* Seamless Fade FROM Hero Section */}
-        <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-black via-black/80 to-transparent pointer-events-none z-30" />
+        <div className="absolute top-0 left-0 w-full h-[100vh] bg-gradient-to-b from-black via-black/50 to-transparent pointer-events-none z-30" />
         
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
@@ -647,7 +647,7 @@ export default function Home() {
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
-            <div className="w-[100vw] h-full flex flex-col pt-16 md:pt-20 pb-4 px-6 md:px-12 relative z-10">
+            <div className="w-[100vw] h-full flex flex-col pt-16 md:pt-20 pb-[10vh] px-6 md:px-12 relative z-10">
               
               {/* Scattered 3D Shapes */}
               <motion.div animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
