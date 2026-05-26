@@ -134,10 +134,59 @@ const OUTREACH_CARDS = [
   }
 ];
 
-// ─── OUTREACH CARD COMPONENT ────────────────────────────────
-const OutreachCard = ({ card }: { card: any }) => {
+// ─── OUTREACH PARALLAX COMPONENT ────────────────────────────────
+const OutreachParallaxCard = ({ 
+  card, 
+  index, 
+  totalCards, 
+  scrollYProgress 
+}: { 
+  card: any, 
+  index: number, 
+  totalCards: number, 
+  scrollYProgress: any 
+}) => {
+  const itemsPerRow = 3;
+  const totalRows = Math.ceil(totalCards / itemsPerRow);
+  const rowIndex = Math.floor(index / itemsPerRow);
+  const colIndex = index % itemsPerRow;
+  
+  const L = 1.0 / totalRows;
+  const R_start = rowIndex * L;
+  
+  const startPop = R_start + colIndex * (0.15 * L);
+  const endPop = startPop + (0.15 * L);
+  
+  const startExit = R_start + 0.75 * L;
+  const endExit = R_start + 1.0 * L;
+
+  // Ensure strict monotonically increasing inputs for Framer Motion
+  const i0 = 0;
+  const i1 = Math.max(0.0001, startPop);
+  const i2 = Math.max(i1 + 0.0001, endPop);
+  const i3 = Math.max(i2 + 0.0001, startExit);
+  const i4 = Math.min(0.9998, Math.max(i3 + 0.0001, endExit));
+  const i5 = 1;
+
+  // Scale: start small (0.8), hold at (1.0), then fly towards camera (2.5)
+  const scale = useTransform(
+    scrollYProgress,
+    [i0, i1, i2, i3, i4, i5],
+    [0.8, 0.8, 1.0, 1.0, 2.5, 2.5]
+  );
+  
+  // Opacity: fade in, hold, then fade out as it flies away
+  const opacity = useTransform(
+    scrollYProgress,
+    [i0, i1, i2, i3, i4, i5],
+    [0, 0, 1, 1, 0, 0]
+  );
+
   return (
-    <div className="relative w-full h-[450px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group">
+    <motion.div 
+      style={{ scale, opacity, transformOrigin: 'center center' }} 
+      className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[450px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group"
+    >
       <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/50 to-transparent opacity-90" />
       
@@ -146,7 +195,7 @@ const OutreachCard = ({ card }: { card: any }) => {
         <h3 className="text-xl font-header font-bold mb-3 text-white">{card.title}</h3>
         <p className="text-xs text-white/70 leading-relaxed font-light">{card.desc}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -401,6 +450,13 @@ export default function Home() {
   const { scrollYProgress: horizontalScrollYProgress } = useScroll({
     target: horizontalScrollRef,
     container: containerRef,
+    offset: ["start start", "end end"]
+  });
+  
+  // Vertical Scroll for Outreach Parallax
+  const outreachScrollRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: outreachScrollYProgress } = useScroll({
+    target: outreachScrollRef,
     offset: ["start start", "end end"]
   });
   const xAboutToTimeline = useTransform(
@@ -719,25 +775,45 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-           5. OUTREACH GRID
+           5. OUTREACH PARALLAX (FLY OUT EFFECT)
            ══════════════════════════════════════════════════════ */}
-      <section id="outreach" className="relative z-10 py-32 overflow-hidden">
-        {/* Background Elements */}
-        <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0], rotateX: 360 }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-none" />
-        <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], rotateY: 360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto px-6 w-full text-center mb-16 relative z-10 shrink-0">
-          <h2 className="text-4xl md:text-6xl font-header font-black text-white/60 tracking-wide">
-            Outreach Programs
-          </h2>
-        </div>
-        
-        {/* Static Grid Container */}
-        <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full">
-            {OUTREACH_CARDS.map((card, idx) => (
-              <OutreachCard key={idx} card={card} />
-            ))}
+      <section id="outreach" ref={outreachScrollRef} className="relative z-10" style={{ height: '700vh' }}>
+        <div className="sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12">
+          
+          {/* Background Elements */}
+          <div className="absolute inset-0 z-0 opacity-30 starfield" />
+          <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 150, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] rounded-full border border-white/5 opacity-20 pointer-events-none" />
+          <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 100, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] rounded-full border border-white/10 opacity-30 pointer-events-none" />
+          
+          <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0], rotateX: 360 }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-none" />
+          <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], rotateY: 360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-none" />
+          
+          <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
+            <h2 className="text-4xl md:text-6xl font-header font-black text-white/60 tracking-wide">
+              Outreach Programs
+            </h2>
+          </div>
+          
+          {/* Parallax Grid Container */}
+          <div className="max-w-7xl mx-auto px-6 w-full h-[65vh] md:h-[70vh] relative z-10 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 w-full h-full relative">
+              {[0, 1, 2].map(colIndex => (
+                <div key={colIndex} className="relative w-full h-full" style={{ perspective: '1000px' }}>
+                  {OUTREACH_CARDS.map((card, idx) => {
+                    if (idx % 3 !== colIndex) return null;
+                    return (
+                      <OutreachParallaxCard 
+                        key={idx}
+                        card={card} 
+                        index={idx} 
+                        totalCards={OUTREACH_CARDS.length} 
+                        scrollYProgress={outreachScrollYProgress} 
+                      />
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
