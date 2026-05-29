@@ -309,12 +309,11 @@ body {
 }
 
 .starfield {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -10;
+  width: 100%;
+  height: 100%;
   background-image: 
     radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
     radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)),

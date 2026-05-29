@@ -487,12 +487,9 @@ export default function Home() {
             onWheel={(e) => e.stopPropagation()}
             onTouchMove={(e) => e.stopPropagation()}
           >
-            {/* Animated Nebula Background */}
-            <div className="absolute inset-0 z-0 overflow-hidden">
+            {/* Starry Background */}
+            <div className="absolute inset-0 z-0 overflow-hidden bg-black">
               <div className="absolute inset-0 opacity-40 starfield" />
-              <motion.div animate={{ x: ['-10%', '10%', '-10%'], y: ['5%', '-5%', '5%'], scale: [1, 1.3, 1] }} transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }} className="absolute top-[20%] left-[10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-br from-blue-600/20 via-purple-500/15 to-transparent blur-[100px]" />
-              <motion.div animate={{ x: ['10%', '-15%', '10%'], y: ['-5%', '10%', '-5%'], scale: [1.2, 1, 1.2] }} transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-[10%] right-[5%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-tl from-orange-500/20 via-rose-500/10 to-transparent blur-[120px]" />
-              <motion.div animate={{ x: ['5%', '-10%', '5%'], y: ['10%', '-5%', '10%'] }} transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }} className="absolute top-[50%] left-[40%] w-[40vw] h-[40vw] rounded-full bg-gradient-to-r from-cyan-500/10 via-indigo-500/10 to-transparent blur-[80px]" />
             </div>
             
             {/* Artemis Logo Floating Above */}
