@@ -97,21 +97,15 @@ const OUTREACH_CARDS = [
     image: "/photos/outreach/steam_day_assembly.webp",
   },
   {
-    tag: "Safety First",
-    title: "Community Safety Kits",
-    desc: "At every competition, we distribute free safety kits to every team - a commitment that earned Safety All-Star awards for Josiah Eugenio (2026) and Reed Fisch (2024).",
-    image: "/photos/outreach/community_fair_booth.webp",
-  },
-  {
     tag: "Mentorship",
     title: "Team 7504 Cybearbots",
     desc: "Met with Cybearbots to advise on fundraising, lead acquisition, and strategy. Helped increase their funding from $15k to $30k in one year. Shared scouting and strategic data at Tech Valley.",
     image: "/photos/outreach/mentorship_growth.webp",
   },
   {
-    tag: "Hardware Fixes",
-    title: "Battery Clips",
-    desc: "At each competition we handed out battery clips to prevent batteries from disconnecting after we experienced that issue at one of our competitions.",
+    tag: "Safety & Hardware Fixes",
+    title: "Battery Clips & Safety Kits",
+    desc: "At each competition we handed out 3D printed battery clips to prevent batteries from disconnecting, and distributed free community safety kits to every team, earning us Safety All-Star awards.",
     image: "/photos/outreach/community_fair_booth.webp",
   },
   {
@@ -119,18 +113,6 @@ const OUTREACH_CARDS = [
     title: "Wellness & Science Fairs",
     desc: "Gave demonstrations to our community and illustrated the importance of robotics at the Chatham Wellness Fair, Science Fair, and Learning Fair.",
     image: "/photos/outreach/steam_day_assembly.webp",
-  },
-  {
-    tag: "Pipeline",
-    title: "Middle School FTC",
-    desc: "Continuous partnership, assistance, and advising with our local middle school FTC team (a younger feeder robotics team) to help them with their robot and prepare them for competition.",
-    image: "/photos/outreach/mentorship_growth.webp",
-  },
-  {
-    tag: "Networking",
-    title: "Ravena STEM Fair",
-    desc: "Representation and demonstration at Ravena STEM fair where we network and demonstrate the importance of FRC with other robotics teams from around the state.",
-    image: "/photos/outreach/origami_for_good.webp",
   }
 ];
 
@@ -175,6 +157,13 @@ const OutreachParallaxCard = ({
     [0.8, 0.8, 1.0, 1.0, 2.5, 2.5]
   );
   
+  // Fly in from bottom
+  const y = useTransform(
+    scrollYProgress,
+    [i0, i1, i2, i3, i4, i5],
+    ["120%", "120%", "0%", "0%", "0%", "0%"]
+  );
+  
   // Opacity: fade in, hold, then fade out as it flies away
   const opacity = useTransform(
     scrollYProgress,
@@ -184,14 +173,14 @@ const OutreachParallaxCard = ({
 
   return (
     <motion.div 
-      style={{ scale, opacity, transformOrigin: 'center center' }} 
+      style={{ scale, opacity, y, transformOrigin: 'center center' }} 
       className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[450px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group"
     >
       <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/50 to-transparent opacity-90" />
       
       <div className="relative z-10 p-6 md:p-8 backdrop-blur-md bg-white/[0.03] border-t border-white/10 mt-auto">
-        <span className="text-[10px] font-bold tracking-widest uppercase text-stellar-orange mb-3 block">{card.tag}</span>
+        <span className="inline-block px-4 py-1.5 rounded-full bg-stellar-orange/20 text-stellar-orange text-xs md:text-sm font-bold tracking-widest uppercase mb-4 border border-stellar-orange/30 shadow-[0_0_15px_rgba(251,146,60,0.3)]">{card.tag}</span>
         <h3 className="text-xl font-header font-bold mb-3 text-white">{card.title}</h3>
         <p className="text-xs text-white/70 leading-relaxed font-light">{card.desc}</p>
       </div>
@@ -511,66 +500,73 @@ export default function Home() {
             </div>
 
             {/* 3D Solar System Container */}
-            <div className="relative z-10 w-full max-w-[600px] h-[300px] flex items-center justify-center perspective-[1000px]">
+            <div className="relative z-10 w-full max-w-[800px] h-[500px] flex items-center justify-center perspective-[1200px]">
               
+              {/* Deep space glow behind solar system */}
+              <div className="absolute w-[400px] h-[400px] rounded-full bg-orange-500/10 blur-[100px]" />
+
               {/* The Sun */}
-              <div className="relative z-20 w-16 h-16 rounded-full animate-pulse" style={{ background: 'radial-gradient(circle at 50% 50%, #ffffff 0%, #fef08a 40%, #eab308 100%)', boxShadow: '0 0 80px 20px rgba(250,204,21,0.4)' }} />
+              <div className="relative z-20 w-24 h-24 rounded-full animate-pulse flex items-center justify-center" style={{ background: 'radial-gradient(circle at 50% 50%, #ffffff 0%, #fef08a 20%, #eab308 60%, #ea580c 100%)', boxShadow: '0 0 120px 30px rgba(234,88,12,0.6), inset 0 0 20px rgba(255,255,255,0.8)' }}>
+                {/* Solar Flares/Corona */}
+                <motion.div animate={{ rotate: 360, scale: [1, 1.05, 1] }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className="absolute inset-[-20%] rounded-full border-[2px] border-dashed border-yellow-500/30 opacity-50" />
+                <motion.div animate={{ rotate: -360, scale: [1, 1.1, 1] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} className="absolute inset-[-40%] rounded-full border-[1px] border-dotted border-orange-500/20 opacity-30" />
+              </div>
 
-              {/* Orbit 1: Inner Planet */}
-              <div className="absolute w-[250px] h-[250px] transform-style preserve-3d" style={{ transform: 'rotateX(70deg)' }}>
-                <motion.div 
-                  animate={{ rotateZ: 360 }} 
-                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                  className="w-full h-full border border-white/20 rounded-full transform-style preserve-3d"
-                >
-                  <motion.div 
-                    animate={{ rotateZ: -360 }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-0 left-1/2 -ml-3 -mt-3 w-6 h-6 transform-style preserve-3d" 
-                  >
-                    <div className="w-full h-full rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8),inset_-2px_-2px_6px_rgba(0,0,0,0.6)] transform-style preserve-3d" style={{ transform: 'rotateX(-70deg)', background: 'radial-gradient(circle at 30% 30%, #60a5fa 0%, #1d4ed8 70%, #020617 100%)' }}>
-                      <motion.div animate={{ rotateY: 360 }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
-                      <motion.div animate={{ rotateX: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
+              {/* Orbit 1: Mercury/Inner Planet */}
+              <div className="absolute w-[180px] h-[180px] transform-style preserve-3d" style={{ transform: 'rotateX(75deg) rotateY(10deg)' }}>
+                <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="w-full h-full border border-white/10 rounded-full transform-style preserve-3d">
+                  <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/2 -ml-2 -mt-2 w-4 h-4 transform-style preserve-3d">
+                    <div className="w-full h-full rounded-full shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.8)]" style={{ transform: 'rotateX(-75deg)', background: 'radial-gradient(circle at 30% 30%, #d4d4d8 0%, #71717a 70%, #09090b 100%)' }} />
+                  </motion.div>
+                </motion.div>
+              </div>
+
+              {/* Orbit 2: Earth-like with Moon */}
+              <div className="absolute w-[320px] h-[320px] transform-style preserve-3d" style={{ transform: 'rotateX(70deg) rotateY(-5deg)' }}>
+                <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className="w-full h-full border border-white/15 rounded-full transform-style preserve-3d">
+                  <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/2 -ml-3 -mt-3 w-6 h-6 transform-style preserve-3d">
+                    {/* Earth */}
+                    <div className="w-full h-full rounded-full shadow-[0_0_15px_rgba(59,130,246,0.6),inset_-2px_-2px_6px_rgba(0,0,0,0.8)]" style={{ transform: 'rotateX(-70deg)', background: 'radial-gradient(circle at 30% 30%, #60a5fa 0%, #1d4ed8 60%, #064e3b 90%, #020617 100%)' }}>
+                       {/* Clouds */}
+                       <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border-[1px] border-dotted border-white/40" />
+                    </div>
+                    {/* Moon Orbit */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 transform-style preserve-3d" style={{ transform: 'rotateX(60deg)' }}>
+                      <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }} className="w-full h-full rounded-full border border-white/10 transform-style preserve-3d">
+                        <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/2 -ml-1 -mt-1 w-2 h-2 transform-style preserve-3d">
+                          <div className="w-full h-full rounded-full bg-gray-300" style={{ transform: 'rotateX(-60deg) rotateX(-70deg)' }} />
+                        </motion.div>
+                      </motion.div>
                     </div>
                   </motion.div>
                 </motion.div>
               </div>
 
-              {/* Orbit 2: Middle Planet */}
-              <div className="absolute w-[400px] h-[400px] transform-style preserve-3d" style={{ transform: 'rotateX(70deg)' }}>
-                <motion.div 
-                  animate={{ rotateZ: -360 }} 
-                  transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                  className="w-full h-full border border-white/10 rounded-full transform-style preserve-3d"
-                >
-                  <motion.div 
-                    animate={{ rotateZ: 360 }}
-                    transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-0 left-1/2 -ml-4 -mt-4 w-8 h-8 transform-style preserve-3d" 
-                  >
-                    <div className="w-full h-full rounded-full shadow-[0_0_15px_rgba(168,85,247,0.8),inset_-2px_-2px_6px_rgba(0,0,0,0.6)] transform-style preserve-3d" style={{ transform: 'rotateX(-70deg)', background: 'radial-gradient(circle at 30% 30%, #c084fc 0%, #7e22ce 70%, #020617 100%)' }}>
-                      <motion.div animate={{ rotateY: -360 }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
-                      <motion.div animate={{ rotateX: -360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
-                    </div>
+              {/* Orbit 3: Mars-like */}
+              <div className="absolute w-[460px] h-[460px] transform-style preserve-3d" style={{ transform: 'rotateX(72deg) rotateY(15deg)' }}>
+                <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }} className="w-full h-full border border-white/10 rounded-full transform-style preserve-3d">
+                  <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/2 -ml-2.5 -mt-2.5 w-5 h-5 transform-style preserve-3d">
+                    <div className="w-full h-full rounded-full shadow-[inset_-2px_-2px_6px_rgba(0,0,0,0.8)]" style={{ transform: 'rotateX(-72deg)', background: 'radial-gradient(circle at 30% 30%, #ef4444 0%, #b91c1c 70%, #450a0a 100%)' }} />
                   </motion.div>
                 </motion.div>
               </div>
 
-              {/* Orbit 3: Outer Planet */}
-              <div className="absolute w-[550px] h-[550px] transform-style preserve-3d" style={{ transform: 'rotateX(70deg)' }}>
-                <motion.div 
-                  animate={{ rotateZ: 360 }} 
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="w-full h-full border border-white/5 rounded-full transform-style preserve-3d"
-                >
-                  <motion.div 
-                    animate={{ rotateZ: -360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-0 left-1/2 -ml-5 -mt-5 w-10 h-10 transform-style preserve-3d" 
-                  >
-                    <div className="w-full h-full rounded-full shadow-[0_0_20px_rgba(249,115,22,0.8),inset_-3px_-3px_8px_rgba(0,0,0,0.6)] transform-style preserve-3d" style={{ transform: 'rotateX(-70deg)', background: 'radial-gradient(circle at 30% 30%, #fb923c 0%, #c2410c 70%, #020617 100%)' }}>
-                      <motion.div animate={{ rotateY: 360 }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
-                      <motion.div animate={{ rotateX: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border border-white/30" />
+              {/* Asteroid Belt */}
+              <div className="absolute w-[580px] h-[580px] transform-style preserve-3d" style={{ transform: 'rotateX(70deg)' }}>
+                <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }} className="w-full h-full rounded-full border-[10px] border-dotted border-gray-500/20 opacity-50" />
+                <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 50, repeat: Infinity, ease: "linear" }} className="absolute inset-2 rounded-full border-[6px] border-dashed border-gray-600/30 opacity-40" />
+              </div>
+
+              {/* Orbit 4: Saturn-like with Rings */}
+              <div className="absolute w-[750px] h-[750px] transform-style preserve-3d" style={{ transform: 'rotateX(76deg) rotateY(-8deg)' }}>
+                <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 35, repeat: Infinity, ease: "linear" }} className="w-full h-full border border-white/5 rounded-full transform-style preserve-3d">
+                  <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 35, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/2 -ml-6 -mt-6 w-12 h-12 transform-style preserve-3d">
+                    <div className="relative w-full h-full flex items-center justify-center transform-style preserve-3d" style={{ transform: 'rotateX(-76deg)' }}>
+                      {/* Planet Body */}
+                      <div className="absolute w-10 h-10 rounded-full shadow-[inset_-3px_-3px_8px_rgba(0,0,0,0.8)] z-10" style={{ background: 'radial-gradient(circle at 30% 30%, #fcd34d 0%, #d97706 40%, #78350f 100%)' }} />
+                      {/* Saturn Rings */}
+                      <motion.div animate={{ rotateX: [60, 70, 60], rotateY: [10, -10, 10] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute w-20 h-20 rounded-full border-[4px] border-amber-200/40 z-0 transform-style preserve-3d" />
+                      <motion.div animate={{ rotateX: [60, 70, 60], rotateY: [10, -10, 10] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute w-24 h-24 rounded-full border-[2px] border-amber-400/20 z-0 transform-style preserve-3d" />
                     </div>
                   </motion.div>
                 </motion.div>
@@ -782,6 +778,7 @@ export default function Home() {
           
           {/* Background Elements */}
           <div className="absolute inset-0 z-0 opacity-30 starfield" />
+          <motion.div animate={{ x: ['-20vw', '20vw', '-20vw'], y: ['-20vh', '20vh', '-20vh'], scale: [1, 1.2, 1] }} transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] rounded-full bg-gradient-to-r from-artemis-blue/30 to-stellar-orange/30 blur-[120px] pointer-events-none z-0 mix-blend-screen" />
           <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 150, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] rounded-full border border-white/5 opacity-20 pointer-events-none" />
           <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 100, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] rounded-full border border-white/10 opacity-30 pointer-events-none" />
           
@@ -979,8 +976,12 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="w-full border-t border-white/5 py-6 text-center">
-            <p className="text-[9px] uppercase tracking-widest text-white/20">&copy; {new Date().getFullYear()} Team 6621. All systems nominal.</p>
+          <div className="w-full border-t border-white/5 py-6 text-center flex flex-col gap-3">
+            <p className="text-[10px] text-white/30 max-w-4xl mx-auto leading-relaxed px-6">
+              Artemis Robotics Team 6621 is a student-led organization affiliated with the Chatham Central School District. <br className="hidden md:block"/>
+              FIRST® and FIRST® Robotics Competition are registered trademarks of FIRST® (For Inspiration and Recognition of Science and Technology). This website is not officially endorsed by FIRST®.
+            </p>
+            <p className="text-[9px] uppercase tracking-widest text-white/20">&copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.</p>
           </div>
         </footer>
       </section>
