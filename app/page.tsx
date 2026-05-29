@@ -150,21 +150,21 @@ const OutreachParallaxCard = ({
   const i4 = Math.min(0.9998, Math.max(i3 + 0.0001, endExit));
   const i5 = 1;
 
-  // Scale: start small (0.8), hold at (1.0), then fly towards camera (2.5)
+  // Scale: stays mostly flat, tiny shrink on enter/exit
   const scale = useTransform(
     scrollYProgress,
     [i0, i1, i2, i3, i4, i5],
-    [0.8, 0.8, 1.0, 1.0, 2.5, 2.5]
+    [0.9, 0.9, 1.0, 1.0, 0.9, 0.9]
   );
   
-  // Fly in from bottom
+  // Enter from bottom, hold, then exit through the top (traditional scroll)
   const y = useTransform(
     scrollYProgress,
     [i0, i1, i2, i3, i4, i5],
-    ["120%", "120%", "0%", "0%", "0%", "0%"]
+    ["120%", "120%", "0%", "0%", "-120%", "-120%"]
   );
   
-  // Opacity: fade in, hold, then fade out as it flies away
+  // Opacity: fade in as it rises, hold, then fade out as it rises away
   const opacity = useTransform(
     scrollYProgress,
     [i0, i1, i2, i3, i4, i5],
@@ -362,10 +362,20 @@ export default function Home() {
     
     const currentImages: HTMLImageElement[] = [];
     
+    let minimumTimeElapsed = false;
+    let allAssetsLoaded = false;
+
+    // Force the beautiful 3D loading screen to be visible for at least 3.5 seconds
+    setTimeout(() => {
+      minimumTimeElapsed = true;
+      if (allAssetsLoaded) setIsLoading(false);
+    }, 3500);
+
     const onAssetLoaded = () => {
       loadedCount++;
       if (loadedCount >= totalToLoad) {
-        setIsLoading(false);
+        allAssetsLoaded = true;
+        if (minimumTimeElapsed) setIsLoading(false);
       }
     };
 
