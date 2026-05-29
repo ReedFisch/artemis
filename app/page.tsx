@@ -635,8 +635,9 @@ export default function Home() {
           </motion.header>
           {/* Sponsor Button */}
         <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto">
-          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 backdrop-blur-xl bg-white/10 hover:bg-white/20 text-white" style={{ border: '1px solid rgba(255,255,255,0.3)', boxShadow: '0 4px 30px rgba(0,0,0,0.5)' }}>
-            Sponsor Now
+          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-500 hover:scale-110 hover:-translate-y-1 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40 text-white flex items-center gap-3 shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60">
+            <span>Support Now</span>
+            <span className="text-lg group-hover:rotate-12 group-hover:scale-125 transition-all duration-300">🚀</span>
           </a>
         </div>
 
