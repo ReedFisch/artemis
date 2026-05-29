@@ -776,13 +776,21 @@ export default function Home() {
         <div className="sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12">
           
           {/* Background Elements */}
-          <div className="absolute inset-0 z-0 opacity-30 starfield" />
-          <motion.div animate={{ x: ['-20vw', '20vw', '-20vw'], y: ['-20vh', '20vh', '-20vh'], scale: [1, 1.2, 1] }} transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] rounded-full bg-gradient-to-r from-artemis-blue/30 to-stellar-orange/30 blur-[120px] pointer-events-none z-0 mix-blend-screen" />
-          <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 150, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] rounded-full border border-white/5 opacity-20 pointer-events-none" />
-          <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 100, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] rounded-full border border-white/10 opacity-30 pointer-events-none" />
+          <div className="absolute inset-0 z-0 opacity-20 starfield" />
           
-          <motion.div animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0], rotateX: 360 }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-50 z-0 pointer-events-none" />
-          <motion.div animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], rotateY: 360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-40 z-0 pointer-events-none" />
+          {/* Top fade to blend into timeline */}
+          <div className="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-[#05070B] to-transparent pointer-events-none z-[1]" />
+          
+          {/* Subtle organic gradient blobs */}
+          <motion.div animate={{ x: ['-5vw', '8vw', '-3vw', '-5vw'], y: ['-3vh', '5vh', '-8vh', '-3vh'], scale: [1, 1.08, 0.95, 1] }} transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }} className="absolute top-[30%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-br from-artemis-blue/10 via-purple-500/5 to-transparent blur-[150px] pointer-events-none z-0" />
+          <motion.div animate={{ x: ['5vw', '-6vw', '3vw', '5vw'], y: ['4vh', '-6vh', '7vh', '4vh'], scale: [0.95, 1.05, 1, 0.95] }} transition={{ duration: 35, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-[20%] right-[15%] w-[45vw] h-[45vw] rounded-full bg-gradient-to-tl from-stellar-orange/8 via-rose-500/5 to-transparent blur-[140px] pointer-events-none z-0" />
+          
+          {/* Slow orbital rings */}
+          <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 200, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] rounded-full border border-white/[0.03] pointer-events-none" />
+          <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 150, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] rounded-full border border-white/[0.05] pointer-events-none" />
+          
+          <motion.div animate={{ x: [0, 20, -15, 0], y: [0, 15, -10, 0], rotateX: 360 }} transition={{ duration: 35, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-30 z-0 pointer-events-none" />
+          <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -20, 15, 0], rotateY: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-25 z-0 pointer-events-none" />
           
           <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
             <h2 className="text-4xl md:text-6xl font-header font-black text-white/60 tracking-wide">
