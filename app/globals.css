@@ -308,6 +308,10 @@ body {
   transform-style: preserve-3d;
 }
 
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
 .starfield {
   position: absolute;
   top: 0;
