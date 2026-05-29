@@ -286,8 +286,13 @@ export default function Home() {
     if (actualTargetId === '#timeline') {
       const aboutSection = document.querySelector('#about') as HTMLElement;
       if (!aboutSection) return;
-      // Scroll to 41% progress of the 400vh section to align timeline to the left edge
-      targetPosition = aboutSection.offsetTop + 0.41 * (3 * window.innerHeight);
+      // Scroll to exactly 36.6% progress (1.1 * viewport height) to align timeline left edge
+      targetPosition = aboutSection.offsetTop + 1.1 * window.innerHeight;
+    } else if (actualTargetId === '#outreach') {
+      const target = document.querySelector(actualTargetId) as HTMLElement;
+      if (!target) return;
+      // Scroll partially into the outreach container so the first cards are visible
+      targetPosition = target.offsetTop + 1.2 * window.innerHeight;
     } else {
       const target = document.querySelector(actualTargetId) as HTMLElement;
       if (!target) return;
