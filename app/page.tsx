@@ -486,8 +486,13 @@ export default function Home() {
             onWheel={(e) => e.stopPropagation()}
             onTouchMove={(e) => e.stopPropagation()}
           >
-            {/* Plain Starry Background */}
-            <div className="absolute inset-0 z-0 opacity-40 starfield" />
+            {/* Animated Nebula Background */}
+            <div className="absolute inset-0 z-0 overflow-hidden">
+              <div className="absolute inset-0 opacity-40 starfield" />
+              <motion.div animate={{ x: ['-10%', '10%', '-10%'], y: ['5%', '-5%', '5%'], scale: [1, 1.3, 1] }} transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }} className="absolute top-[20%] left-[10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-br from-blue-600/20 via-purple-500/15 to-transparent blur-[100px]" />
+              <motion.div animate={{ x: ['10%', '-15%', '10%'], y: ['-5%', '10%', '-5%'], scale: [1.2, 1, 1.2] }} transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-[10%] right-[5%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-tl from-orange-500/20 via-rose-500/10 to-transparent blur-[120px]" />
+              <motion.div animate={{ x: ['5%', '-10%', '5%'], y: ['10%', '-5%', '10%'] }} transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }} className="absolute top-[50%] left-[40%] w-[40vw] h-[40vw] rounded-full bg-gradient-to-r from-cyan-500/10 via-indigo-500/10 to-transparent blur-[80px]" />
+            </div>
             
             {/* Artemis Logo Floating Above */}
             <div className="relative z-20 mb-8 w-40 h-40 flex items-center justify-center">
@@ -501,35 +506,34 @@ export default function Home() {
               <div className="absolute w-[400px] h-[400px] rounded-full bg-orange-500/10 blur-[100px]" />
 
               {/* The Sun */}
-              <div className="relative z-20 w-24 h-24 rounded-full animate-pulse flex items-center justify-center" style={{ background: 'radial-gradient(circle at 50% 50%, #ffffff 0%, #fef08a 20%, #eab308 60%, #ea580c 100%)', boxShadow: '0 0 120px 30px rgba(234,88,12,0.6), inset 0 0 20px rgba(255,255,255,0.8)' }}>
+              <div className="relative z-20 w-24 h-24 rounded-full animate-pulse flex items-center justify-center" style={{ background: 'radial-gradient(circle at 40% 35%, #ffffff 0%, #fef08a 20%, #eab308 60%, #ea580c 100%)', boxShadow: '0 0 120px 30px rgba(234,88,12,0.6), 0 0 60px 15px rgba(250,204,21,0.3), inset 0 0 20px rgba(255,255,255,0.8)' }}>
                 {/* Solar Flares/Corona */}
                 <motion.div animate={{ rotate: 360, scale: [1, 1.05, 1] }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className="absolute inset-[-20%] rounded-full border-[2px] border-dashed border-yellow-500/30 opacity-50" />
                 <motion.div animate={{ rotate: -360, scale: [1, 1.1, 1] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} className="absolute inset-[-40%] rounded-full border-[1px] border-dotted border-orange-500/20 opacity-30" />
               </div>
 
-              {/* Orbit 1: Mercury/Inner Planet */}
+              {/* Orbit 1: Mercury */}
               <div className="absolute w-[180px] h-[180px] transform-style preserve-3d" style={{ transform: 'rotateX(75deg) rotateY(10deg)' }}>
                 <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="w-full h-full border border-white/10 rounded-full transform-style preserve-3d">
                   <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/2 -ml-2 -mt-2 w-4 h-4 transform-style preserve-3d">
-                    <div className="w-full h-full rounded-full shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.8)]" style={{ transform: 'rotateX(-75deg)', background: 'radial-gradient(circle at 30% 30%, #d4d4d8 0%, #71717a 70%, #09090b 100%)' }} />
+                    <div className="w-full h-full rounded-full" style={{ transform: 'rotateX(-75deg)', background: 'radial-gradient(circle at 35% 30%, #e5e7eb 0%, #a1a1aa 40%, #52525b 75%, #18181b 100%)', boxShadow: '0 0 8px 2px rgba(161,161,170,0.4), inset -2px -2px 4px rgba(0,0,0,0.8), inset 1px 1px 3px rgba(255,255,255,0.3)' }} />
                   </motion.div>
                 </motion.div>
               </div>
 
-              {/* Orbit 2: Earth-like with Moon */}
+              {/* Orbit 2: Earth with Moon */}
               <div className="absolute w-[320px] h-[320px] transform-style preserve-3d" style={{ transform: 'rotateX(70deg) rotateY(-5deg)' }}>
                 <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className="w-full h-full border border-white/15 rounded-full transform-style preserve-3d">
                   <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/2 -ml-3 -mt-3 w-6 h-6 transform-style preserve-3d">
                     {/* Earth */}
-                    <div className="w-full h-full rounded-full shadow-[0_0_15px_rgba(59,130,246,0.6),inset_-2px_-2px_6px_rgba(0,0,0,0.8)]" style={{ transform: 'rotateX(-70deg)', background: 'radial-gradient(circle at 30% 30%, #60a5fa 0%, #1d4ed8 60%, #064e3b 90%, #020617 100%)' }}>
-                       {/* Clouds */}
+                    <div className="w-full h-full rounded-full" style={{ transform: 'rotateX(-70deg)', background: 'radial-gradient(circle at 35% 30%, #93c5fd 0%, #3b82f6 25%, #1d4ed8 55%, #064e3b 80%, #020617 100%)', boxShadow: '0 0 15px 4px rgba(59,130,246,0.5), 0 0 6px 2px rgba(96,165,250,0.3), inset -2px -2px 6px rgba(0,0,0,0.8), inset 1px 1px 4px rgba(147,197,253,0.4)' }}>
                        <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute inset-0 rounded-full border-[1px] border-dotted border-white/40" />
                     </div>
                     {/* Moon Orbit */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 transform-style preserve-3d" style={{ transform: 'rotateX(60deg)' }}>
                       <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }} className="w-full h-full rounded-full border border-white/10 transform-style preserve-3d">
                         <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/2 -ml-1 -mt-1 w-2 h-2 transform-style preserve-3d">
-                          <div className="w-full h-full rounded-full bg-gray-300" style={{ transform: 'rotateX(-60deg) rotateX(-70deg)' }} />
+                          <div className="w-full h-full rounded-full" style={{ transform: 'rotateX(-60deg) rotateX(-70deg)', background: 'radial-gradient(circle at 35% 30%, #e5e7eb 0%, #9ca3af 60%, #374151 100%)', boxShadow: '0 0 4px 1px rgba(156,163,175,0.3), inset -1px -1px 2px rgba(0,0,0,0.6)' }} />
                         </motion.div>
                       </motion.div>
                     </div>
@@ -537,11 +541,11 @@ export default function Home() {
                 </motion.div>
               </div>
 
-              {/* Orbit 3: Mars-like */}
+              {/* Orbit 3: Mars */}
               <div className="absolute w-[460px] h-[460px] transform-style preserve-3d" style={{ transform: 'rotateX(72deg) rotateY(15deg)' }}>
                 <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }} className="w-full h-full border border-white/10 rounded-full transform-style preserve-3d">
                   <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/2 -ml-2.5 -mt-2.5 w-5 h-5 transform-style preserve-3d">
-                    <div className="w-full h-full rounded-full shadow-[inset_-2px_-2px_6px_rgba(0,0,0,0.8)]" style={{ transform: 'rotateX(-72deg)', background: 'radial-gradient(circle at 30% 30%, #ef4444 0%, #b91c1c 70%, #450a0a 100%)' }} />
+                    <div className="w-full h-full rounded-full" style={{ transform: 'rotateX(-72deg)', background: 'radial-gradient(circle at 35% 30%, #fca5a5 0%, #ef4444 30%, #b91c1c 65%, #450a0a 100%)', boxShadow: '0 0 12px 3px rgba(239,68,68,0.4), 0 0 5px 2px rgba(252,165,165,0.2), inset -2px -2px 6px rgba(0,0,0,0.8), inset 1px 1px 3px rgba(252,165,165,0.3)' }} />
                   </motion.div>
                 </motion.div>
               </div>
@@ -552,13 +556,13 @@ export default function Home() {
                 <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 50, repeat: Infinity, ease: "linear" }} className="absolute inset-2 rounded-full border-[6px] border-dashed border-gray-600/30 opacity-40" />
               </div>
 
-              {/* Orbit 4: Saturn-like with Rings */}
+              {/* Orbit 4: Saturn with Rings */}
               <div className="absolute w-[750px] h-[750px] transform-style preserve-3d" style={{ transform: 'rotateX(76deg) rotateY(-8deg)' }}>
                 <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 35, repeat: Infinity, ease: "linear" }} className="w-full h-full border border-white/5 rounded-full transform-style preserve-3d">
                   <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 35, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/2 -ml-6 -mt-6 w-12 h-12 transform-style preserve-3d">
                     <div className="relative w-full h-full flex items-center justify-center transform-style preserve-3d" style={{ transform: 'rotateX(-76deg)' }}>
                       {/* Planet Body */}
-                      <div className="absolute w-10 h-10 rounded-full shadow-[inset_-3px_-3px_8px_rgba(0,0,0,0.8)] z-10" style={{ background: 'radial-gradient(circle at 30% 30%, #fcd34d 0%, #d97706 40%, #78350f 100%)' }} />
+                      <div className="absolute w-10 h-10 rounded-full z-10" style={{ background: 'radial-gradient(circle at 35% 30%, #fef08a 0%, #fcd34d 25%, #d97706 55%, #78350f 100%)', boxShadow: '0 0 15px 4px rgba(217,119,6,0.4), 0 0 6px 2px rgba(252,211,77,0.2), inset -3px -3px 8px rgba(0,0,0,0.8), inset 1px 1px 4px rgba(254,240,138,0.4)' }} />
                       {/* Saturn Rings */}
                       <motion.div animate={{ rotateX: [60, 70, 60], rotateY: [10, -10, 10] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute w-20 h-20 rounded-full border-[4px] border-amber-200/40 z-0 transform-style preserve-3d" />
                       <motion.div animate={{ rotateX: [60, 70, 60], rotateY: [10, -10, 10] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute w-24 h-24 rounded-full border-[2px] border-amber-400/20 z-0 transform-style preserve-3d" />
