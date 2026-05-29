@@ -472,12 +472,12 @@ export default function Home() {
   });
   const xAboutToTimeline = useTransform(
     horizontalScrollYProgress, 
-    [0, 0.15, 0.85, 1], 
+    [0, 0.15, 0.75, 1], 
     ["0vw", "-5vw", "-270vw", "-270vw"]
   );
   const yAboutToTimeline = useTransform(
     horizontalScrollYProgress,
-    [0, 0.85, 1],
+    [0, 0.75, 1],
     ["0vh", "0vh", "-10vh"]
   );
 
@@ -791,7 +791,7 @@ export default function Home() {
                 </ul>
               </div>
               <img src="/timeline/2026_1.jpg" alt="2026 Event" className="absolute bottom-[15%] left-[180vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
-              <img src="/timeline/2026_2.jpg" alt="2026 Team" className="absolute top-[15%] left-[215vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_50px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/2026_2.jpg" alt="2026 Team" className="absolute top-[15%] left-[225vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_50px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
             </div>
             </motion.div>
