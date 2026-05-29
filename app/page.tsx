@@ -277,6 +277,9 @@ export default function Home() {
     // Correct ID for Sponsor button mismatch
     const actualTargetId = targetId === '#sponsorship' ? '#budget' : targetId;
     
+    const container = containerRef.current;
+    if (!container) return;
+    
     let targetPosition = 0;
     
     // Special handling for the horizontal timeline section
@@ -284,14 +287,14 @@ export default function Home() {
       const aboutSection = document.querySelector('#about') as HTMLElement;
       if (!aboutSection) return;
       // Scroll to 41% progress of the 400vh section to align timeline to the left edge
-      targetPosition = aboutSection.getBoundingClientRect().top + window.scrollY + 0.41 * (3 * window.innerHeight);
+      targetPosition = aboutSection.offsetTop + 0.41 * (3 * window.innerHeight);
     } else {
-      const target = document.querySelector(actualTargetId);
+      const target = document.querySelector(actualTargetId) as HTMLElement;
       if (!target) return;
-      targetPosition = target.getBoundingClientRect().top + window.scrollY;
+      targetPosition = target.offsetTop;
     }
     
-    const startPosition = window.scrollY;
+    const startPosition = container.scrollTop;
     const distance = targetPosition - startPosition;
     const duration = 600; // Smooth but fast scroll (600ms)
     let start: number | null = null;
@@ -303,7 +306,7 @@ export default function Home() {
         ? 4 * Math.pow(progress / duration, 3) 
         : 1 - Math.pow(-2 * (progress / duration) + 2, 3) / 2;
         
-      window.scrollTo(0, startPosition + distance * Math.min(easeInOutCubic, 1));
+      container.scrollTo(0, startPosition + distance * Math.min(easeInOutCubic, 1));
       if (progress < duration) {
         requestAnimationFrame(step);
       }
@@ -493,18 +496,7 @@ export default function Home() {
 
   return (
     <main ref={containerRef} className={`${isLoading ? 'fixed inset-0 overflow-hidden pointer-events-none' : 'snap-container'} text-white font-sans overflow-x-hidden w-full h-screen`}>
-      <svg width="0" height="0" style={{ position: 'absolute', width: 0, height: 0, display: 'none' }}>
-        <filter id="pixelate" x="-10%" y="-10%" width="120%" height="120%">
-          <feGaussianBlur stdDeviation="1.5" result="smoothed" />
-          <feComponentTransfer in="smoothed" result="pixelated">
-            <feFuncR type="discrete" tableValues="0 0.25 0.5 0.75 1" />
-            <feFuncG type="discrete" tableValues="0 0.25 0.5 0.75 1" />
-            <feFuncB type="discrete" tableValues="0 0.25 0.5 0.75 1" />
-            <feFuncA type="discrete" tableValues="0 1" />
-          </feComponentTransfer>
-          <feMorphology operator="dilate" radius="1.5" />
-        </filter>
-      </svg>
+
 
             {/* ══════════════════════════════════════════════════════
            1. HERO & ZIP ANIMATION (Combined Sticky Scrolling)
@@ -642,12 +634,12 @@ export default function Home() {
             <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-colors">About</a>
             <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="hover:text-white transition-colors">Timeline</a>
             <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-colors">Impact</a>
-            <a href="#budget" onClick={(e) => handleFastScroll(e, '#budget')} className="hover:text-white transition-colors">Sponsor</a>
+            <a href="#budget" onClick={(e) => handleFastScroll(e, '#budget')} className="hover:text-white transition-colors">Support</a>
           </nav>
           </motion.header>
           {/* Sponsor Button */}
         <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto" style={{ perspective: '800px' }}>
-          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group inline-block px-10 py-5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40 text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-jiggle hover:pixelate-filter active:scale-90 active:rotate-x-[25deg] active:-translate-y-4 preserve-3d transform-gpu origin-bottom">
+          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group inline-block px-10 py-5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40 text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-jiggle active:scale-95 transform-gpu origin-bottom">
             Support Now
           </a>
         </div>
@@ -824,7 +816,7 @@ export default function Home() {
           
           <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
             <h2 className="text-4xl md:text-6xl font-header font-black text-white/60 tracking-wide">
-              Outreach Programs
+              Impact
             </h2>
           </div>
           

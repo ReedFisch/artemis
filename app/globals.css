@@ -231,10 +231,10 @@ body {
 }
 
 @keyframes jiggle {
-  0%, 100% { transform: scale(1.1) rotate(0deg); }
-  25% { transform: scale(1.1) rotate(-4deg); }
-  50% { transform: scale(1.1) rotate(4deg); }
-  75% { transform: scale(1.1) rotate(-4deg); }
+  0%, 100% { transform: scale(1) translateY(0); }
+  25% { transform: scale(1.02) translateY(-2px); }
+  50% { transform: scale(1.01) translateY(0); }
+  75% { transform: scale(1.015) translateY(-1px); }
 }
 
 @keyframes scroll-left {
@@ -244,12 +244,8 @@ body {
 
 @utility hover-jiggle {
   &:hover {
-    animation: jiggle 0.4s ease-in-out;
+    animation: jiggle 0.4s ease-in-out forwards;
   }
-}
-
-@utility pixelate-filter {
-  filter: url(#pixelate);
 }
 
 @keyframes fade-in-up {
