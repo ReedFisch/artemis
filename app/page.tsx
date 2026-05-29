@@ -204,6 +204,17 @@ const SPONSOR_LOGOS = [
   "Donna Eager", "Hudson River Bank and Trust"
 ];
 
+const SPONSOR_LOGO_IMAGES = [
+  "/sponsors/bank_greene_county.webp", "/sponsors/chatham_bookstore.webp", "/sponsors/chatham_lions.webp",
+  "/sponsors/chatham_pub.webp", "/sponsors/checkered_flag.webp", "/sponsors/craftech.webp",
+  "/sponsors/gene_haas.webp", "/sponsors/ghent_one_stop.webp", "/sponsors/gould_martial_arts.webp",
+  "/sponsors/hawthorne_valley.webp", "/sponsors/herringtons.webp", "/sponsors/kneller_insurance.webp",
+  "/sponsors/meltz_lumber.webp", "/sponsors/metzwood_insurance.webp", "/sponsors/new_concord_bnb.webp",
+  "/sponsors/roots_holistic.webp", "/sponsors/samascott.webp", "/sponsors/sei_design.webp",
+  "/sponsors/simmons_automotive.webp", "/sponsors/spencertown_academy.webp", "/sponsors/stewarts.webp",
+  "/sponsors/stonykill_coffee.webp", "/sponsors/swaying_pine.webp", "/sponsors/taconic_engineering.webp"
+];
+
 // ═══════════════════════════════════════════════════════════════
 // LIQUID ANIMATION HELPERS
 // ═══════════════════════════════════════════════════════════════
@@ -834,54 +845,66 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" className="snap-section relative z-10 overflow-hidden">
-        {/* Scattered 3D Shapes Interacting with Cursor and scrolling vertically */}
-        <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-auto" />
-        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '0s', animationDuration: '12s' }} whileHover={{ scale: 1.2, rotateX: 180, rotateY: 180, cursor: 'pointer' }} whileTap={{ scale: 0.8, rotateZ: 360, borderRadius: '100%' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-36 h-36 opacity-60 z-0 pointer-events-auto" />
+      <section id="budget" className="snap-section relative z-10 overflow-hidden min-h-screen flex items-center bg-black/50 py-16">
+        {/* Scattered 3D Shapes */}
+        <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
-        <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col lg:flex-row gap-12 items-center justify-center relative z-10">
+        <div className="max-w-4xl mx-auto px-6 w-full flex flex-col items-center justify-center relative z-10 text-center">
           
-          {/* Budget Breakdown 3D Visual */}
-          <div className="lg:w-1/2 w-full space-y-8">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-header font-black mb-4">
-                Budget
-              </h2>
-              <p className="text-sm text-white/50 font-light max-w-lg mb-8">
-                42% of students in our high school are on free or reduced lunch. We refuse to charge our students a single cent to participate. We believe that talent is universal but opportunity is not.
-              </p>
-            </div>
+          <h2 className="text-4xl md:text-5xl font-header font-black mb-4">
+            Budget
+          </h2>
+          <p className="text-sm text-white/50 font-light max-w-2xl mb-12">
+            42% of students in our high school are on free or reduced lunch. We refuse to charge our students a single cent to participate. We believe that talent is universal but opportunity is not.
+          </p>
 
-            <div className="glass-panel-deep p-8 relative overflow-hidden">
-              <div className="absolute -right-20 -top-20 w-64 h-64 bg-artemis-blue/10 rounded-full blur-3xl" />
-              <div className="flex justify-between items-end mb-8 border-b border-white/10 pb-4">
-                <span className="text-xs text-white/40 uppercase tracking-widest">Target Goal</span>
-                <span className="text-5xl font-header font-black text-white text-3d-glow">
-                  $<Counter to={65000} duration={2} format={(v) => v.toLocaleString()} />
-                </span>
-              </div>
-              <div className="space-y-6">
-                {BUDGET_ITEMS.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between group">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-3 h-3 rounded-full ${item.color} shadow-[0_0_10px_currentColor] group-hover:scale-150 transition-transform`} />
-                      <span className="text-xs text-white/70">{item.label}</span>
-                    </div>
-                    <span className="text-sm font-bold text-white/90">
-                      $<Counter to={item.amount} duration={2} format={(v) => v.toLocaleString()} />
-                    </span>
+          <div className="glass-panel-deep p-8 md:p-12 w-full relative overflow-hidden text-left">
+            <div className="absolute -right-20 -top-20 w-64 h-64 bg-artemis-blue/10 rounded-full blur-3xl" />
+            <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 border-b border-white/10 pb-6 gap-4">
+              <span className="text-sm text-white/40 uppercase tracking-widest">Target Goal</span>
+              <span className="text-5xl font-header font-black text-white">
+                $<Counter to={65000} duration={2} format={(v) => v.toLocaleString()} />
+              </span>
+            </div>
+            <div className="space-y-6">
+              {BUDGET_ITEMS.map((item, idx) => (
+                <div key={idx} className="flex items-center justify-between group">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-3 h-3 rounded-full ${item.color} shadow-[0_0_10px_currentColor] group-hover:scale-150 transition-transform`} />
+                    <span className="text-sm text-white/70">{item.label}</span>
                   </div>
-                ))}
-              </div>
+                  <span className="text-lg font-bold text-white/90">
+                    $<Counter to={item.amount} duration={2} format={(v) => v.toLocaleString()} />
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Tiers & Interest Form */}
+      {/* ══════════════════════════════════════════════════════
+           7. SPONSORSHIP TIERS
+           ══════════════════════════════════════════════════════ */}
+      <section id="sponsorship" className="snap-section relative z-10 overflow-hidden min-h-screen flex items-center bg-[#05070B] py-16">
+        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '0s', animationDuration: '12s' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-36 h-36 opacity-30 z-0 pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row gap-12 items-start justify-center relative z-10">
+          
+          {/* Tiers List */}
           <div className="lg:w-1/2 w-full flex flex-col gap-6">
-            <div className="grid grid-cols-2 gap-4">
-              {TIERS.slice(0,2).map(tier => (
+            <div>
+              <h2 className="text-4xl md:text-5xl font-header font-black mb-4">
+                Sponsorship Tiers
+              </h2>
+              <p className="text-sm text-white/50 font-light mb-8">
+                Support our mission and help us continue to provide STEAM opportunities to our students at no cost.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {TIERS.map(tier => (
                 <div key={tier.name} 
-                  className={`glass-panel p-6 cursor-pointer border transition-all duration-300 ${
+                  className={`glass-panel p-6 cursor-pointer border transition-all duration-300 flex flex-col h-full ${
                     selectedTier === tier.name ? 'border-artemis-blue bg-artemis-blue/10 shadow-[0_0_30px_rgba(37,99,235,0.2)] scale-105' : 'border-white/5 hover:border-white/20'
                   } ${tier.name === 'Apollo' ? 'relative overflow-hidden' : ''}`}
                   onClick={() => setSelectedTier(tier.name)}
@@ -890,22 +913,25 @@ export default function Home() {
                     <div className="absolute inset-0 bg-gradient-to-br from-artemis-blue/20 to-transparent animate-pulse" />
                   )}
                   <h3 className="text-xl font-header font-bold mb-1 relative z-10">{tier.name}</h3>
-                  <p className="text-2xl font-black text-white/80 relative z-10">{tier.price}</p>
-                </div>
-              ))}
-              {TIERS.slice(2,4).map(tier => (
-                <div key={tier.name} 
-                  className={`glass-panel p-6 cursor-pointer border transition-all duration-300 ${
-                    selectedTier === tier.name ? 'border-stellar-orange bg-stellar-orange/10 shadow-[0_0_30px_rgba(249,115,22,0.2)] scale-105' : 'border-white/5 hover:border-white/20'
-                  }`}
-                  onClick={() => setSelectedTier(tier.name)}
-                >
-                  <h3 className="text-xl font-header font-bold mb-1">{tier.name}</h3>
-                  <p className="text-2xl font-black text-white/80">{tier.price}</p>
+                  <p className="text-2xl font-black text-white/80 relative z-10 mb-4">{tier.price}</p>
+                  
+                  <div className="mt-auto pt-4 border-t border-white/10 flex-grow">
+                    <ul className="text-xs text-white/70 space-y-2">
+                      {tier.benefits.map((benefit, i) => (
+                        <li key={i} className="flex gap-2">
+                          <span className="text-artemis-blue shrink-0">▹</span>
+                          <span>{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               ))}
             </div>
+          </div>
 
+          {/* Interest Form */}
+          <div className="lg:w-1/2 w-full flex flex-col gap-6 lg:mt-32">
             <div className="glass-panel p-8">
               {!contactSuccess ? (
                 <form onSubmit={handleContactSubmit} className="flex flex-col gap-4">
@@ -927,22 +953,42 @@ export default function Home() {
               )}
             </div>
             
-            {/* Simple Sponsor Text List */}
-            <div className="pt-6 border-t border-white/10">
-              <p className="text-[9px] uppercase tracking-widest text-white/30 mb-3 text-center">Current Active Sponsors</p>
-              <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 max-h-32 overflow-y-auto hide-scrollbars">
-                {SPONSOR_LOGOS.map((sponsor, i) => (
-                  <span key={i} className="text-[10px] text-white/40">{sponsor}</span>
-                ))}
-              </div>
-            </div>
-
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
-           7. 3D FOOTER
+           7.5. SPONSOR MARQUEE
+           ══════════════════════════════════════════════════════ */}
+      <section className="w-full py-16 border-t border-white/10 relative z-10 overflow-hidden bg-[#05070B] flex flex-col gap-12">
+        
+        {/* Logos Marquee */}
+        <div className="marquee-container w-full">
+          <div className="marquee-content flex items-center" style={{ animationDuration: '60s' }}>
+            {/* Double the array for seamless infinite scroll */}
+            {[...SPONSOR_LOGO_IMAGES, ...SPONSOR_LOGO_IMAGES].map((src, i) => (
+              <span key={`logo-${i}`} className="mx-8 flex items-center justify-center w-48 shrink-0">
+                <img src={src} alt="Sponsor Logo" className="max-h-20 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Names Marquee */}
+        <div className="marquee-container w-full">
+          <div className="marquee-content flex items-center" style={{ animationDuration: '60s' }}>
+            {/* Double the array for seamless infinite scroll */}
+            {[...SPONSOR_LOGOS, ...SPONSOR_LOGOS].map((name, i) => (
+              <span key={`name-${i}`} className="mx-6 text-sm md:text-base font-bold font-header tracking-widest uppercase text-white/30 whitespace-nowrap flex items-center shrink-0">
+                {name} <span className="text-artemis-blue/50 ml-12">▹</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════
+           8. 3D FOOTER
            ══════════════════════════════════════════════════════ */}
       <section id="contact" className="snap-section relative z-10 !min-h-[50vh]">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-artemis-blue/5 z-0" />
@@ -953,7 +999,7 @@ export default function Home() {
               <div className="flex items-center gap-4">
                 <img src="/branding/logo_4.webp" alt="Logo" className="w-10 h-10 object-contain mix-blend-screen" />
                 <div>
-                  <h3 className="font-header font-black text-xl tracking-widest text-3d">ARTEMIS.6621</h3>
+                  <h3 className="font-header font-black text-xl tracking-widest">ARTEMIS.6621</h3>
                   <p className="text-[9px] uppercase tracking-widest text-white/40">Chatham High School Robotics</p>
                 </div>
               </div>
