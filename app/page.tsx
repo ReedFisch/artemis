@@ -649,9 +649,7 @@ export default function Home() {
            ══════════════════════════════════════════════════════ */}
       <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '400vh', scrollSnapAlign: 'start' }}>
         
-        {/* Seamless Fade FROM Hero Section */}
-        <div className="absolute top-0 left-0 w-full h-[100vh] bg-gradient-to-b from-black via-black/50 to-transparent pointer-events-none z-30" />
-        
+
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
           
