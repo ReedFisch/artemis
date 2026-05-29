@@ -786,8 +786,9 @@ export default function Home() {
           {/* Background Elements */}
           <div className="absolute inset-0 z-0 opacity-20 starfield" />
           
-          {/* Top fade to blend into timeline */}
-          <div className="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-[#05070B] to-transparent pointer-events-none z-[1]" />
+          {/* Top and Bottom fades for seamless blending */}
+          <div className="absolute top-0 left-0 w-full h-[20vh] bg-gradient-to-b from-[#05070B] via-[#05070B]/80 to-transparent pointer-events-none z-[1]" />
+          <div className="absolute bottom-0 left-0 w-full h-[25vh] bg-gradient-to-t from-[#05070B] via-[#05070B]/80 to-transparent pointer-events-none z-[1]" />
           
           {/* Subtle organic gradient blobs */}
           <motion.div animate={{ x: ['-5vw', '8vw', '-3vw', '-5vw'], y: ['-3vh', '5vh', '-8vh', '-3vh'], scale: [1, 1.08, 0.95, 1] }} transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }} className="absolute top-[30%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-br from-artemis-blue/10 via-purple-500/5 to-transparent blur-[150px] pointer-events-none z-0" />
@@ -843,11 +844,8 @@ export default function Home() {
           {/* Budget Breakdown 3D Visual */}
           <div className="lg:w-1/2 w-full space-y-8">
             <div>
-              <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-stellar-orange mb-2 block">
-                05 / Alliance
-              </span>
-              <h2 className="text-4xl md:text-5xl font-header font-black text-3d-glow mb-4">
-                Budget Breakdown
+              <h2 className="text-4xl md:text-5xl font-header font-black mb-4">
+                Budget
               </h2>
               <p className="text-sm text-white/50 font-light max-w-lg mb-8">
                 42% of students in our high school are on free or reduced lunch. We refuse to charge our students a single cent to participate. We believe that talent is universal but opportunity is not.
