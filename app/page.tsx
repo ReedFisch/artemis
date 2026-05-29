@@ -296,7 +296,7 @@ export default function Home() {
     
     const startPosition = container.scrollTop;
     const distance = targetPosition - startPosition;
-    const duration = 600; // Smooth but fast scroll (600ms)
+    const duration = 1200; // Smooth slower scroll (1200ms)
     let start: number | null = null;
     
     const step = (timestamp: number) => {
@@ -639,7 +639,7 @@ export default function Home() {
           </motion.header>
           {/* Sponsor Button */}
         <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto" style={{ perspective: '800px' }}>
-          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group inline-block px-10 py-5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40 text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-jiggle active:scale-95 transform-gpu origin-bottom">
+          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group inline-block px-10 py-5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40 text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom">
             Support Now
           </a>
         </div>
