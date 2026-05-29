@@ -446,6 +446,7 @@ export default function Home() {
   const outreachScrollRef = useRef<HTMLElement>(null);
   const { scrollYProgress: outreachScrollYProgress } = useScroll({
     target: outreachScrollRef,
+    container: containerRef,
     offset: ["start start", "end end"]
   });
   const xAboutToTimeline = useTransform(
