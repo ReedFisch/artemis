@@ -493,6 +493,18 @@ export default function Home() {
 
   return (
     <main ref={containerRef} className={`${isLoading ? 'fixed inset-0 overflow-hidden pointer-events-none' : 'snap-container'} text-white font-sans overflow-x-hidden w-full h-screen`}>
+      <svg width="0" height="0" style={{ position: 'absolute', width: 0, height: 0, display: 'none' }}>
+        <filter id="pixelate" x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="1.5" result="smoothed" />
+          <feComponentTransfer in="smoothed" result="pixelated">
+            <feFuncR type="discrete" tableValues="0 0.25 0.5 0.75 1" />
+            <feFuncG type="discrete" tableValues="0 0.25 0.5 0.75 1" />
+            <feFuncB type="discrete" tableValues="0 0.25 0.5 0.75 1" />
+            <feFuncA type="discrete" tableValues="0 1" />
+          </feComponentTransfer>
+          <feMorphology operator="dilate" radius="1.5" />
+        </filter>
+      </svg>
 
             {/* ══════════════════════════════════════════════════════
            1. HERO & ZIP ANIMATION (Combined Sticky Scrolling)
@@ -634,10 +646,9 @@ export default function Home() {
           </nav>
           </motion.header>
           {/* Sponsor Button */}
-        <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto">
-          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-500 hover:scale-110 hover:-translate-y-1 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40 text-white flex items-center gap-3 shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60">
-            <span>Support Now</span>
-            <span className="text-lg group-hover:rotate-12 group-hover:scale-125 transition-all duration-300">🚀</span>
+        <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto" style={{ perspective: '800px' }}>
+          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group inline-block px-10 py-5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40 text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-jiggle hover:pixelate-filter active:scale-90 active:rotate-x-[25deg] active:-translate-y-4 preserve-3d transform-gpu origin-bottom">
+            Support Now
           </a>
         </div>
 
