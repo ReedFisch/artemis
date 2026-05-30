@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+/* ========== CUSTOM CURSORS ========== */
+html, body, * {
+  cursor: url('/cursors/normal.png') 0 0, auto;
+}
+
+a, button, [role="button"], .cursor-pointer, select, label, summary {
+  cursor: url('/cursors/hover.png') 16 0, pointer;
+}
+
+input, textarea, [contenteditable="true"] {
+  cursor: url('/cursors/text.png') 16 16, text;
+}
+
 /* ================================================
    ARTEMIS 6621 — 3D GLASS DESIGN SYSTEM
    Deep Space / Glassmorphism / CSS 3D
