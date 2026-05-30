@@ -641,7 +641,7 @@ export default function Home() {
             <img src="/branding/logo_4.webp" alt="Artemis Logo" className="w-[72px] h-[72px] opacity-80 mix-blend-screen object-contain" />
             <span className="display text-[63px] font-black text-white/60 leading-none">ARTEMIS</span>
           </div>
-          <nav className="flex gap-8 label font-bold text-white/50">
+          <nav className="flex gap-10 text-base md:text-lg tracking-widest uppercase font-bold text-white/50 font-mono">
             <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">About</a>
             <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Timeline</a>
             <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Impact</a>
@@ -686,7 +686,7 @@ export default function Home() {
               <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-6 lg:gap-10 items-stretch h-auto mt-4">
                 
                 {/* Left Side: About Text */}
-                <div className="lg:w-1/2 flex flex-col space-y-6 p-8 md:p-10 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] justify-between h-full relative overflow-hidden backdrop-blur-3xl border border-white/10" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                <div className="lg:w-5/12 flex flex-col space-y-6 p-8 md:p-10 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] justify-between h-full relative overflow-hidden backdrop-blur-3xl border border-white/10" style={{ background: 'rgba(255,255,255,0.02)' }}>
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                   
                   <div className="relative z-10">
@@ -719,7 +719,7 @@ export default function Home() {
                 </div>
 
                 {/* Right Side: Photo and Stats */}
-                <div className="lg:w-1/2 w-full flex flex-col gap-6 h-full">
+                <div className="lg:w-7/12 w-full flex flex-col gap-6 h-full">
                   {/* Team Photo */}
                   <div className="relative rounded-[2rem] overflow-hidden border border-white/10 group flex-grow" style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                     <img src="/photos/hero/team_with_robot.webp" alt="Team 6621 Artemis with their robot" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -857,7 +857,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" className="snap-section relative z-10 overflow-hidden min-h-screen flex items-center bg-black/50 py-16">
+      <section id="budget" className="snap-section relative z-10 overflow-hidden min-h-screen flex items-center bg-gradient-to-b from-[#05070B]/0 via-black/40 to-black/80 py-16">
         {/* Scattered 3D Shapes */}
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
