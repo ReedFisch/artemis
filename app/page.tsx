@@ -1510,7 +1510,10 @@ export default function Home() {
               Artemis Central Robotics Team 6621 is a student-led organization affiliated with the Chatham Central School District. <br className="hidden md:block"/>
               FIRST® and FIRST® Robotics Competition are registered trademarks of FIRST® (For Inspiration and Recognition of Science and Technology). This website is not officially endorsed by FIRST®.
             </p>
-            <p className="text-[9px] uppercase tracking-widest text-white/20 font-mono">&copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.</p>
+            <div className="flex flex-col gap-1.5 justify-center items-center">
+              <p className="text-[9px] uppercase tracking-widest text-white/20 font-mono">&copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.</p>
+              <p className="text-[9px] uppercase tracking-[0.25em] text-white/30 font-mono font-semibold">Photo Credits: Smokingmonkey Photography</p>
+            </div>
           </div>
         </footer>
       </section>
