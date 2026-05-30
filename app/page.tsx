@@ -1197,57 +1197,126 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            8. 3D FOOTER
            ══════════════════════════════════════════════════════ */}
-      <section id="contact" className="relative z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-artemis-blue/5 z-0" />
-        <footer className="w-full mt-auto relative z-10 bg-black/80 backdrop-blur-xl border-t border-white/10">
-          <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
+      <section id="contact" className="relative z-10 overflow-hidden bg-[#05070B] border-t border-white/10">
+        {/* Ambient Cosmic Gas Glows */}
+        <div className="absolute -bottom-20 left-[5%] w-[400px] h-[400px] rounded-full bg-artemis-blue/10 blur-[130px] pointer-events-none z-0" />
+        <div className="absolute top-[10%] right-[10%] w-[350px] h-[350px] rounded-full bg-stellar-orange/10 blur-[110px] pointer-events-none z-0" />
+        
+        {/* Starfield overlay inside the footer */}
+        <div className="absolute inset-0 opacity-40 starfield z-0 pointer-events-none" />
+
+        <footer className="w-full mt-auto relative z-10 bg-black/45 backdrop-blur-3xl">
+          <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-16 relative z-10">
             
+            {/* Column 1: Brand & Flight Crew */}
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-4">
-                <img src="/branding/logo_4.webp" alt="Logo" className="w-10 h-10 object-contain mix-blend-screen" />
+                <motion.img 
+                  src="/branding/logo_4.webp" 
+                  alt="Logo" 
+                  className="w-12 h-12 object-contain mix-blend-screen"
+                  animate={{ y: [0, -6, 0], rotate: [0, 3, -3, 0] }}
+                  transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                />
                 <div>
-                  <h3 className="h2 font-black tracking-widest hover-glitch-text">ARTEMIS.6621</h3>
-                  <p className="text-[9px] uppercase tracking-widest text-white/40">Chatham High School Robotics</p>
+                  <h3 className="h2 font-black tracking-widest hover-glitch-text text-xl">ARTEMIS.6621</h3>
+                  <p className="text-[9px] uppercase tracking-widest text-white/40 font-mono">Chatham Central School District</p>
                 </div>
               </div>
-              <p className="text-xs text-white/50 font-light max-w-xs mt-4">
-                50 Woodbridge Ave, Chatham, NY 12037<br/><br/>
-                Mrs. Fischer - Lead Mentor<br/>
-                Mr. Fischer - Tech & Code Mentor
-              </p>
+              
+              <div className="flex flex-col gap-1 text-xs text-white/60 font-sans font-light mt-4">
+                <span className="text-white/40 uppercase tracking-wider text-[9px] font-semibold mb-1">Launch Coordinator Pad</span>
+                <p className="leading-relaxed">50 Woodbridge Ave, Chatham, NY 12037</p>
+                <div className="mt-4 flex flex-col gap-2 border-l-2 border-stellar-orange/30 pl-3">
+                  <div>
+                    <span className="text-[10px] font-mono font-bold text-stellar-orange uppercase block tracking-wider">Lead Flight Director</span>
+                    <span className="text-white/85">Mrs. Sandra Fischer (Mentor)</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono font-bold text-artemis-blue uppercase block tracking-wider">Systems & Code Director</span>
+                    <span className="text-white/85">Mr. Fischer (Mentor)</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pulsing Mission Badge */}
+              <div className="flex items-center gap-2 mt-4 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-full w-fit">
+                <div className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </div>
+                <span className="text-[9px] font-mono tracking-widest uppercase text-emerald-400 font-bold">Mission Status: Orbit Stable</span>
+              </div>
             </div>
 
+            {/* Column 2: Navigation Map */}
             <div className="flex flex-col gap-4 md:items-center">
-              <h4 className="text-[10px] uppercase tracking-widest text-white/40 font-bold mb-2">Navigation</h4>
-              <div className="flex flex-col gap-3">
+              <h4 className="text-[10px] uppercase tracking-widest text-white/40 font-mono font-black mb-2 border-b border-white/10 pb-1 w-fit">
+                Star Map Coordinates
+              </h4>
+              <div className="flex flex-col gap-3 font-sans text-sm md:items-center">
                 {NAV_LINKS.map(link => (
-                  <a key={link.label} href={link.href} className="text-xs text-white/60 hover:text-white transition-colors">{link.label}</a>
+                  <a 
+                    key={link.label} 
+                    href={link.href} 
+                    className="text-xs text-white/60 hover:text-stellar-orange transition-colors duration-300 transform hover:translate-x-1 md:hover:translate-x-0 md:hover:-translate-y-0.5"
+                  >
+                    {link.label}
+                  </a>
                 ))}
               </div>
             </div>
 
+            {/* Column 3: Comms Link */}
             <div className="flex flex-col gap-4 md:items-end">
-              <h4 className="text-[10px] uppercase tracking-widest text-white/40 font-bold mb-2">Comm Link</h4>
-              <a href="mailto:fischers@chatham.k12.ny.us" className="text-sm font-bold text-artemis-blue hover:text-white transition-colors">fischers@chatham.k12.ny.us</a>
-              <div className="flex gap-4 mt-6">
-                <a href="https://www.instagram.com/artemis_6621/" target="_blank" className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-white/10 transition-colors">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              <h4 className="text-[10px] uppercase tracking-widest text-white/40 font-mono font-black mb-2 border-b border-white/10 pb-1 w-fit">
+                Subspace Frequency
+              </h4>
+              <a 
+                href="mailto:fischers@chatham.k12.ny.us" 
+                className="text-sm font-bold text-artemis-blue hover:text-stellar-orange transition-colors duration-300 tracking-wider font-mono hover:shadow-[0_0_15px_rgba(37,99,235,0.2)]"
+              >
+                fischers@chatham.k12.ny.us
+              </a>
+              
+              <div className="flex gap-4 mt-8">
+                <a 
+                  href="https://www.instagram.com/artemis_6621/" 
+                  target="_blank" 
+                  className="w-11 h-11 rounded-xl bg-white/[0.02] border border-white/10 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:border-stellar-orange/50 hover:bg-stellar-orange/5 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:-translate-y-1"
+                >
+                  <svg className="w-5 h-5 text-white/80 hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                  </svg>
                 </a>
-                <a href="https://www.youtube.com/@ArtemisFrc6621" target="_blank" className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-white/10 transition-colors">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <a 
+                  href="https://www.youtube.com/@ArtemisFrc6621" 
+                  target="_blank" 
+                  className="w-11 h-11 rounded-xl bg-white/[0.02] border border-white/10 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:border-stellar-orange/50 hover:bg-stellar-orange/5 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:-translate-y-1"
+                >
+                  <svg className="w-5 h-5 text-white/80 hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
                 </a>
-                <a href="https://www.thebluealliance.com/team/6621" target="_blank" className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-white/10 transition-colors font-bold text-[9px] uppercase">
+                <a 
+                  href="https://www.thebluealliance.com/team/6621" 
+                  target="_blank" 
+                  className="w-11 h-11 rounded-xl bg-white/[0.02] border border-white/10 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:border-stellar-orange/50 hover:bg-stellar-orange/5 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:-translate-y-1 font-bold text-[9px] uppercase tracking-widest text-white/80 hover:text-white font-mono"
+                >
                   TBA
                 </a>
               </div>
             </div>
+
           </div>
-          <div className="w-full border-t border-white/5 py-6 text-center flex flex-col gap-3">
-            <p className="text-[10px] text-white/30 max-w-4xl mx-auto leading-relaxed px-6">
-              Artemis Robotics Team 6621 is a student-led organization affiliated with the Chatham Central School District. <br className="hidden md:block"/>
+
+          {/* Bottom Copyright and Fine Print */}
+          <div className="w-full border-t border-white/5 py-8 text-center flex flex-col gap-3 relative z-10 bg-black/20">
+            <p className="text-[10px] text-white/30 max-w-4xl mx-auto leading-relaxed px-6 font-sans font-light">
+              Artemis Central Robotics Team 6621 is a student-led organization affiliated with the Chatham Central School District. <br className="hidden md:block"/>
               FIRST® and FIRST® Robotics Competition are registered trademarks of FIRST® (For Inspiration and Recognition of Science and Technology). This website is not officially endorsed by FIRST®.
             </p>
-            <p className="text-[9px] uppercase tracking-widest text-white/20">&copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.</p>
+            <p className="text-[9px] uppercase tracking-widest text-white/20 font-mono">&copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.</p>
           </div>
         </footer>
       </section>
