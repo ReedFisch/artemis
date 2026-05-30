@@ -1055,9 +1055,9 @@ export default function Home() {
           <div className="marquee-content flex items-center" style={{ animationDuration: `${SPONSOR_LOGO_IMAGES.length * 2.5}s` }}>
             {/* Double the array for seamless infinite scroll */}
             {[...SPONSOR_LOGO_IMAGES, ...SPONSOR_LOGO_IMAGES].map((src, i) => (
-              <div key={`logo-${i}`} className="mx-4 flex items-center justify-center w-40 h-40 shrink-0 bg-black/40 border border-white/5 rounded-xl hover:border-white/20 transition-all duration-300 group">
-                <img src={src} alt="Sponsor Logo" className="max-h-24 max-w-[75%] object-contain opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
-              </div>
+              <span key={`logo-${i}`} className="mx-8 flex items-center justify-center shrink-0">
+                <img src={src} alt="Sponsor Logo" className="h-16 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+              </span>
             ))}
           </div>
         </div>
