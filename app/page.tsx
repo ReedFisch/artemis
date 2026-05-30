@@ -156,25 +156,33 @@ const OutreachParallaxCard = ({
   const i4 = Math.min(0.9998, Math.max(i3 + 0.0001, endExit));
   const i5 = 1;
 
+  const isLastRow = rowIndex === totalRows - 1;
+
   // Scale: stays mostly flat, tiny shrink on enter/exit
   const scale = useTransform(
     scrollYProgress,
     [i0, i1, i2, i3, i4, i5],
-    [0.9, 0.9, 1.0, 1.0, 0.9, 0.9]
+    isLastRow
+      ? [0.9, 0.9, 1.0, 1.0, 1.0, 1.0]
+      : [0.9, 0.9, 1.0, 1.0, 0.9, 0.9]
   );
   
   // Enter from bottom, hold, then exit through the top (traditional scroll)
   const y = useTransform(
     scrollYProgress,
     [i0, i1, i2, i3, i4, i5],
-    ["120%", "120%", "0%", "0%", "-120%", "-120%"]
+    isLastRow
+      ? ["120%", "120%", "0%", "0%", "0%", "0%"]
+      : ["120%", "120%", "0%", "0%", "-120%", "-120%"]
   );
   
   // Opacity: fade in as it rises, hold, then fade out as it rises away
   const opacity = useTransform(
     scrollYProgress,
     [i0, i1, i2, i3, i4, i5],
-    [0, 0, 1, 1, 0, 0]
+    isLastRow
+      ? [0, 0, 1, 1, 1, 1]
+      : [0, 0, 1, 1, 0, 0]
   );
 
   return (
@@ -797,7 +805,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            5. OUTREACH PARALLAX (FLY OUT EFFECT)
            ══════════════════════════════════════════════════════ */}
-      <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B]" style={{ height: '700vh' }}>
+      <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B]" style={{ height: '350vh' }}>
         <div className="sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12">
           
           {/* Background Elements */}
