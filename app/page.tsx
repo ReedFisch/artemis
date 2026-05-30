@@ -292,7 +292,7 @@ export default function Home() {
       const target = document.querySelector(actualTargetId) as HTMLElement;
       if (!target) return;
       // Scroll partially into the outreach container so the first cards are visible
-      targetPosition = target.offsetTop + 1.2 * window.innerHeight;
+      targetPosition = target.offsetTop + 1.6 * window.innerHeight;
     } else {
       const target = document.querySelector(actualTargetId) as HTMLElement;
       if (!target) return;
