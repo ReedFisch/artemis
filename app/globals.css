@@ -6,7 +6,7 @@ html, body, * {
 }
 
 a, button, [role="button"], .cursor-pointer, select, label, summary {
-  cursor: url('/cursors/hover.png') 29 0, pointer;
+  cursor: url('/cursors/hover.png') 26 0, pointer;
 }
 
 input, textarea, [contenteditable="true"] {
