@@ -181,7 +181,7 @@ const OutreachParallaxCard = ({
       
       <div className="relative z-10 p-6 md:p-8 backdrop-blur-md bg-white/[0.03] border-t border-white/10 mt-auto">
         <span className="inline-block px-4 py-1.5 rounded-full bg-stellar-orange/20 text-stellar-orange text-xs md:text-sm font-bold tracking-widest uppercase mb-4 border border-stellar-orange/30 shadow-[0_0_15px_rgba(251,146,60,0.3)]">{card.tag}</span>
-        <h3 className="text-xl font-header font-bold mb-3 text-white">{card.title}</h3>
+        <h3 className="h3 font-bold mb-3 text-white terminal-cursor">{card.title}</h3>
         <p className="text-xs text-white/70 leading-relaxed font-light">{card.desc}</p>
       </div>
     </motion.div>
@@ -603,7 +603,7 @@ export default function Home() {
 
             {/* Loading Text */}
             <div className="absolute bottom-20 z-10 flex flex-col items-center">
-              <div className="font-header font-black tracking-[0.4em] text-lg lg:text-xl uppercase text-white/90 animate-pulse">Initializing System</div>
+              <div className="label font-black tracking-[0.4em] text-white/90 animate-pulse terminal-cursor">Initializing System</div>
               <p className="text-white/40 font-mono text-xs mt-4 tracking-widest">ESTABLISHING CONNECTION...</p>
             </div>
           </motion.div>
@@ -631,20 +631,20 @@ export default function Home() {
           <motion.header 
             className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto"
           >
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 cursor-pointer hover-glitch-text">
             <img src="/branding/logo_4.webp" alt="Artemis Logo" className="w-12 h-12 opacity-80 mix-blend-screen object-contain" />
-            <span className="font-header font-black text-white/60 tracking-widest text-3xl md:text-5xl">ARTEMIS</span>
+            <span className="display font-black text-white/60 terminal-cursor">ARTEMIS</span>
           </div>
-          <nav className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-bold">
-            <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-colors">About</a>
-            <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="hover:text-white transition-colors">Timeline</a>
-            <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-colors">Impact</a>
-            <a href="#budget" onClick={(e) => handleFastScroll(e, '#budget')} className="hover:text-white transition-colors">Support</a>
+          <nav className="flex gap-8 label font-bold text-white/50">
+            <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">About</a>
+            <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Timeline</a>
+            <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Impact</a>
+            <a href="#budget" onClick={(e) => handleFastScroll(e, '#budget')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Support</a>
           </nav>
           </motion.header>
           {/* Sponsor Button */}
         <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto" style={{ perspective: '800px' }}>
-          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group inline-block px-10 py-5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40 text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom">
+          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40">
             Support Now
           </a>
         </div>
@@ -684,10 +684,10 @@ export default function Home() {
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                   
                   <div className="relative z-10">
-                    <h2 className="text-4xl md:text-5xl font-header font-black text-white">
+                    <h2 className="h1 font-black text-white terminal-cursor hover-glitch-text transition-all duration-300">
                       About Us
                     </h2>
-                    <p className="text-base text-white/60 leading-relaxed font-light mt-6">
+                    <p className="body text-white/60 leading-relaxed font-light mt-6">
                       Founded in 2016, Team 6621 Artemis Robotics is the only FRC team in Columbia County. We represent Chatham High School not only as the only robotics team but as the sole technology and STEAM-centered club for the entire school. We allow students to learn as they desire, advance their STEAM interests, whether that be art, business, or stem there is a place for anyone and everyone at ARTEMIS.
                     </p>
                   </div>
@@ -696,11 +696,10 @@ export default function Home() {
                     {/* Sleek white divider */}
                     <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.1) 70%, transparent)' }} />
                     
-                    {/* Mission Box (Glassy, No colors) */}
                     <div className="p-6 md:p-8 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl border border-white/10" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(249,115,22,0.05) 100%)', boxShadow: '0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <h3 className="text-2xl font-header font-bold mb-3 text-white tracking-wide">Our Mission</h3>
-                      <p className="text-base text-white/70 italic leading-relaxed font-light">
+                      <h3 className="h2 font-bold mb-3 text-white tracking-wide hover-glitch-text">Our Mission</h3>
+                      <p className="subhead text-white/70 italic leading-relaxed font-light">
                         &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
                       </p>
                     </div>
@@ -723,7 +722,7 @@ export default function Home() {
                     <div className="absolute bottom-0 left-0 right-0 p-8 flex justify-between items-end">
                       <div>
                         <p className="text-[10px] uppercase tracking-widest text-white/50 mb-1">Team 6621</p>
-                        <p className="text-2xl font-header font-bold text-white">Artemis Robotics</p>
+                        <p className="h2 font-bold text-white terminal-cursor hover-glitch-text">Artemis Robotics</p>
                       </div>
                       <span className="text-[10px] uppercase tracking-widest text-white/40">Chatham, NY</span>
                     </div>
@@ -732,18 +731,18 @@ export default function Home() {
                   <div className="grid grid-cols-3 gap-5 shrink-0" style={{ perspective: '800px' }}>
                     <div className="relative p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
-                      <h4 className="text-3xl font-header font-black text-white relative z-10"><Counter to={2016} duration={1.5} /></h4>
-                      <p className="text-[9px] uppercase tracking-widest text-white/50 mt-2 relative z-10">Founded</p>
+                      <h4 className="h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={2016} duration={1.5} /></h4>
+                      <p className="label text-white/50 mt-2 relative z-10">Founded</p>
                     </div>
                     <div className="relative p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
-                      <h4 className="text-3xl font-header font-black text-white relative z-10"><Counter to={60} duration={2} format={(v) => `${v}%`} /></h4>
-                      <p className="text-[9px] uppercase tracking-widest text-white/50 mt-2 relative z-10">New Members</p>
+                      <h4 className="h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={60} duration={2} format={(v) => `${v}%`} /></h4>
+                      <p className="label text-white/50 mt-2 relative z-10">New Members</p>
                     </div>
                     <div className="relative p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
-                      <h4 className="text-3xl font-header font-black text-white relative z-10"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
-                      <p className="text-[9px] uppercase tracking-widest text-white/50 mt-2 relative z-10">Hours This Season</p>
+                      <h4 className="h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
+                      <p className="label text-white/50 mt-2 relative z-10">Hours This Season</p>
                     </div>
                   </div>
                 </div>
@@ -755,7 +754,7 @@ export default function Home() {
               
               {/* 2024 SECTION (0vw to 70vw) */}
               <div className="absolute top-[35%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
-                <h4 className="text-artemis-blue font-header font-bold text-2xl mb-4 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
+                <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
                 <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Creativity Award</div></li>
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>First Leadership Award Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></div></li>
@@ -767,7 +766,7 @@ export default function Home() {
 
               {/* 2025 SECTION (80vw to 150vw) */}
               <div className="absolute top-[25%] left-[80vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] z-30 transform rotate-1">
-                <h4 className="text-stellar-orange font-header font-bold text-2xl mb-4 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
+                <h4 className="text-stellar-orange h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
                 <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
                   <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ranked #3 in New York State</div></li>
                   <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>New York Tech Valley Regional Winner</div></li>
@@ -780,7 +779,7 @@ export default function Home() {
 
               {/* 2026 SECTION (160vw to 270vw) */}
               <div className="absolute top-[45%] left-[150vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
-                <h4 className="text-artemis-blue font-header font-bold text-2xl mb-4 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
+                <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
                 <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></div></li>
                   <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Tech Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 5</span></div></li>
@@ -820,7 +819,7 @@ export default function Home() {
           <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -20, 15, 0], rotateY: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-25 z-0 pointer-events-none" />
           
           <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
-            <h2 className="text-4xl md:text-6xl font-header font-black text-white/60 tracking-wide">
+            <h2 className="display font-black text-white/60 tracking-wide terminal-cursor hover-glitch-text">
               Impact
             </h2>
           </div>
@@ -858,7 +857,7 @@ export default function Home() {
         
         <div className="max-w-4xl mx-auto px-6 w-full flex flex-col items-center justify-center relative z-10 text-center">
           
-          <h2 className="text-4xl md:text-5xl font-header font-black mb-4">
+          <h2 className="display font-black mb-4 terminal-cursor hover-glitch-text">
             Budget
           </h2>
           <p className="text-sm text-white/50 font-light max-w-2xl mb-12">
@@ -869,7 +868,7 @@ export default function Home() {
             <div className="absolute -right-20 -top-20 w-64 h-64 bg-artemis-blue/10 rounded-full blur-3xl" />
             <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 border-b border-white/10 pb-6 gap-4">
               <span className="text-sm text-white/40 uppercase tracking-widest">Target Goal</span>
-              <span className="text-5xl font-header font-black text-white">
+              <span className="display font-black text-white terminal-cursor hover-glitch-text">
                 $<Counter to={65000} duration={2} format={(v) => v.toLocaleString()} />
               </span>
             </div>
@@ -901,7 +900,7 @@ export default function Home() {
           {/* Tiers List */}
           <div className="lg:w-1/2 w-full flex flex-col gap-6">
             <div>
-              <h2 className="text-4xl md:text-5xl font-header font-black mb-4">
+              <h2 className="h1 font-black mb-4 terminal-cursor hover-glitch-text">
                 Sponsorship Tiers
               </h2>
               <p className="text-sm text-white/50 font-light mb-8">
@@ -919,7 +918,7 @@ export default function Home() {
                   {tier.name === 'Apollo' && (
                     <div className="absolute inset-0 bg-gradient-to-br from-artemis-blue/20 to-transparent animate-pulse" />
                   )}
-                  <h3 className="text-xl font-header font-bold mb-1 relative z-10">{tier.name}</h3>
+                  <h3 className="h3 font-bold mb-1 relative z-10">{tier.name}</h3>
                   <p className="text-2xl font-black text-white/80 relative z-10 mb-4">{tier.price}</p>
                   
                   <div className="mt-auto pt-4 border-t border-white/10 flex-grow">
@@ -942,7 +941,7 @@ export default function Home() {
             <div className="glass-panel p-8">
               {!contactSuccess ? (
                 <form onSubmit={handleContactSubmit} className="flex flex-col gap-4">
-                  <h3 className="text-lg font-header font-bold mb-2">Sponsor the {selectedTier} Tier</h3>
+                  <h3 className="h3 font-bold mb-2">Sponsor the {selectedTier} Tier</h3>
                   <div className="grid grid-cols-2 gap-4">
                     <input required type="text" placeholder="Company / Name" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors" />
                     <input required type="email" placeholder="Email Address" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors" />
@@ -986,7 +985,7 @@ export default function Home() {
           <div className="marquee-content flex items-center" style={{ animationDuration: '60s' }}>
             {/* Double the array for seamless infinite scroll */}
             {[...SPONSOR_LOGOS, ...SPONSOR_LOGOS].map((name, i) => (
-              <span key={`name-${i}`} className="mx-6 text-sm md:text-base font-bold font-header tracking-widest uppercase text-white/30 whitespace-nowrap flex items-center shrink-0">
+              <span key={`name-${i}`} className="mx-6 label tracking-widest text-white/30 whitespace-nowrap flex items-center shrink-0">
                 {name} <span className="text-artemis-blue/50 ml-12">▹</span>
               </span>
             ))}
@@ -1006,7 +1005,7 @@ export default function Home() {
               <div className="flex items-center gap-4">
                 <img src="/branding/logo_4.webp" alt="Logo" className="w-10 h-10 object-contain mix-blend-screen" />
                 <div>
-                  <h3 className="font-header font-black text-xl tracking-widest">ARTEMIS.6621</h3>
+                  <h3 className="h2 font-black tracking-widest terminal-cursor hover-glitch-text">ARTEMIS.6621</h3>
                   <p className="text-[9px] uppercase tracking-widest text-white/40">Chatham High School Robotics</p>
                 </div>
               </div>

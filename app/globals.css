@@ -6,12 +6,63 @@
    ================================================ */
 
 @theme {
+  --font-sans: var(--font-inter);
+  --font-header: var(--font-outfit);
+  
   --color-space-black: #0A0E17;
   --color-space-darker: #05070B;
-  --color-artemis-blue: #2563EB;
-  --color-stellar-orange: #F97316;
-  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-header: var(--font-outfit), system-ui, sans-serif;
+  --color-artemis-blue: #2563eb;
+  --color-stellar-orange: #f97316;
+}
+
+:root {
+  --font-display:  var(--font-share-mono), monospace;
+  --font-heading:  var(--font-share-mono), monospace;
+  --font-body:     var(--font-share), sans-serif;
+  --font-label:    var(--font-share-mono), monospace;
+  --font-data:     var(--font-share-mono), monospace;
+}
+
+/* Typography Classes */
+@utility display { font-family: var(--font-display); font-size: 42px; }
+@utility h1      { font-family: var(--font-heading); font-size: 30px; }
+@utility h2      { font-family: var(--font-heading); font-size: 22px; }
+@utility h3      { font-family: var(--font-heading); font-size: 17px; }
+@utility subhead { font-family: var(--font-body); font-size: 15px; }
+@utility body    { font-family: var(--font-body); font-size: 15px; }
+@utility body-sm { font-family: var(--font-body); font-size: 13px; }
+@utility label   { font-family: var(--font-label); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; }
+
+/* Computery Effects */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@utility terminal-cursor {
+  &::after {
+    content: '_';
+    display: inline-block;
+    animation: blink 1s step-end infinite;
+    margin-left: 4px;
+    color: var(--color-stellar-orange);
+  }
+}
+
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  20% { transform: skew(-5deg); }
+  40% { transform: skew(5deg); }
+  60% { transform: skew(-2deg); }
+  80% { transform: skew(2deg); }
+  100% { transform: skew(0deg); }
+}
+
+@utility hover-glitch-text {
+  &:hover {
+    animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    text-shadow: 2px 0px #2563eb, -2px 0px #f97316;
+  }
 }
 
 /* ========== CSS CUSTOM PROPERTIES ========== */
