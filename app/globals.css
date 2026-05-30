@@ -10,7 +10,7 @@ a, button, [role="button"], .cursor-pointer, select, label, summary {
 }
 
 input, textarea, [contenteditable="true"] {
-  cursor: url('/cursors/text.png') 6 24, text;
+  cursor: url('/cursors/text.png') 24 24, text;
 }
 
 /* ================================================
