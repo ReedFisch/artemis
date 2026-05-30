@@ -487,7 +487,7 @@ export default function Home() {
   const xAboutToTimeline = useTransform(
     horizontalScrollYProgress, 
     [0, 0.15, 0.75, 1], 
-    ["0vw", "-5vw", "-270vw", "-270vw"]
+    ["0vw", "-5vw", "-220vw", "-220vw"]
   );
   const yAboutToTimeline = useTransform(
     horizontalScrollYProgress,
@@ -625,13 +625,7 @@ export default function Home() {
 
           {/* 2. Liquid Hero Mask Layer (Fades out immediately when scrolling starts) */}
 
-          <motion.div className="absolute inset-0 z-10" style={{ opacity: fadeOutHeroLiquid }}>
-            {/* HEADER */}
-        
-
-
-
-          </motion.div>
+          {/* Liquid hero layer removed — content relocated */}
 
           {/* 3. Overlays (Header and Sponsor) */}
           <motion.header 
@@ -667,16 +661,16 @@ export default function Home() {
         {/* Sticky container that holds the horizontal sliding content */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
           
-          <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className="flex w-[370vw] h-full relative z-10">
+          <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className="flex w-[320vw] h-full relative z-10">
             
             {/* Section background gradient & floating shapes (scrolling with the content) */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden topography-bg opacity-40" aria-hidden="true" style={{ width: '370vw' }}>
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden topography-bg opacity-40" aria-hidden="true" style={{ width: '320vw' }}>
               {/* Starfield */}
               <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
             </div>
 
             {/* --- ABOUT US PANE (100vw) --- */}
-            <div className="w-[100vw] h-full flex flex-col pt-16 md:pt-20 pb-[10vh] px-6 md:px-12 relative z-10">
+            <div className="w-[100vw] h-full flex flex-col pt-16 md:pt-20 pb-8 px-6 md:px-12 relative z-10">
               
               {/* Scattered 3D Shapes */}
               <motion.div animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
@@ -783,7 +777,7 @@ export default function Home() {
               <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[70vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_60px_rgba(249,115,22,0.3)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
               <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
-              {/* 2026 SECTION (130vw to 200vw) */}
+              {/* 2026 SECTION (130vw to 220vw) */}
               <div className="absolute top-[45%] left-[130vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_50px_rgba(37,99,235,0.2)] z-30 transform -rotate-1">
                 <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
                 <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
@@ -793,7 +787,7 @@ export default function Home() {
                 </ul>
               </div>
               <img src="/timeline/2026_1.jpg" alt="2026 Event" className="absolute bottom-[15%] left-[155vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(255,255,255,0.1)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
-              <img src="/timeline/2026_2.jpg" alt="2026 Team" className="absolute top-[15%] left-[180vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_50px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              <img src="/timeline/2026_2.jpg" alt="2026 Team" className="absolute top-[15%] right-[5vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_50px_rgba(37,99,235,0.2)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
             </div>
             </motion.div>
@@ -803,7 +797,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            5. OUTREACH PARALLAX (FLY OUT EFFECT)
            ══════════════════════════════════════════════════════ */}
-      <section id="outreach" ref={outreachScrollRef} className="relative z-10" style={{ height: '700vh' }}>
+      <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B]" style={{ height: '700vh' }}>
         <div className="sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12">
           
           {/* Background Elements */}
@@ -911,136 +905,215 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7. SPONSORSHIP TIERS
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship" className="snap-section relative z-10 overflow-hidden min-h-screen flex items-center bg-[#05070B] py-16">
-        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '0s', animationDuration: '12s' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-36 h-36 opacity-30 z-0 pointer-events-none" />
+      <section id="sponsorship" className="relative z-10 bg-[#05070B] py-24 border-t border-white/5">
+        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-36 h-36 opacity-30 z-0 pointer-events-none" />
         
-        <div className="max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row gap-12 items-start justify-center relative z-10">
+        <div className="max-w-7xl mx-auto px-6 w-full flex flex-col relative z-10">
           
-          {/* Tiers List */}
-          <div className="lg:w-1/2 w-full flex flex-col gap-6">
-            <div>
-              <h2 className="h1 font-black mb-4 hover-glitch-text">
-                Sponsorship Tiers
-              </h2>
-              <p className="text-sm text-white/50 font-light mb-8">
-                Support our mission and help us continue to provide STEAM opportunities to our students at no cost.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {TIERS.map(tier => (
-                <div key={tier.name} 
-                  className={`glass-panel p-6 cursor-pointer border transition-all duration-300 flex flex-col h-full ${
-                    selectedTier === tier.name ? 'border-artemis-blue bg-artemis-blue/10 shadow-[0_0_30px_rgba(37,99,235,0.2)] scale-105' : 'border-white/5 hover:border-white/20'
-                  } ${tier.name === 'Apollo' ? 'relative overflow-hidden' : ''}`}
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="display font-black text-white hover-glitch-text mb-4">
+              Support Us
+            </h2>
+            <p className="text-sm text-white/50 font-light max-w-2xl mx-auto">
+              42% of our students are on free or reduced lunch. We refuse to charge a single cent to participate. Your sponsorship makes that possible.
+            </p>
+          </div>
+
+          {/* 3-Column Tier Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-12">
+            {TIERS.filter(t => t.name !== 'Other').map((tier) => {
+              const isApollo = tier.name === 'Apollo';
+              
+              // Color styles
+              let colorClass = "";
+              let borderClass = "";
+              let bgGlow = "";
+              let btnClass = "";
+              
+              if (tier.name === 'Hermes') {
+                colorClass = "text-amber-400";
+                borderClass = "border-white/10 hover:border-amber-500/30";
+                btnClass = "border-amber-500/30 text-amber-400 hover:bg-amber-500/10";
+              } else if (tier.name === 'Apollo') {
+                colorClass = "text-artemis-blue";
+                borderClass = "border-artemis-blue bg-artemis-blue/5 shadow-[0_0_50px_rgba(37,99,235,0.15)] scale-[1.03]";
+                bgGlow = "absolute inset-0 bg-gradient-to-b from-artemis-blue/10 to-transparent pointer-events-none";
+                btnClass = "bg-gradient-to-r from-artemis-blue to-purple-600 text-white hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]";
+              } else if (tier.name === 'ZEUS') {
+                colorClass = "text-stellar-orange";
+                borderClass = "border-white/10 hover:border-stellar-orange/30";
+                btnClass = "border-stellar-orange/30 text-stellar-orange hover:bg-stellar-orange/10";
+              }
+
+              return (
+                <div 
+                  key={tier.name}
                   onClick={() => setSelectedTier(tier.name)}
+                  className={`relative p-8 rounded-3xl border backdrop-blur-2xl transition-all duration-500 flex flex-col group cursor-pointer ${borderClass}`}
+                  style={{ background: isApollo ? undefined : 'rgba(255,255,255,0.01)' }}
                 >
-                  {tier.name === 'Apollo' && (
-                    <div className="absolute inset-0 bg-gradient-to-br from-artemis-blue/20 to-transparent animate-pulse" />
+                  {isApollo && <div className={bgGlow} />}
+                  {isApollo && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[9px] uppercase tracking-widest font-black font-mono text-white bg-gradient-to-r from-artemis-blue to-purple-600 shadow-[0_0_15px_rgba(37,99,235,0.5)] z-20">
+                      Featured Tier
+                    </span>
                   )}
-                  <h3 className="h3 font-bold mb-1 relative z-10">{tier.name}</h3>
-                  <p className="text-2xl font-black text-white/80 relative z-10 mb-4">{tier.price}</p>
                   
-                  <div className="mt-auto pt-4 border-t border-white/10 flex-grow">
-                    <ul className="text-xs text-white/70 space-y-2">
+                  <div className="relative z-10 flex flex-col h-full">
+                    <p className={`label text-[10px] tracking-widest uppercase mb-2 ${colorClass}`}>{tier.label}</p>
+                    <h3 className="h2 font-black text-white mb-2">{tier.name}</h3>
+                    <p className="text-3xl font-black text-white mb-6">
+                      {tier.price}
+                    </p>
+                    
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-6" />
+                    
+                    <ul className="space-y-4 text-xs text-white/70 mb-8 flex-grow">
                       {tier.benefits.map((benefit, i) => (
-                        <li key={i} className="flex gap-2">
-                          <span className="text-artemis-blue shrink-0">▹</span>
+                        <li key={i} className="flex items-start gap-3">
+                          <span className={`text-base leading-none ${colorClass}`}>▹</span>
                           <span>{benefit}</span>
                         </li>
                       ))}
                     </ul>
+                    
+                    <a 
+                      href="#sponsorship-form" 
+                      onClick={(e) => { 
+                        e.stopPropagation(); 
+                        setSelectedTier(tier.name); 
+                        handleFastScroll(e, '#sponsorship-form'); 
+                      }} 
+                      className={`w-full py-4 rounded-xl text-center label text-[10px] font-bold tracking-widest uppercase border transition-all duration-300 ${btnClass}`}
+                    >
+                      Select {tier.name}
+                    </a>
                   </div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
 
-          {/* Contact & Interest Form */}
-          <div className="lg:w-1/2 w-full flex flex-col gap-6 lg:mt-32">
-            
-            {/* Additional Contact Info */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all">
-                <h4 className="text-stellar-orange font-bold font-mono mb-2 text-sm">Location</h4>
-                <p className="text-xs text-white/70 font-mono leading-relaxed">
-                  Chatham High School<br />
-                  50 Woodbridge Ave<br />
-                  Chatham, NY 12037
-                </p>
-              </div>
-              <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all">
-                <h4 className="text-stellar-orange font-bold font-mono mb-2 text-sm">Email</h4>
-                <p className="text-xs text-white/70 font-mono leading-relaxed">
-                  Coach: <a href="mailto:fischers@chatham.k12.ny.us" className="text-white hover:text-artemis-blue transition-colors">fischers@chatham.k12.ny.us</a><br />
-                  Captain: <a href="mailto:Reed.L.Fisch@gmail.com" className="text-white hover:text-artemis-blue transition-colors">Reed.L.Fisch@gmail.com</a>
-                </p>
-              </div>
-              <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all">
-                <h4 className="text-stellar-orange font-bold font-mono mb-2 text-sm">Phone</h4>
-                <p className="text-xs text-white/70 font-mono leading-relaxed">
-                  (518) 392-2400 ×1038
-                </p>
-              </div>
-              <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all">
-                <h4 className="text-stellar-orange font-bold font-mono mb-2 text-sm">Watch Us Compete</h4>
-                <p className="text-xs text-white/70 font-mono leading-relaxed">
-                  Match Videos: <a href="https://thebluealliance.com/team/6621" target="_blank" rel="noopener noreferrer" className="text-white hover:text-artemis-blue transition-colors">TheBlueAlliance.com/team/6621</a><br />
-                  YouTube: <a href="https://youtube.com/@ArtemisFrc6621" target="_blank" rel="noopener noreferrer" className="text-white hover:text-artemis-blue transition-colors">@ArtemisFrc6621</a>
-                </p>
-              </div>
+          {/* Donation shown smaller below */}
+          <div 
+            id="donation-card"
+            onClick={() => setSelectedTier('Other')}
+            className={`w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-20 ${
+              selectedTier === 'Other' ? 'border-white/40 bg-white/5 shadow-[0_0_30px_rgba(255,255,255,0.1)]' : 'border-white/5 hover:border-white/20'
+            }`}
+            style={{ background: selectedTier === 'Other' ? undefined : 'rgba(255,255,255,0.01)', backdropFilter: 'blur-20px)' }}
+          >
+            <div className="flex flex-col gap-1 text-center md:text-left">
+              <span className="label text-[9px] uppercase tracking-widest text-white/40">Direct Support</span>
+              <h4 className="text-lg font-bold text-white">Custom Amount / Direct Donation</h4>
+              <p className="text-xs text-white/60 font-light">Every contribution helps fund student meals, travel expenses, and raw materials directly.</p>
             </div>
+            <a 
+              href="#sponsorship-form"
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedTier('Other');
+                handleFastScroll(e, '#sponsorship-form');
+              }}
+              className="px-8 py-3 rounded-lg text-center label text-[9px] font-bold tracking-widest uppercase border border-white/20 text-white hover:bg-white/10 transition-all duration-300 shrink-0"
+            >
+              Custom Donation
+            </a>
+          </div>
 
-            {/* Interest Form */}
-            <div className="glass-panel p-8 mt-2 border border-artemis-blue/30 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-artemis-blue/10 rounded-full blur-2xl pointer-events-none" />
-              {!contactSuccess ? (
-                <form onSubmit={handleContactSubmit} className="flex flex-col gap-4 relative z-10">
-                  <h3 className="h3 font-bold mb-2">Express Interest Form</h3>
-                  <p className="text-xs text-white/60 mb-2">Fill out the form below and we'll reach out to discuss partnership opportunities.</p>
-                  <div className="grid grid-cols-2 gap-4">
-                    <input required type="text" placeholder="Company / Name *" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono" />
-                    <input required type="email" placeholder="Email Address *" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono" />
-                  </div>
-                  <input type="text" placeholder="Phone (Optional)" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono w-full" />
-                  
-                  <div className="relative">
-                    <select required className="appearance-none bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white/70 focus:outline-none focus:border-artemis-blue transition-colors font-mono w-full cursor-pointer">
-                      <option value="" disabled selected>Sponsorship Tier: Select a tier</option>
-                      {TIERS.map(t => <option key={t.name} value={t.name}>{t.name} - {t.price}</option>)}
-                      <option value="Other">Other / Custom</option>
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white/50">
-                      <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                    </div>
-                  </div>
-
-                  <textarea placeholder="Message / Questions or special requests..." rows={3} className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono resize-none"></textarea>
-                  
-                  <button type="submit" disabled={isSubmittingContact} className="w-full py-4 mt-2 rounded-lg bg-gradient-to-r from-stellar-orange to-orange-600 font-bold uppercase text-[10px] tracking-widest hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-shadow">
-                    {isSubmittingContact ? "Processing..." : "Submit Interest"}
-                  </button>
-                </form>
-              ) : (
-                <div className="text-center py-8 relative z-10">
-                  <div className="text-3xl mb-4">🚀</div>
-                  <h3 className="text-xl font-bold mb-2">Transmission Sent</h3>
-                  <p className="text-xs text-white/50">We'll be in contact shortly with invoicing details.</p>
+          {/* Form & Info Section */}
+          <div id="sponsorship-form" className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto w-full">
+            
+            {/* Contact Details (5 cols) */}
+            <div className="lg:col-span-5 flex flex-col gap-6 w-full">
+              <h3 className="h2 font-black text-white mb-2">Partnership Info</h3>
+              <p className="text-xs text-white/50 leading-relaxed font-light mb-4">
+                Have questions about our sponsorship packages or custom branding options? Reach out to us directly or view our competition progress.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="glass-panel p-5 border border-white/5 hover:border-white/20 transition-all">
+                  <h4 className="text-stellar-orange font-bold font-mono mb-2 text-xs">Location</h4>
+                  <p className="text-[11px] text-white/70 font-mono leading-relaxed">
+                    Chatham High School<br />
+                    50 Woodbridge Ave<br />
+                    Chatham, NY 12037
+                  </p>
                 </div>
-              )}
+                <div className="glass-panel p-5 border border-white/5 hover:border-white/20 transition-all">
+                  <h4 className="text-stellar-orange font-bold font-mono mb-2 text-xs">Email Contacts</h4>
+                  <p className="text-[11px] text-white/70 font-mono leading-relaxed">
+                    Coach: <a href="mailto:fischers@chatham.k12.ny.us" className="text-white hover:text-artemis-blue transition-colors">fischers@chatham.k12.ny.us</a><br />
+                    Captain: <a href="mailto:Reed.L.Fisch@gmail.com" className="text-white hover:text-artemis-blue transition-colors">Reed.L.Fisch@gmail.com</a>
+                  </p>
+                </div>
+                <div className="glass-panel p-5 border border-white/5 hover:border-white/20 transition-all">
+                  <h4 className="text-stellar-orange font-bold font-mono mb-2 text-xs">Phone</h4>
+                  <p className="text-[11px] text-white/70 font-mono leading-relaxed">
+                    (518) 392-2400 ×1038
+                  </p>
+                </div>
+                <div className="glass-panel p-5 border border-white/5 hover:border-white/20 transition-all">
+                  <h4 className="text-stellar-orange font-bold font-mono mb-2 text-xs">Mail Checks To</h4>
+                  <p className="text-[11px] text-white/70 font-mono leading-relaxed">
+                    CHS-Robotics, Attn: Sandra Fischer<br />
+                    50 Woodbridge Ave, Chatham, NY 12037
+                  </p>
+                </div>
+              </div>
+
+              <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all mt-2">
+                <h4 className="text-stellar-orange font-bold font-mono mb-2 text-xs">Logo Submission</h4>
+                <p className="text-[10px] text-white/50 leading-relaxed font-mono">
+                  Make checks payable to CHS-Robotics. Please send high-resolution branding assets (.PNG or .SVG preferred) to Coach Sandra Fischer.
+                </p>
+              </div>
             </div>
-            
-            <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all">
-              <h4 className="text-stellar-orange font-bold font-mono mb-2 text-sm">Mail Sponsorship Forms</h4>
-              <p className="text-xs text-white/70 font-mono leading-relaxed mb-4">
-                Make checks payable to: <strong>CHS-Robotics</strong><br />
-                Attn: Sandra Fischer<br />
-                50 Woodbridge Ave<br />
-                Chatham, NY 12037
-              </p>
-              <p className="text-[10px] text-white/40 font-mono">
-                Please include your logo file (image files preferred, high-resolution prints accepted).
-              </p>
+
+            {/* Interest Form (7 cols) */}
+            <div className="lg:col-span-7 w-full">
+              <div className="glass-panel p-8 border border-artemis-blue/30 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-artemis-blue/10 rounded-full blur-2xl pointer-events-none" />
+                {!contactSuccess ? (
+                  <form onSubmit={handleContactSubmit} className="flex flex-col gap-4 relative z-10">
+                    <h3 className="h3 font-bold mb-1">Express Interest</h3>
+                    <p className="text-xs text-white/60 mb-2">Fill out the form and we&apos;ll reach out to discuss partnership opportunities.</p>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <input required type="text" placeholder="Company / Name *" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono" />
+                      <input required type="email" placeholder="Email Address *" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono" />
+                    </div>
+                    
+                    <input type="text" placeholder="Phone (Optional)" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono w-full" />
+                    
+                    <div className="relative">
+                      <select required className="appearance-none bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white/70 focus:outline-none focus:border-artemis-blue transition-colors font-mono w-full cursor-pointer">
+                        <option value="" disabled selected>Sponsorship Tier: Select a tier</option>
+                        {TIERS.filter(t => t.name !== 'Other').map(t => <option key={t.name} value={t.name}>{t.name} - {t.price}</option>)}
+                        <option value="Other">Other / Custom Amount</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white/50">
+                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                      </div>
+                    </div>
+
+                    <textarea placeholder="Message / Questions..." rows={3} className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono resize-none"></textarea>
+                    
+                    <button type="submit" disabled={isSubmittingContact} className="w-full py-4 mt-2 rounded-lg bg-gradient-to-r from-stellar-orange to-orange-600 font-bold uppercase text-[10px] tracking-widest hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-shadow">
+                      {isSubmittingContact ? "Processing..." : "Submit Interest"}
+                    </button>
+                  </form>
+                ) : (
+                  <div className="text-center py-8 relative z-10">
+                    <div className="text-3xl mb-4">🚀</div>
+                    <h3 className="text-xl font-bold mb-2">Transmission Sent</h3>
+                    <p className="text-xs text-white/50">We&apos;ll be in contact shortly with invoicing details.</p>
+                  </div>
+                )}
+              </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -1048,7 +1121,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7.5. SPONSOR MARQUEE
            ══════════════════════════════════════════════════════ */}
-      <section className="w-full py-16 border-t border-white/10 relative z-10 overflow-hidden bg-[#05070B] flex flex-col gap-12">
+      <section className="w-full py-16 relative z-10 overflow-hidden bg-[#05070B] flex flex-col gap-12">
         
         {/* Logos Marquee */}
         <div className="marquee-container w-full">
@@ -1078,7 +1151,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            8. 3D FOOTER
            ══════════════════════════════════════════════════════ */}
-      <section id="contact" className="snap-section relative z-10 !min-h-[50vh]">
+      <section id="contact" className="relative z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-artemis-blue/5 z-0" />
         <footer className="w-full mt-auto relative z-10 bg-black/80 backdrop-blur-xl border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -1133,11 +1206,6 @@ export default function Home() {
         </footer>
       </section>
       
-      {/* Hide scrollbars class utility injected inline or global */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .hide-scrollbars::-webkit-scrollbar { display: none; }
-        .hide-scrollbars { -ms-overflow-style: none; scrollbar-width: none; }
-      `}} />
     </main>
   );
 }
