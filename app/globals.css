@@ -2,15 +2,15 @@
 
 /* ========== CUSTOM CURSORS ========== */
 html, body, * {
-  cursor: url('/cursors/normal.png') 0 0, auto;
+  cursor: url('/cursors/normal.png') 4 0, auto;
 }
 
 a, button, [role="button"], .cursor-pointer, select, label, summary {
-  cursor: url('/cursors/hover.png') 16 0, pointer;
+  cursor: url('/cursors/hover.png') 20 0, pointer;
 }
 
 input, textarea, [contenteditable="true"] {
-  cursor: url('/cursors/text.png') 16 16, text;
+  cursor: url('/cursors/text.png') 6 24, text;
 }
 
 /* ================================================
