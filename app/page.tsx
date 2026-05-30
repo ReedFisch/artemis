@@ -74,12 +74,18 @@ const TIERS = [
   }
 ];
 
-// ─── BUDGET DATA ────────────────────────────────────────────────
-const BUDGET_ITEMS = [
-  { label: "Worlds Travel, Hotels & Registration", amount: 35000, color: "bg-stellar-orange" },
-  { label: "Competition Registration & Meals", amount: 20000, color: "bg-artemis-blue" },
-  { label: "Competition Parts & Equipment", amount: 9000, color: "bg-white/40" },
-  { label: "Off-Season Events", amount: 1000, color: "bg-white/20" },
+const EXPENSES = [
+  { label: "Robot & Field", amount: 4050 },
+  { label: "Competition Season", amount: 59600 },
+  { label: "Off-Season Events", amount: 645 },
+  { label: "Merchandise", amount: 1100 },
+];
+
+const FUNDING_SOURCES = [
+  { label: "District Funding", amount: 10000 },
+  { label: "Grants", amount: 3500 },
+  { label: "Current Sponsors", amount: 8500 },
+  { label: "Fundraising Events", amount: 2000 },
 ];
 
 // ─── OUTREACH DATA ──────────────────────────────────────────────
@@ -857,33 +863,46 @@ export default function Home() {
         
         <div className="max-w-4xl mx-auto px-6 w-full flex flex-col items-center justify-center relative z-10 text-center">
           
-          <h2 className="display font-black mb-4 terminal-cursor hover-glitch-text">
+          <h2 className="display font-black mb-4 terminal-cursor">
             Budget
           </h2>
           <p className="text-sm text-white/50 font-light max-w-2xl mb-12">
             42% of students in our high school are on free or reduced lunch. We refuse to charge our students a single cent to participate. We believe that talent is universal but opportunity is not.
           </p>
 
-          <div className="glass-panel-deep p-8 md:p-12 w-full relative overflow-hidden text-left">
-            <div className="absolute -right-20 -top-20 w-64 h-64 bg-artemis-blue/10 rounded-full blur-3xl" />
-            <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 border-b border-white/10 pb-6 gap-4">
-              <span className="text-sm text-white/40 uppercase tracking-widest">Target Goal</span>
-              <span className="display font-black text-white terminal-cursor hover-glitch-text">
-                $<Counter to={65000} duration={2} format={(v) => v.toLocaleString()} />
-              </span>
-            </div>
-            <div className="space-y-6">
-              {BUDGET_ITEMS.map((item, idx) => (
-                <div key={idx} className="flex items-center justify-between group">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-3 h-3 rounded-full ${item.color} shadow-[0_0_10px_currentColor] group-hover:scale-150 transition-transform`} />
-                    <span className="text-sm text-white/70">{item.label}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full relative z-10 text-left">
+            {/* Expenses */}
+            <div className="glass-panel-deep p-8 md:p-10 rounded-2xl relative overflow-hidden transition-all duration-300 hover:bg-white/[0.03]">
+              <h3 className="h2 font-black mb-6 text-white tracking-wide terminal-cursor">Expenses</h3>
+              <div className="space-y-6 mb-8">
+                {EXPENSES.map((item, idx) => (
+                  <div key={idx} className="flex justify-between items-center text-sm md:text-base border-b border-white/5 pb-2">
+                    <span className="text-white/70 font-mono">{item.label}</span>
+                    <span className="text-stellar-orange font-black">$<Counter to={item.amount} duration={2} format={(v) => v.toLocaleString()} /></span>
                   </div>
-                  <span className="text-lg font-bold text-white/90">
-                    $<Counter to={item.amount} duration={2} format={(v) => v.toLocaleString()} />
-                  </span>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className="flex justify-between items-center text-lg md:text-xl border-t border-white/20 pt-4 mt-auto">
+                <span className="text-white font-bold font-mono">Total Needed</span>
+                <span className="text-stellar-orange font-black">$<Counter to={65395} duration={2} format={(v) => v.toLocaleString()} /></span>
+              </div>
+            </div>
+
+            {/* Funding Sources */}
+            <div className="glass-panel-deep p-8 md:p-10 rounded-2xl relative overflow-hidden transition-all duration-300 hover:bg-white/[0.03]">
+              <h3 className="h2 font-black mb-6 text-white tracking-wide terminal-cursor">Funding Sources</h3>
+              <div className="space-y-6 mb-8">
+                {FUNDING_SOURCES.map((item, idx) => (
+                  <div key={idx} className="flex justify-between items-center text-sm md:text-base border-b border-white/5 pb-2">
+                    <span className="text-white/70 font-mono">{item.label}</span>
+                    <span className="text-artemis-blue font-black">$<Counter to={item.amount} duration={2} format={(v) => v.toLocaleString()} /></span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-between items-center text-lg md:text-xl border-t border-white/20 pt-4 mt-auto">
+                <span className="text-white font-bold font-mono">Total Secured</span>
+                <span className="text-artemis-blue font-black">$<Counter to={24000} duration={2} format={(v) => v.toLocaleString()} /></span>
+              </div>
             </div>
           </div>
         </div>
@@ -936,22 +955,73 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Interest Form */}
+          {/* Contact & Interest Form */}
           <div className="lg:w-1/2 w-full flex flex-col gap-6 lg:mt-32">
-            <div className="glass-panel p-8">
+            
+            {/* Additional Contact Info */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all">
+                <h4 className="text-stellar-orange font-bold font-mono mb-2 text-sm">Location</h4>
+                <p className="text-xs text-white/70 font-mono leading-relaxed">
+                  Chatham High School<br />
+                  50 Woodbridge Ave<br />
+                  Chatham, NY 12037
+                </p>
+              </div>
+              <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all">
+                <h4 className="text-stellar-orange font-bold font-mono mb-2 text-sm">Email</h4>
+                <p className="text-xs text-white/70 font-mono leading-relaxed">
+                  Coach: <a href="mailto:fischers@chatham.k12.ny.us" className="text-white hover:text-artemis-blue transition-colors">fischers@chatham.k12.ny.us</a><br />
+                  Captain: <a href="mailto:Reed.L.Fisch@gmail.com" className="text-white hover:text-artemis-blue transition-colors">Reed.L.Fisch@gmail.com</a>
+                </p>
+              </div>
+              <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all">
+                <h4 className="text-stellar-orange font-bold font-mono mb-2 text-sm">Phone</h4>
+                <p className="text-xs text-white/70 font-mono leading-relaxed">
+                  (518) 392-2400 ×1038
+                </p>
+              </div>
+              <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all">
+                <h4 className="text-stellar-orange font-bold font-mono mb-2 text-sm">Watch Us Compete</h4>
+                <p className="text-xs text-white/70 font-mono leading-relaxed">
+                  Match Videos: <a href="https://thebluealliance.com/team/6621" target="_blank" rel="noopener noreferrer" className="text-white hover:text-artemis-blue transition-colors">TheBlueAlliance.com/team/6621</a><br />
+                  YouTube: <a href="https://youtube.com/@ArtemisFrc6621" target="_blank" rel="noopener noreferrer" className="text-white hover:text-artemis-blue transition-colors">@ArtemisFrc6621</a>
+                </p>
+              </div>
+            </div>
+
+            {/* Interest Form */}
+            <div className="glass-panel p-8 mt-2 border border-artemis-blue/30 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-artemis-blue/10 rounded-full blur-2xl pointer-events-none" />
               {!contactSuccess ? (
-                <form onSubmit={handleContactSubmit} className="flex flex-col gap-4">
-                  <h3 className="h3 font-bold mb-2">Sponsor the {selectedTier} Tier</h3>
+                <form onSubmit={handleContactSubmit} className="flex flex-col gap-4 relative z-10">
+                  <h3 className="h3 font-bold mb-2">Express Interest Form</h3>
+                  <p className="text-xs text-white/60 mb-2">Fill out the form below and we'll reach out to discuss partnership opportunities.</p>
                   <div className="grid grid-cols-2 gap-4">
-                    <input required type="text" placeholder="Company / Name" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors" />
-                    <input required type="email" placeholder="Email Address" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors" />
+                    <input required type="text" placeholder="Company / Name *" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono" />
+                    <input required type="email" placeholder="Email Address *" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono" />
                   </div>
-                  <button type="submit" disabled={isSubmittingContact} className="w-full py-4 rounded-lg bg-gradient-to-r from-artemis-blue to-blue-600 font-bold uppercase text-[10px] tracking-widest hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-shadow">
-                    {isSubmittingContact ? "Processing..." : "Submit Interest to fischers@chatham.k12.ny.us"}
+                  <input type="text" placeholder="Phone (Optional)" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono w-full" />
+                  
+                  <div className="relative">
+                    <select required className="appearance-none bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white/70 focus:outline-none focus:border-artemis-blue transition-colors font-mono w-full cursor-pointer">
+                      <option value="" disabled selected>Sponsorship Tier: Select a tier</option>
+                      {TIERS.map(t => <option key={t.name} value={t.name}>{t.name} - {t.price}</option>)}
+                      <option value="Other">Other / Custom</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white/50">
+                      <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                    </div>
+                  </div>
+
+                  <textarea placeholder="Message / Questions or special requests..." rows={3} className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono resize-none"></textarea>
+                  
+                  <button type="submit" disabled={isSubmittingContact} className="w-full py-4 mt-2 rounded-lg bg-gradient-to-r from-stellar-orange to-orange-600 font-bold uppercase text-[10px] tracking-widest hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-shadow">
+                    {isSubmittingContact ? "Processing..." : "Submit Interest"}
                   </button>
                 </form>
               ) : (
-                <div className="text-center py-8">
+                <div className="text-center py-8 relative z-10">
                   <div className="text-3xl mb-4">🚀</div>
                   <h3 className="text-xl font-bold mb-2">Transmission Sent</h3>
                   <p className="text-xs text-white/50">We'll be in contact shortly with invoicing details.</p>
@@ -959,6 +1029,18 @@ export default function Home() {
               )}
             </div>
             
+            <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all">
+              <h4 className="text-stellar-orange font-bold font-mono mb-2 text-sm">Mail Sponsorship Forms</h4>
+              <p className="text-xs text-white/70 font-mono leading-relaxed mb-4">
+                Make checks payable to: <strong>CHS-Robotics</strong><br />
+                Attn: Sandra Fischer<br />
+                50 Woodbridge Ave<br />
+                Chatham, NY 12037
+              </p>
+              <p className="text-[10px] text-white/40 font-mono">
+                Please include your logo file (image files preferred, high-resolution prints accepted).
+              </p>
+            </div>
           </div>
         </div>
       </section>
