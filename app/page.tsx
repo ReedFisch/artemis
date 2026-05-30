@@ -913,65 +913,86 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7. SPONSORSHIP TIERS
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship" className="relative z-10 bg-[#05070B] py-24 border-t border-white/5">
-        <motion.div animate={{ x: [0, -30, 30, 0], y: [0, 40, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-sphere absolute bottom-[15%] left-[85%] w-36 h-36 opacity-30 z-0 pointer-events-none" />
+      <section id="sponsorship" className="relative z-10 bg-[#05070B] py-28 border-t border-white/[0.03] overflow-hidden">
+        
+        {/* Dynamic Organic Background Nebulas & Glows */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40">
+          <motion.div 
+            animate={{ 
+              x: ['-20%', '20%', '-20%'], 
+              y: ['-15%', '15%', '-15%'],
+              scale: [1, 1.15, 1] 
+            }} 
+            transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }} 
+            className="absolute top-[10%] left-[10%] w-[600px] h-[600px] rounded-full bg-artemis-blue/15 blur-[150px]"
+          />
+          <motion.div 
+            animate={{ 
+              x: ['20%', '-20%', '20%'], 
+              y: ['15%', '-15%', '15%'],
+              scale: [1.1, 0.95, 1.1] 
+            }} 
+            transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }} 
+            className="absolute bottom-[10%] right-[10%] w-[650px] h-[650px] rounded-full bg-stellar-orange/10 blur-[180px]"
+          />
+        </div>
         
         <div className="max-w-7xl mx-auto px-6 w-full flex flex-col relative z-10">
           
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="display font-black text-white hover-glitch-text mb-4">
+          <div className="text-center mb-20">
+            <span className="label text-[10px] uppercase tracking-[0.25em] text-white/40 mb-3 block font-mono">Partnership Opportunities</span>
+            <h2 className="display font-black text-white hover-glitch-text mb-4 text-4xl md:text-5xl tracking-tight">
               Support Us
             </h2>
-            <p className="text-sm text-white/50 font-light max-w-2xl mx-auto">
+            <p className="text-sm text-white/50 font-light max-w-2xl mx-auto leading-relaxed">
               42% of our students are on free or reduced lunch. We refuse to charge a single cent to participate. Your sponsorship makes that possible.
             </p>
           </div>
 
           {/* 3-Column Tier Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-16 items-stretch">
             {TIERS.filter(t => t.name !== 'Other').map((tier) => {
               const isApollo = tier.name === 'Apollo';
               
-              // Color styles
-              let colorClass = "";
+              // Premium Theme Variables
+              let accentColorClass = "";
               let borderClass = "";
-              let bgGlow = "";
+              let badgeClass = "";
               let btnClass = "";
               
               if (tier.name === 'Hermes') {
-                colorClass = "text-amber-400";
-                borderClass = "border-white/10 hover:border-amber-500/30";
-                btnClass = "border-amber-500/30 text-amber-400 hover:bg-amber-500/10";
+                accentColorClass = "text-white/40";
+                borderClass = "border-white/10 hover:border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_rgba(255,255,255,0.02)]";
+                btnClass = "bg-white/[0.03] border border-white/10 text-white/90 hover:bg-white/10 hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]";
               } else if (tier.name === 'Apollo') {
-                colorClass = "text-artemis-blue";
-                borderClass = "border-artemis-blue bg-artemis-blue/5 shadow-[0_0_50px_rgba(37,99,235,0.15)] scale-[1.03]";
-                bgGlow = "absolute inset-0 bg-gradient-to-b from-artemis-blue/10 to-transparent pointer-events-none";
-                btnClass = "bg-gradient-to-r from-artemis-blue to-purple-600 text-white hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]";
+                accentColorClass = "text-artemis-blue/60";
+                borderClass = "border-artemis-blue/20 bg-white/[0.02] shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_40px_rgba(37,99,235,0.08)] scale-[1.03] hover:border-artemis-blue/40";
+                badgeClass = "bg-artemis-blue/10 border border-artemis-blue/30 text-artemis-blue font-mono shadow-[0_0_15px_rgba(37,99,235,0.15)]";
+                btnClass = "bg-artemis-blue/20 border border-artemis-blue/40 text-white hover:bg-artemis-blue/30 hover:border-artemis-blue/60 hover:shadow-[0_0_25px_rgba(37,99,235,0.3)]";
               } else if (tier.name === 'ZEUS') {
-                colorClass = "text-stellar-orange";
-                borderClass = "border-white/10 hover:border-stellar-orange/30";
-                btnClass = "border-stellar-orange/30 text-stellar-orange hover:bg-stellar-orange/10";
+                accentColorClass = "text-stellar-orange/60";
+                borderClass = "border-white/10 hover:border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_rgba(255,255,255,0.02)]";
+                btnClass = "bg-white/[0.03] border border-white/10 text-white/90 hover:bg-white/10 hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]";
               }
 
               return (
                 <div 
                   key={tier.name}
                   onClick={() => setSelectedTier(tier.name)}
-                  className={`relative p-8 rounded-3xl border backdrop-blur-2xl transition-all duration-500 flex flex-col group cursor-pointer ${borderClass}`}
-                  style={{ background: isApollo ? undefined : 'rgba(255,255,255,0.01)' }}
+                  className={`relative p-8 rounded-3xl border backdrop-blur-3xl transition-all duration-500 flex flex-col group cursor-pointer ${borderClass}`}
+                  style={{ background: isApollo ? undefined : 'rgba(255,255,255,0.015)' }}
                 >
-                  {isApollo && <div className={bgGlow} />}
                   {isApollo && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[9px] uppercase tracking-widest font-black font-mono text-white bg-gradient-to-r from-artemis-blue to-purple-600 shadow-[0_0_15px_rgba(37,99,235,0.5)] z-20">
-                      Featured Tier
+                    <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[8px] uppercase tracking-widest font-black font-mono text-white bg-gradient-to-r from-artemis-blue to-indigo-600 shadow-[0_0_15px_rgba(37,99,235,0.4)] z-20">
+                      Most Popular
                     </span>
                   )}
                   
                   <div className="relative z-10 flex flex-col h-full">
-                    <p className={`label text-[10px] tracking-widest uppercase mb-2 ${colorClass}`}>{tier.label}</p>
-                    <h3 className="h2 font-black text-white mb-2">{tier.name}</h3>
-                    <p className="text-3xl font-black text-white mb-6">
+                    <p className="label text-[9px] tracking-widest uppercase mb-2 text-white/40 font-mono">{tier.label}</p>
+                    <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">{tier.name}</h3>
+                    <p className="text-4xl font-extrabold text-white mb-6 tracking-tight">
                       {tier.price}
                     </p>
                     
@@ -980,8 +1001,8 @@ export default function Home() {
                     <ul className="space-y-4 text-xs text-white/70 mb-8 flex-grow">
                       {tier.benefits.map((benefit, i) => (
                         <li key={i} className="flex items-start gap-3">
-                          <span className={`text-base leading-none ${colorClass}`}>▹</span>
-                          <span>{benefit}</span>
+                          <span className={`text-base leading-none ${accentColorClass}`}>▹</span>
+                          <span className="font-light">{benefit}</span>
                         </li>
                       ))}
                     </ul>
@@ -993,7 +1014,7 @@ export default function Home() {
                         setSelectedTier(tier.name); 
                         handleFastScroll(e, '#sponsorship-form'); 
                       }} 
-                      className={`w-full py-4 rounded-xl text-center label text-[10px] font-bold tracking-widest uppercase border transition-all duration-300 ${btnClass}`}
+                      className={`w-full py-4 rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase transition-all duration-300 ${btnClass}`}
                     >
                       Select {tier.name}
                     </a>
@@ -1007,14 +1028,14 @@ export default function Home() {
           <div 
             id="donation-card"
             onClick={() => setSelectedTier('Other')}
-            className={`w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-20 ${
-              selectedTier === 'Other' ? 'border-white/40 bg-white/5 shadow-[0_0_30px_rgba(255,255,255,0.1)]' : 'border-white/5 hover:border-white/20'
+            className={`w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-24 ${
+              selectedTier === 'Other' ? 'border-white/30 bg-white/[0.04] shadow-[0_15px_30px_rgba(0,0,0,0.3)]' : 'border-white/5 hover:border-white/15'
             }`}
-            style={{ background: selectedTier === 'Other' ? undefined : 'rgba(255,255,255,0.01)', backdropFilter: 'blur-20px)' }}
+            style={{ background: selectedTier === 'Other' ? undefined : 'rgba(255,255,255,0.01)', backdropFilter: 'blur(30px)' }}
           >
             <div className="flex flex-col gap-1 text-center md:text-left">
-              <span className="label text-[9px] uppercase tracking-widest text-white/40">Direct Support</span>
-              <h4 className="text-lg font-bold text-white">Custom Amount / Direct Donation</h4>
+              <span className="label text-[9px] uppercase tracking-widest text-white/40 font-mono">Direct Support</span>
+              <h4 className="text-base font-bold text-white tracking-tight">Custom Amount / Direct Donation</h4>
               <p className="text-xs text-white/60 font-light">Every contribution helps fund student meals, travel expenses, and raw materials directly.</p>
             </div>
             <a 
@@ -1024,91 +1045,105 @@ export default function Home() {
                 setSelectedTier('Other');
                 handleFastScroll(e, '#sponsorship-form');
               }}
-              className="px-8 py-3 rounded-lg text-center label text-[9px] font-bold tracking-widest uppercase border border-white/20 text-white hover:bg-white/10 transition-all duration-300 shrink-0"
+              className="px-8 py-3 rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase border border-white/10 text-white/90 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all duration-300 shrink-0"
             >
               Custom Donation
             </a>
           </div>
 
           {/* Form & Info Section */}
-          <div id="sponsorship-form" className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto w-full">
+          <div id="sponsorship-form" className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch max-w-6xl mx-auto w-full">
             
             {/* Contact Details (5 cols) */}
-            <div className="lg:col-span-5 flex flex-col gap-6 w-full">
-              <h3 className="h2 font-black text-white mb-2">Partnership Info</h3>
-              <p className="text-xs text-white/50 leading-relaxed font-light mb-4">
-                Have questions about our sponsorship packages or custom branding options? Reach out to us directly or view our competition progress.
-              </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="glass-panel p-5 border border-white/5 hover:border-white/20 transition-all">
-                  <h4 className="text-stellar-orange font-bold font-mono mb-2 text-xs">Location</h4>
-                  <p className="text-[11px] text-white/70 font-mono leading-relaxed">
-                    Chatham High School<br />
-                    50 Woodbridge Ave<br />
-                    Chatham, NY 12037
-                  </p>
-                </div>
-                <div className="glass-panel p-5 border border-white/5 hover:border-white/20 transition-all">
-                  <h4 className="text-stellar-orange font-bold font-mono mb-2 text-xs">Email Contacts</h4>
-                  <p className="text-[11px] text-white/70 font-mono leading-relaxed">
-                    Coach: <a href="mailto:fischers@chatham.k12.ny.us" className="text-white hover:text-artemis-blue transition-colors">fischers@chatham.k12.ny.us</a><br />
-                    Captain: <a href="mailto:Reed.L.Fisch@gmail.com" className="text-white hover:text-artemis-blue transition-colors">Reed.L.Fisch@gmail.com</a>
-                  </p>
-                </div>
-                <div className="glass-panel p-5 border border-white/5 hover:border-white/20 transition-all">
-                  <h4 className="text-stellar-orange font-bold font-mono mb-2 text-xs">Phone</h4>
-                  <p className="text-[11px] text-white/70 font-mono leading-relaxed">
-                    (518) 392-2400 ×1038
-                  </p>
-                </div>
-                <div className="glass-panel p-5 border border-white/5 hover:border-white/20 transition-all">
-                  <h4 className="text-stellar-orange font-bold font-mono mb-2 text-xs">Mail Checks To</h4>
-                  <p className="text-[11px] text-white/70 font-mono leading-relaxed">
-                    CHS-Robotics, Attn: Sandra Fischer<br />
-                    50 Woodbridge Ave, Chatham, NY 12037
-                  </p>
+            <div className="lg:col-span-5 flex flex-col gap-6 w-full justify-between">
+              <div>
+                <span className="label text-[10px] uppercase tracking-[0.2em] text-white/40 mb-2 block font-sans font-semibold">Get in Touch</span>
+                <h3 className="text-3xl font-bold text-white mb-3 tracking-tight">Partnership Info</h3>
+                <p className="text-sm text-white/50 leading-relaxed font-light mb-8">
+                  Have questions about our sponsorship packages or custom branding options? Reach out to us directly or view our competition progress.
+                </p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-5 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-3xl hover:border-white/12 hover:bg-white/[0.04] transition-all duration-300">
+                    <h4 className="text-white/40 font-bold font-sans mb-2 text-[10px] uppercase tracking-wider">Location</h4>
+                    <p className="text-xs text-white/80 font-sans leading-relaxed font-light">
+                      Chatham High School<br />
+                      50 Woodbridge Ave<br />
+                      Chatham, NY 12037
+                    </p>
+                  </div>
+                  <div className="p-5 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-3xl hover:border-white/12 hover:bg-white/[0.04] transition-all duration-300">
+                    <h4 className="text-white/40 font-bold font-sans mb-2 text-[10px] uppercase tracking-wider">Email Contacts</h4>
+                    <p className="text-xs text-white/80 font-sans leading-relaxed font-light">
+                      Coach: <a href="mailto:fischers@chatham.k12.ny.us" className="text-white hover:text-stellar-orange transition-colors">fischers@chatham.k12.ny.us</a><br />
+                      Captain: <a href="mailto:Reed.L.Fisch@gmail.com" className="text-white hover:text-stellar-orange transition-colors">Reed.L.Fisch@gmail.com</a>
+                    </p>
+                  </div>
+                  <div className="p-5 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-3xl hover:border-white/12 hover:bg-white/[0.04] transition-all duration-300">
+                    <h4 className="text-white/40 font-bold font-sans mb-2 text-[10px] uppercase tracking-wider">Phone</h4>
+                    <p className="text-xs text-white/80 font-sans leading-relaxed font-light">
+                      (518) 392-2400 ×1038
+                    </p>
+                  </div>
+                  <div className="p-5 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-3xl hover:border-white/12 hover:bg-white/[0.04] transition-all duration-300">
+                    <h4 className="text-white/40 font-bold font-sans mb-2 text-[10px] uppercase tracking-wider">Mail Checks To</h4>
+                    <p className="text-xs text-white/80 font-sans leading-relaxed font-light">
+                      CHS-Robotics<br />Attn: Sandra Fischer<br />
+                      50 Woodbridge Ave<br />Chatham, NY 12037
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              <div className="glass-panel p-6 border border-white/5 hover:border-white/20 transition-all mt-2">
-                <h4 className="text-stellar-orange font-bold font-mono mb-2 text-xs">Logo Submission</h4>
-                <p className="text-[10px] text-white/50 leading-relaxed font-mono">
+              <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-3xl hover:border-white/12 hover:bg-white/[0.04] transition-all duration-300 mt-4">
+                <h4 className="text-white/40 font-bold font-sans mb-2 text-[10px] uppercase tracking-wider">Logo Submission</h4>
+                <p className="text-xs text-white/50 leading-relaxed font-sans font-light">
                   Make checks payable to CHS-Robotics. Please send high-resolution branding assets (.PNG or .SVG preferred) to Coach Sandra Fischer.
                 </p>
               </div>
             </div>
 
             {/* Interest Form (7 cols) */}
-            <div className="lg:col-span-7 w-full">
-              <div className="glass-panel p-8 border border-artemis-blue/30 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-artemis-blue/10 rounded-full blur-2xl pointer-events-none" />
+            <div className="lg:col-span-7 w-full flex flex-col justify-center">
+              <div className="p-8 rounded-3xl border border-white/10 bg-white/[0.01] backdrop-blur-3xl relative overflow-hidden h-full flex flex-col justify-center">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
                 {!contactSuccess ? (
-                  <form onSubmit={handleContactSubmit} className="flex flex-col gap-4 relative z-10">
-                    <h3 className="h3 font-bold mb-1">Express Interest</h3>
-                    <p className="text-xs text-white/60 mb-2">Fill out the form and we&apos;ll reach out to discuss partnership opportunities.</p>
-                    
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <input required type="text" placeholder="Company / Name *" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono" />
-                      <input required type="email" placeholder="Email Address *" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono" />
+                  <form onSubmit={handleContactSubmit} className="flex flex-col gap-5 relative z-10">
+                    <div>
+                      <h3 className="text-2xl font-bold text-white tracking-tight">Express Interest</h3>
+                      <p className="text-xs text-white/50 mt-1 font-light">Fill out the form and we&apos;ll reach out to discuss partnership opportunities.</p>
                     </div>
                     
-                    <input type="text" placeholder="Phone (Optional)" className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono w-full" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <input required type="text" placeholder="Company / Name *" className="bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans" />
+                      <input required type="email" placeholder="Email Address *" className="bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans" />
+                    </div>
+                    
+                    <input type="text" placeholder="Phone (Optional)" className="bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans w-full" />
                     
                     <div className="relative">
-                      <select required className="appearance-none bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white/70 focus:outline-none focus:border-artemis-blue transition-colors font-mono w-full cursor-pointer">
-                        <option value="" disabled selected>Sponsorship Tier: Select a tier</option>
-                        {TIERS.filter(t => t.name !== 'Other').map(t => <option key={t.name} value={t.name}>{t.name} - {t.price}</option>)}
-                        <option value="Other">Other / Custom Amount</option>
+                      <select 
+                        required 
+                        value={selectedTier}
+                        onChange={(e) => setSelectedTier(e.target.value as any)}
+                        className="appearance-none bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white/80 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans w-full cursor-pointer"
+                      >
+                        <option value="" disabled className="bg-[#05070B] text-white">Sponsorship Tier: Select a tier</option>
+                        {TIERS.filter(t => t.name !== 'Other').map(t => (
+                          <option key={t.name} value={t.name} className="bg-[#05070B] text-white">
+                            {t.name} - {t.price}
+                          </option>
+                        ))}
+                        <option value="Other" className="bg-[#05070B] text-white">Other / Custom Amount</option>
                       </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white/50">
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-white/40">
                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                       </div>
                     </div>
 
-                    <textarea placeholder="Message / Questions..." rows={3} className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-artemis-blue transition-colors font-mono resize-none"></textarea>
+                    <textarea placeholder="Message / Questions..." rows={4} className="bg-[#05070B]/50 border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans resize-none"></textarea>
                     
-                    <button type="submit" disabled={isSubmittingContact} className="w-full py-4 mt-2 rounded-lg bg-gradient-to-r from-stellar-orange to-orange-600 font-bold uppercase text-[10px] tracking-widest hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-shadow">
+                    <button type="submit" disabled={isSubmittingContact} className="w-full py-4 mt-2 rounded-xl bg-gradient-to-r from-stellar-orange to-orange-600 font-semibold uppercase text-xs tracking-wider hover:shadow-[0_0_30px_rgba(249,115,22,0.35)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
                       {isSubmittingContact ? "Processing..." : "Submit Interest"}
                     </button>
                   </form>
