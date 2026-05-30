@@ -484,6 +484,15 @@ body {
 
 @media (max-width: 768px) {
   .hide-mobile { display: none !important; }
+  .snap-container {
+    scroll-snap-type: none !important;
+    height: auto !important;
+    overflow-y: visible !important;
+  }
+  .snap-section {
+    min-height: auto !important;
+    height: auto !important;
+  }
 }
 
 @media (min-width: 769px) {

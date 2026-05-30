@@ -262,8 +262,21 @@ export default function Home() {
   const [isMoving, setIsMoving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isAtTop, setIsAtTop] = useState(true);
+  
+  const [isMobile, setIsMobile] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: containerRef });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (isLoading) {
@@ -298,15 +311,27 @@ export default function Home() {
     
     // Special handling for the horizontal timeline section
     if (actualTargetId === '#timeline') {
-      const aboutSection = document.querySelector('#about') as HTMLElement;
-      if (!aboutSection) return;
-      // Scroll to exactly 36.6% progress (1.1 * viewport height) to align timeline left edge
-      targetPosition = aboutSection.offsetTop + 1.1 * window.innerHeight;
+      if (isMobile) {
+        const target = document.querySelector('#timeline') as HTMLElement;
+        if (!target) return;
+        targetPosition = target.offsetTop;
+      } else {
+        const aboutSection = document.querySelector('#about') as HTMLElement;
+        if (!aboutSection) return;
+        // Scroll to exactly 36.6% progress (1.1 * viewport height) to align timeline left edge
+        targetPosition = aboutSection.offsetTop + 1.1 * window.innerHeight;
+      }
     } else if (actualTargetId === '#outreach') {
-      const target = document.querySelector(actualTargetId) as HTMLElement;
-      if (!target) return;
-      // Scroll partially into the outreach container so the first cards are visible
-      targetPosition = target.offsetTop + 1.6 * window.innerHeight;
+      if (isMobile) {
+        const target = document.querySelector('#outreach') as HTMLElement;
+        if (!target) return;
+        targetPosition = target.offsetTop;
+      } else {
+        const target = document.querySelector(actualTargetId) as HTMLElement;
+        if (!target) return;
+        // Scroll partially into the outreach container so the first cards are visible
+        targetPosition = target.offsetTop + 1.6 * window.innerHeight;
+      }
     } else {
       const target = document.querySelector(actualTargetId) as HTMLElement;
       if (!target) return;
@@ -492,16 +517,22 @@ export default function Home() {
     container: containerRef,
     offset: ["start start", "end end"]
   });
-  const xAboutToTimeline = useTransform(
+  const xAboutToTimelineFallback = useMotionValue("0vw");
+  const yAboutToTimelineFallback = useMotionValue("0vh");
+  
+  const xAboutToTimelineVal = useTransform(
     horizontalScrollYProgress, 
     [0, 0.15, 0.75, 1], 
     ["0vw", "-5vw", "-220vw", "-220vw"]
   );
-  const yAboutToTimeline = useTransform(
+  const yAboutToTimelineVal = useTransform(
     horizontalScrollYProgress,
     [0, 0.75, 1],
     ["0vh", "0vh", "-10vh"]
   );
+
+  const xAboutToTimeline = isMobile ? xAboutToTimelineFallback : xAboutToTimelineVal;
+  const yAboutToTimeline = isMobile ? yAboutToTimelineFallback : yAboutToTimelineVal;
 
   // Form submission mock
   const handleContactSubmit = async (e: React.FormEvent) => {
@@ -637,28 +668,101 @@ export default function Home() {
 
           {/* 3. Overlays (Header and Sponsor) */}
           <motion.header 
-            className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-12 py-8 pointer-events-auto"
+            className={`absolute top-0 left-0 w-full z-50 flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto`}
           >
-          <div className="flex items-center gap-6 cursor-pointer hover-glitch-text">
-            <img src="/branding/logo_4.webp" alt="Artemis Logo" className="w-[72px] h-[72px] opacity-80 mix-blend-screen object-contain" />
+          <div className="flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text" onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+            <img src="/branding/logo_4.webp" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} opacity-80 mix-blend-screen object-contain`} />
             <div className="flex flex-col justify-center">
-              <span className="display text-[63px] font-black text-white/60 leading-none">ARTEMIS</span>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-white/40 mt-1.5 font-sans font-semibold">Chatham High School Robotics</span>
+              <span className={`display ${isMobile ? "text-2xl" : "text-[63px]"} font-black text-white/60 leading-none`}>ARTEMIS</span>
+              <span className={`${isMobile ? "text-[8px]" : "text-[10px]"} uppercase tracking-[0.25em] text-white/40 mt-1 font-sans font-semibold`}>Chatham Central Robotics</span>
             </div>
           </div>
-          <nav className="flex gap-10 text-base md:text-lg tracking-widest uppercase font-bold text-white/50 font-mono">
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex gap-10 text-base md:text-lg tracking-widest uppercase font-bold text-white/50 font-mono">
             <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">About</a>
             <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Timeline</a>
             <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Impact</a>
             <a href="#budget" onClick={(e) => handleFastScroll(e, '#budget')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Support</a>
           </nav>
+
+          {/* Mobile Hamburger Button */}
+          {isMobile && (
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="z-50 flex items-center justify-center w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md active:scale-95 transition-all shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
+              aria-label="Toggle Menu"
+            >
+              <div className="flex flex-col gap-1.5 w-5 justify-center items-center">
+                <motion.span 
+                  animate={isMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-full h-0.5 bg-white rounded-full origin-center" 
+                />
+                <motion.span 
+                  animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+                  transition={{ duration: 0.15 }}
+                  className="w-full h-0.5 bg-white rounded-full" 
+                />
+                <motion.span 
+                  animate={isMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-full h-0.5 bg-white rounded-full origin-center" 
+                />
+              </div>
+            </button>
+          )}
           </motion.header>
+
+          {/* Mobile Navigation Drawer Overlay */}
+          <AnimatePresence>
+            {isMobile && isMenuOpen && (
+              <motion.div 
+                initial={{ opacity: 0, x: "100%" }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed inset-0 z-[45] flex flex-col justify-center items-center bg-[#05070B]/95 backdrop-blur-2xl px-8 pointer-events-auto border-l border-white/5"
+              >
+                {/* Background glowing rings inside mobile menu */}
+                <div className="absolute top-[20%] right-[-10%] w-[300px] h-[300px] rounded-full bg-artemis-blue/10 blur-[100px] pointer-events-none" />
+                <div className="absolute bottom-[20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-stellar-orange/10 blur-[100px] pointer-events-none" />
+                
+                <div className="flex flex-col gap-8 text-center text-xl font-bold uppercase tracking-[0.2em] font-mono text-white/60">
+                  {NAV_LINKS.concat({ href: "#budget", label: "Support" }).map((link, idx) => (
+                    <motion.a 
+                      key={link.label}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + idx * 0.08 }}
+                      href={link.href}
+                      onClick={(e) => {
+                        setIsMenuOpen(false);
+                        handleFastScroll(e, link.href);
+                      }}
+                      className="hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95 transition-all text-2xl py-2"
+                    >
+                      {link.label}
+                    </motion.a>
+                  ))}
+                  
+                  {/* Floating Contact/Info in drawer */}
+                  <div className="h-px w-24 bg-white/10 mx-auto my-4" />
+                  <span className="text-[10px] text-white/30 tracking-widest leading-relaxed">
+                    TEAM 6621 ARTEMIS Central pad<br/>
+                    fischers@chatham.k12.ny.us
+                  </span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          
           {/* Sponsor Button */}
-        <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto" style={{ perspective: '800px' }}>
-          <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40">
-            Support Now
-          </a>
-        </div>
+          <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto" style={{ perspective: '800px' }}>
+            <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40">
+              Support Now
+            </a>
+          </div>
 
         </div>
       </section>
@@ -666,32 +770,35 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            2. ABOUT & TIMELINE (HORIZONTAL SCROLL)
            ══════════════════════════════════════════════════════ */}
-      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: '400vh', scrollSnapAlign: 'start' }}>
+      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: isMobile ? 'auto' : '400vh', scrollSnapAlign: isMobile ? 'none' : 'start' }}>
         
 
-        {/* Sticky container that holds the horizontal sliding content */}
-        <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center">
+        {/* Sticky/Static container that holds the horizontal sliding content or vertical content */}
+        <div className={isMobile ? "relative w-full py-16 flex items-center" : "sticky top-0 h-screen w-full overflow-hidden flex items-center"}>
           
-          <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className="flex w-[320vw] h-full relative z-10">
+          <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className={isMobile ? "w-full block relative z-10" : "flex w-[320vw] h-full relative z-10"}>
             
             {/* Section background gradient & floating shapes (scrolling with the content) */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden topography-bg opacity-40" aria-hidden="true" style={{ width: '320vw' }}>
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden topography-bg opacity-40" aria-hidden="true" style={{ width: isMobile ? '100%' : '320vw' }}>
               {/* Starfield */}
               <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
             </div>
 
-            {/* --- ABOUT US PANE (100vw) --- */}
-            <div className="w-[100vw] h-full flex flex-col pt-16 md:pt-20 pb-8 px-6 md:px-12 relative z-10">
+            {/* --- ABOUT US PANE --- */}
+            <div className={isMobile ? "w-full h-auto flex flex-col pt-8 pb-8 px-6 relative z-10" : "w-[100vw] h-full flex flex-col pt-16 md:pt-20 pb-8 px-6 md:px-12 relative z-10"}>
               
               {/* Scattered 3D Shapes */}
-              <motion.div animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
-              <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
+              {!isMobile && (
+                <>
+                  <motion.div animate={{ rotateX: 360, rotateY: 360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute top-[20%] left-[10%] w-48 h-48 opacity-30 z-0 pointer-events-none" />
+                  <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-diamond absolute bottom-[15%] right-[15%] w-32 h-32 opacity-40 z-0 pointer-events-none" />
+                </>
+              )}
               
-              {/* Offset removed to center it normally now that x-axis isn't shifting early */}
-              <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-6 lg:gap-10 items-stretch h-auto mt-4">
+              <div className={`max-w-7xl mx-auto w-full flex flex-col ${isMobile ? "gap-8" : "lg:flex-row gap-6 lg:gap-10 items-stretch h-auto mt-4"}`}>
                 
                 {/* Left Side: About Text */}
-                <div className="lg:w-5/12 flex flex-col space-y-6 p-8 md:p-10 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] justify-between h-full relative overflow-hidden backdrop-blur-3xl border border-white/10" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                <div className={`${isMobile ? "w-full p-6" : "lg:w-5/12 p-8 md:p-10"} flex flex-col space-y-6 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] justify-between relative overflow-hidden backdrop-blur-3xl border border-white/10`} style={{ background: 'rgba(255,255,255,0.02)' }}>
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                   
                   <div className="relative z-10">
@@ -717,16 +824,16 @@ export default function Home() {
                     
                     {/* About FRC Chip & Text */}
                     <div className="flex items-center gap-6 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.3)]" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
-                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
+                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
                       <p className="text-xs text-white/50 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Right Side: Photo and Stats */}
-                <div className="lg:w-7/12 w-full flex flex-col gap-6 h-full">
+                <div className={`w-full flex flex-col gap-6 ${isMobile ? "" : "lg:w-7/12 h-full"}`}>
                   {/* Team Photo */}
-                  <div className="relative rounded-[2rem] overflow-hidden border border-white/10 group flex-grow" style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                  <div className={`relative rounded-[2rem] overflow-hidden border border-white/10 group ${isMobile ? "h-[250px]" : "flex-grow"}`} style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                     <img src="/photos/hero/team_with_robot.webp" alt="Team 6621 Artemis with their robot" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                     <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%)' }} />
@@ -739,77 +846,141 @@ export default function Home() {
                     </div>
                   </div>
                   {/* Compact stat row */}
-                  <div className="grid grid-cols-3 gap-5 shrink-0" style={{ perspective: '800px' }}>
-                    <div className="relative p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                  <div className="grid grid-cols-3 gap-3 md:gap-5 shrink-0" style={{ perspective: '800px' }}>
+                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
-                      <h4 className="h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={2016} duration={1.5} /></h4>
-                      <p className="label text-white/50 mt-2 relative z-10">Founded</p>
+                      <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={2016} duration={1.5} /></h4>
+                      <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Founded</p>
                     </div>
-                    <div className="relative p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
-                      <h4 className="h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={60} duration={2} format={(v) => `${v}%`} /></h4>
-                      <p className="label text-white/50 mt-2 relative z-10">New Members</p>
+                      <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={60} duration={2} format={(v) => `${v}%`} /></h4>
+                      <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">New Members</p>
                     </div>
-                    <div className="relative p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
-                      <h4 className="h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
-                      <p className="label text-white/50 mt-2 relative z-10">Hours This Season</p>
+                      <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
+                      <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Hours</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* --- TIMELINE PANE (220vw) --- */}
-            <div id="timeline" className="w-[220vw] h-full relative z-10 overflow-hidden">
+            {/* --- TIMELINE PANE --- */}
+            <div id="timeline" className={isMobile ? "w-full px-6 py-12 relative z-10" : "w-[220vw] h-full relative z-10 overflow-hidden"}>
               
-              {/* 2024 SECTION (0vw to 70vw) */}
-              <div className="absolute top-[35%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
-                <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
-                <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
-                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Creativity Award</div></li>
-                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>First Leadership Award Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></div></li>
-                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></div></li>
-                </ul>
-              </div>
-              <img src="/timeline/1.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
-              <img src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+              {isMobile ? (
+                <div className="flex flex-col gap-12 relative pl-8 border-l border-white/10 max-w-xl mx-auto">
+                  {/* Glowing vertical connector line */}
+                  <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-artemis-blue via-stellar-orange to-artemis-blue shadow-[0_0_8px_rgba(37,99,235,0.5)]" />
+                  
+                  {/* 2024 */}
+                  <div className="relative">
+                    {/* Glowing indicator dot */}
+                    <div className="absolute -left-[37px] top-1.5 w-4 h-4 rounded-full bg-artemis-blue border-4 border-[#05070B] shadow-[0_0_10px_#2563eb]" />
+                    <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
+                      <h4 className="text-artemis-blue text-lg font-bold mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.4)' }}>2024 Season</h4>
+                      <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
+                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Creativity Award</div></li>
+                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>First Leadership Award Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></div></li>
+                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></div></li>
+                      </ul>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 mt-4">
+                      <img src="/timeline/1.webp" alt="2024 Event" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
+                      <img src="/timeline/3.webp" alt="2024 Mentors" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
+                    </div>
+                  </div>
 
-              {/* 2025 SECTION (60vw to 120vw) */}
-              <div className="absolute top-[25%] left-[60vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(249,115,22,0.15)] z-30 transform rotate-1">
-                <h4 className="text-stellar-orange h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
-                <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
-                  <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ranked #3 in New York State</div></li>
-                  <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>New York Tech Valley Regional Winner</div></li>
-                  <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Worlds Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division)</span></div></li>
-                  <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ballston Spa Off-Season Competition Finalist</div></li>
-                </ul>
-              </div>
-              <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[70vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
-              <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+                  {/* 2025 */}
+                  <div className="relative">
+                    {/* Glowing indicator dot */}
+                    <div className="absolute -left-[37px] top-1.5 w-4 h-4 rounded-full bg-stellar-orange border-4 border-[#05070B] shadow-[0_0_10px_#f97316]" />
+                    <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
+                      <h4 className="text-stellar-orange text-lg font-bold mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(249,115,22,0.4)' }}>2025 Season</h4>
+                      <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
+                        <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ranked #3 in New York State</div></li>
+                        <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>New York Tech Valley Regional Winner</div></li>
+                        <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Worlds Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division)</span></div></li>
+                        <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ballston Spa Off-Season Finalist</div></li>
+                      </ul>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 mt-4">
+                      <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
+                      <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
+                    </div>
+                  </div>
 
-              {/* 2026 SECTION (130vw to 220vw) */}
-              <div className="absolute top-[45%] left-[130vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
-                <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
-                <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
-                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></div></li>
-                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Tech Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 5</span></div></li>
-                  <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></div></li>
-                </ul>
-              </div>
-              <img src="/timeline/2026_1.jpg" alt="2026 Event" className="absolute bottom-[15%] left-[155vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
-              <img src="/timeline/2026_2.jpg" alt="2026 Team" className="absolute top-[15%] right-[5vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+                  {/* 2026 */}
+                  <div className="relative">
+                    {/* Glowing indicator dot */}
+                    <div className="absolute -left-[37px] top-1.5 w-4 h-4 rounded-full bg-artemis-blue border-4 border-[#05070B] shadow-[0_0_10px_#2563eb]" />
+                    <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
+                      <h4 className="text-artemis-blue text-lg font-bold mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.4)' }}>2026 Season</h4>
+                      <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
+                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></div></li>
+                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Tech Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 5</span></div></li>
+                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></div></li>
+                      </ul>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 mt-4">
+                      <img src="/timeline/2026_1.jpg" alt="2026 Event" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
+                      <img src="/timeline/2026_2.jpg" alt="2026 Team" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {/* 2024 SECTION (0vw to 70vw) */}
+                  <div className="absolute top-[35%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
+                    <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
+                    <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
+                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Creativity Award</div></li>
+                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>First Leadership Award Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></div></li>
+                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></div></li>
+                    </ul>
+                  </div>
+                  <img src="/timeline/1.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+                  <img src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+
+                  {/* 2025 SECTION (60vw to 120vw) */}
+                  <div className="absolute top-[25%] left-[60vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(249,115,22,0.15)] z-30 transform rotate-1">
+                    <h4 className="text-stellar-orange h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
+                    <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
+                      <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ranked #3 in New York State</div></li>
+                      <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>New York Tech Valley Regional Winner</div></li>
+                      <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Worlds Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division)</span></div></li>
+                      <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ballston Spa Off-Season Competition Finalist</div></li>
+                    </ul>
+                  </div>
+                  <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[70vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
+                  <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+
+                  {/* 2026 SECTION (130vw to 220vw) */}
+                  <div className="absolute top-[45%] left-[130vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
+                    <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
+                    <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
+                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></div></li>
+                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Tech Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 5</span></div></li>
+                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></div></li>
+                    </ul>
+                  </div>
+                  <img src="/timeline/2026_1.jpg" alt="2026 Event" className="absolute bottom-[15%] left-[155vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
+                  <img src="/timeline/2026_2.jpg" alt="2026 Team" className="absolute top-[15%] right-[5vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+                </>
+              )}
 
             </div>
-            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
            5. OUTREACH PARALLAX (FLY OUT EFFECT)
            ══════════════════════════════════════════════════════ */}
-      <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B]" style={{ height: '350vh' }}>
-        <div className="sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12">
+      <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B]" style={{ height: isMobile ? 'auto' : '350vh' }}>
+        <div className={isMobile ? "relative w-full flex flex-col items-center py-16 px-6" : "sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12"}>
           
           {/* Background Elements */}
           <div className="absolute inset-0 z-0 opacity-20 starfield" />
@@ -823,11 +994,14 @@ export default function Home() {
           <motion.div animate={{ x: ['5vw', '-6vw', '3vw', '5vw'], y: ['4vh', '-6vh', '7vh', '4vh'], scale: [0.95, 1.05, 1, 0.95] }} transition={{ duration: 35, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-[20%] right-[15%] w-[45vw] h-[45vw] rounded-full bg-gradient-to-tl from-stellar-orange/8 via-rose-500/5 to-transparent blur-[140px] pointer-events-none z-0" />
           
           {/* Slow orbital rings */}
-          <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 200, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] rounded-full border border-white/[0.03] pointer-events-none" />
-          <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 150, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] rounded-full border border-white/[0.05] pointer-events-none" />
-          
-          <motion.div animate={{ x: [0, 20, -15, 0], y: [0, 15, -10, 0], rotateX: 360 }} transition={{ duration: 35, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-30 z-0 pointer-events-none" />
-          <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -20, 15, 0], rotateY: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-25 z-0 pointer-events-none" />
+          {!isMobile && (
+            <>
+              <motion.div animate={{ rotateZ: 360 }} transition={{ duration: 200, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] rounded-full border border-white/[0.03] pointer-events-none" />
+              <motion.div animate={{ rotateZ: -360 }} transition={{ duration: 150, repeat: Infinity, ease: 'linear' }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] rounded-full border border-white/[0.05] pointer-events-none" />
+              <motion.div animate={{ x: [0, 20, -15, 0], y: [0, 15, -10, 0], rotateX: 360 }} transition={{ duration: 35, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-sphere absolute top-[10%] left-[5%] w-32 h-32 opacity-30 z-0 pointer-events-none" />
+              <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -20, 15, 0], rotateY: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-25 z-0 pointer-events-none" />
+            </>
+          )}
           
           <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
             <h2 className="display font-black text-white/60 tracking-wide hover-glitch-text">
@@ -835,27 +1009,47 @@ export default function Home() {
             </h2>
           </div>
           
-          {/* Parallax Grid Container */}
-          <div className="max-w-7xl mx-auto px-6 w-full h-[65vh] md:h-[70vh] relative z-10 mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 w-full h-full relative">
-              {[0, 1, 2].map(colIndex => (
-                <div key={colIndex} className="relative w-full h-full" style={{ perspective: '1000px' }}>
-                  {OUTREACH_CARDS.map((card, idx) => {
-                    if (idx % 3 !== colIndex) return null;
-                    return (
-                      <OutreachParallaxCard 
-                        key={idx}
-                        card={card} 
-                        index={idx} 
-                        totalCards={OUTREACH_CARDS.length} 
-                        scrollYProgress={outreachScrollYProgress} 
-                      />
-                    );
-                  })}
+          {/* Parallax Grid Container or Mobile Stack */}
+          {isMobile ? (
+            <div className="flex flex-col gap-8 w-full max-w-md relative z-10">
+              {OUTREACH_CARDS.map((card, idx) => (
+                <div 
+                  key={idx}
+                  className="relative w-full h-[400px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group"
+                >
+                  <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/50 to-transparent opacity-90" />
+                  
+                  <div className="relative z-10 p-6 backdrop-blur-md bg-white/[0.03] border-t border-white/10 mt-auto">
+                    <span className="inline-block px-4 py-1.5 rounded-full bg-stellar-orange/20 text-stellar-orange text-xs font-bold tracking-widest uppercase mb-4 border border-stellar-orange/30 shadow-[0_0_15px_rgba(251,146,60,0.3)]">{card.tag}</span>
+                    <h3 className="h3 font-bold mb-3 text-white">{card.title}</h3>
+                    <p className="text-xs text-white/70 leading-relaxed font-light">{card.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
-          </div>
+          ) : (
+            <div className="max-w-7xl mx-auto px-6 w-full h-[65vh] md:h-[70vh] relative z-10 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 w-full h-full relative">
+                {[0, 1, 2].map(colIndex => (
+                  <div key={colIndex} className="relative w-full h-full" style={{ perspective: '1000px' }}>
+                    {OUTREACH_CARDS.map((card, idx) => {
+                      if (idx % 3 !== colIndex) return null;
+                      return (
+                        <OutreachParallaxCard 
+                          key={idx}
+                          card={card} 
+                          index={idx} 
+                          totalCards={OUTREACH_CARDS.length} 
+                          scrollYProgress={outreachScrollYProgress} 
+                        />
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -1048,7 +1242,7 @@ export default function Home() {
                 setSelectedTier('Other');
                 handleFastScroll(e, '#sponsorship-form');
               }}
-              className="px-8 py-3 rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase border border-white/10 text-white/90 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all duration-300 shrink-0"
+              className="px-8 py-3.5 rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase border border-white/10 text-white/90 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all duration-300 shrink-0"
             >
               Custom Donation
             </a>
@@ -1259,7 +1453,7 @@ export default function Home() {
                   <a 
                     key={link.label} 
                     href={link.href} 
-                    className="text-xs text-white/60 hover:text-stellar-orange transition-colors duration-300 transform hover:translate-x-1 md:hover:translate-x-0 md:hover:-translate-y-0.5"
+                    className="text-xs text-white/60 hover:text-stellar-orange transition-colors duration-300 transform hover:translate-x-1 md:hover:translate-x-0 md:hover:-translate-y-0.5 py-2 px-4 block"
                   >
                     {link.label}
                   </a>
@@ -1274,7 +1468,7 @@ export default function Home() {
               </h4>
               <a 
                 href="mailto:fischers@chatham.k12.ny.us" 
-                className="text-sm font-bold text-artemis-blue hover:text-stellar-orange transition-colors duration-300 tracking-wider font-mono hover:shadow-[0_0_15px_rgba(37,99,235,0.2)]"
+                className="text-sm font-bold text-artemis-blue hover:text-stellar-orange transition-colors duration-300 tracking-wider font-mono hover:shadow-[0_0_15px_rgba(37,99,235,0.2)] py-2 px-4 block"
               >
                 fischers@chatham.k12.ny.us
               </a>
