@@ -96,12 +96,19 @@ input, textarea, [contenteditable="true"] {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  overflow-x: hidden !important;
 }
 
 body {
   background: #05070B;
   color: white;
-  overflow-x: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  overflow-x: hidden !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
