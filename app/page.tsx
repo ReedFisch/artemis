@@ -641,7 +641,10 @@ export default function Home() {
           >
           <div className="flex items-center gap-6 cursor-pointer hover-glitch-text">
             <img src="/branding/logo_4.webp" alt="Artemis Logo" className="w-[72px] h-[72px] opacity-80 mix-blend-screen object-contain" />
-            <span className="display text-[63px] font-black text-white/60 leading-none">ARTEMIS</span>
+            <div className="flex flex-col justify-center">
+              <span className="display text-[63px] font-black text-white/60 leading-none">ARTEMIS</span>
+              <span className="text-[10px] uppercase tracking-[0.25em] text-white/40 mt-1.5 font-sans font-semibold">Chatham High School Robotics</span>
+            </div>
           </div>
           <nav className="flex gap-10 text-base md:text-lg tracking-widest uppercase font-bold text-white/50 font-mono">
             <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">About</a>
