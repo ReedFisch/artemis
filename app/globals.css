@@ -333,7 +333,7 @@ body {
 
 .marquee-content {
   display: flex;
-  gap: 2rem;
+  width: max-content;
   white-space: nowrap;
   animation: scroll-left 40s linear infinite;
 }

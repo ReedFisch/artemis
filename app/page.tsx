@@ -187,7 +187,7 @@ const OutreachParallaxCard = ({
       
       <div className="relative z-10 p-6 md:p-8 backdrop-blur-md bg-white/[0.03] border-t border-white/10 mt-auto">
         <span className="inline-block px-4 py-1.5 rounded-full bg-stellar-orange/20 text-stellar-orange text-xs md:text-sm font-bold tracking-widest uppercase mb-4 border border-stellar-orange/30 shadow-[0_0_15px_rgba(251,146,60,0.3)]">{card.tag}</span>
-        <h3 className="h3 font-bold mb-3 text-white terminal-cursor">{card.title}</h3>
+        <h3 className="h3 font-bold mb-3 text-white">{card.title}</h3>
         <p className="text-xs text-white/70 leading-relaxed font-light">{card.desc}</p>
       </div>
     </motion.div>
@@ -609,7 +609,7 @@ export default function Home() {
 
             {/* Loading Text */}
             <div className="absolute bottom-20 z-10 flex flex-col items-center">
-              <div className="label font-black tracking-[0.4em] text-white/90 animate-pulse terminal-cursor">Initializing System</div>
+              <div className="label font-black tracking-[0.4em] text-white/90 animate-pulse">Initializing System</div>
               <p className="text-white/40 font-mono text-xs mt-4 tracking-widest">ESTABLISHING CONNECTION...</p>
             </div>
           </motion.div>
@@ -639,7 +639,7 @@ export default function Home() {
           >
           <div className="flex items-center gap-4 cursor-pointer hover-glitch-text">
             <img src="/branding/logo_4.webp" alt="Artemis Logo" className="w-12 h-12 opacity-80 mix-blend-screen object-contain" />
-            <span className="display font-black text-white/60 terminal-cursor">ARTEMIS</span>
+            <span className="display font-black text-white/60">ARTEMIS</span>
           </div>
           <nav className="flex gap-8 label font-bold text-white/50">
             <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">About</a>
@@ -690,7 +690,7 @@ export default function Home() {
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                   
                   <div className="relative z-10">
-                    <h2 className="h1 font-black text-white terminal-cursor hover-glitch-text transition-all duration-300">
+                    <h2 className="h1 font-black text-white hover-glitch-text transition-all duration-300">
                       About Us
                     </h2>
                     <p className="body text-white/60 leading-relaxed font-light mt-6">
@@ -728,7 +728,7 @@ export default function Home() {
                     <div className="absolute bottom-0 left-0 right-0 p-8 flex justify-between items-end">
                       <div>
                         <p className="text-[10px] uppercase tracking-widest text-white/50 mb-1">Team 6621</p>
-                        <p className="h2 font-bold text-white terminal-cursor hover-glitch-text">Artemis Robotics</p>
+                        <p className="h2 font-bold text-white hover-glitch-text">Artemis Robotics</p>
                       </div>
                       <span className="text-[10px] uppercase tracking-widest text-white/40">Chatham, NY</span>
                     </div>
@@ -825,7 +825,7 @@ export default function Home() {
           <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -20, 15, 0], rotateY: 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="shape-3d shape-ring absolute bottom-[20%] right-[10%] w-40 h-40 opacity-25 z-0 pointer-events-none" />
           
           <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
-            <h2 className="display font-black text-white/60 tracking-wide terminal-cursor hover-glitch-text">
+            <h2 className="display font-black text-white/60 tracking-wide hover-glitch-text">
               Impact
             </h2>
           </div>
@@ -863,7 +863,7 @@ export default function Home() {
         
         <div className="max-w-4xl mx-auto px-6 w-full flex flex-col items-center justify-center relative z-10 text-center">
           
-          <h2 className="display font-black mb-4 terminal-cursor">
+          <h2 className="display font-black mb-4">
             Budget
           </h2>
           <p className="text-sm text-white/50 font-light max-w-2xl mb-12">
@@ -873,7 +873,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full relative z-10 text-left">
             {/* Expenses */}
             <div className="glass-panel-deep p-8 md:p-10 rounded-2xl relative overflow-hidden transition-all duration-300 hover:bg-white/[0.03]">
-              <h3 className="h2 font-black mb-6 text-white tracking-wide terminal-cursor">Expenses</h3>
+              <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
               <div className="space-y-6 mb-8">
                 {EXPENSES.map((item, idx) => (
                   <div key={idx} className="flex justify-between items-center text-sm md:text-base border-b border-white/5 pb-2">
@@ -890,7 +890,7 @@ export default function Home() {
 
             {/* Funding Sources */}
             <div className="glass-panel-deep p-8 md:p-10 rounded-2xl relative overflow-hidden transition-all duration-300 hover:bg-white/[0.03]">
-              <h3 className="h2 font-black mb-6 text-white tracking-wide terminal-cursor">Funding Sources</h3>
+              <h3 className="h2 font-black mb-6 text-white tracking-wide">Funding Sources</h3>
               <div className="space-y-6 mb-8">
                 {FUNDING_SOURCES.map((item, idx) => (
                   <div key={idx} className="flex justify-between items-center text-sm md:text-base border-b border-white/5 pb-2">
@@ -919,7 +919,7 @@ export default function Home() {
           {/* Tiers List */}
           <div className="lg:w-1/2 w-full flex flex-col gap-6">
             <div>
-              <h2 className="h1 font-black mb-4 terminal-cursor hover-glitch-text">
+              <h2 className="h1 font-black mb-4 hover-glitch-text">
                 Sponsorship Tiers
               </h2>
               <p className="text-sm text-white/50 font-light mb-8">
@@ -1052,7 +1052,7 @@ export default function Home() {
         
         {/* Logos Marquee */}
         <div className="marquee-container w-full">
-          <div className="marquee-content flex items-center" style={{ animationDuration: '60s' }}>
+          <div className="marquee-content flex items-center" style={{ animationDuration: '40s' }}>
             {/* Double the array for seamless infinite scroll */}
             {[...SPONSOR_LOGO_IMAGES, ...SPONSOR_LOGO_IMAGES].map((src, i) => (
               <span key={`logo-${i}`} className="mx-8 flex items-center justify-center w-48 shrink-0">
@@ -1064,7 +1064,7 @@ export default function Home() {
 
         {/* Names Marquee */}
         <div className="marquee-container w-full">
-          <div className="marquee-content flex items-center" style={{ animationDuration: '60s' }}>
+          <div className="marquee-content flex items-center" style={{ animationDuration: '40s' }}>
             {/* Double the array for seamless infinite scroll */}
             {[...SPONSOR_LOGOS, ...SPONSOR_LOGOS].map((name, i) => (
               <span key={`name-${i}`} className="mx-6 label tracking-widest text-white/30 whitespace-nowrap flex items-center shrink-0">
@@ -1087,7 +1087,7 @@ export default function Home() {
               <div className="flex items-center gap-4">
                 <img src="/branding/logo_4.webp" alt="Logo" className="w-10 h-10 object-contain mix-blend-screen" />
                 <div>
-                  <h3 className="h2 font-black tracking-widest terminal-cursor hover-glitch-text">ARTEMIS.6621</h3>
+                  <h3 className="h2 font-black tracking-widest hover-glitch-text">ARTEMIS.6621</h3>
                   <p className="text-[9px] uppercase tracking-widest text-white/40">Chatham High School Robotics</p>
                 </div>
               </div>
