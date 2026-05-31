@@ -1458,6 +1458,8 @@ export default function Home() {
           />
           {/* Noise Overlay for premium analog texture */}
           <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
+          {/* Fuzzy transition mask at the top to smoothly blend the clipped glows from solid black/dark to orange */}
+          <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-[#05070B] via-[#05070B]/70 to-transparent pointer-events-none" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 flex flex-col justify-between">
