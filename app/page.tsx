@@ -1435,93 +1435,116 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            8. SUNDOWN STYLE FOOTER
            ══════════════════════════════════════════════════════ */}
-      <section id="contact" className="relative z-10 overflow-hidden bg-[#0a0a0a] min-h-screen flex flex-col justify-between pt-20">
+      <footer id="contact" className="relative z-10 overflow-hidden bg-[#05070B] border-t border-white/[0.05] pt-16 pb-12">
         
-        {/* Moving Gradient Background (Sundown Style) */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          <div className="absolute inset-0 bg-black" />
+        {/* Subtle Organic Background Glows */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
           <motion.div 
             animate={{ 
-              x: ['-5%', '5%', '-5%'],
-              y: ['-5%', '5%', '-5%'],
+              x: ['-10%', '10%', '-10%'],
+              y: ['-10%', '10%', '-10%'],
               scale: [1, 1.1, 1] 
             }}
             transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute top-[-20%] left-[-10%] w-[120%] h-[120%] bg-gradient-to-br from-[#ff2a00] via-[#ff6a00] to-transparent blur-[120px] opacity-90"
+            className="absolute -bottom-48 -left-48 w-96 h-96 rounded-full bg-artemis-blue/20 blur-[100px]"
           />
           <motion.div 
             animate={{ 
-              x: ['5%', '-5%', '5%'],
-              y: ['5%', '-5%', '5%'],
+              x: ['10%', '-10%', '10%'],
+              y: ['10%', '-10%', '10%'],
               scale: [1.1, 0.9, 1.1] 
             }}
             transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-10%] right-[-10%] w-[80%] h-[80%] bg-gradient-to-tl from-[#e61d00] via-[#ff4800] to-transparent blur-[100px] opacity-80"
+            className="absolute -bottom-48 -right-48 w-96 h-96 rounded-full bg-stellar-orange/15 blur-[100px]"
           />
-          {/* Noise Overlay */}
-          <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
         </div>
 
-        {/* Top Content Row */}
-        <div className="w-full px-6 md:px-12 relative z-10 flex flex-col md:flex-row justify-between gap-16 mt-12">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
           
-          {/* Left: Navigation */}
-          <div className="flex flex-col gap-2">
-            {NAV_LINKS.map(link => (
-              <a 
-                key={link.label} 
-                href={link.href} 
-                className="text-white text-3xl md:text-4xl font-bold tracking-tight hover:opacity-70 transition-opacity"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Right: Contact & Info */}
-          <div className="flex flex-col gap-8 max-w-sm md:text-right md:items-end">
-            <p className="text-white text-lg md:text-xl font-medium leading-tight">
-              Inspiring students through engineering, teamwork, and innovation.
-            </p>
-            <div className="flex flex-col gap-2 md:items-end w-full">
-              <a href="mailto:fischers@chatham.k12.ny.us" className="text-white/80 hover:text-white text-sm border-b border-white/20 hover:border-white pb-2 w-full text-left md:text-right flex justify-between items-center group">
-                fischers@chatham.k12.ny.us
-                <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-              </a>
-              <a href="mailto:emmettbishop-hayes@chatham.k12.ny.us" className="text-white/80 hover:text-white text-sm border-b border-white/20 hover:border-white pb-2 w-full text-left md:text-right flex justify-between items-center group">
-                emmettbishop-hayes@chatham.k12.ny.us
-                <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full flex-grow relative z-10 flex flex-col justify-end">
-          {/* Giant ARTEMIS Text */}
-          <div className="w-full px-4 overflow-hidden mb-6 flex justify-center">
-            <h1 className="text-[22vw] font-black leading-[0.75] text-[#f8f8f8] tracking-tighter" style={{ textShadow: '0 20px 60px rgba(0,0,0,0.5)' }}>
-              Artemis
-            </h1>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="w-full border-t border-white/20 relative z-10">
-            <div className="px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-white/70 font-medium">
-              <p>Copyright &copy; {new Date().getFullYear()} Team 6621</p>
-              <p className="flex items-center gap-2">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                Chatham, NY
+          {/* Top Row: Links and Contact Info */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12 items-start">
+            
+            {/* Left: Branding & Core Message (5 cols) */}
+            <div className="md:col-span-5 flex flex-col gap-4">
+              <div className="flex items-center gap-3">
+                <img src="/branding/logo_transparent.png" alt="Artemis Logo" className="w-10 h-10 object-contain" />
+                <span className="font-mono font-bold tracking-[0.25em] text-white uppercase text-sm">Artemis</span>
+              </div>
+              <p className="text-xs text-white/50 leading-relaxed font-light max-w-sm">
+                Inspiring students through engineering, teamwork, and innovation. Chatham Central School District Robotics Team 6621.
               </p>
-              <div className="flex gap-6">
-                <a href="https://www.instagram.com/artemis_6621/" target="_blank" className="hover:text-white transition-colors">Instagram</a>
-                <a href="https://www.youtube.com/@ArtemisFrc6621" target="_blank" className="hover:text-white transition-colors">YouTube</a>
-                <a href="https://www.thebluealliance.com/team/6621" target="_blank" className="hover:text-white transition-colors">TBA</a>
+            </div>
+
+            {/* Middle: Quick Links (3 cols) */}
+            <div className="md:col-span-3 flex flex-col gap-3">
+              <span className="label text-[9px] uppercase tracking-widest text-white/30 font-mono">Navigation</span>
+              <div className="flex flex-col gap-2">
+                {NAV_LINKS.map(link => (
+                  <a 
+                    key={link.label} 
+                    href={link.href} 
+                    className="text-xs text-white/75 hover:text-white transition-colors font-medium w-fit"
+                  >
+                    {link.label}
+                  </a>
+                ))}
               </div>
             </div>
-          </div>
-        </div>
 
-      </section>
+            {/* Right: Contact & Socials (4 cols) */}
+            <div className="md:col-span-4 flex flex-col gap-4">
+              <span className="label text-[9px] uppercase tracking-widest text-white/30 font-mono">Connect</span>
+              <div className="flex flex-col gap-1.5">
+                <a href="mailto:fischers@chatham.k12.ny.us" className="text-xs text-white/70 hover:text-white transition-colors font-light flex justify-between items-center group py-1 border-b border-white/5">
+                  fischers@chatham.k12.ny.us
+                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+                <a href="mailto:emmettbishop-hayes@chatham.k12.ny.us" className="text-xs text-white/70 hover:text-white transition-colors font-light flex justify-between items-center group py-1 border-b border-white/5">
+                  emmettbishop-hayes@chatham.k12.ny.us
+                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+              </div>
+              <div className="flex gap-4 mt-2">
+                <a href="https://www.instagram.com/artemis_6621/" target="_blank" rel="noopener noreferrer" className="text-xs text-white/50 hover:text-white transition-colors font-mono">Instagram</a>
+                <a href="https://www.youtube.com/@ArtemisFrc6621" target="_blank" rel="noopener noreferrer" className="text-xs text-white/50 hover:text-white transition-colors font-mono">YouTube</a>
+                <a href="https://www.thebluealliance.com/team/6621" target="_blank" rel="noopener noreferrer" className="text-xs text-white/50 hover:text-white transition-colors font-mono">TBA</a>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Glowing separator line */}
+          <div className="relative h-px w-full mb-8">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+          </div>
+
+          {/* Bottom Row: Legal & Copyright (The User-Specified Section) */}
+          <div className="flex flex-col md:flex-row justify-between gap-6 items-start text-[10px] leading-relaxed">
+            
+            {/* Legal / Disclaimer & Copyright */}
+            <div className="flex flex-col gap-2 text-left max-w-2xl">
+              <p className="text-white/35 font-sans">
+                FIRST® and FIRST® Robotics Competition are registered trademarks of For Inspiration and Recognition of Science and Technology. This website is not officially endorsed by FIRST®.
+              </p>
+              <p className="uppercase tracking-[0.15em] text-white/25 font-mono">
+                &copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.
+              </p>
+            </div>
+            
+            {/* Credits */}
+            <div className="flex flex-col md:items-end gap-1.5 shrink-0 text-left md:text-right font-mono uppercase tracking-[0.15em] text-white/25">
+              <p>
+                Photo Credits: <span className="text-stellar-orange/60">Smokingmonkey Photography</span>
+              </p>
+              <p>
+                Chatham Central School District
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </footer>
 
     </main>
   );
