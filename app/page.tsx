@@ -860,7 +860,7 @@ export default function Home() {
                     <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
                       <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
-                      <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Hours</p>
+                      <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Hours Contributed This Season</p>
                     </div>
                   </div>
                 </div>
