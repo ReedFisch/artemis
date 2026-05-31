@@ -1465,10 +1465,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 flex flex-col justify-between">
           
           {/* Top Row: Links and Contact Info */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center mt-2">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mt-2">
             
-            {/* Left: Large Stacked Quick Links (4 cols) */}
-            <div className="md:col-span-4 flex flex-col gap-2">
+            {/* Left: Large Stacked Quick Links (2 cols) */}
+            <div className="md:col-span-2 flex flex-col gap-2">
               {NAV_LINKS.map(link => (
                 <a 
                   key={link.label} 
@@ -1481,8 +1481,8 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Middle: Big Brand Title (4 cols) */}
-            <div className="md:col-span-4 flex flex-col justify-center text-left select-none">
+            {/* Middle: Big Brand Title (6 cols) */}
+            <div className="md:col-span-6 flex flex-col justify-center text-left select-none md:-ml-12 lg:-ml-24 xl:-ml-32">
               <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-[#f8f8f8] tracking-tighter uppercase font-mono" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
                 Artemis
               </h1>
