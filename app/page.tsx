@@ -17,9 +17,9 @@ interface SponsorshipInterestPayload {
 // ─── NAV LINKS ──────────────────────────────────────────────────
 const NAV_LINKS = [
   { href: "#about", label: "About" },
-  { href: "#achievements", label: "Achievements" },
-  { href: "#outreach", label: "Outreach" },
-  { href: "#budget", label: "Budget & Sponsors" },
+  { href: "#timeline", label: "Timeline" },
+  { href: "#outreach", label: "Impact" },
+  { href: "#budget", label: "Support" },
 ];
 
 // ─── TIER DATA ──────────────────────────────────────────────────
@@ -413,7 +413,7 @@ export default function Home() {
       '/timeline/2025_1_new.jpg',
       '/timeline/2025_2_new.jpg',
       '/timeline/2026_1.jpg',
-      '/branding/logo_4.webp'
+      '/branding/logo_transparent.png'
     ];
     
     const totalToLoad = frameCount + additionalImages.length;
@@ -570,7 +570,7 @@ export default function Home() {
             
             {/* Artemis Logo Floating Above */}
             <div className="relative z-20 mb-8 w-40 h-40 flex items-center justify-center">
-              <img src="/branding/logo_4.webp" alt="Artemis Loading" className="w-full h-full animate-pulse object-contain" />
+              <img src="/branding/logo_transparent.png" alt="Artemis Loading" className="w-full h-full animate-pulse object-contain" />
             </div>
 
             {/* 3D Solar System Container */}
@@ -672,7 +672,7 @@ export default function Home() {
             className={`absolute top-0 left-0 w-full z-50 flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto`}
           >
           <div className="flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text" onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            <img src="/branding/logo_4.webp" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} opacity-80 mix-blend-screen object-contain`} />
+            <img src="/branding/logo_transparent.png" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain`} />
             <div className="flex flex-col justify-center">
               <span className={`display ${isMobile ? "text-2xl" : "text-[63px]"} font-black text-white/60 leading-none`}>ARTEMIS</span>
               <span className={`${isMobile ? "text-[8px]" : "text-[10px]"} uppercase tracking-[0.25em] text-white/40 mt-1 font-sans font-semibold`}>Chatham Central Robotics</span>
@@ -1057,7 +1057,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" className="snap-section relative z-10 overflow-hidden min-h-screen flex items-center bg-gradient-to-b from-[#05070B]/0 via-black/40 to-black/80 py-16">
+      <section id="budget" className="snap-section relative z-10 overflow-hidden min-h-screen flex items-center bg-[#05070B] py-16">
         {/* Scattered 3D Shapes */}
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
@@ -1111,7 +1111,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7. SPONSORSHIP TIERS
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship" className="relative z-10 bg-[#05070B] py-28 border-t border-white/[0.03] overflow-hidden">
+      <section id="sponsorship" className="relative z-10 bg-[#05070B] min-h-screen flex items-center py-16 border-t border-white/[0.03] overflow-hidden">
         
         {/* Dynamic Organic Background Nebulas & Glows */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40">
@@ -1249,6 +1249,27 @@ export default function Home() {
             </a>
           </div>
 
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════
+           7.2. PARTNERSHIP INFO (FORM)
+           ══════════════════════════════════════════════════════ */}
+      <section id="sponsorship-form-section" className="relative z-10 min-h-screen flex items-center bg-[#05070B] py-16 border-t border-white/[0.03] overflow-hidden">
+        {/* Dynamic Organic Background Nebulas & Glows (Continued) */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-30">
+          <motion.div 
+            animate={{ 
+              x: ['20%', '-20%', '20%'], 
+              y: ['15%', '-15%', '15%'],
+              scale: [1, 1.1, 1] 
+            }} 
+            transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }} 
+            className="absolute top-[20%] right-[10%] w-[500px] h-[500px] rounded-full bg-artemis-blue/10 blur-[150px]"
+          />
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-6 w-full flex flex-col relative z-10">
           {/* Form & Info Section */}
           <div id="sponsorship-form" className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch max-w-6xl mx-auto w-full">
             
@@ -1412,483 +1433,96 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-           8. PREMIUM SPACE-THEMED FOOTER
+           8. SUNDOWN STYLE FOOTER
            ══════════════════════════════════════════════════════ */}
-      <section id="contact" className="relative z-10 overflow-hidden bg-[#030509]">
+      <section id="contact" className="relative z-10 overflow-hidden bg-[#0a0a0a] min-h-screen flex flex-col justify-between pt-20">
         
-        {/* ── Cosmic Atmosphere Layers ── */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          {/* Nebula gas glows */}
-          <div className="absolute -bottom-32 left-[2%] w-[500px] h-[500px] rounded-full bg-artemis-blue/[0.07] blur-[160px]" />
-          <div className="absolute top-[5%] right-[5%] w-[450px] h-[450px] rounded-full bg-stellar-orange/[0.06] blur-[140px]" />
-          <div className="absolute top-[40%] left-[40%] w-[300px] h-[300px] rounded-full bg-purple-500/[0.04] blur-[120px]" />
-          
-          {/* Starfield */}
-          <div className="absolute inset-0 opacity-50 starfield" />
-          
-          {/* ── Geometric Glassmorphism Filler — Rich Layered Shapes ── */}
-
-          {/* === LARGE GLASS PANELS === */}
-          {/* Frosted glass rectangle - top left area */}
-          <motion.div
-            className="absolute top-[8%] left-[3%] w-32 h-20 rounded-2xl bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/[0.06] backdrop-blur-sm"
-            animate={{ y: [0, -12, 0], rotate: [0, 2, 0] }}
-            transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
+        {/* Moving Gradient Background (Sundown Style) */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          <div className="absolute inset-0 bg-black" />
+          <motion.div 
+            animate={{ 
+              x: ['-5%', '5%', '-5%'],
+              y: ['-5%', '5%', '-5%'],
+              scale: [1, 1.1, 1] 
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute top-[-20%] left-[-10%] w-[120%] h-[120%] bg-gradient-to-br from-[#ff2a00] via-[#ff6a00] to-transparent blur-[120px] opacity-90"
           />
-          {/* Frosted glass square - mid right */}
-          <motion.div
-            className="absolute top-[45%] right-[4%] w-24 h-24 rounded-3xl bg-gradient-to-tl from-artemis-blue/[0.04] to-transparent border border-artemis-blue/[0.06] backdrop-blur-sm"
-            animate={{ y: [0, 10, 0], rotate: [0, -3, 0], scale: [1, 1.03, 1] }}
-            transition={{ repeat: Infinity, duration: 20, ease: "easeInOut" }}
+          <motion.div 
+            animate={{ 
+              x: ['5%', '-5%', '5%'],
+              y: ['5%', '-5%', '5%'],
+              scale: [1.1, 0.9, 1.1] 
+            }}
+            transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute bottom-[-10%] right-[-10%] w-[80%] h-[80%] bg-gradient-to-tl from-[#e61d00] via-[#ff4800] to-transparent blur-[100px] opacity-80"
           />
-          {/* Tall glass pillar - far left */}
-          <motion.div
-            className="absolute top-[25%] left-[1%] w-6 h-40 rounded-full bg-gradient-to-b from-white/[0.03] to-transparent border border-white/[0.04]"
-            animate={{ y: [0, -20, 0], opacity: [0.5, 0.8, 0.5] }}
-            transition={{ repeat: Infinity, duration: 22, ease: "easeInOut" }}
-          />
-          {/* Wide glass bar - bottom area */}
-          <motion.div
-            className="absolute bottom-[8%] left-[15%] w-48 h-3 rounded-full bg-gradient-to-r from-stellar-orange/[0.05] via-white/[0.03] to-transparent border border-white/[0.04]"
-            animate={{ x: [0, 15, 0], opacity: [0.4, 0.7, 0.4] }}
-            transition={{ repeat: Infinity, duration: 18, ease: "easeInOut" }}
-          />
-
-          {/* === HEXAGONS === */}
-          {/* Large frosted hexagon - upper left */}
-          <motion.div
-            className="absolute top-[12%] left-[8%] w-16 h-16 border border-white/[0.06] rotate-12"
-            style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(37,99,235,0.02))' }}
-            animate={{ y: [0, -15, 0], rotate: [12, 20, 12] }}
-            transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
-          />
-          {/* Small filled hexagon - center right */}
-          <motion.div
-            className="absolute top-[60%] right-[18%] w-10 h-10"
-            style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', background: 'linear-gradient(180deg, rgba(249,115,22,0.06), rgba(249,115,22,0.01))' }}
-            animate={{ y: [0, 8, 0], rotate: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 11, ease: "easeInOut" }}
-          />
-          {/* Tiny hexagon outline - bottom center */}
-          <motion.div
-            className="absolute bottom-[25%] left-[55%] w-6 h-6 border border-purple-400/[0.08]"
-            style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}
-            animate={{ rotate: [0, 30, 0], scale: [1, 1.2, 1] }}
-            transition={{ repeat: Infinity, duration: 9, ease: "easeInOut" }}
-          />
-
-          {/* === TRIANGLES === */}
-          {/* Large frosted triangle - bottom right */}
-          <motion.div
-            className="absolute bottom-[20%] right-[12%] w-20 h-20"
-            style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', background: 'linear-gradient(to bottom, rgba(37,99,235,0.05), rgba(37,99,235,0.01))' }}
-            animate={{ y: [0, 12, 0], rotate: [0, -15, 0] }}
-            transition={{ repeat: Infinity, duration: 18, ease: "easeInOut" }}
-          />
-          {/* Small inverted triangle - upper right */}
-          <motion.div
-            className="absolute top-[20%] right-[30%] w-8 h-8 border border-stellar-orange/[0.06]"
-            style={{ clipPath: 'polygon(0% 0%, 100% 0%, 50% 100%)' }}
-            animate={{ y: [0, -8, 0], rotate: [0, 20, 0] }}
-            transition={{ repeat: Infinity, duration: 13, ease: "easeInOut" }}
-          />
-
-          {/* === DIAMONDS === */}
-          {/* Frosted diamond - center upper */}
-          <motion.div
-            className="absolute top-[30%] right-[25%] w-10 h-10 rotate-45"
-            style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))', border: '1px solid rgba(255,255,255,0.05)' }}
-            animate={{ y: [0, -10, 0], scale: [1, 1.1, 1] }}
-            transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
-          />
-          {/* Small diamond outline - mid left */}
-          <motion.div
-            className="absolute top-[50%] left-[12%] w-6 h-6 rotate-45 border border-artemis-blue/[0.07]"
-            animate={{ y: [0, 6, 0], rotate: [45, 55, 45] }}
-            transition={{ repeat: Infinity, duration: 15, ease: "easeInOut" }}
-          />
-          {/* Tiny filled diamond - far right */}
-          <motion.div
-            className="absolute top-[70%] right-[8%] w-4 h-4 rotate-45 bg-stellar-orange/[0.04] border border-stellar-orange/[0.06]"
-            animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.9, 0.5] }}
-            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-          />
-
-          {/* === CIRCLES & RINGS === */}
-          {/* Small circle ring - lower left */}
-          <motion.div
-            className="absolute bottom-[35%] left-[18%] w-8 h-8 rounded-full border border-white/[0.05]"
-            animate={{ y: [0, 8, 0], x: [0, -5, 0] }}
-            transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
-          />
-          {/* Larger circle ring with glass fill */}
-          <motion.div
-            className="absolute top-[55%] left-[65%] w-14 h-14 rounded-full border border-purple-400/[0.06] bg-purple-500/[0.02]"
-            animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
-            transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
-          />
-          {/* Double ring - top center */}
-          <motion.div
-            className="absolute top-[15%] left-[48%] w-12 h-12 rounded-full border border-white/[0.04]"
-            animate={{ scale: [1, 1.08, 1] }}
-            transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
-          >
-            <div className="absolute inset-2 rounded-full border border-artemis-blue/[0.06]" />
-          </motion.div>
-          {/* Gradient-filled circle - lower right */}
-          <motion.div
-            className="absolute bottom-[12%] right-[30%] w-16 h-16 rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.04) 0%, transparent 70%)' }}
-            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-            transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
-          />
-          {/* Tiny pulsing dot */}
-          <motion.div
-            className="absolute top-[38%] left-[30%] w-2 h-2 rounded-full bg-artemis-blue/[0.15]"
-            animate={{ scale: [1, 2, 1], opacity: [0.6, 0.2, 0.6] }}
-            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-          />
-
-          {/* === ORBITAL ARCS === */}
-          {/* Large orbital arc - top */}
-          <motion.div
-            className="absolute top-[5%] left-[20%] w-[300px] h-[300px] rounded-full border border-dashed border-white/[0.03]"
-            style={{ borderTopColor: 'transparent', borderLeftColor: 'transparent' }}
-            animate={{ rotate: [0, 360] }}
-            transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
-          />
-          {/* Small orbital arc - bottom */}
-          <motion.div
-            className="absolute bottom-[5%] right-[20%] w-[180px] h-[180px] rounded-full border border-dashed border-artemis-blue/[0.04]"
-            style={{ borderBottomColor: 'transparent', borderRightColor: 'transparent' }}
-            animate={{ rotate: [360, 0] }}
-            transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
-          />
-
-          {/* === DOT CONSTELLATIONS === */}
-          {/* Constellation cluster 1 - upper right */}
-          <div className="absolute top-[18%] right-[40%] flex gap-3">
-            <div className="w-1 h-1 rounded-full bg-white/10" />
-            <div className="w-1.5 h-1.5 rounded-full bg-artemis-blue/15" />
-            <div className="w-1 h-1 rounded-full bg-white/[0.07]" />
-          </div>
-          {/* Constellation cluster 2 - mid left */}
-          <div className="absolute top-[48%] left-[6%] flex flex-col gap-2">
-            <div className="flex gap-4">
-              <div className="w-1 h-1 rounded-full bg-white/[0.08]" />
-              <div className="w-1.5 h-1.5 rounded-full bg-stellar-orange/[0.1]" />
-            </div>
-            <div className="flex gap-3 ml-2">
-              <div className="w-1 h-1 rounded-full bg-white/[0.06]" />
-              <div className="w-1 h-1 rounded-full bg-white/[0.09]" />
-              <div className="w-0.5 h-0.5 rounded-full bg-artemis-blue/[0.12]" />
-            </div>
-          </div>
-          {/* Constellation cluster 3 - lower center */}
-          <div className="absolute bottom-[30%] left-[38%] flex gap-5">
-            <div className="w-1 h-1 rounded-full bg-white/[0.07]" />
-            <div className="w-0.5 h-0.5 rounded-full bg-stellar-orange/[0.08]" />
-            <div className="w-1.5 h-1.5 rounded-full bg-white/[0.05]" />
-            <div className="w-1 h-1 rounded-full bg-purple-400/[0.1]" />
-          </div>
-          {/* Constellation with connecting lines */}
-          <svg className="absolute top-[65%] left-[8%] w-20 h-16 opacity-[0.06]" viewBox="0 0 80 64">
-            <circle cx="8" cy="8" r="2" fill="white"/>
-            <circle cx="40" cy="56" r="2.5" fill="white"/>
-            <circle cx="72" cy="20" r="1.5" fill="white"/>
-            <line x1="8" y1="8" x2="40" y2="56" stroke="white" strokeWidth="0.5"/>
-            <line x1="40" y1="56" x2="72" y2="20" stroke="white" strokeWidth="0.5"/>
-          </svg>
-
-          {/* === GLASS PILL SHAPES === */}
-          {/* Pill - upper area */}
-          <motion.div
-            className="absolute top-[22%] right-[15%] w-20 h-3 rounded-full bg-gradient-to-r from-artemis-blue/[0.04] to-transparent border border-white/[0.04]"
-            animate={{ x: [0, 10, 0], opacity: [0.4, 0.7, 0.4] }}
-            transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
-          />
-          {/* Pill - lower area */}
-          <motion.div
-            className="absolute bottom-[40%] right-[6%] w-16 h-2.5 rounded-full bg-gradient-to-l from-stellar-orange/[0.05] to-transparent border border-white/[0.03]"
-            animate={{ x: [0, -8, 0] }}
-            transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
-          />
-          {/* Vertical pill */}
-          <motion.div
-            className="absolute top-[35%] left-[50%] w-2.5 h-14 rounded-full bg-gradient-to-b from-white/[0.03] to-transparent border border-white/[0.03]"
-            animate={{ y: [0, -10, 0], opacity: [0.3, 0.6, 0.3] }}
-            transition={{ repeat: Infinity, duration: 17, ease: "easeInOut" }}
-          />
-
-          {/* === CROSS & PLUS SHAPES === */}
-          {/* Rotating cross - lower center */}
-          <motion.div
-            className="absolute bottom-[15%] left-[45%]"
-            animate={{ rotate: [0, 90, 0] }}
-            transition={{ repeat: Infinity, duration: 20, ease: "easeInOut" }}
-          >
-            <div className="w-6 h-[1px] bg-white/[0.06] absolute top-1/2 left-0" />
-            <div className="w-[1px] h-6 bg-white/[0.06] absolute left-1/2 top-0" />
-          </motion.div>
-          {/* Plus shape - upper left */}
-          <motion.div
-            className="absolute top-[28%] left-[22%]"
-            animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.7, 0.4] }}
-            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-          >
-            <div className="w-4 h-[1px] bg-stellar-orange/[0.08] absolute top-1/2 left-0" />
-            <div className="w-[1px] h-4 bg-stellar-orange/[0.08] absolute left-1/2 top-0" />
-          </motion.div>
-
-          {/* === PARALLELOGRAM & TRAPEZOID === */}
-          {/* Glass parallelogram */}
-          <motion.div
-            className="absolute top-[75%] left-[25%] w-16 h-8"
-            style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)', background: 'linear-gradient(135deg, rgba(255,255,255,0.03), transparent)', border: 'none' }}
-            animate={{ x: [0, 8, 0], opacity: [0.3, 0.6, 0.3] }}
-            transition={{ repeat: Infinity, duration: 19, ease: "easeInOut" }}
-          >
-            <div className="absolute inset-0 border border-white/[0.04]" style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)' }} />
-          </motion.div>
-
-          {/* === PENTAGON === */}
-          <motion.div
-            className="absolute top-[42%] right-[35%] w-12 h-12"
-            style={{ clipPath: 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)', background: 'linear-gradient(180deg, rgba(37,99,235,0.04), rgba(37,99,235,0.01))' }}
-            animate={{ rotate: [0, 12, 0], y: [0, -8, 0] }}
-            transition={{ repeat: Infinity, duration: 21, ease: "easeInOut" }}
-          />
-
-          {/* === DASHED LINES === */}
-          {/* Horizontal dashed line */}
-          <motion.div
-            className="absolute top-[85%] left-[10%] w-32 h-px border-t border-dashed border-white/[0.04]"
-            animate={{ opacity: [0.3, 0.6, 0.3] }}
-            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-          />
-          {/* Diagonal dashed line */}
-          <motion.div
-            className="absolute top-[10%] right-[8%] w-24 h-px border-t border-dashed border-artemis-blue/[0.05] rotate-[30deg]"
-            animate={{ opacity: [0.2, 0.5, 0.2] }}
-            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-          />
-          {/* Vertical dashed line */}
-          <motion.div
-            className="absolute top-[30%] right-[2%] w-px h-20 border-l border-dashed border-white/[0.04]"
-            animate={{ opacity: [0.3, 0.5, 0.3] }}
-            transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
-          />
+          {/* Noise Overlay */}
+          <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
         </div>
 
-        {/* ── Glowing Separator Line ── */}
-        <div className="relative h-px w-full">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-artemis-blue/40 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-stellar-orange/20 to-transparent blur-sm" />
+        {/* Top Content Row */}
+        <div className="w-full px-6 md:px-12 relative z-10 flex flex-col md:flex-row justify-between gap-16 mt-12">
+          
+          {/* Left: Navigation */}
+          <div className="flex flex-col gap-2">
+            {NAV_LINKS.map(link => (
+              <a 
+                key={link.label} 
+                href={link.href} 
+                className="text-white text-3xl md:text-4xl font-bold tracking-tight hover:opacity-70 transition-opacity"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Right: Contact & Info */}
+          <div className="flex flex-col gap-8 max-w-sm md:text-right md:items-end">
+            <p className="text-white text-lg md:text-xl font-medium leading-tight">
+              Inspiring students through engineering, teamwork, and innovation.
+            </p>
+            <div className="flex flex-col gap-2 md:items-end w-full">
+              <a href="mailto:fischers@chatham.k12.ny.us" className="text-white/80 hover:text-white text-sm border-b border-white/20 hover:border-white pb-2 w-full text-left md:text-right flex justify-between items-center group">
+                fischers@chatham.k12.ny.us
+                <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+              </a>
+              <a href="mailto:emmettbishop-hayes@chatham.k12.ny.us" className="text-white/80 hover:text-white text-sm border-b border-white/20 hover:border-white pb-2 w-full text-left md:text-right flex justify-between items-center group">
+                emmettbishop-hayes@chatham.k12.ny.us
+                <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+              </a>
+            </div>
+          </div>
         </div>
 
-        <footer className="w-full mt-auto relative z-10">
-          
-          {/* ── Main Footer Content ── */}
-          <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-20 pb-16 relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
-              
-              {/* ━━ Col 1: Brand Identity (4 cols) ━━ */}
-              <div className="lg:col-span-4 flex flex-col gap-6">
-                {/* Logo + Name */}
-                <div className="flex items-center gap-4">
-                  <motion.div
-                    className="relative"
-                    animate={{ y: [0, -6, 0] }}
-                    transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-                  >
-                    <img 
-                      src="/branding/logo_4.webp" 
-                      alt="Artemis 6621 Logo" 
-                      className="w-14 h-14 object-contain mix-blend-screen"
-                    />
-                    {/* Glow ring behind logo */}
-                    <div className="absolute inset-0 rounded-full bg-artemis-blue/20 blur-xl -z-10 scale-150" />
-                  </motion.div>
-                  <div>
-                    <h3 className="h2 font-black tracking-[0.2em] text-xl text-white">ARTEMIS <span className="text-stellar-orange">6621</span></h3>
-                    <p className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-mono mt-0.5">Chatham High School Robotics</p>
-                  </div>
-                </div>
-
-                {/* Tagline */}
-                <p className="text-sm text-white/50 font-sans font-light leading-relaxed max-w-xs">
-                  Columbia County&apos;s only <span className="text-artemis-blue/80 font-medium">FIRST Robotics Competition</span> team — inspiring students through engineering, teamwork, and innovation.
-                </p>
-
-                {/* Mission Status Badge */}
-                <div className="flex items-center gap-2.5 bg-emerald-500/[0.06] border border-emerald-500/20 px-4 py-2 rounded-full w-fit backdrop-blur-sm">
-                  <div className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </div>
-                  <span className="text-[9px] font-mono tracking-[0.2em] uppercase text-emerald-400/90 font-bold">Mission Active</span>
-                </div>
-              </div>
-
-              {/* ━━ Col 2: Quick Links (2 cols) ━━ */}
-              <div className="lg:col-span-2 flex flex-col gap-5">
-                <h4 className="text-[10px] uppercase tracking-[0.25em] text-white/35 font-mono font-bold">
-                  Navigate
-                </h4>
-                <nav className="flex flex-col gap-1">
-                  {NAV_LINKS.map(link => (
-                    <a 
-                      key={link.label} 
-                      href={link.href} 
-                      className="group flex items-center gap-2 text-[13px] text-white/50 hover:text-white font-sans transition-all duration-300 py-1.5"
-                    >
-                      <span className="w-0 group-hover:w-3 h-px bg-stellar-orange transition-all duration-300" />
-                      {link.label}
-                    </a>
-                  ))}
-                  <a 
-                    href="#sponsorship-form" 
-                    className="group flex items-center gap-2 text-[13px] text-white/50 hover:text-white font-sans transition-all duration-300 py-1.5"
-                  >
-                    <span className="w-0 group-hover:w-3 h-px bg-stellar-orange transition-all duration-300" />
-                    Support Us
-                  </a>
-                </nav>
-              </div>
-
-              {/* ━━ Col 3: Contact (3 cols) ━━ */}
-              <div className="lg:col-span-3 flex flex-col gap-5">
-                <h4 className="text-[10px] uppercase tracking-[0.25em] text-white/35 font-mono font-bold">
-                  Contact
-                </h4>
-
-                {/* Lead Mentor */}
-                <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md p-4 space-y-1.5">
-                  <span className="text-[9px] font-mono font-bold text-stellar-orange/80 uppercase tracking-[0.2em] block">Lead Mentor</span>
-                  <p className="text-sm text-white/80 font-sans">Mrs. Sandra Fischer</p>
-                  <a 
-                    href="mailto:fischers@chatham.k12.ny.us"
-                    className="text-xs text-artemis-blue/80 hover:text-artemis-blue font-mono transition-colors duration-300 block"
-                  >
-                    fischers@chatham.k12.ny.us
-                  </a>
-                </div>
-
-                {/* Business Lead */}
-                <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md p-4 space-y-1.5">
-                  <span className="text-[9px] font-mono font-bold text-artemis-blue/80 uppercase tracking-[0.2em] block">Business Lead</span>
-                  <p className="text-sm text-white/80 font-sans">Emmett Bishop-Hayes</p>
-                  <a 
-                    href="mailto:emmettbishop-hayes@chatham.k12.ny.us"
-                    className="text-xs text-artemis-blue/80 hover:text-artemis-blue font-mono transition-colors duration-300 block break-all"
-                  >
-                    emmettbishop-hayes@chatham.k12.ny.us
-                  </a>
-                </div>
-
-                {/* Address */}
-                <p className="text-xs text-white/35 font-sans leading-relaxed">
-                  50 Woodbridge Ave<br/>Chatham, NY 12037
-                </p>
-              </div>
-
-              {/* ━━ Col 4: Social & Connect (3 cols) ━━ */}
-              <div className="lg:col-span-3 flex flex-col gap-5 lg:items-end">
-                <h4 className="text-[10px] uppercase tracking-[0.25em] text-white/35 font-mono font-bold">
-                  Connect
-                </h4>
-
-                {/* Social Icons — vertical stack on lg, horizontal on mobile */}
-                <div className="flex lg:flex-col gap-3">
-                  {/* Instagram */}
-                  <a 
-                    href="https://www.instagram.com/artemis_6621/" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-3 w-full lg:w-auto"
-                  >
-                    <div className="w-11 h-11 shrink-0 rounded-xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md flex items-center justify-center transition-all duration-300 group-hover:border-pink-500/40 group-hover:bg-pink-500/[0.06] group-hover:shadow-[0_0_25px_rgba(236,72,153,0.2)] group-hover:-translate-y-0.5">
-                      <svg className="w-[18px] h-[18px] text-white/70 group-hover:text-pink-400 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                      </svg>
-                    </div>
-                    <span className="hidden lg:block text-xs text-white/40 group-hover:text-white/70 transition-colors duration-300 font-sans">Instagram</span>
-                  </a>
-
-                  {/* YouTube */}
-                  <a 
-                    href="https://www.youtube.com/@ArtemisFrc6621" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-3 w-full lg:w-auto"
-                  >
-                    <div className="w-11 h-11 shrink-0 rounded-xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md flex items-center justify-center transition-all duration-300 group-hover:border-red-500/40 group-hover:bg-red-500/[0.06] group-hover:shadow-[0_0_25px_rgba(239,68,68,0.2)] group-hover:-translate-y-0.5">
-                      <svg className="w-[18px] h-[18px] text-white/70 group-hover:text-red-400 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                      </svg>
-                    </div>
-                    <span className="hidden lg:block text-xs text-white/40 group-hover:text-white/70 transition-colors duration-300 font-sans">YouTube</span>
-                  </a>
-
-                  {/* The Blue Alliance */}
-                  <a 
-                    href="https://www.thebluealliance.com/team/6621" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-3 w-full lg:w-auto"
-                  >
-                    <div className="w-11 h-11 shrink-0 rounded-xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md flex items-center justify-center transition-all duration-300 group-hover:border-blue-400/40 group-hover:bg-blue-400/[0.06] group-hover:shadow-[0_0_25px_rgba(96,165,250,0.2)] group-hover:-translate-y-0.5">
-                      <span className="font-mono font-black text-[9px] tracking-widest text-white/70 group-hover:text-blue-400 transition-colors duration-300">TBA</span>
-                    </div>
-                    <span className="hidden lg:block text-xs text-white/40 group-hover:text-white/70 transition-colors duration-300 font-sans">The Blue Alliance</span>
-                  </a>
-                </div>
-
-                {/* FIRST Logo/Badge */}
-                <div className="mt-auto pt-4">
-                  <div className="rounded-lg bg-white/[0.02] border border-white/[0.05] px-4 py-3 backdrop-blur-sm">
-                    <p className="text-[9px] font-mono tracking-[0.15em] text-white/30 uppercase leading-relaxed text-right">
-                      Proud member of<br/>
-                      <span className="text-white/50 font-bold tracking-[0.2em]">FIRST® Robotics</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
+        <div className="w-full flex-grow relative z-10 flex flex-col justify-end">
+          {/* Giant ARTEMIS Text */}
+          <div className="w-full px-4 overflow-hidden mb-6 flex justify-center">
+            <h1 className="text-[22vw] font-black leading-[0.75] text-[#f8f8f8] tracking-tighter" style={{ textShadow: '0 20px 60px rgba(0,0,0,0.5)' }}>
+              Artemis
+            </h1>
           </div>
 
-          {/* ── Bottom Bar ── */}
-          <div className="relative z-10">
-            {/* Thin glowing separator */}
-            <div className="relative h-px w-full">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-            </div>
-            
-            <div className="max-w-7xl mx-auto px-6 sm:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
-              {/* Legal */}
-              <div className="flex flex-col gap-2 text-center md:text-left">
-                <p className="text-[10px] text-white/25 font-sans leading-relaxed max-w-xl">
-                  FIRST® and FIRST® Robotics Competition are registered trademarks of For Inspiration and Recognition of Science and Technology. This website is not officially endorsed by FIRST®.
-                </p>
-                <p className="text-[9px] uppercase tracking-[0.2em] text-white/20 font-mono">&copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.</p>
-              </div>
-              
-              {/* Credits */}
-              <div className="flex flex-col items-center md:items-end gap-1.5 shrink-0">
-                <p className="text-[9px] uppercase tracking-[0.25em] text-white/30 font-mono font-semibold">
-                  Photo Credits: <span className="text-stellar-orange/50">Smokingmonkey Photography</span>
-                </p>
-                <p className="text-[8px] uppercase tracking-[0.2em] text-white/15 font-mono">
-                  Chatham Central School District
-                </p>
+          {/* Bottom Bar */}
+          <div className="w-full border-t border-white/20 relative z-10">
+            <div className="px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-white/70 font-medium">
+              <p>Copyright &copy; {new Date().getFullYear()} Team 6621</p>
+              <p className="flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                Chatham, NY
+              </p>
+              <div className="flex gap-6">
+                <a href="https://www.instagram.com/artemis_6621/" target="_blank" className="hover:text-white transition-colors">Instagram</a>
+                <a href="https://www.youtube.com/@ArtemisFrc6621" target="_blank" className="hover:text-white transition-colors">YouTube</a>
+                <a href="https://www.thebluealliance.com/team/6621" target="_blank" className="hover:text-white transition-colors">TBA</a>
               </div>
             </div>
           </div>
+        </div>
 
-        </footer>
       </section>
-      
+
     </main>
   );
 }
