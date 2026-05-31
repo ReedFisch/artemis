@@ -987,8 +987,8 @@ export default function Home() {
                       </ul>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-4">
-                      <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-90 hover:brightness-100 transition-all duration-300" />
-                      <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-90 hover:brightness-100 transition-all duration-300" />
+                      <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-80 hover:brightness-100 transition-all duration-300" />
+                      <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-80 hover:brightness-100 transition-all duration-300" />
                     </div>
                   </div>
 
@@ -1034,8 +1034,8 @@ export default function Home() {
                       <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ballston Spa Off-Season Competition Finalist</div></li>
                     </ul>
                   </div>
-                  <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[70vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
-                  <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+                  <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[70vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-80 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
+                  <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-80 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
                   {/* 2026 SECTION (130vw to 220vw) */}
                   <div className="absolute top-[45%] left-[130vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
@@ -1294,10 +1294,12 @@ export default function Home() {
             })}
           </div>
 
-          {/* Donation shown smaller below */}
           <div 
             id="donation-card"
-            onClick={() => setSelectedTier('Other')}
+            onClick={(e) => {
+              setSelectedTier('Other');
+              handleFastScroll(e as any, '#interest-form');
+            }}
             className={`w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-24 ${
               selectedTier === 'Other' ? 'border-white/30 bg-white/[0.04] shadow-[0_15px_30px_rgba(0,0,0,0.3)]' : 'border-white/5 hover:border-white/15'
             }`}
@@ -1309,11 +1311,11 @@ export default function Home() {
               <p className="text-xs text-white/60 font-light">Every contribution helps fund student meals, travel expenses, and raw materials directly.</p>
             </div>
             <a 
-              href="#sponsorship-form"
+              href="#interest-form"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedTier('Other');
-                handleFastScroll(e, '#sponsorship-form');
+                handleFastScroll(e, '#interest-form');
               }}
               className="px-8 py-3.5 rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase border border-white/10 text-white/90 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all duration-300 shrink-0"
             >
@@ -1407,7 +1409,7 @@ export default function Home() {
             </div>
 
             {/* Interest Form (7 cols) */}
-            <div className="lg:col-span-7 w-full flex flex-col justify-center">
+            <div id="interest-form" className="lg:col-span-7 w-full flex flex-col justify-center">
               <div className="p-8 rounded-3xl border border-white/10 bg-white/[0.01] backdrop-blur-3xl relative overflow-hidden h-full flex flex-col justify-center">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
                 {!contactSuccess ? (
