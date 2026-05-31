@@ -1559,7 +1559,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            8. SUNDOWN STYLE FOOTER
            ══════════════════════════════════════════════════════ */}
-      <footer id="contact" className="relative z-10 overflow-hidden pt-12 pb-6" style={{ background: 'linear-gradient(to bottom, #05070B 0%, #150602 35%, #2a0b02 100%)' }}>
+      <footer id="contact" className="relative z-10 overflow-hidden pt-12 pb-6" style={{ background: 'linear-gradient(to bottom, #05070B 0%, #0d0402 45%, #180601 100%)' }}>
         
         {/* Vibrant Moving Gradient Background (Sundown Style - Contained & Continuous) */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -1571,7 +1571,7 @@ export default function Home() {
               scale: [1, 1.25, 1] 
             }}
             transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-55%] left-[-25%] w-[110%] h-[130%] bg-gradient-to-br from-[#ff2a00] via-[#ff5500] to-transparent blur-[100px] opacity-95"
+            className="absolute bottom-[-55%] left-[-25%] w-[110%] h-[130%] bg-gradient-to-br from-[#ff2a00] via-[#ff5500] to-transparent blur-[100px] opacity-40"
           />
           <motion.div 
             animate={{ 
@@ -1581,7 +1581,7 @@ export default function Home() {
               scale: [1.25, 0.85, 1.25] 
             }}
             transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-35%] right-[-15%] w-[80%] h-[100%] bg-gradient-to-tl from-[#e61d00] via-[#ff3c00] to-transparent blur-[80px] opacity-90"
+            className="absolute bottom-[-35%] right-[-15%] w-[80%] h-[100%] bg-gradient-to-tl from-[#e61d00] via-[#ff3c00] to-transparent blur-[80px] opacity-35"
           />
           {/* Third dynamic amber core to enrich the color shifts */}
           <motion.div 
@@ -1592,7 +1592,7 @@ export default function Home() {
               scale: [0.85, 1.15, 0.85] 
             }}
             transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-45%] left-[20%] w-[70%] h-[90%] bg-gradient-to-tr from-[#ffaa00] via-[#ff2a00]/60 to-transparent blur-[90px] opacity-80"
+            className="absolute bottom-[-45%] left-[20%] w-[70%] h-[90%] bg-gradient-to-tr from-[#ffaa00] via-[#ff2a00]/60 to-transparent blur-[90px] opacity-30"
           />
           {/* Embedded style block for dynamic film grain keyframe wiggling */}
           <style dangerouslySetInnerHTML={{ __html: `
