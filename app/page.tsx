@@ -855,7 +855,7 @@ export default function Home() {
                     <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
                       <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={20} duration={2} format={(v) => `${v}+`} /></h4>
-                      <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">New Members</p>
+                      <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Members</p>
                     </div>
                     <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
@@ -1482,7 +1482,7 @@ export default function Home() {
             </div>
 
             {/* Middle: Big Brand Title (6 cols md, 7 cols lg) */}
-            <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-center text-left select-none md:-ml-2 lg:-ml-6 xl:-ml-10">
+            <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-center text-center select-none">
               <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-[#f8f8f8] tracking-tighter uppercase font-mono" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
                 Artemis
               </h1>
