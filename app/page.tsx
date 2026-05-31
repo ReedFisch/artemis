@@ -1434,11 +1434,11 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            8. SUNDOWN STYLE FOOTER
            ══════════════════════════════════════════════════════ */}
-      <footer id="contact" className="relative z-10 overflow-hidden bg-[#0a0a0a] pt-16 pb-8 border-t border-white/[0.05]">
+      <footer id="contact" className="relative z-10 overflow-hidden bg-[#05070B] pt-12 pb-6">
         
-        {/* Vibrant Moving Gradient Background (Sundown Style - Contained) */}
+        {/* Vibrant Moving Gradient Background (Sundown Style - Contained & Continuous) */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          <div className="absolute inset-0 bg-[#0a0a0a]" />
+          <div className="absolute inset-0 bg-[#05070B]" />
           <motion.div 
             animate={{ 
               x: ['-5%', '5%', '-5%'],
@@ -1446,7 +1446,7 @@ export default function Home() {
               scale: [1, 1.15, 1] 
             }}
             transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-50%] left-[-20%] w-[100%] h-[120%] bg-gradient-to-br from-[#ff2a00] via-[#ff5500] to-transparent blur-[110px] opacity-90"
+            className="absolute bottom-[-50%] left-[-20%] w-[100%] h-[120%] bg-gradient-to-br from-[#ff2a00] via-[#ff5500] to-transparent blur-[110px] opacity-95"
           />
           <motion.div 
             animate={{ 
@@ -1455,16 +1455,16 @@ export default function Home() {
               scale: [1.15, 0.85, 1.15] 
             }}
             transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-30%] right-[-10%] w-[70%] h-[90%] bg-gradient-to-tl from-[#e61d00] via-[#ff3c00] to-transparent blur-[90px] opacity-80"
+            className="absolute bottom-[-30%] right-[-10%] w-[70%] h-[90%] bg-gradient-to-tl from-[#e61d00] via-[#ff3c00] to-transparent blur-[90px] opacity-85"
           />
           {/* Noise Overlay for premium analog texture */}
           <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 flex flex-col justify-between min-h-[460px]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 flex flex-col justify-between min-h-[380px]">
           
           {/* Top Row: Links and Contact Info */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start mt-2">
             
             {/* Left: Large Stacked Quick Links (4 cols) */}
             <div className="md:col-span-4 flex flex-col gap-2">
@@ -1473,56 +1473,71 @@ export default function Home() {
                   key={link.label} 
                   href={link.href} 
                   onClick={(e) => handleFastScroll(e, link.href)}
-                  className="text-white text-3xl md:text-4xl font-extrabold tracking-tight hover:opacity-75 transition-all hover:translate-x-1.5 duration-300 w-fit"
+                  className="text-white text-3xl md:text-4xl font-extrabold tracking-tight hover:opacity-85 transition-all hover:translate-x-1.5 duration-300 w-fit"
                 >
                   {link.label}
                 </a>
               ))}
             </div>
 
-            {/* Middle: Mission / Tagline & Logo (4 cols) */}
+            {/* Middle: Mission / Tagline & Logo Icon (4 cols) */}
             <div className="md:col-span-4 flex flex-col gap-4 text-left">
-              <div className="flex items-center gap-3">
-                <img src="/branding/logo_transparent.png" alt="Artemis Logo" className="w-10 h-10 object-contain" />
-                <span className="font-mono font-bold tracking-[0.25em] text-white uppercase text-sm">Artemis</span>
+              <div className="flex items-center">
+                <img src="/branding/logo_transparent.png" alt="Artemis Logo" className="w-12 h-12 object-contain" />
               </div>
-              <p className="text-xs text-white/50 leading-relaxed font-light max-w-sm">
+              <p className="text-xs text-white leading-relaxed font-normal max-w-sm">
                 Inspiring students through engineering, teamwork, and innovation. Chatham Central School District Robotics Team 6621.
               </p>
             </div>
 
-            {/* Right: Connect / Contact Row (4 cols) */}
+            {/* Right: Connect / Contact Row with Descriptions & Social Logos (4 cols) */}
             <div className="md:col-span-4 flex flex-col gap-4">
-              <span className="label text-[9px] uppercase tracking-widest text-white/30 font-mono">Connect</span>
-              <div className="flex flex-col gap-1">
-                <a href="mailto:fischers@chatham.k12.ny.us" className="text-xs text-white/70 hover:text-white transition-colors font-light flex justify-between items-center group py-2 border-b border-white/10">
-                  fischers@chatham.k12.ny.us
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </a>
-                <a href="mailto:emmettbishop-hayes@chatham.k12.ny.us" className="text-xs text-white/70 hover:text-white transition-colors font-light flex justify-between items-center group py-2 border-b border-white/10">
-                  emmettbishop-hayes@chatham.k12.ny.us
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </a>
+              <span className="label text-[9px] uppercase tracking-widest text-white/50 font-mono">Connect</span>
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[9px] uppercase tracking-wider text-white font-mono font-semibold">Sandra Fischer &bull; Lead Mentor</span>
+                  <a href="mailto:fischers@chatham.k12.ny.us" className="text-xs text-white hover:text-white/80 transition-colors font-medium flex justify-between items-center group py-1.5 border-b border-white/20">
+                    fischers@chatham.k12.ny.us
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                  </a>
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[9px] uppercase tracking-wider text-white font-mono font-semibold">Emmett Bishop-Hayes &bull; Business Lead</span>
+                  <a href="mailto:emmettbishop-hayes@chatham.k12.ny.us" className="text-xs text-white hover:text-white/80 transition-colors font-medium flex justify-between items-center group py-1.5 border-b border-white/20">
+                    emmettbishop-hayes@chatham.k12.ny.us
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                  </a>
+                </div>
               </div>
+              
               <div className="flex gap-4 mt-2">
-                <a href="https://www.instagram.com/artemis_6621/" target="_blank" rel="noopener noreferrer" className="text-xs text-white/50 hover:text-white transition-colors font-mono">Instagram</a>
-                <a href="https://www.youtube.com/@ArtemisFrc6621" target="_blank" rel="noopener noreferrer" className="text-xs text-white/50 hover:text-white transition-colors font-mono">YouTube</a>
-                <a href="https://www.thebluealliance.com/team/6621" target="_blank" rel="noopener noreferrer" className="text-xs text-white/50 hover:text-white transition-colors font-mono">TBA</a>
+                <a href="https://www.instagram.com/artemis_6621/" target="_blank" rel="noopener noreferrer" className="text-xs text-white hover:opacity-85 transition-opacity font-mono flex items-center gap-1.5 py-1">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                  Instagram
+                </a>
+                <a href="https://www.youtube.com/@ArtemisFrc6621" target="_blank" rel="noopener noreferrer" className="text-xs text-white hover:opacity-85 transition-opacity font-mono flex items-center gap-1.5 py-1">
+                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  YouTube
+                </a>
+                <a href="https://www.thebluealliance.com/team/6621" target="_blank" rel="noopener noreferrer" className="text-xs text-white hover:opacity-85 transition-opacity font-mono flex items-center gap-1.5 py-1">
+                  <span className="font-sans font-black text-[9px] px-1 bg-white/10 rounded tracking-tight text-white">TBA</span>
+                  TBA
+                </a>
               </div>
             </div>
 
           </div>
 
-          {/* Giant Artemis Title (Centered and scale-responsive, matching Sundown's style but compact) */}
-          <div className="w-full overflow-hidden my-6 flex justify-center select-none pointer-events-none">
-            <h1 className="text-[17vw] font-black leading-[0.75] text-[#f8f8f8] tracking-tighter" style={{ textShadow: '0 15px 40px rgba(0,0,0,0.6)' }}>
+          {/* Giant Artemis Title (Centered and scale-responsive, matching Sundown's style but compact & smaller) */}
+          <div className="w-full overflow-hidden my-4 flex justify-center select-none pointer-events-none">
+            <h1 className="text-[12vw] font-black leading-[0.75] text-[#f8f8f8] tracking-tighter" style={{ textShadow: '0 12px 30px rgba(0,0,0,0.6)' }}>
               Artemis
             </h1>
           </div>
 
           {/* Glowing separator line */}
-          <div className="relative h-px w-full mb-6">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.1] to-transparent" />
+          <div className="relative h-px w-full mb-4">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent" />
           </div>
 
           {/* Bottom Row: Legal & Copyright / Credits */}
@@ -1530,18 +1545,18 @@ export default function Home() {
             
             {/* Legal / Disclaimer & Copyright */}
             <div className="flex flex-col gap-2 text-left max-w-2xl">
-              <p className="text-white/30 font-sans">
+              <p className="text-white/60 font-sans font-medium">
                 FIRST® and FIRST® Robotics Competition are registered trademarks of For Inspiration and Recognition of Science and Technology. This website is not officially endorsed by FIRST®.
               </p>
-              <p className="uppercase tracking-[0.15em] text-white/20 font-mono">
+              <p className="uppercase tracking-[0.15em] text-white/50 font-mono font-semibold">
                 &copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.
               </p>
             </div>
             
             {/* Credits */}
-            <div className="flex flex-col md:items-end gap-1 shrink-0 text-left md:text-right font-mono uppercase tracking-[0.15em] text-white/20">
+            <div className="flex flex-col md:items-end gap-1 shrink-0 text-left md:text-right font-mono uppercase tracking-[0.15em] text-white/50 font-semibold">
               <p>
-                Photo Credits: <span className="text-stellar-orange/50">Smokingmonkey Photography</span>
+                Photo Credits: <span className="text-stellar-orange">Smokingmonkey Photography</span>
               </p>
               <p>
                 Chatham Central School District
