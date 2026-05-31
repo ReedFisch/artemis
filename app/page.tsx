@@ -1463,8 +1463,46 @@ export default function Home() {
 
                     <textarea placeholder="Message / Questions..." rows={4} className="bg-[#05070B]/50 border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans resize-none"></textarea>
                     
-                    <button type="submit" disabled={isSubmittingContact} className="w-full py-4 mt-2 rounded-xl bg-gradient-to-r from-stellar-orange to-orange-600 font-semibold uppercase text-xs tracking-wider hover:shadow-[0_0_30px_rgba(249,115,22,0.35)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
-                      {isSubmittingContact ? "Processing..." : "Submit Interest"}
+                    <button 
+                      type="submit" 
+                      disabled={isSubmittingContact} 
+                      className="group relative w-full py-4 mt-2 rounded-xl bg-gradient-to-r from-stellar-orange to-orange-600 font-semibold uppercase text-xs tracking-wider hover:shadow-[0_0_30px_rgba(249,115,22,0.35)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer overflow-hidden"
+                    >
+                      {/* Dynamic Gradient & Grain Hover Layer */}
+                      <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
+                        {/* base gradient background */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-artemis-blue/30 to-stellar-orange/30" />
+                        {/* floating moving spheres inside the button */}
+                        <motion.div 
+                          animate={{ 
+                            x: ['-30%', '30%', '-30%'],
+                            y: ['-20%', '20%', '-20%'],
+                            rotate: [0, 360],
+                            scale: [1, 1.3, 1] 
+                          }}
+                          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                          className="absolute -top-1/2 -left-1/2 w-full h-full bg-[#ff2a00]/70 blur-md rounded-full"
+                        />
+                        <motion.div 
+                          animate={{ 
+                            x: ['30%', '-30%', '30%'],
+                            y: ['20%', '-20%', '20%'],
+                            rotate: [360, 0],
+                            scale: [1.3, 0.8, 1.3] 
+                          }}
+                          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                          className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-artemis-blue/60 blur-md rounded-full"
+                        />
+                        {/* dynamic wiggling grain inside the button on hover */}
+                        <div 
+                          className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] opacity-[0.2] animate-dynamic-grain pointer-events-none" 
+                          style={{ 
+                            mixBlendMode: 'overlay',
+                            backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' 
+                          }} 
+                        />
+                      </div>
+                      <span className="relative z-10">{isSubmittingContact ? "Processing..." : "Submit Interest"}</span>
                     </button>
                   </form>
                 ) : (
