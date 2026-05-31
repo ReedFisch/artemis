@@ -257,6 +257,7 @@ const AutonomousBlob = ({ radius, duration, delay = 0 }: any) => {
 
 export default function Home() {
   const [selectedTier, setSelectedTier] = useState<"Hermes" | "Apollo" | "ZEUS" | "Other">("Apollo");
+  const [customAmount, setCustomAmount] = useState("");
   const [contactSuccess, setContactSuccess] = useState(false);
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
@@ -475,7 +476,7 @@ export default function Home() {
   // Apply a stiff spring to completely eliminate any scroll jitter/jumping back and forth
   const smoothFrameProgress = useSpring(heroScrollYProgress, { stiffness: 400, damping: 90, mass: 0.1 });
 
-  useMotionValueEvent(smoothFrameProgress, "change", (latest) => {
+  useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
     const frameIndex = Math.min(289, Math.floor(latest * 290));
     if (canvasRef.current && imagesRef.current[frameIndex]) {
       const ctx = canvasRef.current.getContext('2d');
@@ -1338,6 +1339,28 @@ export default function Home() {
                       </div>
                     </div>
 
+                    <AnimatePresence>
+                      {selectedTier === 'Other' && (
+                        <motion.div 
+                          initial={{ opacity: 0, height: 0, marginTop: -20 }}
+                          animate={{ opacity: 1, height: 'auto', marginTop: 0 }}
+                          exit={{ opacity: 0, height: 0, marginTop: -20 }}
+                          className="relative overflow-hidden"
+                        >
+                          <div className="relative">
+                            <span className="absolute left-5 top-1/2 -translate-y-1/2 text-white/40 font-mono">$</span>
+                            <input 
+                              type="number" 
+                              placeholder="Enter custom amount" 
+                              value={customAmount}
+                              onChange={(e) => setCustomAmount(e.target.value)}
+                              className="w-full bg-white/[0.02] border border-white/10 rounded-xl pl-10 pr-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans"
+                            />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
                     <textarea placeholder="Message / Questions..." rows={4} className="bg-[#05070B]/50 border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans resize-none"></textarea>
                     
                     <button type="submit" disabled={isSubmittingContact} className="w-full py-4 mt-2 rounded-xl bg-gradient-to-r from-stellar-orange to-orange-600 font-semibold uppercase text-xs tracking-wider hover:shadow-[0_0_30px_rgba(249,115,22,0.35)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
@@ -1403,46 +1426,202 @@ export default function Home() {
           {/* Starfield */}
           <div className="absolute inset-0 opacity-50 starfield" />
           
-          {/* Geometric filler shapes — floating glass outlines */}
-          {/* Hexagon outline */}
+          {/* ── Geometric Glassmorphism Filler — Rich Layered Shapes ── */}
+
+          {/* === LARGE GLASS PANELS === */}
+          {/* Frosted glass rectangle - top left area */}
+          <motion.div
+            className="absolute top-[8%] left-[3%] w-32 h-20 rounded-2xl bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/[0.06] backdrop-blur-sm"
+            animate={{ y: [0, -12, 0], rotate: [0, 2, 0] }}
+            transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
+          />
+          {/* Frosted glass square - mid right */}
+          <motion.div
+            className="absolute top-[45%] right-[4%] w-24 h-24 rounded-3xl bg-gradient-to-tl from-artemis-blue/[0.04] to-transparent border border-artemis-blue/[0.06] backdrop-blur-sm"
+            animate={{ y: [0, 10, 0], rotate: [0, -3, 0], scale: [1, 1.03, 1] }}
+            transition={{ repeat: Infinity, duration: 20, ease: "easeInOut" }}
+          />
+          {/* Tall glass pillar - far left */}
+          <motion.div
+            className="absolute top-[25%] left-[1%] w-6 h-40 rounded-full bg-gradient-to-b from-white/[0.03] to-transparent border border-white/[0.04]"
+            animate={{ y: [0, -20, 0], opacity: [0.5, 0.8, 0.5] }}
+            transition={{ repeat: Infinity, duration: 22, ease: "easeInOut" }}
+          />
+          {/* Wide glass bar - bottom area */}
+          <motion.div
+            className="absolute bottom-[8%] left-[15%] w-48 h-3 rounded-full bg-gradient-to-r from-stellar-orange/[0.05] via-white/[0.03] to-transparent border border-white/[0.04]"
+            animate={{ x: [0, 15, 0], opacity: [0.4, 0.7, 0.4] }}
+            transition={{ repeat: Infinity, duration: 18, ease: "easeInOut" }}
+          />
+
+          {/* === HEXAGONS === */}
+          {/* Large frosted hexagon - upper left */}
           <motion.div
             className="absolute top-[12%] left-[8%] w-16 h-16 border border-white/[0.06] rotate-12"
-            style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}
+            style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(37,99,235,0.02))' }}
             animate={{ y: [0, -15, 0], rotate: [12, 20, 12] }}
             transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
           />
-          {/* Triangle outline */}
+          {/* Small filled hexagon - center right */}
           <motion.div
-            className="absolute bottom-[20%] right-[12%] w-20 h-20 border border-artemis-blue/[0.08]"
-            style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}
+            className="absolute top-[60%] right-[18%] w-10 h-10"
+            style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', background: 'linear-gradient(180deg, rgba(249,115,22,0.06), rgba(249,115,22,0.01))' }}
+            animate={{ y: [0, 8, 0], rotate: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 11, ease: "easeInOut" }}
+          />
+          {/* Tiny hexagon outline - bottom center */}
+          <motion.div
+            className="absolute bottom-[25%] left-[55%] w-6 h-6 border border-purple-400/[0.08]"
+            style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}
+            animate={{ rotate: [0, 30, 0], scale: [1, 1.2, 1] }}
+            transition={{ repeat: Infinity, duration: 9, ease: "easeInOut" }}
+          />
+
+          {/* === TRIANGLES === */}
+          {/* Large frosted triangle - bottom right */}
+          <motion.div
+            className="absolute bottom-[20%] right-[12%] w-20 h-20"
+            style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', background: 'linear-gradient(to bottom, rgba(37,99,235,0.05), rgba(37,99,235,0.01))' }}
             animate={{ y: [0, 12, 0], rotate: [0, -15, 0] }}
             transition={{ repeat: Infinity, duration: 18, ease: "easeInOut" }}
           />
-          {/* Diamond */}
+          {/* Small inverted triangle - upper right */}
           <motion.div
-            className="absolute top-[30%] right-[25%] w-10 h-10 border border-stellar-orange/[0.07] rotate-45"
+            className="absolute top-[20%] right-[30%] w-8 h-8 border border-stellar-orange/[0.06]"
+            style={{ clipPath: 'polygon(0% 0%, 100% 0%, 50% 100%)' }}
+            animate={{ y: [0, -8, 0], rotate: [0, 20, 0] }}
+            transition={{ repeat: Infinity, duration: 13, ease: "easeInOut" }}
+          />
+
+          {/* === DIAMONDS === */}
+          {/* Frosted diamond - center upper */}
+          <motion.div
+            className="absolute top-[30%] right-[25%] w-10 h-10 rotate-45"
+            style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))', border: '1px solid rgba(255,255,255,0.05)' }}
             animate={{ y: [0, -10, 0], scale: [1, 1.1, 1] }}
             transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
           />
-          {/* Small circle ring */}
+          {/* Small diamond outline - mid left */}
+          <motion.div
+            className="absolute top-[50%] left-[12%] w-6 h-6 rotate-45 border border-artemis-blue/[0.07]"
+            animate={{ y: [0, 6, 0], rotate: [45, 55, 45] }}
+            transition={{ repeat: Infinity, duration: 15, ease: "easeInOut" }}
+          />
+          {/* Tiny filled diamond - far right */}
+          <motion.div
+            className="absolute top-[70%] right-[8%] w-4 h-4 rotate-45 bg-stellar-orange/[0.04] border border-stellar-orange/[0.06]"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.9, 0.5] }}
+            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+          />
+
+          {/* === CIRCLES & RINGS === */}
+          {/* Small circle ring - lower left */}
           <motion.div
             className="absolute bottom-[35%] left-[18%] w-8 h-8 rounded-full border border-white/[0.05]"
             animate={{ y: [0, 8, 0], x: [0, -5, 0] }}
             transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
           />
-          {/* Larger circle ring */}
+          {/* Larger circle ring with glass fill */}
           <motion.div
-            className="absolute top-[55%] left-[65%] w-14 h-14 rounded-full border border-purple-400/[0.06]"
+            className="absolute top-[55%] left-[65%] w-14 h-14 rounded-full border border-purple-400/[0.06] bg-purple-500/[0.02]"
             animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
             transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
           />
-          {/* Tiny dots cluster */}
+          {/* Double ring - top center */}
+          <motion.div
+            className="absolute top-[15%] left-[48%] w-12 h-12 rounded-full border border-white/[0.04]"
+            animate={{ scale: [1, 1.08, 1] }}
+            transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
+          >
+            <div className="absolute inset-2 rounded-full border border-artemis-blue/[0.06]" />
+          </motion.div>
+          {/* Gradient-filled circle - lower right */}
+          <motion.div
+            className="absolute bottom-[12%] right-[30%] w-16 h-16 rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.04) 0%, transparent 70%)' }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
+          />
+          {/* Tiny pulsing dot */}
+          <motion.div
+            className="absolute top-[38%] left-[30%] w-2 h-2 rounded-full bg-artemis-blue/[0.15]"
+            animate={{ scale: [1, 2, 1], opacity: [0.6, 0.2, 0.6] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+          />
+
+          {/* === ORBITAL ARCS === */}
+          {/* Large orbital arc - top */}
+          <motion.div
+            className="absolute top-[5%] left-[20%] w-[300px] h-[300px] rounded-full border border-dashed border-white/[0.03]"
+            style={{ borderTopColor: 'transparent', borderLeftColor: 'transparent' }}
+            animate={{ rotate: [0, 360] }}
+            transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
+          />
+          {/* Small orbital arc - bottom */}
+          <motion.div
+            className="absolute bottom-[5%] right-[20%] w-[180px] h-[180px] rounded-full border border-dashed border-artemis-blue/[0.04]"
+            style={{ borderBottomColor: 'transparent', borderRightColor: 'transparent' }}
+            animate={{ rotate: [360, 0] }}
+            transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
+          />
+
+          {/* === DOT CONSTELLATIONS === */}
+          {/* Constellation cluster 1 - upper right */}
           <div className="absolute top-[18%] right-[40%] flex gap-3">
             <div className="w-1 h-1 rounded-full bg-white/10" />
             <div className="w-1.5 h-1.5 rounded-full bg-artemis-blue/15" />
             <div className="w-1 h-1 rounded-full bg-white/[0.07]" />
           </div>
-          {/* Cross shape */}
+          {/* Constellation cluster 2 - mid left */}
+          <div className="absolute top-[48%] left-[6%] flex flex-col gap-2">
+            <div className="flex gap-4">
+              <div className="w-1 h-1 rounded-full bg-white/[0.08]" />
+              <div className="w-1.5 h-1.5 rounded-full bg-stellar-orange/[0.1]" />
+            </div>
+            <div className="flex gap-3 ml-2">
+              <div className="w-1 h-1 rounded-full bg-white/[0.06]" />
+              <div className="w-1 h-1 rounded-full bg-white/[0.09]" />
+              <div className="w-0.5 h-0.5 rounded-full bg-artemis-blue/[0.12]" />
+            </div>
+          </div>
+          {/* Constellation cluster 3 - lower center */}
+          <div className="absolute bottom-[30%] left-[38%] flex gap-5">
+            <div className="w-1 h-1 rounded-full bg-white/[0.07]" />
+            <div className="w-0.5 h-0.5 rounded-full bg-stellar-orange/[0.08]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-white/[0.05]" />
+            <div className="w-1 h-1 rounded-full bg-purple-400/[0.1]" />
+          </div>
+          {/* Constellation with connecting lines */}
+          <svg className="absolute top-[65%] left-[8%] w-20 h-16 opacity-[0.06]" viewBox="0 0 80 64">
+            <circle cx="8" cy="8" r="2" fill="white"/>
+            <circle cx="40" cy="56" r="2.5" fill="white"/>
+            <circle cx="72" cy="20" r="1.5" fill="white"/>
+            <line x1="8" y1="8" x2="40" y2="56" stroke="white" strokeWidth="0.5"/>
+            <line x1="40" y1="56" x2="72" y2="20" stroke="white" strokeWidth="0.5"/>
+          </svg>
+
+          {/* === GLASS PILL SHAPES === */}
+          {/* Pill - upper area */}
+          <motion.div
+            className="absolute top-[22%] right-[15%] w-20 h-3 rounded-full bg-gradient-to-r from-artemis-blue/[0.04] to-transparent border border-white/[0.04]"
+            animate={{ x: [0, 10, 0], opacity: [0.4, 0.7, 0.4] }}
+            transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
+          />
+          {/* Pill - lower area */}
+          <motion.div
+            className="absolute bottom-[40%] right-[6%] w-16 h-2.5 rounded-full bg-gradient-to-l from-stellar-orange/[0.05] to-transparent border border-white/[0.03]"
+            animate={{ x: [0, -8, 0] }}
+            transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
+          />
+          {/* Vertical pill */}
+          <motion.div
+            className="absolute top-[35%] left-[50%] w-2.5 h-14 rounded-full bg-gradient-to-b from-white/[0.03] to-transparent border border-white/[0.03]"
+            animate={{ y: [0, -10, 0], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ repeat: Infinity, duration: 17, ease: "easeInOut" }}
+          />
+
+          {/* === CROSS & PLUS SHAPES === */}
+          {/* Rotating cross - lower center */}
           <motion.div
             className="absolute bottom-[15%] left-[45%]"
             animate={{ rotate: [0, 90, 0] }}
@@ -1451,6 +1630,54 @@ export default function Home() {
             <div className="w-6 h-[1px] bg-white/[0.06] absolute top-1/2 left-0" />
             <div className="w-[1px] h-6 bg-white/[0.06] absolute left-1/2 top-0" />
           </motion.div>
+          {/* Plus shape - upper left */}
+          <motion.div
+            className="absolute top-[28%] left-[22%]"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.7, 0.4] }}
+            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+          >
+            <div className="w-4 h-[1px] bg-stellar-orange/[0.08] absolute top-1/2 left-0" />
+            <div className="w-[1px] h-4 bg-stellar-orange/[0.08] absolute left-1/2 top-0" />
+          </motion.div>
+
+          {/* === PARALLELOGRAM & TRAPEZOID === */}
+          {/* Glass parallelogram */}
+          <motion.div
+            className="absolute top-[75%] left-[25%] w-16 h-8"
+            style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)', background: 'linear-gradient(135deg, rgba(255,255,255,0.03), transparent)', border: 'none' }}
+            animate={{ x: [0, 8, 0], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ repeat: Infinity, duration: 19, ease: "easeInOut" }}
+          >
+            <div className="absolute inset-0 border border-white/[0.04]" style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)' }} />
+          </motion.div>
+
+          {/* === PENTAGON === */}
+          <motion.div
+            className="absolute top-[42%] right-[35%] w-12 h-12"
+            style={{ clipPath: 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)', background: 'linear-gradient(180deg, rgba(37,99,235,0.04), rgba(37,99,235,0.01))' }}
+            animate={{ rotate: [0, 12, 0], y: [0, -8, 0] }}
+            transition={{ repeat: Infinity, duration: 21, ease: "easeInOut" }}
+          />
+
+          {/* === DASHED LINES === */}
+          {/* Horizontal dashed line */}
+          <motion.div
+            className="absolute top-[85%] left-[10%] w-32 h-px border-t border-dashed border-white/[0.04]"
+            animate={{ opacity: [0.3, 0.6, 0.3] }}
+            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+          />
+          {/* Diagonal dashed line */}
+          <motion.div
+            className="absolute top-[10%] right-[8%] w-24 h-px border-t border-dashed border-artemis-blue/[0.05] rotate-[30deg]"
+            animate={{ opacity: [0.2, 0.5, 0.2] }}
+            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+          />
+          {/* Vertical dashed line */}
+          <motion.div
+            className="absolute top-[30%] right-[2%] w-px h-20 border-l border-dashed border-white/[0.04]"
+            animate={{ opacity: [0.3, 0.5, 0.3] }}
+            transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
+          />
         </div>
 
         {/* ── Glowing Separator Line ── */}
