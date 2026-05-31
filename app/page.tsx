@@ -1434,37 +1434,54 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            8. SUNDOWN STYLE FOOTER
            ══════════════════════════════════════════════════════ */}
-      <footer id="contact" className="relative z-10 overflow-hidden bg-[#05070B] border-t border-white/[0.05] pt-16 pb-12">
+      <footer id="contact" className="relative z-10 overflow-hidden bg-[#0a0a0a] pt-16 pb-8 border-t border-white/[0.05]">
         
-        {/* Subtle Organic Background Glows */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
+        {/* Vibrant Moving Gradient Background (Sundown Style - Contained) */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          <div className="absolute inset-0 bg-[#0a0a0a]" />
           <motion.div 
             animate={{ 
-              x: ['-10%', '10%', '-10%'],
-              y: ['-10%', '10%', '-10%'],
-              scale: [1, 1.1, 1] 
+              x: ['-5%', '5%', '-5%'],
+              y: ['-5%', '5%', '-5%'],
+              scale: [1, 1.15, 1] 
             }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute -bottom-48 -left-48 w-96 h-96 rounded-full bg-artemis-blue/20 blur-[100px]"
+            transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute bottom-[-50%] left-[-20%] w-[100%] h-[120%] bg-gradient-to-br from-[#ff2a00] via-[#ff5500] to-transparent blur-[110px] opacity-90"
           />
           <motion.div 
             animate={{ 
-              x: ['10%', '-10%', '10%'],
-              y: ['10%', '-10%', '10%'],
-              scale: [1.1, 0.9, 1.1] 
+              x: ['5%', '-5%', '5%'],
+              y: ['5%', '-5%', '5%'],
+              scale: [1.15, 0.85, 1.15] 
             }}
-            transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute -bottom-48 -right-48 w-96 h-96 rounded-full bg-stellar-orange/15 blur-[100px]"
+            transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute bottom-[-30%] right-[-10%] w-[70%] h-[90%] bg-gradient-to-tl from-[#e61d00] via-[#ff3c00] to-transparent blur-[90px] opacity-80"
           />
+          {/* Noise Overlay for premium analog texture */}
+          <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 flex flex-col justify-between min-h-[460px]">
           
           {/* Top Row: Links and Contact Info */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start mt-4">
             
-            {/* Left: Branding & Core Message (5 cols) */}
-            <div className="md:col-span-5 flex flex-col gap-4">
+            {/* Left: Large Stacked Quick Links (4 cols) */}
+            <div className="md:col-span-4 flex flex-col gap-2">
+              {NAV_LINKS.map(link => (
+                <a 
+                  key={link.label} 
+                  href={link.href} 
+                  onClick={(e) => handleFastScroll(e, link.href)}
+                  className="text-white text-3xl md:text-4xl font-extrabold tracking-tight hover:opacity-75 transition-all hover:translate-x-1.5 duration-300 w-fit"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+
+            {/* Middle: Mission / Tagline & Logo (4 cols) */}
+            <div className="md:col-span-4 flex flex-col gap-4 text-left">
               <div className="flex items-center gap-3">
                 <img src="/branding/logo_transparent.png" alt="Artemis Logo" className="w-10 h-10 object-contain" />
                 <span className="font-mono font-bold tracking-[0.25em] text-white uppercase text-sm">Artemis</span>
@@ -1474,32 +1491,15 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Middle: Quick Links (3 cols) */}
-            <div className="md:col-span-3 flex flex-col gap-3">
-              <span className="label text-[9px] uppercase tracking-widest text-white/30 font-mono">Navigation</span>
-              <div className="flex flex-col gap-2">
-                {NAV_LINKS.map(link => (
-                  <a 
-                    key={link.label} 
-                    href={link.href} 
-                    onClick={(e) => handleFastScroll(e, link.href)}
-                    className="text-xs text-white/75 hover:text-white transition-colors font-medium w-fit"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Right: Contact & Socials (4 cols) */}
+            {/* Right: Connect / Contact Row (4 cols) */}
             <div className="md:col-span-4 flex flex-col gap-4">
               <span className="label text-[9px] uppercase tracking-widest text-white/30 font-mono">Connect</span>
-              <div className="flex flex-col gap-1.5">
-                <a href="mailto:fischers@chatham.k12.ny.us" className="text-xs text-white/70 hover:text-white transition-colors font-light flex justify-between items-center group py-1 border-b border-white/5">
+              <div className="flex flex-col gap-1">
+                <a href="mailto:fischers@chatham.k12.ny.us" className="text-xs text-white/70 hover:text-white transition-colors font-light flex justify-between items-center group py-2 border-b border-white/10">
                   fischers@chatham.k12.ny.us
                   <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </a>
-                <a href="mailto:emmettbishop-hayes@chatham.k12.ny.us" className="text-xs text-white/70 hover:text-white transition-colors font-light flex justify-between items-center group py-1 border-b border-white/5">
+                <a href="mailto:emmettbishop-hayes@chatham.k12.ny.us" className="text-xs text-white/70 hover:text-white transition-colors font-light flex justify-between items-center group py-2 border-b border-white/10">
                   emmettbishop-hayes@chatham.k12.ny.us
                   <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </a>
@@ -1513,28 +1513,35 @@ export default function Home() {
 
           </div>
 
-          {/* Glowing separator line */}
-          <div className="relative h-px w-full mb-8">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+          {/* Giant Artemis Title (Centered and scale-responsive, matching Sundown's style but compact) */}
+          <div className="w-full overflow-hidden my-6 flex justify-center select-none pointer-events-none">
+            <h1 className="text-[17vw] font-black leading-[0.75] text-[#f8f8f8] tracking-tighter" style={{ textShadow: '0 15px 40px rgba(0,0,0,0.6)' }}>
+              Artemis
+            </h1>
           </div>
 
-          {/* Bottom Row: Legal & Copyright (The User-Specified Section) */}
-          <div className="flex flex-col md:flex-row justify-between gap-6 items-start text-[10px] leading-relaxed">
+          {/* Glowing separator line */}
+          <div className="relative h-px w-full mb-6">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.1] to-transparent" />
+          </div>
+
+          {/* Bottom Row: Legal & Copyright / Credits */}
+          <div className="flex flex-col md:flex-row justify-between gap-6 items-start text-[9px] leading-relaxed">
             
             {/* Legal / Disclaimer & Copyright */}
             <div className="flex flex-col gap-2 text-left max-w-2xl">
-              <p className="text-white/35 font-sans">
+              <p className="text-white/30 font-sans">
                 FIRST® and FIRST® Robotics Competition are registered trademarks of For Inspiration and Recognition of Science and Technology. This website is not officially endorsed by FIRST®.
               </p>
-              <p className="uppercase tracking-[0.15em] text-white/25 font-mono">
+              <p className="uppercase tracking-[0.15em] text-white/20 font-mono">
                 &copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.
               </p>
             </div>
             
             {/* Credits */}
-            <div className="flex flex-col md:items-end gap-1.5 shrink-0 text-left md:text-right font-mono uppercase tracking-[0.15em] text-white/25">
+            <div className="flex flex-col md:items-end gap-1 shrink-0 text-left md:text-right font-mono uppercase tracking-[0.15em] text-white/20">
               <p>
-                Photo Credits: <span className="text-stellar-orange/60">Smokingmonkey Photography</span>
+                Photo Credits: <span className="text-stellar-orange/50">Smokingmonkey Photography</span>
               </p>
               <p>
                 Chatham Central School District
