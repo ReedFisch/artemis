@@ -1461,10 +1461,10 @@ export default function Home() {
           <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 flex flex-col justify-between min-h-[380px]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 flex flex-col justify-between">
           
           {/* Top Row: Links and Contact Info */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start mt-2">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center mt-2">
             
             {/* Left: Large Stacked Quick Links (4 cols) */}
             <div className="md:col-span-4 flex flex-col gap-2">
@@ -1480,14 +1480,11 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Middle: Mission / Tagline & Logo Icon (4 cols) */}
-            <div className="md:col-span-4 flex flex-col gap-4 text-left">
-              <div className="flex items-center">
-                <img src="/branding/logo_transparent.png" alt="Artemis Logo" className="w-12 h-12 object-contain" />
-              </div>
-              <p className="text-xs text-white leading-relaxed font-normal max-w-sm">
-                Inspiring students through engineering, teamwork, and innovation. Chatham Central School District Robotics Team 6621.
-              </p>
+            {/* Middle: Big Brand Title (4 cols) */}
+            <div className="md:col-span-4 flex flex-col justify-center text-left select-none">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#f8f8f8] tracking-tighter uppercase font-mono" style={{ textShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
+                Artemis
+              </h1>
             </div>
 
             {/* Right: Connect / Contact Row with Descriptions & Social Logos (4 cols) */}
@@ -1528,15 +1525,8 @@ export default function Home() {
 
           </div>
 
-          {/* Giant Artemis Title (Centered and scale-responsive, matching Sundown's style but compact & smaller) */}
-          <div className="w-full overflow-hidden my-4 flex justify-center select-none pointer-events-none">
-            <h1 className="text-[12vw] font-black leading-[0.75] text-[#f8f8f8] tracking-tighter" style={{ textShadow: '0 12px 30px rgba(0,0,0,0.6)' }}>
-              Artemis
-            </h1>
-          </div>
-
           {/* Glowing separator line */}
-          <div className="relative h-px w-full mb-4">
+          <div className="relative h-px w-full my-6">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent" />
           </div>
 
