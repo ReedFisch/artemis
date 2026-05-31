@@ -1217,14 +1217,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 w-full flex flex-col relative z-10">
           
           {/* Section Header */}
-          <div className="text-center mb-20">
+          <div className="text-center mb-16">
             <span className="label text-[10px] uppercase tracking-[0.25em] text-white/40 mb-3 block font-mono">Partnership Opportunities</span>
             <h2 className="display font-black text-white hover-glitch-text mb-4 text-4xl md:text-5xl tracking-tight">
               Support Us
             </h2>
-            <p className="text-sm text-white/50 font-light max-w-2xl mx-auto leading-relaxed">
-              42% of our students are on free or reduced lunch. We refuse to charge a single cent to participate. Your sponsorship makes that possible.
-            </p>
           </div>
 
           {/* 3-Column Tier Cards */}
@@ -1260,11 +1257,7 @@ export default function Home() {
                   className={`relative p-8 rounded-3xl border backdrop-blur-3xl transition-all duration-500 flex flex-col group cursor-pointer ${borderClass}`}
                   style={{ background: isApollo ? undefined : 'rgba(255,255,255,0.015)' }}
                 >
-                  {isApollo && (
-                    <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[8px] uppercase tracking-widest font-black font-mono text-white bg-gradient-to-r from-artemis-blue to-indigo-600 shadow-[0_0_15px_rgba(37,99,235,0.4)] z-20">
-                      Most Popular
-                    </span>
-                  )}
+
                   
                   <div className="relative z-10 flex flex-col h-full">
                     <p className="label text-[9px] tracking-widest uppercase mb-2 text-white/40 font-mono">{tier.label}</p>
