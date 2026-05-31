@@ -545,7 +545,49 @@ export default function Home() {
   };
 
   return (
-    <main ref={containerRef} className={`${isLoading ? 'fixed inset-0 overflow-hidden pointer-events-none' : 'snap-container'} text-white font-sans overflow-x-hidden w-full h-screen`}>
+    <main ref={containerRef} className={`${isLoading ? 'fixed inset-0 overflow-hidden pointer-events-none' : 'snap-container'} text-white font-sans overflow-x-hidden w-full h-screen relative`}>
+
+      {/* Global Ambient Dynamic Gradients (Extremely faint & luxury) */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.25]">
+        <motion.div 
+          animate={{ 
+            x: ['-10%', '10%', '-10%'],
+            y: ['-10%', '10%', '-10%'],
+            rotate: [0, 180, 360],
+            scale: [1, 1.2, 1] 
+          }}
+          transition={{ duration: 35, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-[10%] left-[5%] w-[45vw] h-[45vw] bg-gradient-to-br from-[#ff2a00]/3 via-[#ff5500]/2 to-transparent blur-[140px]"
+        />
+        <motion.div 
+          animate={{ 
+            x: ['10%', '-10%', '10%'],
+            y: ['10%', '-10%', '10%'],
+            rotate: [360, 180, 0],
+            scale: [1.2, 0.9, 1.2] 
+          }}
+          transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute bottom-[10%] right-[5%] w-[40vw] h-[40vw] bg-gradient-to-tl from-[#2563eb]/3 via-[#ff2a00]/2 to-transparent blur-[140px]"
+        />
+        <motion.div 
+          animate={{ 
+            x: ['-5%', '5%', '-5%'],
+            y: ['5%', '-5%', '5%'],
+            rotate: [90, 270, 90],
+            scale: [0.95, 1.15, 0.95] 
+          }}
+          transition={{ duration: 45, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-[45%] left-[-10%] w-[50vw] h-[50vw] bg-gradient-to-tr from-[#f97316]/3 via-purple-500/2 to-transparent blur-[150px]"
+        />
+        {/* Global extremely subtle dynamic wiggling grain for continuous cinematic analog feel */}
+        <div 
+          className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] opacity-[0.04] animate-dynamic-grain pointer-events-none" 
+          style={{ 
+            mixBlendMode: 'overlay',
+            backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' 
+          }} 
+        />
+      </div>
 
 
             {/* ══════════════════════════════════════════════════════
@@ -759,8 +801,46 @@ export default function Home() {
           
           {/* Sponsor Button */}
           <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto" style={{ perspective: '800px' }}>
-            <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="group inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 hover:bg-gradient-to-r hover:from-artemis-blue/40 hover:to-stellar-orange/40">
-              Support Now
+            <a 
+              href="#sponsorship" 
+              onClick={(e) => handleFastScroll(e, '#sponsorship')} 
+              className="group relative inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
+            >
+              {/* Dynamic Gradient & Grain Hover Layer */}
+              <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
+                {/* base gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-artemis-blue/30 to-stellar-orange/30" />
+                {/* floating moving spheres inside the button */}
+                <motion.div 
+                  animate={{ 
+                    x: ['-30%', '30%', '-30%'],
+                    y: ['-20%', '20%', '-20%'],
+                    rotate: [0, 360],
+                    scale: [1, 1.3, 1] 
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute -top-1/2 -left-1/2 w-full h-full bg-[#ff2a00]/70 blur-md rounded-full"
+                />
+                <motion.div 
+                  animate={{ 
+                    x: ['30%', '-30%', '30%'],
+                    y: ['20%', '-20%', '20%'],
+                    rotate: [360, 0],
+                    scale: [1.3, 0.8, 1.3] 
+                  }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-artemis-blue/60 blur-md rounded-full"
+                />
+                {/* dynamic wiggling grain inside the button on hover */}
+                <div 
+                  className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] opacity-[0.2] animate-dynamic-grain pointer-events-none" 
+                  style={{ 
+                    mixBlendMode: 'overlay',
+                    backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' 
+                  }} 
+                />
+              </div>
+              <span className="relative z-10">Support Now</span>
             </a>
           </div>
 
