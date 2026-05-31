@@ -1365,10 +1365,22 @@ export default function Home() {
                   </div>
                   <div className="p-5 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-3xl hover:border-white/12 hover:bg-white/[0.04] transition-all duration-300">
                     <h4 className="text-white/40 font-bold font-sans mb-2 text-[10px] uppercase tracking-wider">Email Contacts</h4>
-                    <p className="text-xs text-white/80 font-sans leading-relaxed font-light">
-                      Coach: <a href="mailto:fischers@chatham.k12.ny.us" className="text-white hover:text-stellar-orange transition-colors">fischers@chatham.k12.ny.us</a><br />
-                      Captain: <a href="mailto:Reed.L.Fisch@gmail.com" className="text-white hover:text-stellar-orange transition-colors">Reed.L.Fisch@gmail.com</a>
-                    </p>
+                    <div className="flex flex-col gap-3 mt-1">
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-[9px] uppercase tracking-wider text-white font-mono font-semibold">Sandra Fischer &bull; Lead Mentor</span>
+                        <a href="mailto:fischers@chatham.k12.ny.us" className="text-xs text-white hover:text-white/80 transition-colors font-medium flex justify-between items-center group py-1 border-b border-white/10">
+                          fischers@chatham.k12.ny.us
+                          <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                        </a>
+                      </div>
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-[9px] uppercase tracking-wider text-white font-mono font-semibold">Emmett Bishop-Hayes &bull; Business Lead</span>
+                        <a href="mailto:emmettbishop-hayes@chatham.k12.ny.us" className="text-xs text-white hover:text-white/80 transition-colors font-medium flex justify-between items-center group py-1 border-b border-white/10">
+                          emmettbishop-hayes@chatham.k12.ny.us
+                          <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                        </a>
+                      </div>
+                    </div>
                   </div>
                   <div className="p-5 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-3xl hover:border-white/12 hover:bg-white/[0.04] transition-all duration-300">
                     <h4 className="text-white/40 font-bold font-sans mb-2 text-[10px] uppercase tracking-wider">Phone</h4>
