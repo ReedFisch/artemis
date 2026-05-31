@@ -1481,15 +1481,15 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Middle: Big Brand Title (6 cols) */}
-            <div className="md:col-span-6 flex flex-col justify-center text-left select-none md:-ml-12 lg:-ml-24 xl:-ml-32">
+            {/* Middle: Big Brand Title (6 cols md, 7 cols lg) */}
+            <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-center text-left select-none md:-ml-2 lg:-ml-6 xl:-ml-10">
               <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-[#f8f8f8] tracking-tighter uppercase font-mono" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
                 Artemis
               </h1>
             </div>
 
-            {/* Right: Connect / Contact Row with Descriptions & Social Logos (4 cols) */}
-            <div className="md:col-span-4 flex flex-col gap-4">
+            {/* Right: Connect / Contact Row with Descriptions & Social Logos (4 cols md, 3 cols lg) */}
+            <div className="md:col-span-4 lg:col-span-3 flex flex-col gap-4">
               <span className="label text-[9px] uppercase tracking-widest text-white/50 font-mono">Connect</span>
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-0.5">
