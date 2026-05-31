@@ -987,8 +987,8 @@ export default function Home() {
                       </ul>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-4">
-                      <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
-                      <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
+                      <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-90 hover:brightness-100 transition-all duration-300" />
+                      <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-90 hover:brightness-100 transition-all duration-300" />
                     </div>
                   </div>
 
@@ -1005,8 +1005,8 @@ export default function Home() {
                       </ul>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-4">
-                      <img src="/timeline/2026_1.jpg" alt="2026 Event" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
-                      <img src="/timeline/2026_2.jpg" alt="2026 Team" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
+                      <img src="/timeline/2026_1.jpg" alt="2026 Event" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-90 hover:brightness-100 transition-all duration-300" />
+                      <img src="/timeline/2026_2.jpg" alt="2026 Team" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-90 hover:brightness-100 transition-all duration-300" />
                     </div>
                   </div>
                 </div>
@@ -1034,8 +1034,8 @@ export default function Home() {
                       <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ballston Spa Off-Season Competition Finalist</div></li>
                     </ul>
                   </div>
-                  <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[70vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
-                  <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+                  <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[70vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
+                  <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
                   {/* 2026 SECTION (130vw to 220vw) */}
                   <div className="absolute top-[45%] left-[130vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
@@ -1046,8 +1046,8 @@ export default function Home() {
                       <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></div></li>
                     </ul>
                   </div>
-                  <img src="/timeline/2026_1.jpg" alt="2026 Event" className="absolute bottom-[15%] left-[155vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
-                  <img src="/timeline/2026_2.jpg" alt="2026 Team" className="absolute top-[15%] right-[5vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+                  <img src="/timeline/2026_1.jpg" alt="2026 Event" className="absolute bottom-[15%] left-[155vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
+                  <img src="/timeline/2026_2.jpg" alt="2026 Team" className="absolute top-[15%] right-[5vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
                 </>
               )}
 
