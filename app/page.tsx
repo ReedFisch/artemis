@@ -1519,7 +1519,7 @@ export default function Home() {
             </div>
 
             {/* Middle: Big Brand Title (6 cols md, 7 cols lg) */}
-            <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-center text-center select-none lg:-ml-3 xl:-ml-5">
+            <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-center text-center select-none lg:-ml-6 xl:-ml-8">
               <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-[#f8f8f8] tracking-tighter uppercase font-mono" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
                 Artemis
               </h1>
