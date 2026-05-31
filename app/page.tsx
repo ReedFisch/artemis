@@ -1535,18 +1535,18 @@ export default function Home() {
             
             {/* Legal / Disclaimer & Copyright */}
             <div className="flex flex-col gap-2 text-left max-w-2xl">
-              <p className="text-white/60 font-sans font-medium">
+              <p className="text-white font-semibold leading-relaxed">
                 FIRST® and FIRST® Robotics Competition are registered trademarks of For Inspiration and Recognition of Science and Technology. This website is not officially endorsed by FIRST®.
               </p>
-              <p className="uppercase tracking-[0.15em] text-white/50 font-mono font-semibold">
+              <p className="uppercase tracking-[0.15em] text-white font-bold font-mono">
                 &copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.
               </p>
             </div>
             
             {/* Credits */}
-            <div className="flex flex-col md:items-end gap-1 shrink-0 text-left md:text-right font-mono uppercase tracking-[0.15em] text-white/50 font-semibold">
+            <div className="flex flex-col md:items-end gap-1 shrink-0 text-left md:text-right font-mono uppercase tracking-[0.15em] text-white font-bold">
               <p>
-                Photo Credits: <span className="text-stellar-orange">Smokingmonkey Photography</span>
+                Photo Credits: <span className="text-white underline decoration-stellar-orange decoration-2">Smokingmonkey Photography</span>
               </p>
               <p>
                 Chatham Central School District
