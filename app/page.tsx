@@ -19,7 +19,7 @@ const NAV_LINKS = [
   { href: "#about", label: "About" },
   { href: "#timeline", label: "Timeline" },
   { href: "#outreach", label: "Impact" },
-  { href: "#budget", label: "Support" },
+  { href: "#sponsorship", label: "Support" },
 ];
 
 // ─── TIER DATA ──────────────────────────────────────────────────
@@ -302,8 +302,7 @@ export default function Home() {
   const handleFastScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     
-    // Correct ID for Sponsor button mismatch
-    const actualTargetId = targetId === '#sponsorship' ? '#budget' : targetId;
+    const actualTargetId = targetId;
     
     const container = containerRef.current;
     if (!container) return;
@@ -684,7 +683,7 @@ export default function Home() {
             <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">About</a>
             <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Timeline</a>
             <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Impact</a>
-            <a href="#budget" onClick={(e) => handleFastScroll(e, '#budget')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Support</a>
+            <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Support</a>
           </nav>
 
           {/* Mobile Hamburger Button */}
@@ -730,7 +729,7 @@ export default function Home() {
                 <div className="absolute bottom-[20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-stellar-orange/10 blur-[100px] pointer-events-none" />
                 
                 <div className="flex flex-col gap-8 text-center text-xl font-bold uppercase tracking-[0.2em] font-mono text-white/60">
-                  {NAV_LINKS.concat({ href: "#budget", label: "Support" }).map((link, idx) => (
+                  {NAV_LINKS.map((link, idx) => (
                     <motion.a 
                       key={link.label}
                       initial={{ opacity: 0, y: 20 }}
