@@ -547,7 +547,7 @@ export default function Home() {
   return (
     <main ref={containerRef} className={`${isLoading ? 'fixed inset-0 overflow-hidden pointer-events-none' : 'snap-container'} text-white font-sans overflow-x-hidden w-full h-screen relative`}>
 
-      {/* Global Ambient Dynamic Gradients (Extremely faint & luxury) */}
+      {/* Global Ambient Dynamic Gradients (Extremely faint & luxury - Warm Orange Tones) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.25]">
         <motion.div 
           animate={{ 
@@ -567,7 +567,7 @@ export default function Home() {
             scale: [1.2, 0.9, 1.2] 
           }}
           transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-[10%] right-[5%] w-[40vw] h-[40vw] bg-gradient-to-tl from-[#2563eb]/3 via-[#ff2a00]/2 to-transparent blur-[140px]"
+          className="absolute bottom-[10%] right-[5%] w-[40vw] h-[40vw] bg-gradient-to-tl from-[#ff3c00]/3 via-[#ffaa00]/1 to-transparent blur-[140px]"
         />
         <motion.div 
           animate={{ 
@@ -577,7 +577,7 @@ export default function Home() {
             scale: [0.95, 1.15, 0.95] 
           }}
           transition={{ duration: 45, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-[45%] left-[-10%] w-[50vw] h-[50vw] bg-gradient-to-tr from-[#f97316]/3 via-purple-500/2 to-transparent blur-[150px]"
+          className="absolute top-[45%] left-[-10%] w-[50vw] h-[50vw] bg-gradient-to-tr from-[#ff5500]/2.5 via-[#ffaa00]/1.5 to-transparent blur-[150px]"
         />
         {/* Global extremely subtle dynamic wiggling grain for continuous cinematic analog feel */}
         <div 
@@ -804,12 +804,12 @@ export default function Home() {
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
-              className="group relative inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
+              className="group relative inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
             >
               {/* Dynamic Gradient & Grain Hover Layer */}
               <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
                 {/* base gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-artemis-blue/30 to-stellar-orange/30" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#ff2a00]/20 to-[#ffaa00]/20" />
                 {/* floating moving spheres inside the button */}
                 <motion.div 
                   animate={{ 
@@ -829,7 +829,7 @@ export default function Home() {
                     scale: [1.3, 0.8, 1.3] 
                   }}
                   transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-artemis-blue/60 blur-md rounded-full"
+                  className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-[#ff8800]/70 blur-md rounded-full"
                 />
                 {/* dynamic wiggling grain inside the button on hover */}
                 <div 
@@ -1459,12 +1459,12 @@ export default function Home() {
                     <button 
                       type="submit" 
                       disabled={isSubmittingContact} 
-                      className="group relative w-full py-4 mt-2 rounded-xl bg-gradient-to-r from-stellar-orange to-orange-600 font-semibold uppercase text-xs tracking-wider hover:shadow-[0_0_30px_rgba(249,115,22,0.35)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer overflow-hidden"
+                      className="group relative w-full py-4 mt-2 rounded-xl bg-gradient-to-r from-stellar-orange to-orange-600 font-semibold uppercase text-xs tracking-wider transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer overflow-hidden"
                     >
                       {/* Dynamic Gradient & Grain Hover Layer */}
                       <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
                         {/* base gradient background */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-artemis-blue/30 to-stellar-orange/30" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#ff2a00]/20 to-[#ffaa00]/20" />
                         {/* floating moving spheres inside the button */}
                         <motion.div 
                           animate={{ 
@@ -1484,7 +1484,7 @@ export default function Home() {
                             scale: [1.3, 0.8, 1.3] 
                           }}
                           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                          className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-artemis-blue/60 blur-md rounded-full"
+                          className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-[#ff8800]/70 blur-md rounded-full"
                         />
                         {/* dynamic wiggling grain inside the button on hover */}
                         <div 
