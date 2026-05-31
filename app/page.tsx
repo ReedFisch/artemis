@@ -1440,24 +1440,61 @@ export default function Home() {
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
           <motion.div 
             animate={{ 
-              x: ['-5%', '5%', '-5%'],
-              y: ['-5%', '5%', '-5%'],
-              scale: [1, 1.15, 1] 
+              x: ['-10%', '15%', '-10%'],
+              y: ['-15%', '10%', '-15%'],
+              rotate: [0, 180, 360],
+              scale: [1, 1.25, 1] 
             }}
-            transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-50%] left-[-20%] w-[100%] h-[120%] bg-gradient-to-br from-[#ff2a00] via-[#ff5500] to-transparent blur-[110px] opacity-95"
+            transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute bottom-[-55%] left-[-25%] w-[110%] h-[130%] bg-gradient-to-br from-[#ff2a00] via-[#ff5500] to-transparent blur-[100px] opacity-95"
           />
           <motion.div 
             animate={{ 
-              x: ['5%', '-5%', '5%'],
-              y: ['5%', '-5%', '5%'],
-              scale: [1.15, 0.85, 1.15] 
+              x: ['15%', '-10%', '15%'],
+              y: ['10%', '-15%', '10%'],
+              rotate: [360, 180, 0],
+              scale: [1.25, 0.85, 1.25] 
             }}
-            transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-30%] right-[-10%] w-[70%] h-[90%] bg-gradient-to-tl from-[#e61d00] via-[#ff3c00] to-transparent blur-[90px] opacity-85"
+            transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute bottom-[-35%] right-[-15%] w-[80%] h-[100%] bg-gradient-to-tl from-[#e61d00] via-[#ff3c00] to-transparent blur-[80px] opacity-90"
           />
+          {/* Third dynamic amber core to enrich the color shifts */}
+          <motion.div 
+            animate={{ 
+              x: ['-5%', '10%', '-5%'],
+              y: ['15%', '-10%', '15%'],
+              rotate: [90, 270, 90],
+              scale: [0.85, 1.15, 0.85] 
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute bottom-[-45%] left-[20%] w-[70%] h-[90%] bg-gradient-to-tr from-[#ffaa00] via-[#ff2a00]/60 to-transparent blur-[90px] opacity-80"
+          />
+          {/* Embedded style block for dynamic film grain keyframe wiggling */}
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes grainMove {
+              0%, 100% { transform: translate(0, 0); }
+              10% { transform: translate(-1%, -1%); }
+              20% { transform: translate(-2%, 1%); }
+              30% { transform: translate(1%, -2%); }
+              40% { transform: translate(-1%, 2%); }
+              50% { transform: translate(-2%, 1%); }
+              60% { transform: translate(2%, -1%); }
+              70% { transform: translate(1%, 1%); }
+              80% { transform: translate(-2%, -1%); }
+              90% { transform: translate(1%, 1%); }
+            }
+            .animate-dynamic-grain {
+              animation: grainMove 0.4s steps(6) infinite;
+            }
+          `}} />
           {/* Noise Overlay for premium analog texture */}
-          <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
+          <div 
+            className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] opacity-[0.25] animate-dynamic-grain pointer-events-none" 
+            style={{ 
+              mixBlendMode: 'overlay',
+              backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' 
+            }} 
+          />
           {/* Fuzzy transition mask at the top to smoothly blend the clipped glows from solid black/dark to orange */}
           <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-[#05070B] via-[#05070B]/70 to-transparent pointer-events-none" />
         </div>
