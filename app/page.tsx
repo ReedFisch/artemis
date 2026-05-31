@@ -1434,11 +1434,10 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            8. SUNDOWN STYLE FOOTER
            ══════════════════════════════════════════════════════ */}
-      <footer id="contact" className="relative z-10 overflow-hidden bg-[#05070B] pt-12 pb-6">
+      <footer id="contact" className="relative z-10 overflow-hidden pt-12 pb-6" style={{ background: 'linear-gradient(to bottom, #05070B 0%, #150602 35%, #2a0b02 100%)' }}>
         
         {/* Vibrant Moving Gradient Background (Sundown Style - Contained & Continuous) */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          <div className="absolute inset-0 bg-[#05070B]" />
           <motion.div 
             animate={{ 
               x: ['-5%', '5%', '-5%'],
