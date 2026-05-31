@@ -1482,6 +1482,7 @@ export default function Home() {
                   <a 
                     key={link.label} 
                     href={link.href} 
+                    onClick={(e) => handleFastScroll(e, link.href)}
                     className="text-xs text-white/75 hover:text-white transition-colors font-medium w-fit"
                   >
                     {link.label}
