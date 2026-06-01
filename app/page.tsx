@@ -710,7 +710,7 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
-      <section id="hero" ref={heroScrollRef} className="relative w-full z-10" style={{ height: '300vh' }}>
+      <section id="hero" ref={heroScrollRef} className="relative w-full z-10 h-[80vh] lg:h-[300vh]">
         <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
           
           {/* 1. Canvas Zip Animation Layer (Bottom) */}
@@ -735,7 +735,7 @@ export default function Home() {
 
           {/* 3. Overlays (Header and Sponsor) */}
           <motion.header 
-            className={`absolute top-0 left-0 w-full z-50 flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto`}
+            className={`fixed top-0 left-0 w-full z-[60] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto`}
           >
           <div className="flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text" onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             <img src="/branding/logo_transparent.png" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain`} />
@@ -789,7 +789,7 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed inset-0 z-[45] flex flex-col justify-center items-center bg-[#05070B]/95 backdrop-blur-2xl px-8 pointer-events-auto border-l border-white/5"
+                className="fixed inset-0 z-[55] flex flex-col justify-center items-center bg-[#05070B]/95 backdrop-blur-2xl px-8 pointer-events-auto border-l border-white/5"
               >
                 {/* Background glowing rings inside mobile menu */}
                 <div className="absolute top-[20%] right-[-10%] w-[300px] h-[300px] rounded-full bg-artemis-blue/10 blur-[100px] pointer-events-none" />
@@ -875,11 +875,11 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            2. ABOUT & TIMELINE (HORIZONTAL SCROLL)
            ══════════════════════════════════════════════════════ */}
-      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10" style={{ height: isMobile ? 'auto' : '400vh', scrollSnapAlign: isMobile ? 'none' : 'start' }}>
+      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10 h-auto lg:h-[400vh]" style={{ scrollSnapAlign: isMobile ? 'none' : 'start' }}>
         
 
         {/* Sticky/Static container that holds the horizontal sliding content or vertical content */}
-        <div className={isMobile ? "relative w-full py-16 flex items-center" : "sticky top-0 h-screen w-full overflow-hidden flex items-center"}>
+        <div className="relative w-full py-16 flex items-center lg:sticky lg:top-0 lg:h-screen lg:w-full lg:overflow-hidden lg:py-0">
           
           <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className={isMobile ? "w-full block relative z-10" : "flex w-[320vw] h-full relative z-10"}>
             
@@ -1274,7 +1274,7 @@ export default function Home() {
           </div>
 
           {/* 3-Column Tier Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-16 items-stretch">
+          <div className="flex flex-row overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-8 w-full mb-16 items-stretch pb-8 md:pb-0 hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
             {TIERS.filter(t => t.name !== 'Other').map((tier) => {
               const isApollo = tier.name === 'Apollo';
               
@@ -1303,7 +1303,7 @@ export default function Home() {
                 <div 
                   key={tier.name}
                   onClick={() => setSelectedTier(tier.name)}
-                  className={`relative p-8 rounded-3xl border backdrop-blur-3xl transition-all duration-500 flex flex-col group cursor-pointer ${isMobile ? 'border-white/10 bg-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.3)] scale-100 active:scale-[0.98]' : borderClass}`}
+                  className={`relative p-8 rounded-3xl border backdrop-blur-3xl transition-all duration-500 flex flex-col group cursor-pointer ${isMobile ? 'border-white/10 bg-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.3)] scale-100 active:scale-[0.98] w-[85vw] max-w-[320px] shrink-0 snap-center' : borderClass}`}
                   style={{ background: (isApollo && !isMobile) ? undefined : 'rgba(255,255,255,0.015)' }}
                 >
 
