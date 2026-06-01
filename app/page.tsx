@@ -1189,13 +1189,36 @@ export default function Home() {
             </div>
             
             {/* Funding Gap to Worlds */}
-            <div className="md:col-span-2 glass-panel-deep p-6 md:p-8 rounded-2xl relative overflow-hidden flex flex-col sm:flex-row justify-between items-center transition-all duration-300 hover:bg-white/[0.03] border border-stellar-orange/30 shadow-[0_0_30px_rgba(249,115,22,0.1)]">
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-stellar-orange/5 to-transparent pointer-events-none" />
-              <div className="flex flex-col gap-1 relative z-10 text-center sm:text-left">
-                <span className="text-white font-bold font-mono text-lg md:text-xl uppercase tracking-widest">Funding Gap to Worlds</span>
-                <span className="text-xs text-white/50 font-light">Help us reach our goal to compete at the championship</span>
+            <div className="md:col-span-2 relative overflow-hidden rounded-3xl p-8 md:p-10 flex flex-col sm:flex-row justify-between items-center transition-all duration-500 hover:-translate-y-1 group bg-[#0A0E17]/60 backdrop-blur-3xl border border-white/10 hover:border-stellar-orange/50 shadow-[0_15px_40px_rgba(0,0,0,0.6)]">
+              {/* Glassmorphic lighting effects */}
+              <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-3xl">
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-50" />
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-30" />
+                
+                {/* Glowing Orbs */}
+                <motion.div 
+                  animate={{ x: ['-20%', '20%', '-20%'], y: ['-20%', '20%', '-20%'] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute -top-1/2 left-1/4 w-64 h-64 bg-stellar-orange/20 rounded-full blur-[70px]"
+                />
+                <motion.div 
+                  animate={{ x: ['20%', '-20%', '20%'], y: ['20%', '-20%', '20%'] }}
+                  transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute -bottom-1/2 right-1/4 w-64 h-64 bg-artemis-blue/20 rounded-full blur-[70px]"
+                />
               </div>
-              <span className="text-stellar-orange font-black text-3xl md:text-4xl mt-4 sm:mt-0 relative z-10">$<Counter to={35000} duration={2} format={(v) => v.toLocaleString()} /></span>
+              
+              <div className="flex flex-col gap-2 relative z-10 text-center sm:text-left">
+                <span className="text-white font-black font-mono text-xl md:text-2xl uppercase tracking-[0.2em] drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]">Funding Gap to Worlds</span>
+                <span className="text-sm text-white/60 font-light tracking-wide">Help us reach our goal to compete at the championship</span>
+              </div>
+              
+              <div className="relative z-10 mt-6 sm:mt-0 group-hover:scale-105 transition-transform duration-500">
+                <div className="absolute inset-0 bg-stellar-orange/20 blur-[30px] rounded-full scale-150" />
+                <span className="text-stellar-orange font-black text-4xl md:text-5xl drop-shadow-[0_0_25px_rgba(249,115,22,0.6)] relative z-10">
+                  $<Counter to={35000} duration={2} format={(v) => v.toLocaleString()} />
+                </span>
+              </div>
             </div>
           </div>
         </div>
