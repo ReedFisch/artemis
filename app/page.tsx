@@ -124,7 +124,7 @@ const OUTREACH_CARDS = [
     tag: "Recognition",
     title: "Unconventional Awards",
     desc: "Created custom awards to give out and recognize teams that go above and beyond in unconventional ways that are not traditionally recognized by FIRST.",
-    image: "/photos/outreach/steam_day_assembly.webp",
+    image: "/photos/outreach/unconventional_awards.jpg",
   }
 ];
 
