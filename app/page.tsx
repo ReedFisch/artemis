@@ -1210,7 +1210,7 @@ export default function Home() {
               
               <div className="flex flex-col gap-2 relative z-10 text-center sm:text-left">
                 <span className="text-white font-black font-mono text-xl md:text-2xl uppercase tracking-[0.2em] drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]">Funding Gap to Worlds</span>
-                <span className="text-sm text-white/60 font-light tracking-wide">Help us reach our goal to compete at the championship</span>
+                <span className="text-sm text-white/60 font-light tracking-wide">Help us reach our goal to compete at the World Championship</span>
               </div>
               
               <div className="relative z-10 mt-6 sm:mt-0 group-hover:scale-105 transition-transform duration-500">
