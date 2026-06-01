@@ -773,28 +773,16 @@ export default function Home() {
           </nav>
 
           {/* Mobile Hamburger Button */}
-          {isMobile && (
+          {isMobile && !isMenuOpen && (
             <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => setIsMenuOpen(true)}
               className="z-50 flex items-center justify-center w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md active:scale-95 transition-all shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
-              aria-label="Toggle Menu"
+              aria-label="Open Menu"
             >
               <div className="flex flex-col gap-1.5 w-5 justify-center items-center">
-                <motion.span 
-                  animate={isMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="w-full h-0.5 bg-white rounded-full origin-center" 
-                />
-                <motion.span 
-                  animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                  transition={{ duration: 0.15 }}
-                  className="w-full h-0.5 bg-white rounded-full" 
-                />
-                <motion.span 
-                  animate={isMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="w-full h-0.5 bg-white rounded-full origin-center" 
-                />
+                <span className="w-full h-0.5 bg-white rounded-full" />
+                <span className="w-full h-0.5 bg-white rounded-full" />
+                <span className="w-full h-0.5 bg-white rounded-full" />
               </div>
             </button>
           )}
@@ -1139,11 +1127,11 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" ref={budgetScrollRef} className={`snap-section relative z-10 overflow-hidden ${isMobile ? 'h-[200vh]' : 'min-h-screen flex items-center'} bg-[#05070B] py-16`}>
+      <section id="budget" ref={budgetScrollRef} className="relative z-10 overflow-hidden bg-[#05070B] py-20 md:py-32">
         {/* Scattered 3D Shapes */}
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
-        <div className="max-w-4xl mx-auto px-6 w-full flex flex-col items-center justify-center relative z-10 text-center">
+        <div className="max-w-4xl mx-auto px-6 w-full flex flex-col items-center relative z-10 text-center">
           
           <h2 className="display font-black mb-4">
             Budget
@@ -1155,7 +1143,8 @@ export default function Home() {
           
           {/* MOBILE 3D FLIP DECK */}
           {isMobile && (
-            <div className="sticky top-0 h-[100svh] w-full flex items-center justify-center pointer-events-none" style={{ perspective: '1200px' }}>
+            <div className="h-[150vh] w-full mt-12 relative">
+              <div className="sticky top-24 h-[70svh] w-full flex items-center justify-center pointer-events-none" style={{ perspective: '1200px' }}>
               <div className="relative w-full max-w-sm" style={{ transformStyle: 'preserve-3d' }}>
                 
                 {/* BOTTOM CARD (Funding Sources) */}
@@ -1198,6 +1187,7 @@ export default function Home() {
                   </div>
                 </motion.div>
               </div>
+            </div>
             </div>
           )}
 
@@ -1269,7 +1259,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7. SPONSORSHIP TIERS
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship" className="relative z-10 bg-[#05070B] min-h-screen flex items-center py-16 border-t border-white/[0.03] overflow-hidden">
+      <section id="sponsorship" className="relative z-10 bg-[#05070B] py-20 md:py-32 border-t border-white/[0.03] overflow-hidden">
         
         {/* Dynamic Organic Background Nebulas & Glows */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40">
@@ -1390,7 +1380,7 @@ export default function Home() {
               setSelectedTier('Other');
               handleFastScroll(e as any, '#interest-form');
             }}
-            className={`w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-24 ${
+            className={`w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-8 md:mb-12 ${
               selectedTier === 'Other' ? 'border-white/30 bg-white/[0.04] shadow-[0_15px_30px_rgba(0,0,0,0.3)]' : 'border-white/5 hover:border-white/15'
             }`}
             style={{ background: selectedTier === 'Other' ? undefined : 'rgba(255,255,255,0.01)', backdropFilter: 'blur(30px)' }}
@@ -1419,7 +1409,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7.2. PARTNERSHIP INFO (FORM)
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship-form-section" className="relative z-10 min-h-screen flex items-center bg-[#05070B] py-16 border-t border-white/[0.03] overflow-hidden">
+      <section id="sponsorship-form-section" className="relative z-10 py-20 md:py-32 bg-[#05070B] border-t border-white/[0.03] overflow-hidden">
         {/* Dynamic Organic Background Nebulas & Glows (Continued) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-30">
           <motion.div 
@@ -1825,10 +1815,17 @@ export default function Home() {
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="fixed inset-0 z-[100] flex flex-col justify-center items-center bg-[#05070B]/95 backdrop-blur-2xl px-8 pointer-events-auto border-l border-white/5"
           >
-            {/* Background glowing rings inside mobile menu */}
             <div className="absolute top-[20%] right-[-10%] w-[300px] h-[300px] rounded-full bg-artemis-blue/10 blur-[100px] pointer-events-none" />
             <div className="absolute bottom-[20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-stellar-orange/10 blur-[100px] pointer-events-none" />
             
+            <button 
+              onClick={() => setIsMenuOpen(false)}
+              className="absolute top-6 right-6 z-[120] w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/50 hover:text-white active:scale-95 transition-all shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
+              aria-label="Close Menu"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+
             <div className="flex flex-col gap-8 text-center text-xl font-bold uppercase tracking-[0.2em] font-mono text-white/90">
               {NAV_LINKS.map((link, idx) => (
                 <a 
