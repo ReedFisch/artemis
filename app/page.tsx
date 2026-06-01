@@ -279,7 +279,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -721,7 +721,8 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.75 }}
                 transition={{ duration: 1.5 }}
-                className="w-full h-full object-cover" 
+                className="w-[150%] h-[150%] max-w-none -ml-[25%] mt-[20vh] object-contain object-bottom" 
+                style={{ transform: 'scale(0.5)', transformOrigin: 'bottom center' }}
               />
             ) : (
               <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.75]" />
@@ -935,7 +936,7 @@ export default function Home() {
                 </div>
 
                 {/* Right Side: Photo and Stats */}
-                <div className={`w-full flex flex-col gap-6 ${isMobile ? "" : "lg:w-7/12 h-full"}`}>
+                <div className={`w-full flex-col gap-6 ${isMobile ? "hidden" : "flex lg:w-7/12 h-full"}`}>
                   {/* Team Photo */}
                   <div className={`relative rounded-[2rem] overflow-hidden border border-white/10 group ${isMobile ? "h-[250px]" : "flex-grow"}`} style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
                     <img src="/photos/hero/team_with_robot.webp" alt="Team 6621 Artemis with their robot" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -1113,13 +1114,13 @@ export default function Home() {
             </h2>
           </div>
           
-          {/* Parallax Grid Container or Mobile Stack */}
+          {/* Parallax Grid Container or Mobile Carousel */}
           {isMobile ? (
-            <div className="flex flex-col gap-8 w-full max-w-md relative z-10">
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 w-full relative z-10 pb-8 px-6" style={{ scrollPaddingLeft: '1.5rem', scrollbarWidth: 'none' }}>
               {OUTREACH_CARDS.map((card, idx) => (
                 <div 
                   key={idx}
-                  className="relative w-full h-[400px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group"
+                  className="relative w-[85vw] max-w-[320px] shrink-0 h-[400px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group snap-center"
                 >
                   <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/50 to-transparent opacity-90" />
