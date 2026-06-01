@@ -410,13 +410,13 @@ export default function Home() {
     offset: ["start start", "end end"]
   });
 
-  const card1X = useTransform(budgetScrollYProgress, [0, 0.5], [0, -400]);
-  const card1RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [0, -15]);
-  const card1Opacity = useTransform(budgetScrollYProgress, [0, 0.4, 0.5], [1, 1, 0]);
-  const card2Y = useTransform(budgetScrollYProgress, [0, 0.5], [30, 0]);
-  const card2Scale = useTransform(budgetScrollYProgress, [0, 0.5], [0.95, 1]);
-  const card2RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [3, 0]);
-  const card2Opacity = useTransform(budgetScrollYProgress, [0, 0.5], [0.8, 1]);
+  const card1Y = useTransform(budgetScrollYProgress, [0, 0.5], [0, -600]);
+  const card1RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [0, -5]);
+  const card1Opacity = useTransform(budgetScrollYProgress, [0, 0.3, 0.5], [1, 1, 0]);
+  const card2Y = useTransform(budgetScrollYProgress, [0, 0.5], [40, 0]);
+  const card2Scale = useTransform(budgetScrollYProgress, [0, 0.5], [0.9, 1]);
+  const card2RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [2, 0]);
+  const card2Opacity = useTransform(budgetScrollYProgress, [0, 0.5], [0.7, 1]);
 
   const heroScrollRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScrollYProgress } = useScroll({
@@ -754,7 +754,7 @@ export default function Home() {
 
           {/* 3. Overlays (Header and Sponsor) */}
           <motion.header 
-            className={`fixed top-0 left-0 w-full z-[60] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto`}
+            className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto`}
           >
           <div className="flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text" onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             <img src="/branding/logo_transparent.png" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain`} />
@@ -906,9 +906,9 @@ export default function Home() {
                     </div>
                     
                     {/* About FRC Chip & Text */}
-                    <div className="flex items-center gap-6 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] hover:border-white/20 transition-colors duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.4)]" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
-                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
+                    <div className="flex flex-col items-start gap-4 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] hover:border-white/20 transition-colors duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.4)]" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
                       <p className="text-xs text-white/50 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
+                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
                     </div>
                   </div>
                 </div>
@@ -1161,7 +1161,7 @@ export default function Home() {
                 {/* BOTTOM CARD (Funding Sources) */}
                 <motion.div 
                   style={{ y: card2Y, scale: card2Scale, rotateZ: card2RotateZ, opacity: card2Opacity }}
-                  className="absolute inset-0 w-full glass-panel-deep p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30"
+                  className="absolute inset-0 w-full glass-panel-deep p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30 z-10"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Funding Sources</h3>
                   <div className="space-y-6 mb-8">
@@ -1180,8 +1180,8 @@ export default function Home() {
 
                 {/* TOP CARD (Expenses) */}
                 <motion.div 
-                  style={{ x: card1X, rotateZ: card1RotateZ, opacity: card1Opacity, transformOrigin: 'bottom left' }}
-                  className="relative w-full glass-panel-deep p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30 bg-[#0A0D14]"
+                  style={{ y: card1Y, rotateZ: card1RotateZ, opacity: card1Opacity, transformOrigin: 'bottom center' }}
+                  className="relative w-full glass-panel-deep p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30 bg-[#0A0D14] z-20"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
                   <div className="space-y-6 mb-8">
@@ -1818,6 +1818,7 @@ export default function Home() {
       <AnimatePresence>
         {isMobile && isMenuOpen && (
           <motion.div 
+            key="mobile-nav-overlay"
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
