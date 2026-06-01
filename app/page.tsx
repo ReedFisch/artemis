@@ -80,7 +80,6 @@ const EXPENSES = [
   { label: "New Equipment", amount: 2500 },
   { label: "Off-Season Events", amount: 1000 },
   { label: "Merchandise", amount: 1500 },
-  { label: "World's Fund", amount: 35000 },
 ];
 
 const FUNDING_SOURCES = [
@@ -1168,7 +1167,7 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-center text-lg md:text-xl border-t border-white/20 pt-4 mt-auto">
                 <span className="text-white font-bold font-mono">Total Needed</span>
-                <span className="text-stellar-orange font-black">$<Counter to={65000} duration={2} format={(v) => v.toLocaleString()} /></span>
+                <span className="text-stellar-orange font-black">$<Counter to={30000} duration={2} format={(v) => v.toLocaleString()} /></span>
               </div>
             </div>
 
@@ -1574,7 +1573,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            8. SUNDOWN STYLE FOOTER
            ══════════════════════════════════════════════════════ */}
-      <footer id="contact" className="relative z-10 overflow-hidden pt-12 pb-6" style={{ background: 'linear-gradient(to bottom, #05070B 0%, #020614 45%, #010c2e 100%)' }}>
+      <footer id="contact" className="relative z-10 overflow-hidden pt-12 pb-6" style={{ background: 'linear-gradient(to bottom, #05070B 0%, #010206 45%, #000411 100%)' }}>
         
         {/* Vibrant Moving Gradient Background (Sundown Style - Contained & Continuous) */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
