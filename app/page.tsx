@@ -799,40 +799,7 @@ export default function Home() {
           )}
           </motion.header>
 
-          {/* Mobile Navigation Drawer Overlay */}
-          <AnimatePresence>
-            {isMobile && isMenuOpen && (
-              <motion.div 
-                initial={{ opacity: 0, x: "100%" }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: "100%" }}
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed inset-0 z-[55] flex flex-col justify-center items-center bg-[#05070B]/95 backdrop-blur-2xl px-8 pointer-events-auto border-l border-white/5"
-              >
-                {/* Background glowing rings inside mobile menu */}
-                <div className="absolute top-[20%] right-[-10%] w-[300px] h-[300px] rounded-full bg-artemis-blue/10 blur-[100px] pointer-events-none" />
-                <div className="absolute bottom-[20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-stellar-orange/10 blur-[100px] pointer-events-none" />
-                
-                <div className="flex flex-col gap-8 text-center text-xl font-bold uppercase tracking-[0.2em] font-mono text-white/60">
-                  {NAV_LINKS.map((link, idx) => (
-                    <a 
-                      key={link.label}
-                      href={link.href}
-                      onClick={(e) => {
-                        setIsMenuOpen(false);
-                        handleFastScroll(e, link.href);
-                      }}
-                      className="hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95 transition-all text-2xl py-2"
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                  
-
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Navigation overlay moved to the bottom of main */}
           
           {/* Sponsor Button */}
           <div className={`absolute ${isMobile ? 'top-[45vh]' : 'bottom-12'} left-0 w-full flex justify-center z-30 pointer-events-auto`} style={{ perspective: '800px' }}>
@@ -1334,6 +1301,17 @@ export default function Home() {
             <h2 className="display font-black text-white hover-glitch-text mb-4 text-4xl md:text-5xl tracking-tight">
               Support Us
             </h2>
+            
+            {/* Mobile Scroll Indicator */}
+            <div className="md:hidden mt-6 flex items-center justify-center gap-3 opacity-60">
+              <svg className="w-4 h-4 text-white animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span className="text-[10px] uppercase tracking-widest font-mono text-white">Swipe to compare</span>
+              <svg className="w-4 h-4 text-white animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </div>
           </div>
 
           {/* 3-Column Tier Cards */}
@@ -1835,6 +1813,39 @@ export default function Home() {
 
         </div>
       </footer>
+
+      {/* Mobile Navigation Drawer Overlay (Placed globally to avoid overflow/z-index clipping) */}
+      <AnimatePresence>
+        {isMobile && isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-[100] flex flex-col justify-center items-center bg-[#05070B]/95 backdrop-blur-2xl px-8 pointer-events-auto border-l border-white/5"
+          >
+            {/* Background glowing rings inside mobile menu */}
+            <div className="absolute top-[20%] right-[-10%] w-[300px] h-[300px] rounded-full bg-artemis-blue/10 blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-[20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-stellar-orange/10 blur-[100px] pointer-events-none" />
+            
+            <div className="flex flex-col gap-8 text-center text-xl font-bold uppercase tracking-[0.2em] font-mono text-white/90">
+              {NAV_LINKS.map((link, idx) => (
+                <a 
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => {
+                    setIsMenuOpen(false);
+                    handleFastScroll(e, link.href);
+                  }}
+                  className="hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95 transition-all text-2xl py-2"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </main>
   );
