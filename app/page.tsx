@@ -413,7 +413,8 @@ export default function Home() {
   
   // Preload images on mount
   useEffect(() => {
-    const frameCount = 290;
+    const isMobileDevice = window.innerWidth < 1024;
+    const frameCount = isMobileDevice ? 1 : 290;
     
     // Add additional critical images to preload
     const additionalImages = [
@@ -451,7 +452,7 @@ export default function Home() {
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
       const paddedIndex = i.toString().padStart(3, '0');
-      img.src = i === 1 ? '/hero_starting_frame.webp' : `/hero_frames/${paddedIndex}.webp`;
+      img.src = (i === 1 || isMobileDevice) ? '/hero_starting_frame.webp' : `/hero_frames/${paddedIndex}.webp`;
       
       img.onload = () => {
         onAssetLoaded();
@@ -559,46 +560,48 @@ export default function Home() {
     <main ref={containerRef} className={`${isLoading ? 'fixed inset-0 overflow-hidden pointer-events-none' : 'snap-container'} text-white font-sans overflow-x-hidden w-full h-screen relative`}>
 
       {/* Global Ambient Dynamic Gradients (Extremely faint & luxury - Warm Orange Tones) */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.25]">
-        <motion.div 
-          animate={{ 
-            x: ['-10%', '10%', '-10%'],
-            y: ['-10%', '10%', '-10%'],
-            rotate: [0, 180, 360],
-            scale: [1, 1.2, 1] 
-          }}
-          transition={{ duration: 35, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-[10%] left-[5%] w-[45vw] h-[45vw] bg-gradient-to-br from-[#ff2a00]/3 via-[#ff5500]/2 to-transparent blur-[140px]"
-        />
-        <motion.div 
-          animate={{ 
-            x: ['10%', '-10%', '10%'],
-            y: ['10%', '-10%', '10%'],
-            rotate: [360, 180, 0],
-            scale: [1.2, 0.9, 1.2] 
-          }}
-          transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-[10%] right-[5%] w-[40vw] h-[40vw] bg-gradient-to-tl from-[#ff3c00]/3 via-[#ffaa00]/1 to-transparent blur-[140px]"
-        />
-        <motion.div 
-          animate={{ 
-            x: ['-5%', '5%', '-5%'],
-            y: ['5%', '-5%', '5%'],
-            rotate: [90, 270, 90],
-            scale: [0.95, 1.15, 0.95] 
-          }}
-          transition={{ duration: 45, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-[45%] left-[-10%] w-[50vw] h-[50vw] bg-gradient-to-tr from-[#ff5500]/2.5 via-[#ffaa00]/1.5 to-transparent blur-[150px]"
-        />
-        {/* Global extremely subtle dynamic wiggling grain for continuous cinematic analog feel */}
-        <div 
-          className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] opacity-[0.04] animate-dynamic-grain pointer-events-none" 
-          style={{ 
-            mixBlendMode: 'overlay',
-            backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' 
-          }} 
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.25]">
+          <motion.div 
+            animate={{ 
+              x: ['-10%', '10%', '-10%'],
+              y: ['-10%', '10%', '-10%'],
+              rotate: [0, 180, 360],
+              scale: [1, 1.2, 1] 
+            }}
+            transition={{ duration: 35, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute top-[10%] left-[5%] w-[45vw] h-[45vw] bg-gradient-to-br from-[#ff2a00]/3 via-[#ff5500]/2 to-transparent blur-[140px]"
+          />
+          <motion.div 
+            animate={{ 
+              x: ['10%', '-10%', '10%'],
+              y: ['10%', '-10%', '10%'],
+              rotate: [360, 180, 0],
+              scale: [1.2, 0.9, 1.2] 
+            }}
+            transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute bottom-[10%] right-[5%] w-[40vw] h-[40vw] bg-gradient-to-tl from-[#ff3c00]/3 via-[#ffaa00]/1 to-transparent blur-[140px]"
+          />
+          <motion.div 
+            animate={{ 
+              x: ['-5%', '5%', '-5%'],
+              y: ['5%', '-5%', '5%'],
+              rotate: [90, 270, 90],
+              scale: [0.95, 1.15, 0.95] 
+            }}
+            transition={{ duration: 45, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute top-[45%] left-[-10%] w-[50vw] h-[50vw] bg-gradient-to-tr from-[#ff5500]/2.5 via-[#ffaa00]/1.5 to-transparent blur-[150px]"
+          />
+          {/* Global extremely subtle dynamic wiggling grain for continuous cinematic analog feel */}
+          <div 
+            className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] opacity-[0.04] animate-dynamic-grain pointer-events-none" 
+            style={{ 
+              mixBlendMode: 'overlay',
+              backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' 
+            }} 
+          />
+        </div>
+      )}
 
 
             {/* ══════════════════════════════════════════════════════
@@ -712,7 +715,17 @@ export default function Home() {
           
           {/* 1. Canvas Zip Animation Layer (Bottom) */}
           <div className="absolute inset-0 z-0 bg-black">
-            <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.75]" />
+            {isMobile ? (
+              <motion.img 
+                src="/hero_starting_frame.webp"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.75 }}
+                transition={{ duration: 1.5 }}
+                className="w-full h-full object-cover" 
+              />
+            ) : (
+              <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.75]" />
+            )}
           </div>
 
           {/* 2. Liquid Hero Mask Layer (Fades out immediately when scrolling starts) */}
@@ -1289,8 +1302,8 @@ export default function Home() {
                 <div 
                   key={tier.name}
                   onClick={() => setSelectedTier(tier.name)}
-                  className={`relative p-8 rounded-3xl border backdrop-blur-3xl transition-all duration-500 flex flex-col group cursor-pointer ${borderClass}`}
-                  style={{ background: isApollo ? undefined : 'rgba(255,255,255,0.015)' }}
+                  className={`relative p-8 rounded-3xl border backdrop-blur-3xl transition-all duration-500 flex flex-col group cursor-pointer ${isMobile ? 'border-white/10 bg-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.3)] scale-100 active:scale-[0.98]' : borderClass}`}
+                  style={{ background: (isApollo && !isMobile) ? undefined : 'rgba(255,255,255,0.015)' }}
                 >
 
                   
@@ -1303,13 +1316,19 @@ export default function Home() {
                     
                     <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-6" />
                     
-                    <ul className="space-y-4 text-xs text-white/70 mb-8 flex-grow">
-                      {tier.benefits.map((benefit, i) => (
+                    <ul className="space-y-3 md:space-y-4 text-xs md:text-sm text-white/70 mb-8 flex-grow">
+                      {(isMobile ? tier.benefits.slice(0, 2) : tier.benefits).map((benefit, i) => (
                         <li key={i} className="flex items-start gap-3">
                           <span className={`text-base leading-none ${accentColorClass}`}>▹</span>
                           <span className="font-light">{benefit}</span>
                         </li>
                       ))}
+                      {isMobile && tier.benefits.length > 2 && (
+                        <li className="flex items-start gap-3 opacity-60">
+                          <span className={`text-base leading-none ${accentColorClass}`}>+</span>
+                          <span className="font-light">{tier.benefits.length - 2} more benefits</span>
+                        </li>
+                      )}
                     </ul>
                     
                     <a 
@@ -1319,7 +1338,7 @@ export default function Home() {
                         setSelectedTier(tier.name); 
                         handleFastScroll(e, '#interest-form'); 
                       }} 
-                      className={`w-full py-4 rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase transition-all duration-300 ${btnClass}`}
+                      className={`w-full py-4 min-h-[44px] flex items-center justify-center rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase transition-all duration-300 ${btnClass} active:scale-95`}
                     >
                       Select {tier.name}
                     </a>
@@ -1455,18 +1474,18 @@ export default function Home() {
                     </div>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <input required type="text" placeholder="Company / Name *" className="bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans" />
-                      <input required type="email" placeholder="Email Address *" className="bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans" />
+                      <input required type="text" placeholder="Company / Name *" className="bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-base md:text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans" />
+                      <input required type="email" placeholder="Email Address *" className="bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-base md:text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans" />
                     </div>
                     
-                    <input type="text" placeholder="Phone (Optional)" className="bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans w-full" />
+                    <input type="tel" placeholder="Phone (Optional)" className="bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-base md:text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans w-full" />
                     
                     <div className="relative">
                       <select 
                         required 
                         value={selectedTier}
                         onChange={(e) => setSelectedTier(e.target.value as any)}
-                        className="appearance-none bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white/80 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans w-full cursor-pointer"
+                        className="appearance-none bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-base md:text-sm text-white/80 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans w-full cursor-pointer"
                       >
                         <option value="" disabled className="bg-[#05070B] text-white">Sponsorship Tier: Select a tier</option>
                         {TIERS.filter(t => t.name !== 'Other').map(t => (
@@ -1496,7 +1515,7 @@ export default function Home() {
                               placeholder="Enter custom amount" 
                               value={customAmount}
                               onChange={(e) => setCustomAmount(e.target.value)}
-                              className="w-full bg-white/[0.02] border border-white/10 rounded-xl pl-10 pr-5 py-3.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans"
+                              className="w-full bg-white/[0.02] border border-white/10 rounded-xl pl-10 pr-5 py-3.5 text-base md:text-sm text-white placeholder-white/30 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans"
                             />
                           </div>
                         </motion.div>
@@ -1568,7 +1587,7 @@ export default function Home() {
         
         {/* Logos Marquee */}
         <div className="marquee-container w-full">
-          <div className="marquee-content flex items-center" style={{ animationDuration: `${SPONSOR_LOGO_IMAGES.length * 2.5}s` }}>
+          <div className="marquee-content flex items-center" style={{ animationDuration: `${SPONSOR_LOGO_IMAGES.length * (isMobile ? 4 : 2.5)}s` }}>
             {/* Double the array for seamless infinite scroll */}
             {[...SPONSOR_LOGO_IMAGES, ...SPONSOR_LOGO_IMAGES].map((src, i) => (
               <span key={`logo-${i}`} className="mx-8 flex items-center justify-center shrink-0">
@@ -1580,7 +1599,7 @@ export default function Home() {
 
         {/* Names Marquee */}
         <div className="marquee-container w-full">
-          <div className="marquee-content flex items-center" style={{ animationDuration: `${SPONSOR_LOGOS.length * 2}s` }}>
+          <div className="marquee-content flex items-center" style={{ animationDuration: `${SPONSOR_LOGOS.length * (isMobile ? 3 : 2)}s` }}>
             {/* Double the array for seamless infinite scroll */}
             {[...SPONSOR_LOGOS, ...SPONSOR_LOGOS].map((name, i) => (
               <span key={`name-${i}`} className="mx-6 label tracking-widest text-white/30 whitespace-nowrap flex items-center shrink-0">
@@ -1680,7 +1699,7 @@ export default function Home() {
 
             {/* Middle: Big Brand Title (6 cols md, 7 cols lg) */}
             <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-center text-center select-none lg:-ml-9 xl:-ml-12">
-              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-[#f8f8f8] tracking-tighter uppercase font-mono" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
+              <h1 className="text-[clamp(3.5rem,14vw,8rem)] leading-[0.85] font-black text-[#f8f8f8] tracking-tighter uppercase font-mono" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
                 Artemis
               </h1>
             </div>
