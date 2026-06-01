@@ -309,33 +309,37 @@ export default function Home() {
     
     let targetPosition = 0;
     
+    const getAbsoluteOffset = (el: HTMLElement) => {
+      return el.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop;
+    };
+
     // Special handling for the horizontal timeline section
     if (actualTargetId === '#timeline') {
       if (isMobile) {
         const target = document.querySelector('#timeline') as HTMLElement;
         if (!target) return;
-        targetPosition = target.offsetTop;
+        targetPosition = getAbsoluteOffset(target);
       } else {
         const aboutSection = document.querySelector('#about') as HTMLElement;
         if (!aboutSection) return;
         // Scroll to exactly 36.6% progress (1.1 * viewport height) to align timeline left edge
-        targetPosition = aboutSection.offsetTop + 1.1 * window.innerHeight;
+        targetPosition = getAbsoluteOffset(aboutSection) + 1.1 * window.innerHeight;
       }
     } else if (actualTargetId === '#outreach') {
       if (isMobile) {
         const target = document.querySelector('#outreach') as HTMLElement;
         if (!target) return;
-        targetPosition = target.offsetTop;
+        targetPosition = getAbsoluteOffset(target);
       } else {
         const target = document.querySelector(actualTargetId) as HTMLElement;
         if (!target) return;
         // Scroll partially into the outreach container so the first cards are visible
-        targetPosition = target.offsetTop + 0.6 * window.innerHeight;
+        targetPosition = getAbsoluteOffset(target) + 0.6 * window.innerHeight;
       }
     } else {
       const target = document.querySelector(actualTargetId) as HTMLElement;
       if (!target) return;
-      targetPosition = target.offsetTop;
+      targetPosition = getAbsoluteOffset(target) - (isMobile ? 20 : 40);
     }
     
     const startPosition = container.scrollTop;
@@ -1278,11 +1282,11 @@ export default function Home() {
                     </ul>
                     
                     <a 
-                      href="#sponsorship-form-section" 
+                      href="#interest-form" 
                       onClick={(e) => { 
                         e.stopPropagation(); 
                         setSelectedTier(tier.name); 
-                        handleFastScroll(e, '#sponsorship-form-section'); 
+                        handleFastScroll(e, '#interest-form'); 
                       }} 
                       className={`w-full py-4 rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase transition-all duration-300 ${btnClass}`}
                     >
@@ -1298,7 +1302,7 @@ export default function Home() {
             id="donation-card"
             onClick={(e) => {
               setSelectedTier('Other');
-              handleFastScroll(e as any, '#sponsorship-form-section');
+              handleFastScroll(e as any, '#interest-form');
             }}
             className={`w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-24 ${
               selectedTier === 'Other' ? 'border-white/30 bg-white/[0.04] shadow-[0_15px_30px_rgba(0,0,0,0.3)]' : 'border-white/5 hover:border-white/15'
@@ -1311,11 +1315,11 @@ export default function Home() {
               <p className="text-xs text-white/60 font-light">Every contribution helps fund student meals, travel expenses, and raw materials directly.</p>
             </div>
             <a 
-              href="#sponsorship-form-section"
+              href="#interest-form"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedTier('Other');
-                handleFastScroll(e, '#sponsorship-form-section');
+                handleFastScroll(e, '#interest-form');
               }}
               className="px-8 py-3.5 rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase border border-white/10 text-white/90 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all duration-300 shrink-0"
             >
