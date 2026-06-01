@@ -1712,6 +1712,9 @@ export default function Home() {
                 Photo Credits: <span className="text-white underline decoration-stellar-orange decoration-2">Smokingmonkey Photography</span>
               </p>
               <p>
+                Website created by <span className="text-white underline decoration-artemis-blue decoration-2">Reed Fisch</span>
+              </p>
+              <p>
                 Chatham Central School District
               </p>
             </div>
