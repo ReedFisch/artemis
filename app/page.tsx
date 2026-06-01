@@ -1188,6 +1188,16 @@ export default function Home() {
                 <span className="text-artemis-blue font-black">$<Counter to={30000} duration={2} format={(v) => v.toLocaleString()} /></span>
               </div>
             </div>
+            
+            {/* Funding Gap to Worlds */}
+            <div className="md:col-span-2 glass-panel-deep p-6 md:p-8 rounded-2xl relative overflow-hidden flex flex-col sm:flex-row justify-between items-center transition-all duration-300 hover:bg-white/[0.03] border border-stellar-orange/30 shadow-[0_0_30px_rgba(249,115,22,0.1)]">
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-stellar-orange/5 to-transparent pointer-events-none" />
+              <div className="flex flex-col gap-1 relative z-10 text-center sm:text-left">
+                <span className="text-white font-bold font-mono text-lg md:text-xl uppercase tracking-widest">Funding Gap to Worlds</span>
+                <span className="text-xs text-white/50 font-light">Help us reach our goal to compete at the championship</span>
+              </div>
+              <span className="text-stellar-orange font-black text-3xl md:text-4xl mt-4 sm:mt-0 relative z-10">$<Counter to={35000} duration={2} format={(v) => v.toLocaleString()} /></span>
+            </div>
           </div>
         </div>
       </section>
