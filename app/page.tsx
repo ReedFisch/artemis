@@ -156,33 +156,34 @@ const OutreachParallaxCard = ({
   const i4 = Math.min(0.9998, Math.max(i3 + 0.0001, endExit));
   const i5 = 1;
 
+  const isFirstRow = rowIndex === 0;
   const isLastRow = rowIndex === totalRows - 1;
 
   // Scale: stays mostly flat, tiny shrink on enter/exit
   const scale = useTransform(
     scrollYProgress,
     [i0, i1, i2, i3, i4, i5],
-    isLastRow
-      ? [0.9, 0.9, 1.0, 1.0, 1.0, 1.0]
-      : [0.9, 0.9, 1.0, 1.0, 0.9, 0.9]
+    isFirstRow
+      ? (isLastRow ? [1.0, 1.0, 1.0, 1.0, 1.0, 1.0] : [1.0, 1.0, 1.0, 1.0, 0.9, 0.9])
+      : (isLastRow ? [0.9, 0.9, 1.0, 1.0, 1.0, 1.0] : [0.9, 0.9, 1.0, 1.0, 0.9, 0.9])
   );
   
-  // Enter from bottom, hold, then exit through the top (traditional scroll)
+  // Enter from bottom, hold, then exit through the top
   const y = useTransform(
     scrollYProgress,
     [i0, i1, i2, i3, i4, i5],
-    isLastRow
-      ? ["120%", "120%", "0%", "0%", "0%", "0%"]
-      : ["120%", "120%", "0%", "0%", "-120%", "-120%"]
+    isFirstRow
+      ? (isLastRow ? ["0%", "0%", "0%", "0%", "0%", "0%"] : ["0%", "0%", "0%", "0%", "-120%", "-120%"])
+      : (isLastRow ? ["120%", "120%", "0%", "0%", "0%", "0%"] : ["120%", "120%", "0%", "0%", "-120%", "-120%"])
   );
   
   // Opacity: fade in as it rises, hold, then fade out as it rises away
   const opacity = useTransform(
     scrollYProgress,
     [i0, i1, i2, i3, i4, i5],
-    isLastRow
-      ? [0, 0, 1, 1, 1, 1]
-      : [0, 0, 1, 1, 0, 0]
+    isFirstRow
+      ? (isLastRow ? [1, 1, 1, 1, 1, 1] : [1, 1, 1, 1, 0, 0])
+      : (isLastRow ? [0, 0, 1, 1, 1, 1] : [0, 0, 1, 1, 0, 0])
   );
 
   return (
@@ -1206,7 +1207,6 @@ export default function Home() {
               </div>
               
               <div className="relative z-10 mt-6 sm:mt-0 group-hover:scale-105 transition-transform duration-500">
-                <div className="absolute inset-0 bg-stellar-orange/20 blur-[30px] rounded-full scale-150" />
                 <span className="text-stellar-orange font-black text-4xl md:text-5xl drop-shadow-[0_0_25px_rgba(249,115,22,0.6)] relative z-10">
                   $<Counter to={35000} duration={2} format={(v) => v.toLocaleString()} />
                 </span>
