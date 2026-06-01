@@ -270,11 +270,19 @@ export default function Home() {
   const [isMoving, setIsMoving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isAtTop, setIsAtTop] = useState(true);
-  
   const [isMobile, setIsMobile] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
+  const impactScrollRef = useRef<HTMLDivElement>(null);
+  const supportScrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollCarousel = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
+    if (ref.current) {
+      const scrollAmount = window.innerWidth * 0.75;
+      ref.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   const { scrollYProgress } = useScroll({ container: containerRef });
 
   useEffect(() => {
@@ -771,21 +779,6 @@ export default function Home() {
             <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Impact</a>
             <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Support</a>
           </nav>
-
-          {/* Mobile Hamburger Button */}
-          {isMobile && !isMenuOpen && (
-            <button 
-              onClick={() => setIsMenuOpen(true)}
-              className="z-50 flex items-center justify-center w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md active:scale-95 transition-all shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
-              aria-label="Open Menu"
-            >
-              <div className="flex flex-col gap-1.5 w-5 justify-center items-center">
-                <span className="w-full h-0.5 bg-white rounded-full" />
-                <span className="w-full h-0.5 bg-white rounded-full" />
-                <span className="w-full h-0.5 bg-white rounded-full" />
-              </div>
-            </button>
-          )}
           </motion.header>
 
           {/* Navigation overlay moved to the bottom of main */}
@@ -841,7 +834,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            2. ABOUT & TIMELINE (HORIZONTAL SCROLL)
            ══════════════════════════════════════════════════════ */}
-      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10 h-auto lg:h-[400vh]" style={{ scrollSnapAlign: isMobile ? 'none' : 'start' }}>
+      <section ref={horizontalScrollRef} id="about" className="relative w-full z-10 h-auto lg:h-[400vh] mt-24 md:mt-0" style={{ scrollSnapAlign: isMobile ? 'none' : 'start' }}>
         
 
         {/* Sticky/Static container that holds the horizontal sliding content or vertical content */}
@@ -1078,11 +1071,25 @@ export default function Home() {
             <h2 className="display font-black text-white/60 tracking-wide hover-glitch-text">
               Impact
             </h2>
+            {/* Mobile Scroll Indicator & Controls */}
+            <div className="md:hidden mt-4 flex items-center justify-center gap-4">
+              <button onClick={() => scrollCarousel(impactScrollRef, 'left')} className="p-2 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white active:scale-95 transition-all">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <span className="text-[10px] uppercase tracking-widest font-mono text-white/50">Swipe or click</span>
+              <button onClick={() => scrollCarousel(impactScrollRef, 'right')} className="p-2 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white active:scale-95 transition-all">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
           </div>
           
           {/* Parallax Grid Container or Mobile Carousel */}
           {isMobile ? (
-            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 w-full relative z-10 pb-8 px-6" style={{ scrollPaddingLeft: '1.5rem', scrollbarWidth: 'none' }}>
+            <div ref={impactScrollRef} className="flex overflow-x-auto snap-x snap-mandatory gap-6 w-full relative z-10 pb-8 px-6" style={{ scrollPaddingLeft: '1.5rem', scrollbarWidth: 'none' }}>
               {OUTREACH_CARDS.map((card, idx) => (
                 <div 
                   key={idx}
@@ -1127,7 +1134,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" ref={budgetScrollRef} className="relative z-10 overflow-hidden bg-[#05070B] py-20 md:py-32">
+      <section id="budget" ref={budgetScrollRef} className="relative z-10 bg-[#05070B] py-20 md:py-32">
         {/* Scattered 3D Shapes */}
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
@@ -1292,20 +1299,24 @@ export default function Home() {
               Support Us
             </h2>
             
-            {/* Mobile Scroll Indicator */}
-            <div className="md:hidden mt-6 flex items-center justify-center gap-3 opacity-60">
-              <svg className="w-4 h-4 text-white animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              <span className="text-[10px] uppercase tracking-widest font-mono text-white">Swipe to compare</span>
-              <svg className="w-4 h-4 text-white animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
+            {/* Mobile Scroll Indicator & Controls */}
+            <div className="md:hidden mt-6 flex items-center justify-center gap-4">
+              <button onClick={() => scrollCarousel(supportScrollRef, 'left')} className="p-2 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white active:scale-95 transition-all">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <span className="text-[10px] uppercase tracking-widest font-mono text-white/50">Swipe or click</span>
+              <button onClick={() => scrollCarousel(supportScrollRef, 'right')} className="p-2 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white active:scale-95 transition-all">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           </div>
 
           {/* 3-Column Tier Cards */}
-          <div className="flex flex-row overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-8 w-full mb-16 items-stretch pb-8 md:pb-0 hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
+          <div ref={supportScrollRef} className="flex flex-row overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-8 w-full mb-16 items-stretch pb-8 md:pb-0 hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
             {TIERS.filter(t => t.name !== 'Other').map((tier) => {
               const isApollo = tier.name === 'Apollo';
               
@@ -1803,47 +1814,6 @@ export default function Home() {
 
         </div>
       </footer>
-
-      {/* Mobile Navigation Drawer Overlay (Placed globally to avoid overflow/z-index clipping) */}
-      <AnimatePresence>
-        {isMobile && isMenuOpen && (
-          <motion.div 
-            key="mobile-nav-overlay"
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[100] flex flex-col justify-center items-center bg-[#05070B]/95 backdrop-blur-2xl px-8 pointer-events-auto border-l border-white/5"
-          >
-            <div className="absolute top-[20%] right-[-10%] w-[300px] h-[300px] rounded-full bg-artemis-blue/10 blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-[20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-stellar-orange/10 blur-[100px] pointer-events-none" />
-            
-            <button 
-              onClick={() => setIsMenuOpen(false)}
-              className="absolute top-6 right-6 z-[120] w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/50 hover:text-white active:scale-95 transition-all shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
-              aria-label="Close Menu"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </button>
-
-            <div className="flex flex-col gap-8 text-center text-xl font-bold uppercase tracking-[0.2em] font-mono text-white/90">
-              {NAV_LINKS.map((link, idx) => (
-                <a 
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => {
-                    setIsMenuOpen(false);
-                    handleFastScroll(e, link.href);
-                  }}
-                  className="hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95 transition-all text-2xl py-2"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
     </main>
   );
