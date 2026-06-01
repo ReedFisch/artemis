@@ -1731,7 +1731,7 @@ export default function Home() {
                 FIRST® and FIRST® Robotics Competition are registered trademarks of For Inspiration and Recognition of Science and Technology. This website is not officially endorsed by FIRST®.
               </p>
               <p className="uppercase tracking-[0.15em] text-white font-bold font-mono">
-                &copy; {new Date().getFullYear()} Team 6621 Artemis. All rights reserved.
+                Team 6621 Artemis
               </p>
             </div>
             
