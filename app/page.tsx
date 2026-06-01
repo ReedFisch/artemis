@@ -75,17 +75,18 @@ const TIERS = [
 ];
 
 const EXPENSES = [
-  { label: "Robot & Field", amount: 4050 },
-  { label: "Competition Season", amount: 59600 },
-  { label: "Off-Season Events", amount: 645 },
-  { label: "Merchandise", amount: 1100 },
+  { label: "Robot & Field", amount: 5000 },
+  { label: "Competition Season", amount: 20000 },
+  { label: "New Equipment", amount: 2500 },
+  { label: "Off-Season Events", amount: 1000 },
+  { label: "Merchandise", amount: 1500 },
+  { label: "World's Fund", amount: 35000 },
 ];
 
 const FUNDING_SOURCES = [
   { label: "District Funding", amount: 10000 },
-  { label: "Grants", amount: 3500 },
-  { label: "Current Sponsors", amount: 8500 },
-  { label: "Fundraising Events", amount: 2000 },
+  { label: "Grants", amount: 7000 },
+  { label: "Current Sponsors", amount: 13000 },
 ];
 
 // ─── OUTREACH DATA ──────────────────────────────────────────────
@@ -1167,7 +1168,7 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-center text-lg md:text-xl border-t border-white/20 pt-4 mt-auto">
                 <span className="text-white font-bold font-mono">Total Needed</span>
-                <span className="text-stellar-orange font-black">$<Counter to={65395} duration={2} format={(v) => v.toLocaleString()} /></span>
+                <span className="text-stellar-orange font-black">$<Counter to={65000} duration={2} format={(v) => v.toLocaleString()} /></span>
               </div>
             </div>
 
@@ -1184,7 +1185,7 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-center text-lg md:text-xl border-t border-white/20 pt-4 mt-auto">
                 <span className="text-white font-bold font-mono">Total Secured</span>
-                <span className="text-artemis-blue font-black">$<Counter to={24000} duration={2} format={(v) => v.toLocaleString()} /></span>
+                <span className="text-artemis-blue font-black">$<Counter to={30000} duration={2} format={(v) => v.toLocaleString()} /></span>
               </div>
             </div>
           </div>
