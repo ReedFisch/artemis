@@ -1196,12 +1196,11 @@ export default function Home() {
                     <span className="text-stellar-orange font-black">$30,000</span>
                   </div>
                 </motion.div>
-                
               </div>
             </div>
           )}
 
-          <div className="hidden md:grid grid-cols-2 gap-8 w-full relative z-10 text-left">
+          <div className="hidden lg:grid grid-cols-2 gap-8 w-full relative z-10 text-left">
 
             {/* Expenses */}
             <div className="glass-panel-deep p-8 md:p-10 rounded-2xl relative overflow-hidden transition-all duration-300 hover:bg-white/[0.03]">
@@ -1238,8 +1237,8 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Funding Gap to Worlds (Rendered below the mobile flip deck or the desktop grid) */}
-          <div className="w-full relative z-10 text-left mt-8">
+          {/* Funding Gap to Worlds (Rendered below the desktop grid, hidden on mobile) */}
+          <div className="hidden lg:block w-full relative z-10 text-left mt-8">
             <div className="relative overflow-hidden rounded-3xl p-8 md:p-10 flex flex-col sm:flex-row justify-between items-center transition-all duration-500 hover:-translate-y-1 group bg-white/[0.03] backdrop-blur-3xl border border-white/10 hover:border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
               {/* Premium Glass Sheen */}
               <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-3xl">
