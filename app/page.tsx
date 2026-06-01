@@ -119,6 +119,12 @@ const OUTREACH_CARDS = [
     title: "Wellness & Science Fairs",
     desc: "Gave demonstrations to our community and illustrated the importance of robotics at the Chatham Wellness Fair, Science Fair, and Learning Fair.",
     image: "/photos/outreach/steam_day_assembly.webp",
+  },
+  {
+    tag: "Recognition",
+    title: "Unconventional Awards",
+    desc: "Created custom awards to give out and recognize teams that go above and beyond in unconventional ways that are not traditionally recognized by FIRST.",
+    image: "/photos/outreach/steam_day_assembly.webp",
   }
 ];
 
