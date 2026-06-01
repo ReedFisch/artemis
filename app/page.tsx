@@ -1585,7 +1585,7 @@ export default function Home() {
               scale: [1, 1.25, 1] 
             }}
             transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-55%] left-[-25%] w-[110%] h-[130%] bg-gradient-to-br from-[#ff2a00] via-[#ff5500] to-transparent blur-[100px] opacity-40"
+            className="absolute bottom-[-55%] left-[-25%] w-[110%] h-[130%] bg-gradient-to-br from-[#0f172a] via-[#1e3a8a] to-transparent blur-[120px] opacity-20"
           />
           <motion.div 
             animate={{ 
@@ -1595,9 +1595,9 @@ export default function Home() {
               scale: [1.25, 0.85, 1.25] 
             }}
             transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-35%] right-[-15%] w-[80%] h-[100%] bg-gradient-to-tl from-[#e61d00] via-[#ff3c00] to-transparent blur-[80px] opacity-35"
+            className="absolute bottom-[-35%] right-[-15%] w-[80%] h-[100%] bg-gradient-to-tl from-[#020617] via-[#1d4ed8] to-transparent blur-[100px] opacity-15"
           />
-          {/* Third dynamic amber core to enrich the color shifts */}
+          {/* Third dynamic dark core to enrich the color shifts */}
           <motion.div 
             animate={{ 
               x: ['-5%', '10%', '-5%'],
@@ -1606,7 +1606,7 @@ export default function Home() {
               scale: [0.85, 1.15, 0.85] 
             }}
             transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-[-45%] left-[20%] w-[70%] h-[90%] bg-gradient-to-tr from-[#ffaa00] via-[#ff2a00]/60 to-transparent blur-[90px] opacity-30"
+            className="absolute bottom-[-45%] left-[20%] w-[70%] h-[90%] bg-gradient-to-tr from-[#172554] via-[#0f172a]/60 to-transparent blur-[110px] opacity-15"
           />
           {/* Embedded style block for dynamic film grain keyframe wiggling */}
           <style dangerouslySetInnerHTML={{ __html: `
