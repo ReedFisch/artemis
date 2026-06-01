@@ -43,7 +43,7 @@ const TIERS = [
     color: "blue",
     benefits: [
       "Small logo placement on FRC robot",
-      "Name on team pit banner",
+      "Logo printed on competition shirts",
       "All Hermes perks included",
       "Signed team photo & team shirt",
     ],
@@ -55,7 +55,7 @@ const TIERS = [
     color: "orange",
     benefits: [
       "Large prominent logo on FRC robot",
-      "Logo printed on competition shirts",
+      "Personal thank you video",
       "Social media spotlight shout-outs",
       "All Apollo perks included",
     ],
@@ -878,7 +878,7 @@ export default function Home() {
               <div className={`max-w-7xl mx-auto w-full flex flex-col ${isMobile ? "gap-8" : "lg:flex-row gap-6 lg:gap-10 items-stretch h-auto mt-4"}`}>
                 
                 {/* Left Side: About Text */}
-                <div className={`${isMobile ? "w-full p-6" : "lg:w-5/12 p-8 md:p-10"} flex flex-col space-y-6 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] justify-between relative overflow-hidden backdrop-blur-3xl border border-white/10`} style={{ background: 'rgba(255,255,255,0.02)' }}>
+                <div className={`${isMobile ? "w-full p-6" : "lg:w-5/12 p-6 md:p-8"} flex flex-col space-y-6 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_40px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)] justify-between relative overflow-hidden backdrop-blur-3xl border border-white/10`} style={{ background: 'rgba(255,255,255,0.02)' }}>
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                   
                   <div className="relative z-10">
@@ -894,7 +894,7 @@ export default function Home() {
                     {/* Sleek white divider */}
                     <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.1) 70%, transparent)' }} />
                     
-                    <div className="p-6 md:p-8 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl border border-white/10" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(249,115,22,0.05) 100%)', boxShadow: '0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                    <div className="p-6 md:p-8 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl border border-white/10 hover:border-white/20 hover:bg-white/[0.04]" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(249,115,22,0.05) 100%)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <h3 className="h2 font-bold mb-3 text-white tracking-wide hover-glitch-text">Our Mission</h3>
                       <p className="subhead text-white/70 italic leading-relaxed font-light">
@@ -903,7 +903,7 @@ export default function Home() {
                     </div>
                     
                     {/* About FRC Chip & Text */}
-                    <div className="flex items-center gap-6 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.3)]" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
+                    <div className="flex items-center gap-6 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] hover:border-white/20 transition-colors duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.4)]" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
                       <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="shrink-0 px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
                       <p className="text-xs text-white/50 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
                     </div>
@@ -913,7 +913,7 @@ export default function Home() {
                 {/* Right Side: Photo and Stats */}
                 <div className={`w-full flex flex-col gap-6 ${isMobile ? "" : "lg:w-7/12 h-full"}`}>
                   {/* Team Photo */}
-                  <div className={`relative rounded-[2rem] overflow-hidden border border-white/10 group ${isMobile ? "h-[250px]" : "flex-grow"}`} style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                  <div className={`relative rounded-[2rem] overflow-hidden border border-white/10 group ${isMobile ? "h-[250px]" : "flex-grow"}`} style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
                     <img src="/photos/hero/team_with_robot.webp" alt="Team 6621 Artemis with their robot" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                     <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%)' }} />
@@ -927,17 +927,17 @@ export default function Home() {
                   </div>
                   {/* Compact stat row */}
                   <div className="grid grid-cols-3 gap-3 md:gap-5 shrink-0" style={{ perspective: '800px' }}>
-                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default hover:border-white/20 hover:bg-white/[0.04]" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
                       <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={2016} duration={1.5} /></h4>
                       <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Founded</p>
                     </div>
-                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default hover:border-white/20 hover:bg-white/[0.04]" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
                       <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={20} duration={2} format={(v) => `${v}+`} /></h4>
                       <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Members</p>
                     </div>
-                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default hover:border-white/20 hover:bg-white/[0.04]" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
                       <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
                       <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
                       <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Hours Contributed This Season</p>
@@ -1278,11 +1278,11 @@ export default function Home() {
                     </ul>
                     
                     <a 
-                      href="#sponsorship-form" 
+                      href="#sponsorship-form-section" 
                       onClick={(e) => { 
                         e.stopPropagation(); 
                         setSelectedTier(tier.name); 
-                        handleFastScroll(e, '#sponsorship-form'); 
+                        handleFastScroll(e, '#sponsorship-form-section'); 
                       }} 
                       className={`w-full py-4 rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase transition-all duration-300 ${btnClass}`}
                     >
@@ -1298,7 +1298,7 @@ export default function Home() {
             id="donation-card"
             onClick={(e) => {
               setSelectedTier('Other');
-              handleFastScroll(e as any, '#interest-form');
+              handleFastScroll(e as any, '#sponsorship-form-section');
             }}
             className={`w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-24 ${
               selectedTier === 'Other' ? 'border-white/30 bg-white/[0.04] shadow-[0_15px_30px_rgba(0,0,0,0.3)]' : 'border-white/5 hover:border-white/15'
@@ -1311,11 +1311,11 @@ export default function Home() {
               <p className="text-xs text-white/60 font-light">Every contribution helps fund student meals, travel expenses, and raw materials directly.</p>
             </div>
             <a 
-              href="#interest-form"
+              href="#sponsorship-form-section"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedTier('Other');
-                handleFastScroll(e, '#interest-form');
+                handleFastScroll(e, '#sponsorship-form-section');
               }}
               className="px-8 py-3.5 rounded-xl text-center label text-[9px] font-bold tracking-widest uppercase border border-white/10 text-white/90 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all duration-300 shrink-0"
             >
@@ -1559,7 +1559,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            8. SUNDOWN STYLE FOOTER
            ══════════════════════════════════════════════════════ */}
-      <footer id="contact" className="relative z-10 overflow-hidden pt-12 pb-6" style={{ background: 'linear-gradient(to bottom, #05070B 0%, #0d0402 45%, #180601 100%)' }}>
+      <footer id="contact" className="relative z-10 overflow-hidden pt-12 pb-6" style={{ background: 'linear-gradient(to bottom, #05070B 0%, #020614 45%, #010c2e 100%)' }}>
         
         {/* Vibrant Moving Gradient Background (Sundown Style - Contained & Continuous) */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
