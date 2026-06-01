@@ -401,6 +401,22 @@ export default function Home() {
   }, [cursorX, cursorY]);
 
   // Hero Scroll Scrubbing (Zip Animation)
+  
+  // Mobile Budget 3D Flip Card Scroll Tracking
+  const budgetScrollRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: budgetScrollYProgress } = useScroll({
+    target: budgetScrollRef,
+    container: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  const card1RotateX = useTransform(budgetScrollYProgress, [0, 0.5], [0, -180]);
+  const card1Opacity = useTransform(budgetScrollYProgress, [0, 0.25, 0.5], [1, 1, 0]);
+  const card2Y = useTransform(budgetScrollYProgress, [0, 0.5], [40, 0]);
+  const card2Scale = useTransform(budgetScrollYProgress, [0, 0.5], [0.9, 1]);
+  const card2RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [4, 0]);
+  const card2Opacity = useTransform(budgetScrollYProgress, [0, 0.2], [0.5, 1]);
+
   const heroScrollRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScrollYProgress } = useScroll({
     target: heroScrollRef,
@@ -716,6 +732,7 @@ export default function Home() {
           {/* 1. Canvas Zip Animation Layer (Bottom) */}
           <div className="absolute inset-0 z-0 bg-black">
             {isMobile ? (
+              <>
               <motion.img 
                 src="/hero_starting_frame.webp"
                 initial={{ opacity: 0 }}
@@ -724,6 +741,7 @@ export default function Home() {
                 className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] max-w-none h-auto object-cover object-bottom" 
               />
               <div className="absolute bottom-0 left-0 w-full h-[25vh] bg-gradient-to-t from-[#05070B] to-transparent z-10 pointer-events-none" />
+              </>
             ) : (
               <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.75]" />
             )}
@@ -1153,7 +1171,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" className="snap-section relative z-10 overflow-hidden min-h-screen flex items-center bg-[#05070B] py-16">
+      <section id="budget" ref={budgetScrollRef} className={`snap-section relative z-10 overflow-hidden ${isMobile ? 'h-[200vh]' : 'min-h-screen flex items-center'} bg-[#05070B] py-16`}>
         {/* Scattered 3D Shapes */}
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
@@ -1166,7 +1184,58 @@ export default function Home() {
             42% of students in our high school are on free or reduced lunch. We refuse to charge our students a single cent to participate. We believe that talent is universal but opportunity is not.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full relative z-10 text-left">
+          
+          {/* MOBILE 3D FLIP DECK */}
+          {isMobile && (
+            <div className="sticky top-0 h-[100svh] w-full flex items-center justify-center pointer-events-none" style={{ perspective: '1200px' }}>
+              <div className="relative w-full max-w-sm" style={{ transformStyle: 'preserve-3d' }}>
+                
+                {/* BOTTOM CARD (Funding Sources) */}
+                <motion.div 
+                  style={{ y: card2Y, scale: card2Scale, rotateZ: card2RotateZ, opacity: card2Opacity }}
+                  className="absolute inset-0 w-full glass-panel-deep p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30"
+                >
+                  <h3 className="h2 font-black mb-6 text-white tracking-wide">Funding Sources</h3>
+                  <div className="space-y-6 mb-8">
+                    {FUNDING_SOURCES.map((item, idx) => (
+                      <div key={idx} className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                        <span className="text-white/70 font-mono">{item.label}</span>
+                        <span className="text-artemis-blue font-black">${item.amount.toLocaleString()}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex justify-between items-center text-lg border-t border-white/20 pt-4 mt-auto">
+                    <span className="text-white font-bold font-mono">Total Secured</span>
+                    <span className="text-artemis-blue font-black">$30,000</span>
+                  </div>
+                </motion.div>
+
+                {/* TOP CARD (Expenses) */}
+                <motion.div 
+                  style={{ rotateX: card1RotateX, opacity: card1Opacity, transformOrigin: 'top center' }}
+                  className="relative w-full glass-panel-deep p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30 bg-[#0A0D14]"
+                >
+                  <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
+                  <div className="space-y-6 mb-8">
+                    {EXPENSES.map((item, idx) => (
+                      <div key={idx} className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                        <span className="text-white/70 font-mono">{item.label}</span>
+                        <span className="text-stellar-orange font-black">${item.amount.toLocaleString()}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex justify-between items-center text-lg border-t border-white/20 pt-4 mt-auto">
+                    <span className="text-white font-bold font-mono">Total Needed</span>
+                    <span className="text-stellar-orange font-black">$30,000</span>
+                  </div>
+                </motion.div>
+                
+              </div>
+            </div>
+          )}
+
+          <div className="hidden md:grid grid-cols-2 gap-8 w-full relative z-10 text-left">
+
             {/* Expenses */}
             <div className="glass-panel-deep p-8 md:p-10 rounded-2xl relative overflow-hidden transition-all duration-300 hover:bg-white/[0.03]">
               <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
@@ -1200,9 +1269,11 @@ export default function Home() {
                 <span className="text-artemis-blue font-black">$<Counter to={30000} duration={2} format={(v) => v.toLocaleString()} /></span>
               </div>
             </div>
-            
-            {/* Funding Gap to Worlds */}
-            <div className="md:col-span-2 relative overflow-hidden rounded-3xl p-8 md:p-10 flex flex-col sm:flex-row justify-between items-center transition-all duration-500 hover:-translate-y-1 group bg-white/[0.03] backdrop-blur-3xl border border-white/10 hover:border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+          </div>
+          
+          {/* Funding Gap to Worlds (Rendered below the mobile flip deck or the desktop grid) */}
+          <div className="w-full relative z-10 text-left mt-8">
+            <div className="relative overflow-hidden rounded-3xl p-8 md:p-10 flex flex-col sm:flex-row justify-between items-center transition-all duration-500 hover:-translate-y-1 group bg-white/[0.03] backdrop-blur-3xl border border-white/10 hover:border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
               {/* Premium Glass Sheen */}
               <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-3xl">
                 {/* Diagonal light sheen */}
