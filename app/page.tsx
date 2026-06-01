@@ -1402,7 +1402,7 @@ export default function Home() {
           <div id="sponsorship-form" className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch max-w-6xl mx-auto w-full">
             
             {/* Contact Details (5 cols) */}
-            <div className="lg:col-span-5 flex flex-col gap-6 w-full justify-between">
+            <div className="hidden lg:flex lg:col-span-5 flex-col gap-6 w-full justify-between">
               <div>
                 <span className="label text-[10px] uppercase tracking-[0.2em] text-white/40 mb-2 block font-sans font-semibold">Get in Touch</span>
                 <h3 className="text-3xl font-bold text-white mb-3 tracking-tight">Partnership Info</h3>
@@ -1684,7 +1684,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mt-2">
             
             {/* Left: Large Stacked Quick Links (2 cols) */}
-            <div className="md:col-span-2 flex flex-col gap-2">
+            <div className="hidden md:flex md:col-span-2 flex-col gap-2">
               {NAV_LINKS.map(link => (
                 <a 
                   key={link.label} 
