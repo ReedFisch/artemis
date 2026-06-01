@@ -1189,27 +1189,19 @@ export default function Home() {
             </div>
             
             {/* Funding Gap to Worlds */}
-            <div className="md:col-span-2 relative overflow-hidden rounded-3xl p-8 md:p-10 flex flex-col sm:flex-row justify-between items-center transition-all duration-500 hover:-translate-y-1 group bg-[#0A0E17]/60 backdrop-blur-3xl border border-white/10 hover:border-stellar-orange/50 shadow-[0_15px_40px_rgba(0,0,0,0.6)]">
-              {/* Glassmorphic lighting effects */}
+            <div className="md:col-span-2 relative overflow-hidden rounded-3xl p-8 md:p-10 flex flex-col sm:flex-row justify-between items-center transition-all duration-500 hover:-translate-y-1 group bg-white/[0.03] backdrop-blur-3xl border border-white/10 hover:border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+              {/* Premium Glass Sheen */}
               <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-3xl">
-                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-50" />
-                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-30" />
+                {/* Diagonal light sheen */}
+                <div className="absolute top-0 left-0 w-[150%] h-[150%] bg-gradient-to-br from-white/[0.08] via-transparent to-transparent -translate-x-1/4 -translate-y-1/4" />
                 
-                {/* Glowing Orbs */}
-                <motion.div 
-                  animate={{ x: ['-20%', '20%', '-20%'], y: ['-20%', '20%', '-20%'] }}
-                  transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -top-1/2 left-1/4 w-64 h-64 bg-stellar-orange/20 rounded-full blur-[70px]"
-                />
-                <motion.div 
-                  animate={{ x: ['20%', '-20%', '20%'], y: ['20%', '-20%', '20%'] }}
-                  transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -bottom-1/2 right-1/4 w-64 h-64 bg-artemis-blue/20 rounded-full blur-[70px]"
-                />
+                {/* Crisp edge highlights */}
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
               </div>
               
               <div className="flex flex-col gap-2 relative z-10 text-center sm:text-left">
-                <span className="text-white font-black font-mono text-xl md:text-2xl uppercase tracking-[0.2em] drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]">Funding Gap to Worlds</span>
+                <span className="text-white font-black font-mono text-xl md:text-2xl uppercase tracking-[0.2em] drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">Funding Gap to Worlds</span>
                 <span className="text-sm text-white/60 font-light tracking-wide">Help us reach our goal to compete at the World Championship</span>
               </div>
               
