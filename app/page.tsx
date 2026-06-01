@@ -721,8 +721,9 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.75 }}
                 transition={{ duration: 1.5 }}
-                className="w-full h-[60vh] object-contain object-bottom px-8 mt-[10vh] max-w-2xl mx-auto" 
+                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] max-w-none h-auto object-cover object-bottom" 
               />
+              <div className="absolute bottom-0 left-0 w-full h-[25vh] bg-gradient-to-t from-[#05070B] to-transparent z-10 pointer-events-none" />
             ) : (
               <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.75]" />
             )}
@@ -816,7 +817,7 @@ export default function Home() {
           </AnimatePresence>
           
           {/* Sponsor Button */}
-          <div className={`absolute ${isMobile ? 'bottom-20' : 'bottom-12'} left-0 w-full flex justify-center z-30 pointer-events-auto`} style={{ perspective: '800px' }}>
+          <div className={`absolute ${isMobile ? 'top-[45vh]' : 'bottom-12'} left-0 w-full flex justify-center z-30 pointer-events-auto`} style={{ perspective: '800px' }}>
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
