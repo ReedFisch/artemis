@@ -738,9 +738,9 @@ export default function Home() {
           >
           <div className="flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text" onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             <img src="/branding/logo_transparent.png" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain`} />
-            <div className="flex flex-col justify-center">
-              <span className={`display ${isMobile ? "text-2xl" : "text-[63px]"} font-black text-white/60 leading-none`}>ARTEMIS</span>
-              <span className={`${isMobile ? "text-[8px]" : "text-[10px]"} uppercase tracking-[0.25em] text-white/40 mt-1 font-sans font-semibold`}>Chatham High School Robotics</span>
+            <div className="flex flex-col justify-center max-w-[50vw]">
+              <span className={`display ${isMobile ? "text-xl md:text-2xl" : "text-[63px]"} font-black text-white/60 leading-none truncate`}>ARTEMIS</span>
+              <span className={`${isMobile ? "text-[8px] leading-tight" : "text-[10px]"} uppercase tracking-[0.1em] md:tracking-[0.25em] text-white/40 mt-1 font-sans font-semibold whitespace-normal md:whitespace-nowrap`}>Chatham High School Robotics</span>
             </div>
           </div>
           
