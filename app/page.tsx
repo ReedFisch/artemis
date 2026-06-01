@@ -410,12 +410,13 @@ export default function Home() {
     offset: ["start start", "end end"]
   });
 
-  const card1RotateX = useTransform(budgetScrollYProgress, [0, 0.5], [0, -180]);
-  const card1Opacity = useTransform(budgetScrollYProgress, [0, 0.25, 0.5], [1, 1, 0]);
-  const card2Y = useTransform(budgetScrollYProgress, [0, 0.5], [40, 0]);
-  const card2Scale = useTransform(budgetScrollYProgress, [0, 0.5], [0.9, 1]);
-  const card2RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [4, 0]);
-  const card2Opacity = useTransform(budgetScrollYProgress, [0, 0.2], [0.5, 1]);
+  const card1X = useTransform(budgetScrollYProgress, [0, 0.5], [0, -400]);
+  const card1RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [0, -15]);
+  const card1Opacity = useTransform(budgetScrollYProgress, [0, 0.4, 0.5], [1, 1, 0]);
+  const card2Y = useTransform(budgetScrollYProgress, [0, 0.5], [30, 0]);
+  const card2Scale = useTransform(budgetScrollYProgress, [0, 0.5], [0.95, 1]);
+  const card2RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [3, 0]);
+  const card2Opacity = useTransform(budgetScrollYProgress, [0, 0.5], [0.8, 1]);
 
   const heroScrollRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScrollYProgress } = useScroll({
@@ -1179,7 +1180,7 @@ export default function Home() {
 
                 {/* TOP CARD (Expenses) */}
                 <motion.div 
-                  style={{ rotateX: card1RotateX, opacity: card1Opacity, transformOrigin: 'top center' }}
+                  style={{ x: card1X, rotateZ: card1RotateZ, opacity: card1Opacity, transformOrigin: 'bottom left' }}
                   className="relative w-full glass-panel-deep p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30 bg-[#0A0D14]"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
