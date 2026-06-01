@@ -784,7 +784,7 @@ export default function Home() {
           {/* Navigation overlay moved to the bottom of main */}
           
           {/* Sponsor Button */}
-          <div className={`absolute ${isMobile ? 'top-[45vh]' : 'bottom-12'} left-0 w-full flex justify-center z-30 pointer-events-auto`} style={{ perspective: '800px' }}>
+          <div className={`absolute ${isMobile ? 'bottom-24' : 'bottom-12'} left-0 w-full flex justify-center z-30 pointer-events-auto`} style={{ perspective: '800px' }}>
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
