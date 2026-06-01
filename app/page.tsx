@@ -721,8 +721,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.75 }}
                 transition={{ duration: 1.5 }}
-                className="w-[150%] h-[150%] max-w-none -ml-[25%] mt-[20vh] object-contain object-bottom" 
-                style={{ transform: 'scale(0.5)', transformOrigin: 'bottom center' }}
+                className="w-full h-[60vh] object-contain object-bottom px-8 mt-[10vh] max-w-2xl mx-auto" 
               />
             ) : (
               <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.75]" />
@@ -797,11 +796,8 @@ export default function Home() {
                 
                 <div className="flex flex-col gap-8 text-center text-xl font-bold uppercase tracking-[0.2em] font-mono text-white/60">
                   {NAV_LINKS.map((link, idx) => (
-                    <motion.a 
+                    <a 
                       key={link.label}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 + idx * 0.08 }}
                       href={link.href}
                       onClick={(e) => {
                         setIsMenuOpen(false);
@@ -810,22 +806,17 @@ export default function Home() {
                       className="hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95 transition-all text-2xl py-2"
                     >
                       {link.label}
-                    </motion.a>
+                    </a>
                   ))}
                   
-                  {/* Floating Contact/Info in drawer */}
-                  <div className="h-px w-24 bg-white/10 mx-auto my-4" />
-                  <span className="text-[10px] text-white/30 tracking-widest leading-relaxed">
-                    TEAM 6621 ARTEMIS Central pad<br/>
-                    fischers@chatham.k12.ny.us
-                  </span>
+
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
           
           {/* Sponsor Button */}
-          <div className="absolute bottom-12 left-0 w-full flex justify-center z-30 pointer-events-auto" style={{ perspective: '800px' }}>
+          <div className={`absolute ${isMobile ? 'bottom-20' : 'bottom-12'} left-0 w-full flex justify-center z-30 pointer-events-auto`} style={{ perspective: '800px' }}>
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
@@ -1318,18 +1309,12 @@ export default function Home() {
                     <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-6" />
                     
                     <ul className="space-y-3 md:space-y-4 text-xs md:text-sm text-white/70 mb-8 flex-grow">
-                      {(isMobile ? tier.benefits.slice(0, 2) : tier.benefits).map((benefit, i) => (
+                      {tier.benefits.map((benefit, i) => (
                         <li key={i} className="flex items-start gap-3">
                           <span className={`text-base leading-none ${accentColorClass}`}>▹</span>
                           <span className="font-light">{benefit}</span>
                         </li>
                       ))}
-                      {isMobile && tier.benefits.length > 2 && (
-                        <li className="flex items-start gap-3 opacity-60">
-                          <span className={`text-base leading-none ${accentColorClass}`}>+</span>
-                          <span className="font-light">{tier.benefits.length - 2} more benefits</span>
-                        </li>
-                      )}
                     </ul>
                     
                     <a 
