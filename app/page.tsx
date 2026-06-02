@@ -1150,8 +1150,8 @@ export default function Home() {
           
           {/* MOBILE 3D FLIP DECK */}
           {isMobile && (
-            <div className="h-[150vh] w-full mt-12 relative">
-              <div className="sticky top-24 h-[70svh] w-full flex items-center justify-center pointer-events-none" style={{ perspective: '1200px' }}>
+            <div className="h-[110vh] w-full mt-12 relative">
+              <div className="sticky top-32 w-full flex justify-center pointer-events-none" style={{ perspective: '1200px' }}>
               <div className="relative w-full max-w-sm" style={{ transformStyle: 'preserve-3d' }}>
                 
                 {/* BOTTOM CARD (Funding Sources) */}
@@ -1391,7 +1391,7 @@ export default function Home() {
               setSelectedTier('Other');
               handleFastScroll(e as any, '#interest-form');
             }}
-            className={`w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-8 md:mb-12 ${
+            className={`hidden md:flex w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-8 md:mb-12 ${
               selectedTier === 'Other' ? 'border-white/30 bg-white/[0.04] shadow-[0_15px_30px_rgba(0,0,0,0.3)]' : 'border-white/5 hover:border-white/15'
             }`}
             style={{ background: selectedTier === 'Other' ? undefined : 'rgba(255,255,255,0.01)', backdropFilter: 'blur(30px)' }}
