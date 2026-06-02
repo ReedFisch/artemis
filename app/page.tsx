@@ -1164,7 +1164,7 @@ export default function Home() {
           
           {/* MOBILE 3D FLIP DECK */}
           {isMobile && (
-            <div className="h-[150vh] w-full mt-24 relative">
+            <div className="h-[80vh] w-full mt-8 relative">
               <div className="sticky top-32 w-full flex justify-center pointer-events-none" style={{ perspective: '1200px' }}>
               <div className="relative w-full max-w-sm" style={{ transformStyle: 'preserve-3d' }}>
                 
