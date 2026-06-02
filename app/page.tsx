@@ -1156,7 +1156,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" ref={budgetScrollRef} className="relative z-10 bg-[#05070B] pt-12 pb-0 md:py-32">
+      <section id="budget" ref={budgetScrollRef} className="relative z-10 bg-[#05070B] pt-2 pb-0 md:py-32">
         {/* Scattered 3D Shapes */}
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
