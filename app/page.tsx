@@ -418,15 +418,18 @@ export default function Home() {
     offset: ["start start", "end end"]
   });
 
-  const card1Y = useTransform(budgetScrollYProgress, [0, 0.7], [0, -40]);
-  const card1RotateZ = useTransform(budgetScrollYProgress, [0, 0.7], [0, -5]);
-  const card1Opacity = useTransform(budgetScrollYProgress, [0, 0.3, 0.7], [1, 1, 0]);
-  const card1Scale = useTransform(budgetScrollYProgress, [0, 0.7], [1, 0.9]);
+  const flipProgress = useTransform(budgetScrollYProgress, [0, 0.7], [0, 1]);
 
-  const card2Y = useTransform(budgetScrollYProgress, [0, 0.7], [100, 0]);
-  const card2Scale = useTransform(budgetScrollYProgress, [0, 0.7], [0.9, 1]);
-  const card2RotateZ = useTransform(budgetScrollYProgress, [0, 0.7], [2, 0]);
-  const card2Opacity = useTransform(budgetScrollYProgress, [0, 0.7], [0, 1]);
+  const card1RotateX = useTransform(flipProgress, [0, 0.5], [0, 90]);
+  const card1Opacity = useTransform(flipProgress, [0.49, 0.5], [1, 0]);
+  const card1Scale = useTransform(flipProgress, [0, 0.5], [1, 0.95]);
+  const card1Y = useTransform(flipProgress, [0, 0.5], [0, -20]);
+
+  const card2RotateX = useTransform(flipProgress, [0.5, 1], [-90, 0]);
+  const card2Opacity = useTransform(flipProgress, [0.49, 0.5], [0, 1]);
+  const card2Scale = useTransform(flipProgress, [0.5, 1], [0.95, 1]);
+  const card2Y = useTransform(flipProgress, [0.5, 1], [20, 0]);
+
 
   const heroScrollRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScrollYProgress } = useScroll({
@@ -1170,7 +1173,7 @@ export default function Home() {
                 
                 {/* BOTTOM CARD (Funding Sources) */}
                 <motion.div 
-                  style={{ y: card2Y, scale: card2Scale, rotateZ: card2RotateZ, opacity: card2Opacity }}
+                  style={{ y: card2Y, scale: card2Scale, rotateX: card2RotateX, opacity: card2Opacity, transformOrigin: 'top center' }}
                   className="absolute inset-0 w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30 z-10"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Funding Sources</h3>
@@ -1190,7 +1193,7 @@ export default function Home() {
 
                 {/* TOP CARD (Expenses) */}
                 <motion.div 
-                  style={{ y: card1Y, rotateZ: card1RotateZ, opacity: card1Opacity, scale: card1Scale, transformOrigin: 'bottom center' }}
+                  style={{ y: card1Y, rotateX: card1RotateX, opacity: card1Opacity, scale: card1Scale, transformOrigin: 'bottom center' }}
                   className="relative w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30 z-20"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
