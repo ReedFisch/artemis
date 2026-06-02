@@ -749,7 +749,7 @@ export default function Home() {
           <motion.header 
             className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto`}
           >
-          <div className={`flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-opacity duration-500 ${isAtTop ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}`} onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+          <div className={`flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-opacity duration-500 ${(isAtTop && isMobile) ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}`} onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             <img src="/branding/logo_transparent.png" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain`} />
             <div className="flex flex-col justify-center max-w-[50vw]">
               <span className={`display ${isMobile ? "text-xl md:text-2xl" : "text-[63px]"} font-black text-white/60 leading-none truncate`}>ARTEMIS</span>
@@ -768,19 +768,19 @@ export default function Home() {
 
           {/* Navigation overlay moved to the bottom of main */}
           
-          {/* Centered Hero Content & Sponsor Button */}
-          <div className="absolute inset-0 flex flex-col items-center justify-start z-30 pointer-events-auto px-6 pt-[5vh] md:pt-[8vh]">
+          {/* Mobile Centered Hero Content */}
+          <div className="absolute inset-0 flex flex-col items-center justify-start z-30 pointer-events-auto px-6 pt-[5vh] md:hidden">
             {/* Huge Centered Logo & Text */}
-            <img src="/branding/logo_transparent.png" alt="Artemis Logo Large" className="w-32 h-32 md:w-56 md:h-56 object-contain mb-6 drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
-            <h1 className="display text-7xl md:text-[10rem] font-black text-white/50 tracking-tight drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-center leading-none">
+            <img src="/branding/logo_transparent.png" alt="Artemis Logo Large" className="w-32 h-32 object-contain mb-6 drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
+            <h1 className="display text-7xl font-black text-white/50 tracking-tight drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-center leading-none">
               ARTEMIS
             </h1>
-            <p className="text-[10px] md:text-sm uppercase tracking-[0.3em] md:tracking-[0.5em] text-white/50 mt-4 md:mt-6 text-center font-mono font-bold drop-shadow-md">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-white/50 mt-4 text-center font-mono font-bold drop-shadow-md">
               Chatham High School Robotics
             </p>
 
-            {/* Support Now Button */}
-            <div className="mt-8 md:mt-10" style={{ perspective: '800px' }}>
+            {/* Mobile Support Now Button */}
+            <div className="mt-8" style={{ perspective: '800px' }}>
               <a 
                 href="#sponsorship" 
                 onClick={(e) => handleFastScroll(e, '#sponsorship')} 
@@ -823,6 +823,51 @@ export default function Home() {
                 <span className="relative z-10">Support Now</span>
               </a>
             </div>
+          </div>
+
+          {/* Desktop Support Now Button (Lowered) */}
+          <div className="hidden md:flex absolute bottom-16 left-12 z-30 pointer-events-auto" style={{ perspective: '800px' }}>
+            <a 
+              href="#sponsorship" 
+              onClick={(e) => handleFastScroll(e, '#sponsorship')} 
+              className="group relative inline-block px-12 py-6 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
+            >
+              {/* Dynamic Gradient & Grain Hover Layer */}
+              <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
+                {/* base gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#ff2a00]/20 to-[#ffaa00]/20" />
+                {/* floating moving spheres inside the button */}
+                <motion.div 
+                  animate={{ 
+                    x: ['-30%', '30%', '-30%'],
+                    y: ['-20%', '20%', '-20%'],
+                    rotate: [0, 360],
+                    scale: [1, 1.3, 1] 
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute -top-1/2 -left-1/2 w-full h-full bg-[#ff2a00]/70 blur-md rounded-full"
+                />
+                <motion.div 
+                  animate={{ 
+                    x: ['30%', '-30%', '30%'],
+                    y: ['20%', '-20%', '20%'],
+                    rotate: [360, 0],
+                    scale: [1.3, 0.8, 1.3] 
+                  }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-[#ff8800]/70 blur-md rounded-full"
+                />
+                {/* dynamic wiggling grain inside the button on hover */}
+                <div 
+                  className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] opacity-[0.2] animate-dynamic-grain pointer-events-none" 
+                  style={{ 
+                    mixBlendMode: 'overlay',
+                    backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' 
+                  }} 
+                />
+              </div>
+              <span className="relative z-10 text-lg">Support Now</span>
+            </a>
           </div>
 
         </div>
