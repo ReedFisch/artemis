@@ -1146,7 +1146,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" ref={budgetScrollRef} className="relative z-10 bg-[#05070B] py-20 md:py-32">
+      <section id="budget" ref={budgetScrollRef} className="relative z-10 bg-[#05070B] pt-12 pb-0 md:py-32">
         {/* Scattered 3D Shapes */}
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
@@ -1162,14 +1162,14 @@ export default function Home() {
           
           {/* MOBILE 3D FLIP DECK */}
           {isMobile && (
-            <div className="h-[110vh] w-full mt-12 relative">
+            <div className="h-[70vh] w-full mt-12 relative">
               <div className="sticky top-32 w-full flex justify-center pointer-events-none" style={{ perspective: '1200px' }}>
               <div className="relative w-full max-w-sm" style={{ transformStyle: 'preserve-3d' }}>
                 
                 {/* BOTTOM CARD (Funding Sources) */}
                 <motion.div 
                   style={{ y: card2Y, scale: card2Scale, rotateZ: card2RotateZ, opacity: card2Opacity }}
-                  className="absolute inset-0 w-full glass-panel-deep p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30 z-10"
+                  className="absolute inset-0 w-full bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30 z-10"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Funding Sources</h3>
                   <div className="space-y-6 mb-8">
@@ -1189,7 +1189,7 @@ export default function Home() {
                 {/* TOP CARD (Expenses) */}
                 <motion.div 
                   style={{ y: card1Y, rotateZ: card1RotateZ, opacity: card1Opacity, transformOrigin: 'bottom center' }}
-                  className="relative w-full glass-panel-deep p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30 bg-[#0A0D14] z-20"
+                  className="relative w-full bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30 z-20"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
                   <div className="space-y-6 mb-8">
@@ -1278,7 +1278,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7. SPONSORSHIP TIERS
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship" className="relative z-10 bg-[#05070B] pt-20 pb-4 md:py-32 border-t border-white/[0.03] overflow-hidden" style={{ marginTop: isMobile ? '-30vh' : '0' }}>
+      <section id="sponsorship" className="relative z-10 bg-[#05070B] pt-12 pb-4 md:py-32 border-t border-white/[0.03] overflow-hidden">
         
         {/* Dynamic Organic Background Nebulas & Glows */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40">
