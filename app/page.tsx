@@ -271,6 +271,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [isBudgetFlipped, setIsBudgetFlipped] = useState(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const impactScrollRef = useRef<HTMLDivElement>(null);
@@ -410,32 +411,6 @@ export default function Home() {
 
   // Hero Scroll Scrubbing (Zip Animation)
   
-  // Mobile Budget 3D Flip Card Scroll Tracking
-  const budgetScrollRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: budgetScrollYProgress } = useScroll({
-    target: budgetScrollRef,
-    container: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const flipProgress = useTransform(budgetScrollYProgress, [0, 0.7], [0, 1]);
-
-  // Deck Shuffle Swap
-  const card1X = useTransform(flipProgress, [0, 0.5, 1], [0, -80, 0]);
-  const card1Y = useTransform(flipProgress, [0, 1], [0, 40]);
-  const card1Scale = useTransform(flipProgress, [0, 1], [1, 0.95]);
-  const card1RotateZ = useTransform(flipProgress, [0, 0.5, 1], [0, -8, 0]);
-  const card1ZIndex = useTransform(flipProgress, (v) => (v < 0.5 ? 20 : 10));
-
-  const card2X = useTransform(flipProgress, [0, 0.5, 1], [0, 80, 0]);
-  const card2Y = useTransform(flipProgress, [0, 1], [40, 0]);
-  const card2Scale = useTransform(flipProgress, [0, 1], [0.95, 1]);
-  const card2RotateZ = useTransform(flipProgress, [0, 0.5, 1], [0, 8, 0]);
-  const card2ZIndex = useTransform(flipProgress, (v) => (v < 0.5 ? 10 : 20));
-
-  const arrowRotate = useTransform(flipProgress, [0, 1], [0, 180]);
-
-
   const heroScrollRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScrollYProgress } = useScroll({
     target: heroScrollRef,
@@ -1156,7 +1131,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" ref={budgetScrollRef} className="relative z-10 bg-[#05070B] pt-2 pb-0 md:py-32">
+      <section id="budget" className="relative z-10 bg-[#05070B] pt-2 pb-0 md:py-32">
         {/* Scattered 3D Shapes */}
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
@@ -1172,13 +1147,19 @@ export default function Home() {
           
           {/* MOBILE 3D FLIP DECK */}
           {isMobile && (
-            <div className="h-[60vh] w-full mt-8 relative">
-              <div className="sticky top-32 w-full flex justify-center pointer-events-none" style={{ perspective: '1200px' }}>
-              <div className="relative w-full max-w-sm" style={{ transformStyle: 'preserve-3d' }}>
+            <div className="w-full mt-8 relative pb-20 pt-4 flex justify-center">
+              <div className="relative w-full max-w-sm h-[420px]" style={{ transformStyle: 'preserve-3d' }}>
                 
                 {/* BOTTOM CARD (Funding Sources) */}
                 <motion.div 
-                  style={{ x: card2X, y: card2Y, scale: card2Scale, rotateZ: card2RotateZ, zIndex: card2ZIndex }}
+                  animate={{ 
+                    x: isBudgetFlipped ? [0, 80, 0] : [0, 80, 0],
+                    y: isBudgetFlipped ? [40, 0] : [0, 40],
+                    scale: isBudgetFlipped ? [0.95, 1] : [1, 0.95],
+                    rotateZ: isBudgetFlipped ? [0, 8, 0] : [0, 8, 0],
+                    zIndex: isBudgetFlipped ? 20 : 10
+                  }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="absolute inset-0 w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Funding Sources</h3>
@@ -1190,7 +1171,7 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                  <div className="flex justify-between items-center text-lg border-t border-white/20 pt-4 mt-auto">
+                  <div className="flex justify-between items-center text-lg border-t border-white/20 pt-4 mt-auto absolute bottom-8 left-8 right-8">
                     <span className="text-white font-bold font-mono">Total Secured</span>
                     <span className="text-artemis-blue font-black">$30,000</span>
                   </div>
@@ -1198,8 +1179,15 @@ export default function Home() {
 
                 {/* TOP CARD (Expenses) */}
                 <motion.div 
-                  style={{ x: card1X, y: card1Y, scale: card1Scale, rotateZ: card1RotateZ, zIndex: card1ZIndex }}
-                  className="relative w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30"
+                  animate={{ 
+                    x: isBudgetFlipped ? [0, -80, 0] : [0, -80, 0],
+                    y: isBudgetFlipped ? [0, 40] : [40, 0],
+                    scale: isBudgetFlipped ? [1, 0.95] : [0.95, 1],
+                    rotateZ: isBudgetFlipped ? [0, -8, 0] : [0, -8, 0],
+                    zIndex: isBudgetFlipped ? 10 : 20
+                  }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="absolute inset-0 w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
                   <div className="space-y-6 mb-8">
@@ -1210,7 +1198,7 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                  <div className="flex justify-between items-center text-lg border-t border-white/20 pt-4 mt-auto">
+                  <div className="flex justify-between items-center text-lg border-t border-white/20 pt-4 mt-auto absolute bottom-8 left-8 right-8">
                     <span className="text-white font-bold font-mono">Total Needed</span>
                     <span className="text-stellar-orange font-black">$30,000</span>
                   </div>
@@ -1218,17 +1206,12 @@ export default function Home() {
 
                 {/* FLIP ARROW INDICATOR */}
                 <motion.div 
-                  className="absolute top-1/2 -right-4 -translate-y-1/2 cursor-pointer z-30 opacity-70 hover:opacity-100 transition-opacity p-3 rounded-full bg-[#0A0D14] border border-white/20 shadow-xl pointer-events-auto"
-                  onClick={() => {
-                    if (flipProgress.get() > 0.5) {
-                      window.scrollBy({ top: -window.innerHeight * 0.4, behavior: 'smooth' });
-                    } else {
-                      window.scrollBy({ top: window.innerHeight * 0.4, behavior: 'smooth' });
-                    }
-                  }}
+                  className="absolute top-1/2 -right-4 -translate-y-1/2 cursor-pointer z-30 opacity-70 hover:opacity-100 transition-all hover:scale-110 p-3 rounded-full bg-[#0A0D14] border border-white/20 shadow-xl pointer-events-auto"
+                  onClick={() => setIsBudgetFlipped(!isBudgetFlipped)}
                 >
                   <motion.svg 
-                    style={{ rotateZ: arrowRotate }}
+                    animate={{ rotateZ: isBudgetFlipped ? 180 : 0 }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
                     width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white"
                   >
                     <polyline points="17 1 21 5 17 9"></polyline>
@@ -1237,7 +1220,6 @@ export default function Home() {
                     <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
                   </motion.svg>
                 </motion.div>
-              </div>
               </div>
             </div>
           )}
