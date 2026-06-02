@@ -1218,7 +1218,7 @@ export default function Home() {
 
                 {/* FLIP ARROW INDICATOR */}
                 <motion.div 
-                  className="absolute -bottom-16 left-1/2 -translate-x-1/2 cursor-pointer z-30 opacity-70 hover:opacity-100 transition-opacity p-3 rounded-full bg-white/5 border border-white/10 shadow-lg pointer-events-auto"
+                  className="absolute top-1/2 -right-4 -translate-y-1/2 cursor-pointer z-30 opacity-70 hover:opacity-100 transition-opacity p-3 rounded-full bg-[#0A0D14] border border-white/20 shadow-xl pointer-events-auto"
                   onClick={() => {
                     if (flipProgress.get() > 0.5) {
                       window.scrollBy({ top: -window.innerHeight * 0.4, behavior: 'smooth' });
@@ -1226,14 +1226,15 @@ export default function Home() {
                       window.scrollBy({ top: window.innerHeight * 0.4, behavior: 'smooth' });
                     }
                   }}
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 >
                   <motion.svg 
                     style={{ rotateZ: arrowRotate }}
                     width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white"
                   >
-                    <path d="M6 9l6 6 6-6"/>
+                    <polyline points="17 1 21 5 17 9"></polyline>
+                    <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                    <polyline points="7 23 3 19 7 15"></polyline>
+                    <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
                   </motion.svg>
                 </motion.div>
               </div>
