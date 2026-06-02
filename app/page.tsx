@@ -418,7 +418,7 @@ export default function Home() {
     offset: ["start start", "end end"]
   });
 
-  const card1Y = useTransform(budgetScrollYProgress, [0, 0.5], [0, -600]);
+  const card1Y = useTransform(budgetScrollYProgress, [0, 0.5], [0, -30]);
   const card1RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [0, -5]);
   const card1Opacity = useTransform(budgetScrollYProgress, [0, 0.3, 0.5], [1, 1, 0]);
   const card2Y = useTransform(budgetScrollYProgress, [0, 0.5], [40, 0]);
@@ -784,7 +784,7 @@ export default function Home() {
           {/* Navigation overlay moved to the bottom of main */}
           
           {/* Centered Hero Content & Sponsor Button */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-auto px-6 mt-[-10vh]">
+          <div className="absolute inset-0 flex flex-col items-center justify-start z-30 pointer-events-auto px-6 pt-[15vh] md:pt-[20vh]">
             {/* Huge Centered Logo & Text */}
             <img src="/branding/logo_transparent.png" alt="Artemis Logo Large" className="w-32 h-32 md:w-56 md:h-56 object-contain mb-6 drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
             <h1 className="display text-7xl md:text-[10rem] font-black text-white tracking-tight drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-center leading-none">
