@@ -420,15 +420,18 @@ export default function Home() {
 
   const flipProgress = useTransform(budgetScrollYProgress, [0, 0.7], [0, 1]);
 
-  const card1RotateX = useTransform(flipProgress, [0, 0.5], [0, 90]);
-  const card1Opacity = useTransform(flipProgress, [0.49, 0.5], [1, 0]);
-  const card1Scale = useTransform(flipProgress, [0, 0.5], [1, 0.95]);
-  const card1Y = useTransform(flipProgress, [0, 0.5], [0, -20]);
+  // Deck Shuffle Swap
+  const card1X = useTransform(flipProgress, [0, 0.5, 1], [0, -80, 0]);
+  const card1Y = useTransform(flipProgress, [0, 1], [0, 40]);
+  const card1Scale = useTransform(flipProgress, [0, 1], [1, 0.95]);
+  const card1RotateZ = useTransform(flipProgress, [0, 0.5, 1], [0, -8, 0]);
+  const card1ZIndex = useTransform(flipProgress, (v) => (v < 0.5 ? 20 : 10));
 
-  const card2RotateX = useTransform(flipProgress, [0.5, 1], [-90, 0]);
-  const card2Opacity = useTransform(flipProgress, [0.49, 0.5], [0, 1]);
-  const card2Scale = useTransform(flipProgress, [0.5, 1], [0.95, 1]);
-  const card2Y = useTransform(flipProgress, [0.5, 1], [20, 0]);
+  const card2X = useTransform(flipProgress, [0, 0.5, 1], [0, 80, 0]);
+  const card2Y = useTransform(flipProgress, [0, 1], [40, 0]);
+  const card2Scale = useTransform(flipProgress, [0, 1], [0.95, 1]);
+  const card2RotateZ = useTransform(flipProgress, [0, 0.5, 1], [0, 8, 0]);
+  const card2ZIndex = useTransform(flipProgress, (v) => (v < 0.5 ? 10 : 20));
 
 
   const heroScrollRef = useRef<HTMLElement>(null);
@@ -1167,14 +1170,14 @@ export default function Home() {
           
           {/* MOBILE 3D FLIP DECK */}
           {isMobile && (
-            <div className="h-[80vh] w-full mt-8 relative">
+            <div className="h-[60vh] w-full mt-8 relative">
               <div className="sticky top-32 w-full flex justify-center pointer-events-none" style={{ perspective: '1200px' }}>
               <div className="relative w-full max-w-sm" style={{ transformStyle: 'preserve-3d' }}>
                 
                 {/* BOTTOM CARD (Funding Sources) */}
                 <motion.div 
-                  style={{ y: card2Y, scale: card2Scale, rotateX: card2RotateX, opacity: card2Opacity, transformOrigin: 'top center' }}
-                  className="absolute inset-0 w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30 z-10"
+                  style={{ x: card2X, y: card2Y, scale: card2Scale, rotateZ: card2RotateZ, zIndex: card2ZIndex }}
+                  className="absolute inset-0 w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Funding Sources</h3>
                   <div className="space-y-6 mb-8">
@@ -1193,8 +1196,8 @@ export default function Home() {
 
                 {/* TOP CARD (Expenses) */}
                 <motion.div 
-                  style={{ y: card1Y, rotateX: card1RotateX, opacity: card1Opacity, scale: card1Scale, transformOrigin: 'bottom center' }}
-                  className="relative w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30 z-20"
+                  style={{ x: card1X, y: card1Y, scale: card1Scale, rotateZ: card1RotateZ, zIndex: card1ZIndex }}
+                  className="relative w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
                   <div className="space-y-6 mb-8">
