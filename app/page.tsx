@@ -764,7 +764,7 @@ export default function Home() {
           <motion.header 
             className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto`}
           >
-          <div className="flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text" onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+          <div className={`flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-opacity duration-500 ${isAtTop ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}`} onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             <img src="/branding/logo_transparent.png" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain`} />
             <div className="flex flex-col justify-center max-w-[50vw]">
               <span className={`display ${isMobile ? "text-xl md:text-2xl" : "text-[63px]"} font-black text-white/60 leading-none truncate`}>ARTEMIS</span>
@@ -783,49 +783,61 @@ export default function Home() {
 
           {/* Navigation overlay moved to the bottom of main */}
           
-          {/* Sponsor Button */}
-          <div className={`absolute ${isMobile ? 'bottom-24' : 'bottom-12'} left-0 w-full flex justify-center z-30 pointer-events-auto`} style={{ perspective: '800px' }}>
-            <a 
-              href="#sponsorship" 
-              onClick={(e) => handleFastScroll(e, '#sponsorship')} 
-              className="group relative inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
-            >
-              {/* Dynamic Gradient & Grain Hover Layer */}
-              <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
-                {/* base gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#ff2a00]/20 to-[#ffaa00]/20" />
-                {/* floating moving spheres inside the button */}
-                <motion.div 
-                  animate={{ 
-                    x: ['-30%', '30%', '-30%'],
-                    y: ['-20%', '20%', '-20%'],
-                    rotate: [0, 360],
-                    scale: [1, 1.3, 1] 
-                  }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -top-1/2 -left-1/2 w-full h-full bg-[#ff2a00]/70 blur-md rounded-full"
-                />
-                <motion.div 
-                  animate={{ 
-                    x: ['30%', '-30%', '30%'],
-                    y: ['20%', '-20%', '20%'],
-                    rotate: [360, 0],
-                    scale: [1.3, 0.8, 1.3] 
-                  }}
-                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-[#ff8800]/70 blur-md rounded-full"
-                />
-                {/* dynamic wiggling grain inside the button on hover */}
-                <div 
-                  className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] opacity-[0.2] animate-dynamic-grain pointer-events-none" 
-                  style={{ 
-                    mixBlendMode: 'overlay',
-                    backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' 
-                  }} 
-                />
-              </div>
-              <span className="relative z-10">Support Now</span>
-            </a>
+          {/* Centered Hero Content & Sponsor Button */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-auto px-6 mt-[-10vh]">
+            {/* Huge Centered Logo & Text */}
+            <img src="/branding/logo_transparent.png" alt="Artemis Logo Large" className="w-32 h-32 md:w-56 md:h-56 object-contain mb-6 drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
+            <h1 className="display text-7xl md:text-[10rem] font-black text-white tracking-tight drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-center leading-none">
+              ARTEMIS
+            </h1>
+            <p className="text-[10px] md:text-sm uppercase tracking-[0.3em] md:tracking-[0.5em] text-white/80 mt-4 md:mt-6 text-center font-mono font-bold drop-shadow-md">
+              Chatham High School Robotics
+            </p>
+
+            {/* Support Now Button */}
+            <div className="mt-12 md:mt-16" style={{ perspective: '800px' }}>
+              <a 
+                href="#sponsorship" 
+                onClick={(e) => handleFastScroll(e, '#sponsorship')} 
+                className="group relative inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
+              >
+                {/* Dynamic Gradient & Grain Hover Layer */}
+                <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
+                  {/* base gradient background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#ff2a00]/20 to-[#ffaa00]/20" />
+                  {/* floating moving spheres inside the button */}
+                  <motion.div 
+                    animate={{ 
+                      x: ['-30%', '30%', '-30%'],
+                      y: ['-20%', '20%', '-20%'],
+                      rotate: [0, 360],
+                      scale: [1, 1.3, 1] 
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -top-1/2 -left-1/2 w-full h-full bg-[#ff2a00]/70 blur-md rounded-full"
+                  />
+                  <motion.div 
+                    animate={{ 
+                      x: ['30%', '-30%', '30%'],
+                      y: ['20%', '-20%', '20%'],
+                      rotate: [360, 0],
+                      scale: [1.3, 0.8, 1.3] 
+                    }}
+                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-[#ff8800]/70 blur-md rounded-full"
+                  />
+                  {/* dynamic wiggling grain inside the button on hover */}
+                  <div 
+                    className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] opacity-[0.2] animate-dynamic-grain pointer-events-none" 
+                    style={{ 
+                      mixBlendMode: 'overlay',
+                      backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' 
+                    }} 
+                  />
+                </div>
+                <span className="relative z-10">Support Now</span>
+              </a>
+            </div>
           </div>
 
         </div>
@@ -838,7 +850,7 @@ export default function Home() {
         
 
         {/* Sticky/Static container that holds the horizontal sliding content or vertical content */}
-        <div className="relative w-full py-16 flex items-center lg:sticky lg:top-0 lg:h-screen lg:w-full lg:overflow-hidden lg:py-0">
+        <div className="relative w-full pb-4 pt-24 lg:pt-0 lg:pb-0 flex items-center lg:sticky lg:top-0 lg:h-screen lg:w-full lg:overflow-hidden lg:py-0">
           
           <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className={isMobile ? "w-full block relative z-10" : "flex w-[320vw] h-full relative z-10"}>
             
@@ -932,7 +944,7 @@ export default function Home() {
             </div>
 
             {/* --- TIMELINE PANE --- */}
-            <div id="timeline" className={isMobile ? "w-full px-6 py-12 relative z-10" : "w-[220vw] h-full relative z-10 overflow-hidden"}>
+            <div id="timeline" className={isMobile ? "w-full px-6 pt-12 pb-4 relative z-10" : "w-[220vw] h-full relative z-10 overflow-hidden"}>
               
               {isMobile ? (
                 <div className="flex flex-col gap-12 relative pl-8 border-l border-white/10 max-w-xl mx-auto">
@@ -1044,7 +1056,7 @@ export default function Home() {
            5. OUTREACH PARALLAX (FLY OUT EFFECT)
            ══════════════════════════════════════════════════════ */}
       <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B]" style={{ height: isMobile ? 'auto' : '350vh' }}>
-        <div className={isMobile ? "relative w-full flex flex-col items-center py-16 px-6" : "sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12"}>
+        <div className={isMobile ? "relative w-full flex flex-col items-center pt-8 pb-16 px-6" : "sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12"}>
           
           {/* Background Elements */}
           <div className="absolute inset-0 z-0 opacity-20 starfield" />
@@ -1194,7 +1206,7 @@ export default function Home() {
                   </div>
                 </motion.div>
               </div>
-            </div>
+              </div>
             </div>
           )}
 
@@ -1266,7 +1278,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7. SPONSORSHIP TIERS
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship" className="relative z-10 bg-[#05070B] pt-20 pb-12 md:py-32 border-t border-white/[0.03] overflow-hidden">
+      <section id="sponsorship" className="relative z-10 bg-[#05070B] pt-20 pb-4 md:py-32 border-t border-white/[0.03] overflow-hidden" style={{ marginTop: isMobile ? '-30vh' : '0' }}>
         
         {/* Dynamic Organic Background Nebulas & Glows */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40">
@@ -1316,7 +1328,7 @@ export default function Home() {
           </div>
 
           {/* 3-Column Tier Cards */}
-          <div ref={supportScrollRef} className="flex flex-row overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-8 w-full mb-0 md:mb-16 items-stretch pb-8 md:pb-0 hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
+          <div ref={supportScrollRef} className="flex flex-row overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-8 w-full mb-0 md:mb-16 items-stretch pb-4 md:pb-0 hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
             {TIERS.filter(t => t.name !== 'Other').map((tier) => {
               const isApollo = tier.name === 'Apollo';
               
@@ -1420,7 +1432,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7.2. PARTNERSHIP INFO (FORM)
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship-form-section" className="relative z-10 pt-4 pb-20 md:py-32 bg-[#05070B] border-t border-white/[0.03] overflow-hidden">
+      <section id="sponsorship-form-section" className="relative z-10 pt-0 pb-20 md:py-32 bg-[#05070B] border-t border-white/[0.03] overflow-hidden">
         {/* Dynamic Organic Background Nebulas & Glows (Continued) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-30">
           <motion.div 
