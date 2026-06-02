@@ -1266,7 +1266,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7. SPONSORSHIP TIERS
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship" className="relative z-10 bg-[#05070B] py-20 md:py-32 border-t border-white/[0.03] overflow-hidden">
+      <section id="sponsorship" className="relative z-10 bg-[#05070B] pt-20 pb-12 md:py-32 border-t border-white/[0.03] overflow-hidden">
         
         {/* Dynamic Organic Background Nebulas & Glows */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40">
@@ -1316,7 +1316,7 @@ export default function Home() {
           </div>
 
           {/* 3-Column Tier Cards */}
-          <div ref={supportScrollRef} className="flex flex-row overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-8 w-full mb-16 items-stretch pb-8 md:pb-0 hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
+          <div ref={supportScrollRef} className="flex flex-row overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-8 w-full mb-0 md:mb-16 items-stretch pb-8 md:pb-0 hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
             {TIERS.filter(t => t.name !== 'Other').map((tier) => {
               const isApollo = tier.name === 'Apollo';
               
@@ -1420,7 +1420,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7.2. PARTNERSHIP INFO (FORM)
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship-form-section" className="relative z-10 py-20 md:py-32 bg-[#05070B] border-t border-white/[0.03] overflow-hidden">
+      <section id="sponsorship-form-section" className="relative z-10 pt-4 pb-20 md:py-32 bg-[#05070B] border-t border-white/[0.03] overflow-hidden">
         {/* Dynamic Organic Background Nebulas & Glows (Continued) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-30">
           <motion.div 
