@@ -826,7 +826,7 @@ export default function Home() {
           </div>
 
           {/* Desktop Support Now Button (Lowered) */}
-          <div className="hidden md:flex absolute bottom-16 left-12 z-30 pointer-events-auto" style={{ perspective: '800px' }}>
+          <div className="hidden md:flex absolute bottom-16 left-1/2 -translate-x-1/2 z-30 pointer-events-auto" style={{ perspective: '800px' }}>
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
