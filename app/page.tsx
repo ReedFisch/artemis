@@ -418,13 +418,15 @@ export default function Home() {
     offset: ["start start", "end end"]
   });
 
-  const card1Y = useTransform(budgetScrollYProgress, [0, 0.5], [0, -30]);
-  const card1RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [0, -5]);
-  const card1Opacity = useTransform(budgetScrollYProgress, [0, 0.3, 0.5], [1, 1, 0]);
-  const card2Y = useTransform(budgetScrollYProgress, [0, 0.5], [40, 0]);
-  const card2Scale = useTransform(budgetScrollYProgress, [0, 0.5], [0.9, 1]);
-  const card2RotateZ = useTransform(budgetScrollYProgress, [0, 0.5], [2, 0]);
-  const card2Opacity = useTransform(budgetScrollYProgress, [0, 0.5], [0.7, 1]);
+  const card1Y = useTransform(budgetScrollYProgress, [0, 0.7], [0, -40]);
+  const card1RotateZ = useTransform(budgetScrollYProgress, [0, 0.7], [0, -5]);
+  const card1Opacity = useTransform(budgetScrollYProgress, [0, 0.3, 0.7], [1, 1, 0]);
+  const card1Scale = useTransform(budgetScrollYProgress, [0, 0.7], [1, 0.9]);
+
+  const card2Y = useTransform(budgetScrollYProgress, [0, 0.7], [100, 0]);
+  const card2Scale = useTransform(budgetScrollYProgress, [0, 0.7], [0.9, 1]);
+  const card2RotateZ = useTransform(budgetScrollYProgress, [0, 0.7], [2, 0]);
+  const card2Opacity = useTransform(budgetScrollYProgress, [0, 0.7], [0, 1]);
 
   const heroScrollRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScrollYProgress } = useScroll({
@@ -1162,14 +1164,14 @@ export default function Home() {
           
           {/* MOBILE 3D FLIP DECK */}
           {isMobile && (
-            <div className="h-[70vh] w-full mt-12 relative">
+            <div className="h-[150vh] w-full mt-24 relative">
               <div className="sticky top-32 w-full flex justify-center pointer-events-none" style={{ perspective: '1200px' }}>
               <div className="relative w-full max-w-sm" style={{ transformStyle: 'preserve-3d' }}>
                 
                 {/* BOTTOM CARD (Funding Sources) */}
                 <motion.div 
                   style={{ y: card2Y, scale: card2Scale, rotateZ: card2RotateZ, opacity: card2Opacity }}
-                  className="absolute inset-0 w-full bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30 z-10"
+                  className="absolute inset-0 w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30 z-10"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Funding Sources</h3>
                   <div className="space-y-6 mb-8">
@@ -1188,8 +1190,8 @@ export default function Home() {
 
                 {/* TOP CARD (Expenses) */}
                 <motion.div 
-                  style={{ y: card1Y, rotateZ: card1RotateZ, opacity: card1Opacity, transformOrigin: 'bottom center' }}
-                  className="relative w-full bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30 z-20"
+                  style={{ y: card1Y, rotateZ: card1RotateZ, opacity: card1Opacity, scale: card1Scale, transformOrigin: 'bottom center' }}
+                  className="relative w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30 z-20"
                 >
                   <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
                   <div className="space-y-6 mb-8">
@@ -1278,7 +1280,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            7. SPONSORSHIP TIERS
            ══════════════════════════════════════════════════════ */}
-      <section id="sponsorship" className="relative z-10 bg-[#05070B] pt-12 pb-4 md:py-32 border-t border-white/[0.03] overflow-hidden">
+      <section id="sponsorship" className="relative z-10 bg-[#05070B] pt-4 pb-4 md:py-32 border-t border-white/[0.03] overflow-hidden">
         
         {/* Dynamic Organic Background Nebulas & Glows */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40">
