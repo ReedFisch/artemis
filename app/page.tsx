@@ -433,6 +433,8 @@ export default function Home() {
   const card2RotateZ = useTransform(flipProgress, [0, 0.5, 1], [0, 8, 0]);
   const card2ZIndex = useTransform(flipProgress, (v) => (v < 0.5 ? 10 : 20));
 
+  const arrowRotate = useTransform(flipProgress, [0, 1], [0, 180]);
+
 
   const heroScrollRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScrollYProgress } = useScroll({
@@ -1212,6 +1214,27 @@ export default function Home() {
                     <span className="text-white font-bold font-mono">Total Needed</span>
                     <span className="text-stellar-orange font-black">$30,000</span>
                   </div>
+                </motion.div>
+
+                {/* FLIP ARROW INDICATOR */}
+                <motion.div 
+                  className="absolute -bottom-16 left-1/2 -translate-x-1/2 cursor-pointer z-30 opacity-70 hover:opacity-100 transition-opacity p-3 rounded-full bg-white/5 border border-white/10 shadow-lg pointer-events-auto"
+                  onClick={() => {
+                    if (flipProgress.get() > 0.5) {
+                      window.scrollBy({ top: -window.innerHeight * 0.4, behavior: 'smooth' });
+                    } else {
+                      window.scrollBy({ top: window.innerHeight * 0.4, behavior: 'smooth' });
+                    }
+                  }}
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <motion.svg 
+                    style={{ rotateZ: arrowRotate }}
+                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white"
+                  >
+                    <path d="M6 9l6 6 6-6"/>
+                  </motion.svg>
                 </motion.div>
               </div>
               </div>
