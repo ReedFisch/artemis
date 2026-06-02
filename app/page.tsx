@@ -797,7 +797,7 @@ export default function Home() {
             </p>
 
             {/* Support Now Button */}
-            <div className="mt-12 md:mt-16" style={{ perspective: '800px' }}>
+            <div className="mt-8 md:mt-10" style={{ perspective: '800px' }}>
               <a 
                 href="#sponsorship" 
                 onClick={(e) => handleFastScroll(e, '#sponsorship')} 
