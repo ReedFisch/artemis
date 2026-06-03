@@ -195,7 +195,7 @@ const OutreachParallaxCard = ({
   return (
     <motion.div 
       style={{ scale, opacity, y, transformOrigin: 'center center' }} 
-      className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[450px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group"
+      className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[450px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group hover:border-white/20 hover:shadow-[0_25px_60px_rgba(0,0,0,0.6),0_0_30px_rgba(37,99,235,0.06)] transition-all duration-500"
     >
       <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/50 to-transparent opacity-90" />
@@ -747,10 +747,10 @@ export default function Home() {
 
           {/* 3. Overlays (Header and Sponsor) */}
           <motion.header 
-            className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto`}
+            className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto transition-all duration-500 ${!isAtTop ? 'glass-header-scrolled' : ''}`}
           >
-          <div className={`flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-opacity duration-500 ${(isAtTop && isMobile) ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}`} onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            <img src="/branding/logo_transparent.png" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain`} />
+          <div className={`flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-all duration-500 ${(isAtTop && isMobile) ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}`} onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+            <img src="/branding/logo_transparent.png" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain transition-transform duration-300 hover:scale-105`} />
             <div className="flex flex-col justify-center max-w-[50vw]">
               <span className={`display ${isMobile ? "text-xl md:text-2xl" : "text-[63px]"} font-black text-white/60 leading-none truncate`}>ARTEMIS</span>
               <span className={`${isMobile ? "text-[8px] leading-tight" : "text-[10px]"} uppercase tracking-[0.1em] md:tracking-[0.25em] text-white/40 mt-1 font-sans font-semibold whitespace-normal md:whitespace-nowrap`}>Chatham High School Robotics</span>
@@ -759,10 +759,10 @@ export default function Home() {
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-10 text-base md:text-lg tracking-widest uppercase font-bold text-white/50 font-mono">
-            <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">About</a>
-            <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Timeline</a>
-            <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Impact</a>
-            <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Support</a>
+            <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">About</a>
+            <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Timeline</a>
+            <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Impact</a>
+            <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Support</a>
           </nav>
           </motion.header>
 
@@ -825,12 +825,23 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Desktop Scroll Down Indicator */}
+          <div className="hidden md:flex absolute bottom-32 left-1/2 z-20 pointer-events-none flex-col items-center gap-3" style={{ animation: 'scroll-indicator-bounce 2.5s ease-in-out infinite', transform: 'translateX(-50%)' }}>
+            <span className="text-[9px] uppercase tracking-[0.3em] text-white/30 font-mono">Scroll</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white/30">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </div>
+
+          {/* Desktop Bottom Vignette */}
+          <div className="hidden md:block absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-[#05070B] via-[#05070B]/40 to-transparent z-10 pointer-events-none" />
+
           {/* Desktop Support Now Button (Lowered) */}
           <div className="hidden md:flex absolute bottom-16 left-1/2 -translate-x-1/2 z-30 pointer-events-auto" style={{ perspective: '800px' }}>
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
-              className="group relative inline-block px-12 py-6 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
+              className="group relative inline-block px-12 py-6 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden pulse-glow-ring"
             >
               {/* Dynamic Gradient & Grain Hover Layer */}
               <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
@@ -906,6 +917,8 @@ export default function Home() {
                 {/* Left Side: About Text */}
                 <div className={`${isMobile ? "w-full p-6" : "lg:w-5/12 p-6 md:p-8"} flex flex-col space-y-6 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_40px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)] justify-between relative overflow-hidden backdrop-blur-3xl border border-white/10`} style={{ background: 'rgba(255,255,255,0.02)' }}>
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
+                  {/* Premium diagonal glass sheen */}
+                  <div className="absolute top-0 left-0 w-[200%] h-[200%] bg-gradient-to-br from-white/[0.06] via-transparent to-transparent -translate-x-1/3 -translate-y-1/3 pointer-events-none" />
                   
                   <div className="relative z-10">
                     <h2 className="h1 font-black text-white hover-glitch-text transition-all duration-300">
@@ -953,18 +966,18 @@ export default function Home() {
                   </div>
                   {/* Compact stat row */}
                   <div className="grid grid-cols-3 gap-3 md:gap-5 shrink-0" style={{ perspective: '800px' }}>
-                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default hover:border-white/20 hover:bg-white/[0.04]" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
-                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
+                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default hover:border-white/20 hover:bg-white/[0.04] hover:shadow-[0_15px_50px_rgba(37,99,235,0.1),0_10px_40px_rgba(0,0,0,0.4)]" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
+                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60 group-hover:opacity-90 transition-opacity duration-500" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
                       <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={2016} duration={1.5} /></h4>
                       <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Founded</p>
                     </div>
-                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default hover:border-white/20 hover:bg-white/[0.04]" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
-                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
+                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default hover:border-white/20 hover:bg-white/[0.04] hover:shadow-[0_15px_50px_rgba(37,99,235,0.1),0_10px_40px_rgba(0,0,0,0.4)]" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
+                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60 group-hover:opacity-90 transition-opacity duration-500" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
                       <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={20} duration={2} format={(v) => `${v}+`} /></h4>
                       <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Members</p>
                     </div>
-                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default hover:border-white/20 hover:bg-white/[0.04]" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
-                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
+                    <div className="relative p-4 md:p-6 text-center rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-default hover:border-white/20 hover:bg-white/[0.04] hover:shadow-[0_15px_50px_rgba(37,99,235,0.1),0_10px_40px_rgba(0,0,0,0.4)]" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
+                      <div className="absolute top-0 left-[10%] right-[10%] h-[40%] rounded-b-full opacity-60 group-hover:opacity-90 transition-opacity duration-500" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)' }} />
                       <h4 className="text-xl md:h1 font-black text-white relative z-10 hover-glitch-text"><Counter to={5000} duration={2.5} format={(v) => `${v.toLocaleString()}+`} /></h4>
                       <p className="text-[9px] md:label text-white/50 mt-2 relative z-10">Hours Contributed This Season</p>
                     </div>
@@ -1039,6 +1052,7 @@ export default function Home() {
               ) : (
                 <>
                   {/* 2024 SECTION (0vw to 70vw) */}
+                  <span className="absolute top-[10%] left-[2vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>2024</span>
                   <div className="absolute top-[35%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
                     <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
                     <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
@@ -1051,6 +1065,7 @@ export default function Home() {
                   <img src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
                   {/* 2025 SECTION (60vw to 120vw) */}
+                  <span className="absolute top-[8%] left-[55vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>2025</span>
                   <div className="absolute top-[25%] left-[60vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(249,115,22,0.15)] z-30 transform rotate-1">
                     <h4 className="text-stellar-orange h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
                     <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
@@ -1064,6 +1079,7 @@ export default function Home() {
                   <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-80 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
                   {/* 2026 SECTION (130vw to 220vw) */}
+                  <span className="absolute top-[12%] left-[125vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>2026</span>
                   <div className="absolute top-[45%] left-[130vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
                     <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
                     <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
@@ -1110,8 +1126,9 @@ export default function Home() {
           )}
           
           <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
-            <h2 className="display font-black text-white/60 tracking-wide hover-glitch-text">
+            <h2 className="display font-black text-white/60 tracking-wide hover-glitch-text relative inline-block">
               Impact
+              <div className="absolute inset-0 blur-[60px] bg-gradient-to-r from-artemis-blue/20 via-purple-500/10 to-stellar-orange/15 pointer-events-none -z-10 scale-150" />
             </h2>
             {/* Mobile Scroll Indicator & Controls */}
             <div className="md:hidden mt-4 flex items-center justify-center gap-4">
@@ -1275,12 +1292,21 @@ export default function Home() {
             <div className="glass-panel-deep p-8 md:p-10 rounded-2xl relative overflow-hidden transition-all duration-300 hover:bg-white/[0.03]">
               <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
               <div className="space-y-6 mb-8">
-                {EXPENSES.map((item, idx) => (
-                  <div key={idx} className="flex justify-between items-center text-sm md:text-base border-b border-white/5 pb-2">
-                    <span className="text-white/70 font-mono">{item.label}</span>
-                    <span className="text-stellar-orange font-black">$<Counter to={item.amount} duration={2} format={(v) => v.toLocaleString()} /></span>
+                {EXPENSES.map((item, idx) => {
+                  const maxExpense = Math.max(...EXPENSES.map(e => e.amount));
+                  const barWidth = (item.amount / maxExpense) * 100;
+                  return (
+                  <div key={idx} className="flex flex-col gap-1.5 border-b border-white/5 pb-3">
+                    <div className="flex justify-between items-center text-sm md:text-base">
+                      <span className="text-white/70 font-mono">{item.label}</span>
+                      <span className="text-stellar-orange font-black">$<Counter to={item.amount} duration={2} format={(v) => v.toLocaleString()} /></span>
+                    </div>
+                    <div className="w-full h-[3px] rounded-full bg-white/5 overflow-hidden">
+                      <motion.div className="h-full rounded-full bg-gradient-to-r from-stellar-orange/60 to-stellar-orange/20" initial={{ width: 0 }} whileInView={{ width: `${barWidth}%` }} transition={{ duration: 1.5, ease: 'easeOut', delay: idx * 0.1 }} viewport={{ once: true }} />
+                    </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
               <div className="flex justify-between items-center text-lg md:text-xl border-t border-white/20 pt-4 mt-auto">
                 <span className="text-white font-bold font-mono">Total Needed</span>
@@ -1292,12 +1318,21 @@ export default function Home() {
             <div className="glass-panel-deep p-8 md:p-10 rounded-2xl relative overflow-hidden transition-all duration-300 hover:bg-white/[0.03]">
               <h3 className="h2 font-black mb-6 text-white tracking-wide">Funding Sources</h3>
               <div className="space-y-6 mb-8">
-                {FUNDING_SOURCES.map((item, idx) => (
-                  <div key={idx} className="flex justify-between items-center text-sm md:text-base border-b border-white/5 pb-2">
-                    <span className="text-white/70 font-mono">{item.label}</span>
-                    <span className="text-artemis-blue font-black">$<Counter to={item.amount} duration={2} format={(v) => v.toLocaleString()} /></span>
+                {FUNDING_SOURCES.map((item, idx) => {
+                  const maxFunding = Math.max(...FUNDING_SOURCES.map(f => f.amount));
+                  const barWidth = (item.amount / maxFunding) * 100;
+                  return (
+                  <div key={idx} className="flex flex-col gap-1.5 border-b border-white/5 pb-3">
+                    <div className="flex justify-between items-center text-sm md:text-base">
+                      <span className="text-white/70 font-mono">{item.label}</span>
+                      <span className="text-artemis-blue font-black">$<Counter to={item.amount} duration={2} format={(v) => v.toLocaleString()} /></span>
+                    </div>
+                    <div className="w-full h-[3px] rounded-full bg-white/5 overflow-hidden">
+                      <motion.div className="h-full rounded-full bg-gradient-to-r from-artemis-blue/60 to-artemis-blue/20" initial={{ width: 0 }} whileInView={{ width: `${barWidth}%` }} transition={{ duration: 1.5, ease: 'easeOut', delay: idx * 0.1 }} viewport={{ once: true }} />
+                    </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
               <div className="flex justify-between items-center text-lg md:text-xl border-t border-white/20 pt-4 mt-auto">
                 <span className="text-white font-bold font-mono">Total Secured</span>
@@ -1308,7 +1343,7 @@ export default function Home() {
           
           {/* Funding Gap to Worlds (Rendered below the desktop grid, hidden on mobile) */}
           <div className="hidden lg:block w-full relative z-10 text-left mt-8">
-            <div className="relative overflow-hidden rounded-3xl p-8 md:p-10 flex flex-col sm:flex-row justify-between items-center transition-all duration-500 hover:-translate-y-1 group bg-white/[0.03] backdrop-blur-3xl border border-white/10 hover:border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+            <div className="relative overflow-hidden rounded-3xl p-8 md:p-10 flex flex-col sm:flex-row justify-between items-center transition-all duration-500 hover:-translate-y-1 group bg-white/[0.03] backdrop-blur-3xl border border-stellar-orange/15 hover:border-stellar-orange/30 shadow-[0_8px_32px_rgba(0,0,0,0.5)] funding-gap-pulse">
               {/* Premium Glass Sheen */}
               <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-3xl">
                 {/* Diagonal light sheen */}
@@ -1416,9 +1451,15 @@ export default function Home() {
                 <div 
                   key={tier.name}
                   onClick={() => setSelectedTier(tier.name)}
-                  className={`relative p-8 rounded-3xl border backdrop-blur-3xl transition-all duration-500 flex flex-col group cursor-pointer ${isMobile ? 'border-white/10 bg-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.3)] scale-100 active:scale-[0.98] w-[85vw] max-w-[320px] shrink-0 snap-center' : borderClass}`}
+                  className={`relative p-8 rounded-3xl border backdrop-blur-3xl transition-all duration-500 flex flex-col group cursor-pointer gradient-border ${isMobile ? 'border-white/10 bg-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.3)] scale-100 active:scale-[0.98] w-[85vw] max-w-[320px] shrink-0 snap-center' : borderClass} ${!isMobile ? 'hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)]' : ''}`}
                   style={{ background: (isApollo && !isMobile) ? undefined : 'rgba(255,255,255,0.015)' }}
                 >
+                  {/* Most Popular badge on Apollo */}
+                  {isApollo && !isMobile && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 px-4 py-1 rounded-full badge-popular border border-artemis-blue/30 text-[9px] font-bold uppercase tracking-[0.2em] text-artemis-blue font-mono shadow-[0_4px_20px_rgba(37,99,235,0.15)]">
+                      Most Popular
+                    </div>
+                  )}
 
                   
                   <div className="relative z-10 flex flex-col h-full">
@@ -1807,7 +1848,7 @@ export default function Home() {
 
             {/* Middle: Big Brand Title (6 cols md, 7 cols lg) */}
             <div className="hidden md:flex md:col-span-6 lg:col-span-7 flex-col justify-center text-center select-none lg:-ml-9 xl:-ml-12">
-              <h1 className="text-[clamp(3.5rem,14vw,8rem)] leading-[0.85] font-black text-[#f8f8f8] tracking-tighter uppercase font-mono" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
+              <h1 className="text-[clamp(3.5rem,14vw,8rem)] leading-[0.85] font-black tracking-tighter uppercase font-mono" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.6)', background: 'linear-gradient(180deg, rgba(248,248,248,1) 0%, rgba(248,248,248,0.4) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                 Artemis
               </h1>
             </div>
@@ -1833,16 +1874,16 @@ export default function Home() {
               </div>
               
               <div className="flex gap-4 mt-2">
-                <a href="https://www.instagram.com/artemis_6621/" target="_blank" rel="noopener noreferrer" className="text-xs text-white hover:opacity-85 transition-opacity font-mono flex items-center gap-1.5 py-1">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                <a href="https://www.instagram.com/artemis_6621/" target="_blank" rel="noopener noreferrer" className="social-link-premium text-xs text-white/80 font-mono flex items-center gap-1.5 py-1">
+                  <svg className="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                   Instagram
                 </a>
-                <a href="https://www.youtube.com/@ArtemisFrc6621" target="_blank" rel="noopener noreferrer" className="text-xs text-white hover:opacity-85 transition-opacity font-mono flex items-center gap-1.5 py-1">
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <a href="https://www.youtube.com/@ArtemisFrc6621" target="_blank" rel="noopener noreferrer" className="social-link-premium text-xs text-white/80 font-mono flex items-center gap-1.5 py-1">
+                  <svg className="w-3.5 h-3.5 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                   YouTube
                 </a>
-                <a href="https://www.thebluealliance.com/team/6621" target="_blank" rel="noopener noreferrer" className="text-xs text-white hover:opacity-85 transition-opacity font-mono flex items-center gap-1.5 py-1">
-                  <span className="font-sans font-black text-[9px] px-1 bg-white/10 rounded tracking-tight text-white">TBA</span>
+                <a href="https://www.thebluealliance.com/team/6621" target="_blank" rel="noopener noreferrer" className="social-link-premium text-xs text-white/80 font-mono flex items-center gap-1.5 py-1">
+                  <span className="font-sans font-black text-[9px] px-1 bg-white/10 rounded tracking-tight text-white transition-colors">TBA</span>
                   TBA
                 </a>
               </div>

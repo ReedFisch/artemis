@@ -119,10 +119,16 @@ body {
   background: rgba(37, 99, 235, 0.3);
 }
 
-::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #05070B; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+::-webkit-scrollbar-thumb { 
+  background: linear-gradient(180deg, rgba(37,99,235,0.15), rgba(249,115,22,0.1)); 
+  border-radius: 10px; 
+  border: 1px solid rgba(255,255,255,0.03);
+}
+::-webkit-scrollbar-thumb:hover { 
+  background: linear-gradient(180deg, rgba(37,99,235,0.3), rgba(249,115,22,0.2)); 
+}
 
 /* ========== GLASS PANEL UTILITIES ========== */
 
@@ -533,3 +539,124 @@ body {
   background-size: 800px 800px, 1200px 1200px;
   animation: moveTopography 80s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
+
+/* ========== PREMIUM POLISH UTILITIES ========== */
+
+/* Nav link underline slide-in */
+.nav-link-premium {
+  position: relative;
+  padding-bottom: 4px;
+}
+.nav-link-premium::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, rgba(37,99,235,0.8), rgba(249,115,22,0.6));
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+.nav-link-premium:hover::after {
+  width: 100%;
+}
+
+/* Scroll indicator bounce */
+@keyframes scroll-indicator-bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+  40% { transform: translateY(12px) translateX(-50%); }
+  60% { transform: translateY(6px) translateX(-50%); }
+}
+
+/* Pulsing glow ring for CTA buttons */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(249,115,22,0.4); }
+  70% { box-shadow: 0 0 0 16px rgba(249,115,22,0); }
+  100% { box-shadow: 0 0 0 0 rgba(249,115,22,0); }
+}
+
+.pulse-glow-ring {
+  animation: pulse-ring 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Gradient border utility (for tier cards) */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(37,99,235,0.3), rgba(249,115,22,0.2), rgba(37,99,235,0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.gradient-border:hover::before {
+  opacity: 1;
+}
+
+/* Budget bar fill animation */
+.bar-fill-animated {
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--bar-color, rgba(249,115,22,0.6)), var(--bar-color-end, rgba(249,115,22,0.2)));
+  width: 0;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Funding gap banner pulsing border */
+@keyframes border-pulse {
+  0%, 100% { border-color: rgba(249,115,22,0.15); }
+  50% { border-color: rgba(249,115,22,0.35); }
+}
+
+.funding-gap-pulse {
+  animation: border-pulse 3s ease-in-out infinite;
+}
+
+/* Glass header on scroll */
+.glass-header-scrolled {
+  background: rgba(5, 7, 11, 0.75) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+
+/* Social link hover */
+.social-link-premium {
+  transition: all 0.3s ease;
+}
+.social-link-premium:hover {
+  color: rgba(255,255,255,1) !important;
+  transform: translateY(-2px);
+}
+.social-link-premium:hover svg {
+  transform: scale(1.15);
+  transition: transform 0.3s ease;
+}
+
+/* Hide scrollbar utility */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* "Most Popular" badge shimmer */
+@keyframes badge-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.badge-popular {
+  background: linear-gradient(90deg, rgba(37,99,235,0.15), rgba(37,99,235,0.3), rgba(37,99,235,0.15));
+  background-size: 200% 100%;
+  animation: badge-shimmer 3s linear infinite;
+}
+
