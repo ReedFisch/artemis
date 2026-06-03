@@ -492,6 +492,18 @@ export default function Home() {
     return () => clearTimeout(fallbackTimeout);
   }, []);
 
+  useEffect(() => {
+    if (!isLoading && canvasRef.current && imagesRef.current && imagesRef.current[0]) {
+      const ctx = canvasRef.current.getContext('2d');
+      const img = imagesRef.current[0];
+      if (img.complete && img.naturalHeight !== 0 && ctx) {
+        ctx.drawImage(img, 0, 0, 1920, 1080);
+      } else if (img && ctx) {
+        img.onload = () => ctx.drawImage(img, 0, 0, 1920, 1080);
+      }
+    }
+  }, [isLoading]);
+
   const rafRef = useRef<number | null>(null);
   
   // Apply a stiff spring to completely eliminate any scroll jitter/jumping back and forth
