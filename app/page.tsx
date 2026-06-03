@@ -124,7 +124,7 @@ const OUTREACH_CARDS = [
     tag: "Recognition",
     title: "Unconventional Awards",
     desc: "Created custom awards to give out and recognize teams that go above and beyond in unconventional ways that are not traditionally recognized by FIRST.",
-    image: "/photos/outreach/unconventional_awards.jpg",
+    image: "/photos/outreach/unconventional_awards.webp",
   }
 ];
 
@@ -197,7 +197,7 @@ const OutreachParallaxCard = ({
       style={{ scale, opacity, y, transformOrigin: 'center center' }} 
       className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[450px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group hover:border-white/20 hover:shadow-[0_25px_60px_rgba(0,0,0,0.6),0_0_30px_rgba(37,99,235,0.06)] transition-all duration-500"
     >
-      <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+      <img loading="lazy" decoding="async" src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/50 to-transparent opacity-90" />
       
       <div className="relative z-10 p-6 md:p-8 backdrop-blur-md bg-white/[0.03] border-t border-white/10 mt-auto">
@@ -431,10 +431,10 @@ export default function Home() {
       '/robot_drawing_new.webp',
       '/timeline/1.webp',
       '/timeline/3.webp',
-      '/timeline/2025_1_new.jpg',
-      '/timeline/2025_2_new.jpg',
-      '/timeline/2026_1.jpg',
-      '/branding/logo_transparent.png'
+      '/timeline/2025_1_new.webp',
+      '/timeline/2025_2_new.webp',
+      '/timeline/2026_1.webp',
+      '/branding/logo_transparent.webp'
     ];
     
     const totalToLoad = frameCount + additionalImages.length;
@@ -635,7 +635,7 @@ export default function Home() {
             
             {/* Artemis Logo Floating Above */}
             <div className="relative z-20 mb-8 w-40 h-40 flex items-center justify-center">
-              <img src="/branding/logo_transparent.png" alt="Artemis Loading" className="w-full h-full animate-pulse object-contain" />
+              <img src="/branding/logo_transparent.webp" alt="Artemis Loading" className="w-full h-full animate-pulse object-contain" />
             </div>
 
             {/* 3D Solar System Container */}
@@ -750,7 +750,7 @@ export default function Home() {
             className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto transition-all duration-500 ${!isAtTop ? 'glass-header-scrolled' : ''}`}
           >
           <div className={`flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-all duration-500 ${(isAtTop && isMobile) ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}`} onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            <img src="/branding/logo_transparent.png" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain transition-transform duration-300 hover:scale-105`} />
+            <img src="/branding/logo_transparent.webp" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain transition-transform duration-300 hover:scale-105`} />
             <div className="flex flex-col justify-center max-w-[50vw]">
               <span className={`display ${isMobile ? "text-xl md:text-2xl" : "text-[63px]"} font-black text-white/60 leading-none truncate`}>ARTEMIS</span>
               <span className={`${isMobile ? "text-[8px] leading-tight" : "text-[10px]"} uppercase tracking-[0.1em] md:tracking-[0.25em] text-white/40 mt-1 font-sans font-semibold whitespace-normal md:whitespace-nowrap`}>Chatham High School Robotics</span>
@@ -771,7 +771,7 @@ export default function Home() {
           {/* Mobile Centered Hero Content */}
           <div className="absolute inset-0 flex flex-col items-center justify-start z-30 pointer-events-auto px-6 pt-[5vh] md:hidden">
             {/* Huge Centered Logo & Text */}
-            <img src="/branding/logo_transparent.png" alt="Artemis Logo Large" className="w-32 h-32 object-contain mb-6 drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
+            <img src="/branding/logo_transparent.webp" alt="Artemis Logo Large" className="w-32 h-32 object-contain mb-6 drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
             <h1 className="display text-7xl font-black text-white/50 tracking-tight drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-center leading-none">
               ARTEMIS
             </h1>
@@ -1007,8 +1007,8 @@ export default function Home() {
                       </ul>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-4">
-                      <img src="/timeline/1.webp" alt="2024 Event" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
-                      <img src="/timeline/3.webp" alt="2024 Mentors" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
+                      <img loading="lazy" decoding="async" src="/timeline/1.webp" alt="2024 Event" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
+                      <img loading="lazy" decoding="async" src="/timeline/3.webp" alt="2024 Mentors" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md" />
                     </div>
                   </div>
 
@@ -1026,8 +1026,8 @@ export default function Home() {
                       </ul>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-4">
-                      <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-80 hover:brightness-100 transition-all duration-300" />
-                      <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-80 hover:brightness-100 transition-all duration-300" />
+                      <img loading="lazy" decoding="async" src="/timeline/2025_1_new.webp" alt="2025 Winner" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-80 hover:brightness-100 transition-all duration-300" />
+                      <img loading="lazy" decoding="async" src="/timeline/2025_2_new.webp" alt="2025 Celebration" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-80 hover:brightness-100 transition-all duration-300" />
                     </div>
                   </div>
 
@@ -1044,8 +1044,8 @@ export default function Home() {
                       </ul>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-4">
-                      <img src="/timeline/2026_1.jpg" alt="2026 Event" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-90 hover:brightness-100 transition-all duration-300" />
-                      <img src="/timeline/2026_2.jpg" alt="2026 Team" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-90 hover:brightness-100 transition-all duration-300" />
+                      <img loading="lazy" decoding="async" src="/timeline/2026_1.webp" alt="2026 Event" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-90 hover:brightness-100 transition-all duration-300" />
+                      <img loading="lazy" decoding="async" src="/timeline/2026_2.webp" alt="2026 Team" className="w-full h-28 rounded-xl object-cover border border-white/5 shadow-md brightness-90 hover:brightness-100 transition-all duration-300" />
                     </div>
                   </div>
                 </div>
@@ -1061,8 +1061,8 @@ export default function Home() {
                       <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></div></li>
                     </ul>
                   </div>
-                  <img src="/timeline/1.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
-                  <img src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+                  <img loading="lazy" decoding="async" src="/timeline/1.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
+                  <img loading="lazy" decoding="async" src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
                   {/* 2025 SECTION (60vw to 120vw) */}
                   <span className="absolute top-[8%] left-[55vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>2025</span>
@@ -1075,8 +1075,8 @@ export default function Home() {
                       <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ballston Spa Off-Season Competition Finalist</div></li>
                     </ul>
                   </div>
-                  <img src="/timeline/2025_1_new.jpg" alt="2025 Winner" className="absolute bottom-[15%] left-[70vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-80 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
-                  <img src="/timeline/2025_2_new.jpg" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-80 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+                  <img loading="lazy" decoding="async" src="/timeline/2025_1_new.webp" alt="2025 Winner" className="absolute bottom-[15%] left-[70vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-80 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
+                  <img loading="lazy" decoding="async" src="/timeline/2025_2_new.webp" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-80 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
                   {/* 2026 SECTION (130vw to 220vw) */}
                   <span className="absolute top-[12%] left-[125vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>2026</span>
@@ -1088,8 +1088,8 @@ export default function Home() {
                       <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></div></li>
                     </ul>
                   </div>
-                  <img src="/timeline/2026_1.jpg" alt="2026 Event" className="absolute bottom-[15%] left-[155vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
-                  <img src="/timeline/2026_2.jpg" alt="2026 Team" className="absolute top-[15%] right-[5vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
+                  <img loading="lazy" decoding="async" src="/timeline/2026_1.webp" alt="2026 Event" className="absolute bottom-[15%] left-[155vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
+                  <img loading="lazy" decoding="async" src="/timeline/2026_2.webp" alt="2026 Team" className="absolute top-[15%] right-[5vw] w-[40vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
                 </>
               )}
 
@@ -1154,7 +1154,7 @@ export default function Home() {
                   key={idx}
                   className="relative w-[85vw] max-w-[320px] shrink-0 h-[400px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group snap-center"
                 >
-                  <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                  <img loading="lazy" decoding="async" src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/50 to-transparent opacity-90" />
                   
                   <div className="relative z-10 p-6 backdrop-blur-md bg-white/[0.03] border-t border-white/10 mt-auto">
@@ -1740,7 +1740,7 @@ export default function Home() {
             {/* Double the array for seamless infinite scroll */}
             {[...SPONSOR_LOGO_IMAGES, ...SPONSOR_LOGO_IMAGES].map((src, i) => (
               <span key={`logo-${i}`} className="mx-8 flex items-center justify-center shrink-0">
-                <img src={src} alt="Sponsor Logo" className="h-16 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                <img loading="lazy" decoding="async" src={src} alt="Sponsor Logo" className="h-16 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
               </span>
             ))}
           </div>
