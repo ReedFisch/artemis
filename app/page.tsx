@@ -720,7 +720,7 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
-      <section id="hero" ref={heroScrollRef} className="relative w-full z-10 h-[80vh] lg:h-[300vh]">
+      <section id="hero" ref={heroScrollRef} className="relative w-full z-10 h-[80vh] md:h-[300vh]">
         <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex items-center justify-center bg-[#05070B]">
           
           {/* 1. Canvas Zip Animation Layer (Bottom) */}
@@ -1422,7 +1422,7 @@ export default function Home() {
           </div>
 
           {/* 3-Column Tier Cards */}
-          <div ref={supportScrollRef} className="flex flex-row overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-8 w-full mb-0 md:mb-16 items-stretch pb-4 md:pb-0 hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
+          <div ref={supportScrollRef} className="flex flex-row overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-8 w-full mb-0 md:mb-16 items-stretch pt-4 pb-4 md:pt-6 md:pb-0 md:overflow-visible hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
             {TIERS.filter(t => t.name !== 'Other').map((tier) => {
               const isApollo = tier.name === 'Apollo';
               
