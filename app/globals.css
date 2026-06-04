@@ -570,51 +570,88 @@ body {
   60% { transform: translateY(6px) translateX(-50%); }
 }
 
-/* Grainy Blue Warping Glow for CTA buttons */
-@keyframes warp-spin {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.1); }
-  100% { transform: rotate(360deg) scale(1); }
+/* Organic Grainy Glow for CTA buttons */
+@keyframes organic-warp {
+  0% { transform: rotate(0deg) scale(1) translate(0, 0); }
+  25% { transform: rotate(90deg) scale(1.05) translate(2%, -1%); }
+  50% { transform: rotate(180deg) scale(0.97) translate(-1%, 2%); }
+  75% { transform: rotate(270deg) scale(1.08) translate(1%, -2%); }
+  100% { transform: rotate(360deg) scale(1) translate(0, 0); }
 }
 
-@keyframes button-grain-wiggle {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-1%, -1%); }
-  30% { transform: translate(1%, -2%); }
-  50% { transform: translate(-2%, 1%); }
-  70% { transform: translate(2%, 2%); }
-  90% { transform: translate(-1%, 2%); }
+@keyframes organic-warp-2 {
+  0% { transform: rotate(180deg) scale(1.05) translate(0, 0); }
+  33% { transform: rotate(300deg) scale(0.95) translate(-3%, 2%); }
+  66% { transform: rotate(60deg) scale(1.1) translate(2%, -3%); }
+  100% { transform: rotate(180deg) scale(1.05) translate(0, 0); }
 }
 
-.blue-grain-glow {
+@keyframes grain-crawl {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-2%, -1%) rotate(1deg); }
+  20% { transform: translate(1%, -3%) rotate(-0.5deg); }
+  30% { transform: translate(-1%, 2%) rotate(1.5deg); }
+  40% { transform: translate(3%, 1%) rotate(-1deg); }
+  50% { transform: translate(-2%, 3%) rotate(0.5deg); }
+  60% { transform: translate(1%, -2%) rotate(-1.5deg); }
+  70% { transform: translate(-3%, -1%) rotate(1deg); }
+  80% { transform: translate(2%, 2%) rotate(-0.5deg); }
+  90% { transform: translate(-1%, -3%) rotate(0.5deg); }
+}
+
+.cta-glow-wrap {
+  position: relative;
+}
+
+.cta-glow {
   position: absolute;
-  inset: -12px;
+  inset: -20px;
   border-radius: 9999px;
-  overflow: hidden;
   z-index: -1;
-  opacity: 0.9;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.5); /* subtle inner shadow for depth */
+  pointer-events: none;
+  /* Soft feathered edge — no hard cutoff */
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
 }
 
-/* The moving blue gradient */
-.blue-grain-glow::before {
-  content: '';
+/* Blob 1 — slow organic drift */
+.cta-glow-blob1 {
+  position: absolute;
+  inset: -60%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 40% 50%, #0c1e4a 0%, #0a1628 40%, transparent 70%);
+  animation: organic-warp 10s ease-in-out infinite;
+  opacity: 0.9;
+  transition: background 0.6s ease;
+}
+
+/* Blob 2 — counter-rotating, offset */
+.cta-glow-blob2 {
   position: absolute;
   inset: -50%;
-  background: conic-gradient(from 0deg, #1e3a8a, #3b82f6, #0284c7, #1d4ed8, #1e3a8a);
-  filter: blur(16px);
-  animation: warp-spin 8s ease-in-out infinite;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 60% 40%, #0f2557 0%, #081430 45%, transparent 75%);
+  animation: organic-warp-2 13s ease-in-out infinite;
+  opacity: 0.85;
+  transition: background 0.6s ease;
 }
 
-/* The grain overlay */
-.blue-grain-glow::after {
-  content: '';
+/* Heavy grain layer */
+.cta-glow-grain {
   position: absolute;
-  inset: -20%;
-  opacity: 0.6;
+  inset: -30%;
+  opacity: 0.55;
   mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  animation: button-grain-wiggle 4s steps(10) infinite;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-crawl 6s steps(8) infinite;
+}
+
+/* Hover: shift blobs to dark orange/amber */
+.cta-glow-wrap:hover .cta-glow-blob1 {
+  background: radial-gradient(ellipse at 40% 50%, #4a1c08 0%, #2a1005 40%, transparent 70%);
+}
+.cta-glow-wrap:hover .cta-glow-blob2 {
+  background: radial-gradient(ellipse at 60% 40%, #5c2a0a 0%, #301508 45%, transparent 75%);
 }
 
 /* Gradient border utility (for tier cards) */

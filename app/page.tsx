@@ -792,9 +792,13 @@ export default function Home() {
             </p>
 
             {/* Mobile Support Now Button */}
-            <div className="mt-8 relative inline-block" style={{ perspective: '800px' }}>
-              {/* Aurora Pixel Glow */}
-              <div className="absolute inset-[-12px] -z-10 rounded-full blue-grain-glow pointer-events-none" />
+            <div className="mt-8 relative inline-block cta-glow-wrap" style={{ perspective: '800px' }}>
+              {/* Organic Grainy Glow */}
+              <div className="cta-glow">
+                <div className="cta-glow-blob1" />
+                <div className="cta-glow-blob2" />
+                <div className="cta-glow-grain" />
+              </div>
               <a 
                 href="#sponsorship" 
                 onClick={(e) => handleFastScroll(e, '#sponsorship')} 
@@ -851,9 +855,13 @@ export default function Home() {
           <div className="hidden md:block absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-[#05070B] via-[#05070B]/40 to-transparent z-10 pointer-events-none" />
 
           {/* Desktop Support Now Button (Lowered) */}
-          <div className="hidden md:flex absolute bottom-16 left-1/2 -translate-x-1/2 z-30 pointer-events-auto" style={{ perspective: '800px' }}>
-            {/* Aurora Pixel Glow */}
-            <div className="absolute inset-[-12px] -z-10 rounded-full blue-grain-glow pointer-events-none" />
+          <div className="hidden md:flex absolute bottom-16 left-1/2 -translate-x-1/2 z-30 pointer-events-auto cta-glow-wrap" style={{ perspective: '800px' }}>
+            {/* Organic Grainy Glow */}
+            <div className="cta-glow">
+              <div className="cta-glow-blob1" />
+              <div className="cta-glow-blob2" />
+              <div className="cta-glow-grain" />
+            </div>
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
