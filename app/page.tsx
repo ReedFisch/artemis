@@ -798,7 +798,7 @@ export default function Home() {
               <a 
                 href="#sponsorship" 
                 onClick={(e) => handleFastScroll(e, '#sponsorship')} 
-                className="group relative inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
+                className="group relative inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
               >
                 {/* Dynamic Gradient & Grain Hover Layer */}
                 <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
@@ -857,7 +857,7 @@ export default function Home() {
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
-              className="group relative inline-block px-12 py-6 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] border border-white/30 hover:border-white/60 hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
+              className="group relative inline-block px-12 py-6 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
             >
               {/* Dynamic Gradient & Grain Hover Layer */}
               <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
