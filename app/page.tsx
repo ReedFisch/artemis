@@ -794,7 +794,7 @@ export default function Home() {
             {/* Mobile Support Now Button */}
             <div className="mt-8 relative inline-block" style={{ perspective: '800px' }}>
               {/* Aurora Pixel Glow */}
-              <div className="absolute inset-[-12px] -z-10 rounded-full aurora-pixel-glow pointer-events-none" />
+              <div className="absolute inset-[-12px] -z-10 rounded-full blue-grain-glow pointer-events-none" />
               <a 
                 href="#sponsorship" 
                 onClick={(e) => handleFastScroll(e, '#sponsorship')} 
@@ -853,7 +853,7 @@ export default function Home() {
           {/* Desktop Support Now Button (Lowered) */}
           <div className="hidden md:flex absolute bottom-16 left-1/2 -translate-x-1/2 z-30 pointer-events-auto" style={{ perspective: '800px' }}>
             {/* Aurora Pixel Glow */}
-            <div className="absolute inset-[-12px] -z-10 rounded-full aurora-pixel-glow pointer-events-none" />
+            <div className="absolute inset-[-12px] -z-10 rounded-full blue-grain-glow pointer-events-none" />
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
