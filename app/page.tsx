@@ -1865,7 +1865,7 @@ export default function Home() {
 
             {/* Middle: Big Brand Title (6 cols md, 7 cols lg) */}
             <div className="hidden md:flex md:col-span-6 lg:col-span-7 flex-col justify-center text-center select-none lg:-ml-9 xl:-ml-12">
-              <h1 className="text-[clamp(3.5rem,14vw,8rem)] leading-[0.85] font-black tracking-tighter uppercase font-mono" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.6)', background: 'linear-gradient(180deg, rgba(248,248,248,1) 0%, rgba(248,248,248,0.4) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              <h1 className="text-[clamp(3.5rem,14vw,8rem)] leading-[0.85] font-black tracking-tighter uppercase font-mono text-white" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
                 Artemis
               </h1>
             </div>
