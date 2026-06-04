@@ -1076,7 +1076,7 @@ export default function Home() {
               ) : (
                 <>
                   {/* 2024 SECTION (0vw to 70vw) */}
-                  <span className="absolute top-[10%] left-[2vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>2024</span>
+                  <span className="absolute top-[10%] left-[2vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>24</span>
                   <div className="absolute top-[35%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
                     <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
                     <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
@@ -1089,7 +1089,7 @@ export default function Home() {
                   <img loading="lazy" decoding="async" src="/timeline/3.webp" alt="2024 Mentors" className="absolute bottom-[15%] left-[15vw] w-[40vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
                   {/* 2025 SECTION (60vw to 120vw) */}
-                  <span className="absolute top-[8%] left-[55vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>2025</span>
+                  <span className="absolute top-[8%] left-[55vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>25</span>
                   <div className="absolute top-[25%] left-[60vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(249,115,22,0.15)] z-30 transform rotate-1">
                     <h4 className="text-stellar-orange h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
                     <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
@@ -1103,7 +1103,7 @@ export default function Home() {
                   <img loading="lazy" decoding="async" src="/timeline/2025_2_new.webp" alt="2025 Celebration" className="absolute top-[10%] left-[95vw] w-[35vw] max-w-[500px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-80 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform -rotate-2" />
 
                   {/* 2026 SECTION (130vw to 220vw) */}
-                  <span className="absolute top-[12%] left-[125vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>2026</span>
+                  <span className="absolute top-[12%] left-[125vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>26</span>
                   <div className="absolute top-[45%] left-[130vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
                     <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
                     <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
