@@ -1462,7 +1462,7 @@ export default function Home() {
                 btnClass = "bg-white/[0.03] border border-white/10 text-white/90 hover:bg-white/10 hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]";
               } else if (tier.name === 'Apollo') {
                 accentColorClass = "text-artemis-blue/60";
-                borderClass = "border-artemis-blue/20 bg-white/[0.02] shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_40px_rgba(37,99,235,0.08)] scale-[1.03] hover:border-artemis-blue/40";
+                borderClass = "border-artemis-blue/30 bg-white/[0.02] shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_60px_rgba(37,99,235,0.2)] scale-110 hover:border-artemis-blue/50 hover:shadow-[0_25px_60px_rgba(0,0,0,0.7),0_0_80px_rgba(37,99,235,0.3)]";
                 badgeClass = "bg-artemis-blue/10 border border-artemis-blue/30 text-artemis-blue font-mono shadow-[0_0_15px_rgba(37,99,235,0.15)]";
                 btnClass = "bg-artemis-blue/20 border border-artemis-blue/40 text-white hover:bg-artemis-blue/30 hover:border-artemis-blue/60 hover:shadow-[0_0_25px_rgba(37,99,235,0.3)]";
               } else if (tier.name === 'ZEUS') {
@@ -1478,13 +1478,6 @@ export default function Home() {
                   className={`relative p-8 rounded-3xl border backdrop-blur-3xl transition-all duration-500 flex flex-col group cursor-pointer gradient-border ${isMobile ? 'border-white/10 bg-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.3)] scale-100 active:scale-[0.98] w-[85vw] max-w-[320px] shrink-0 snap-center' : borderClass} ${!isMobile ? 'hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)]' : ''}`}
                   style={{ background: (isApollo && !isMobile) ? undefined : 'rgba(255,255,255,0.015)' }}
                 >
-                  {/* Most Popular badge on Apollo */}
-                  {isApollo && !isMobile && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 px-4 py-1 rounded-full badge-popular border border-artemis-blue/30 text-[9px] font-bold uppercase tracking-[0.2em] text-artemis-blue font-mono shadow-[0_4px_20px_rgba(37,99,235,0.15)]">
-                      Most Popular
-                    </div>
-                  )}
-
                   
                   <div className="relative z-10 flex flex-col h-full">
                     <p className="label text-[9px] tracking-widest uppercase mb-2 text-white/40 font-mono">{tier.label}</p>
