@@ -1227,7 +1227,7 @@ export default function Home() {
             Budget
           </h2>
           <p className="text-sm text-white/50 font-light max-w-2xl mb-12">
-            42% of students in our high school are on free or reduced lunch. We refuse to charge our students a single cent to participate. We believe that talent is universal but opportunity is not.
+            Last year for the first time in multiple year we achieved a balance budget. This was only possible through the support of our sponsors and a sustained fundraising effort from our team. However, as we continue to grow our team, upgrade outdated equipment, and with aspirations to compete at the World Championships we're still falling short of where we want to be.
           </p>
 
           
