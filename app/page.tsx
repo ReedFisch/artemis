@@ -530,6 +530,42 @@ export default function Home() {
 
   const fadeOutHeroLiquid = useTransform(heroScrollYProgress, [0, 0.0001], [1, 0]);
 
+  // Trajectories for the fanning letters in "ARTEMIS"
+  const letterX0 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "-60vw"]);
+  const letterY0 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-30vh"]);
+  const letterR0 = useTransform(heroScrollYProgress, [0, 0.25], [0, -120]);
+  const letterOp0 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
+
+  const letterX1 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "-35vw"]);
+  const letterY1 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-50vh"]);
+  const letterR1 = useTransform(heroScrollYProgress, [0, 0.25], [0, -60]);
+  const letterOp1 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
+
+  const letterX2 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "-12vw"]);
+  const letterY2 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-60vh"]);
+  const letterR2 = useTransform(heroScrollYProgress, [0, 0.25], [0, -20]);
+  const letterOp2 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
+
+  const letterX3 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "0vw"]);
+  const letterY3 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-65vh"]);
+  const letterR3 = useTransform(heroScrollYProgress, [0, 0.25], [0, 0]);
+  const letterOp3 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
+
+  const letterX4 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "12vw"]);
+  const letterY4 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-60vh"]);
+  const letterR4 = useTransform(heroScrollYProgress, [0, 0.25], [0, 20]);
+  const letterOp4 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
+
+  const letterX5 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "35vw"]);
+  const letterY5 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-50vh"]);
+  const letterR5 = useTransform(heroScrollYProgress, [0, 0.25], [0, 60]);
+  const letterOp5 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
+
+  const letterX6 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "60vw"]);
+  const letterY6 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-30vh"]);
+  const letterR6 = useTransform(heroScrollYProgress, [0, 0.25], [0, 120]);
+  const letterOp6 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
+
   const bgParallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
 
   useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
@@ -742,15 +778,28 @@ export default function Home() {
               <motion.img 
                 src="/hero_starting_frame.webp"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.75 }}
+                animate={{ opacity: 0.40 }}
                 transition={{ duration: 1.5 }}
                 className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] max-w-none h-auto object-cover object-bottom" 
               />
               <div className="absolute bottom-0 left-0 w-full h-[25vh] bg-gradient-to-t from-[#05070B] to-transparent z-10 pointer-events-none" />
               </>
             ) : (
-              <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.75]" />
+              <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.40]" />
             )}
+          </div>
+
+          {/* Centered Fanning Typographic Layer (In front of robot, centered) */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+            <h1 className="display text-[clamp(2.5rem,15vw,13rem)] font-black uppercase tracking-wider text-white select-none flex leading-none">
+              <motion.span style={{ x: letterX0, y: letterY0, rotate: letterR0, opacity: letterOp0, display: "inline-block" }}>A</motion.span>
+              <motion.span style={{ x: letterX1, y: letterY1, rotate: letterR1, opacity: letterOp1, display: "inline-block" }}>R</motion.span>
+              <motion.span style={{ x: letterX2, y: letterY2, rotate: letterR2, opacity: letterOp2, display: "inline-block" }}>T</motion.span>
+              <motion.span style={{ x: letterX3, y: letterY3, rotate: letterR3, opacity: letterOp3, display: "inline-block" }}>E</motion.span>
+              <motion.span style={{ x: letterX4, y: letterY4, rotate: letterR4, opacity: letterOp4, display: "inline-block" }}>M</motion.span>
+              <motion.span style={{ x: letterX5, y: letterY5, rotate: letterR5, opacity: letterOp5, display: "inline-block" }}>I</motion.span>
+              <motion.span style={{ x: letterX6, y: letterY6, rotate: letterR6, opacity: letterOp6, display: "inline-block" }}>S</motion.span>
+            </h1>
           </div>
 
           {/* 2. Liquid Hero Mask Layer (Fades out immediately when scrolling starts) */}
@@ -762,10 +811,11 @@ export default function Home() {
             className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto transition-all duration-500 ${!isAtTop ? 'glass-header-scrolled' : ''}`}
           >
           <div className={`flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-all duration-500 ${(isAtTop && isMobile) ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}`} onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            <img src="/branding/logo_transparent.webp" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[72px] h-[72px]"} object-contain transition-transform duration-300 hover:scale-105`} />
-            <div className="flex flex-col justify-center max-w-[50vw]">
-              <span className={`display ${isMobile ? "text-xl md:text-2xl" : "text-[63px]"} font-black text-white/60 leading-none truncate`}>ARTEMIS</span>
-              <span className={`${isMobile ? "text-[8px] leading-tight" : "text-[10px]"} uppercase tracking-[0.1em] md:tracking-[0.25em] text-white/40 mt-1 font-sans font-semibold whitespace-normal md:whitespace-nowrap`}>Chatham High School Robotics</span>
+            <img src="/branding/logo_transparent.webp" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[56px] h-[56px]"} object-contain transition-transform duration-300 hover:scale-105`} />
+            <div className="flex flex-col justify-center max-w-[75vw]">
+              <span className={`display ${isMobile ? "text-[11px] tracking-wide" : "text-[22px] tracking-widest"} font-black text-white/80 leading-none uppercase`}>
+                Chatham High School Robotics
+              </span>
             </div>
           </div>
           
@@ -784,10 +834,7 @@ export default function Home() {
           <div className="absolute inset-0 flex flex-col items-center justify-start z-30 pointer-events-auto px-6 pt-[5vh] md:hidden">
             {/* Huge Centered Logo & Text */}
             <img src="/branding/logo_transparent.webp" alt="Artemis Logo Large" className="w-32 h-32 object-contain mb-6 drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
-            <h1 className="display text-7xl font-black text-white/50 tracking-tight drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-center leading-none">
-              ARTEMIS
-            </h1>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-white/50 mt-4 text-center font-mono font-bold drop-shadow-md">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-white/50 mt-2 text-center font-mono font-bold drop-shadow-md">
               Chatham High School Robotics
             </p>
 
