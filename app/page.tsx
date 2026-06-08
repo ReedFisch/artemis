@@ -797,7 +797,6 @@ export default function Home() {
               <div className="cta-glow">
                 <div className="cta-glow-blob1" />
                 <div className="cta-glow-blob2" />
-                <div className="cta-glow-grain" />
               </div>
               <a 
                 href="#sponsorship" 
@@ -860,7 +859,6 @@ export default function Home() {
             <div className="cta-glow">
               <div className="cta-glow-blob1" />
               <div className="cta-glow-blob2" />
-              <div className="cta-glow-grain" />
             </div>
             <a 
               href="#sponsorship" 

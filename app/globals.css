@@ -638,18 +638,7 @@ body {
   transform: translate(-25px, -25px); /* Center the orbiting orb on its keyframe path coords */
 }
 
-/* Heavy grain layer overlays on top of the waves */
-.cta-glow-grain {
-  position: absolute;
-  inset: -10px;
-  opacity: 0.85;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain-crawl 4s steps(8) infinite;
-  /* Wider mask to match the orbiting orbs */
-  mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
-}
+
 
 /* Hover: shift waves to bright orange/amber gradient waves */
 .cta-glow-wrap:hover .cta-glow-blob1 {
