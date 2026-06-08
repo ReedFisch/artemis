@@ -797,12 +797,41 @@ export default function Home() {
               <div className="cta-glow">
                 <div className="cta-glow-blob1" />
                 <div className="cta-glow-blob2" />
+                <div className="cta-glow-blob3" />
+                <div className="cta-glow-blob4" />
               </div>
               <a 
                 href="#sponsorship" 
                 onClick={(e) => handleFastScroll(e, '#sponsorship')} 
                 className="group relative inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
               >
+                {/* Dynamic Gradient Static Layer (Blue) */}
+                <div className="absolute inset-0 z-0 opacity-100 group-hover:opacity-0 transition-opacity duration-500 overflow-hidden pointer-events-none">
+                  {/* base gradient background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-artemis-blue/10 to-blue-500/10" />
+                  {/* floating moving spheres inside the button */}
+                  <motion.div 
+                    animate={{ 
+                      x: ['-30%', '30%', '-30%'],
+                      y: ['-20%', '20%', '-20%'],
+                      rotate: [0, 360],
+                      scale: [1, 1.2, 1] 
+                    }}
+                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -top-1/2 -left-1/2 w-full h-full bg-artemis-blue/30 blur-md rounded-full"
+                  />
+                  <motion.div 
+                    animate={{ 
+                      x: ['30%', '-30%', '30%'],
+                      y: ['20%', '-20%', '20%'],
+                      rotate: [360, 0],
+                      scale: [1.2, 0.8, 1.2] 
+                    }}
+                    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-blue-400/35 blur-md rounded-full"
+                  />
+                </div>
+
                 {/* Dynamic Gradient & Grain Hover Layer */}
                 <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
                   {/* base gradient background */}
@@ -859,12 +888,41 @@ export default function Home() {
             <div className="cta-glow">
               <div className="cta-glow-blob1" />
               <div className="cta-glow-blob2" />
+              <div className="cta-glow-blob3" />
+              <div className="cta-glow-blob4" />
             </div>
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
               className="group relative inline-block px-12 py-6 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
             >
+              {/* Dynamic Gradient Static Layer (Blue) */}
+              <div className="absolute inset-0 z-0 opacity-100 group-hover:opacity-0 transition-opacity duration-500 overflow-hidden pointer-events-none">
+                {/* base gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-artemis-blue/10 to-blue-500/10" />
+                {/* floating moving spheres inside the button */}
+                <motion.div 
+                  animate={{ 
+                    x: ['-30%', '30%', '-30%'],
+                    y: ['-20%', '20%', '-20%'],
+                    rotate: [0, 360],
+                    scale: [1, 1.2, 1] 
+                  }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute -top-1/2 -left-1/2 w-full h-full bg-artemis-blue/30 blur-md rounded-full"
+                />
+                <motion.div 
+                  animate={{ 
+                    x: ['30%', '-30%', '30%'],
+                    y: ['20%', '-20%', '20%'],
+                    rotate: [360, 0],
+                    scale: [1.2, 0.8, 1.2] 
+                  }}
+                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-blue-400/35 blur-md rounded-full"
+                />
+              </div>
+
               {/* Dynamic Gradient & Grain Hover Layer */}
               <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
                 {/* base gradient background */}
