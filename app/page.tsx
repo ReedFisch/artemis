@@ -688,7 +688,8 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.35 }}
                 transition={{ duration: 1.5 }}
-                className="absolute inset-0 w-full h-full object-contain object-center opacity-40" 
+                className="absolute inset-0 w-full h-full object-cover object-bottom" 
+                style={{ filter: 'blur(1.5px)', transform: 'scale(1.15)' }}
               />
               <div className="absolute inset-0 bg-gradient-to-b from-[#05070B]/80 via-transparent to-[#05070B] z-10 pointer-events-none" />
               </>
@@ -804,7 +805,7 @@ export default function Home() {
           {/* Navigation overlay moved to the bottom of main */}
           
           {/* Mobile Cinematic Hero Content */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-auto px-6 md:hidden">
+          <div className="absolute inset-0 flex flex-col items-center justify-end pb-[18vh] z-30 pointer-events-auto px-6 md:hidden">
             <div className="cta-glow-wrap" style={{ perspective: '800px' }}>
               <a 
                 href="#sponsorship" 
