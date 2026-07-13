@@ -26,7 +26,7 @@ const shareTech = Share_Tech({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.artemisfrc.com"),
-  title: "Artemis Robotics | FRC Team 6621",
+  title: "Artemis Robotics",
   description:
     "The official website of Artemis Robotics, FRC Team 6621 from Chatham, NY. Designing, programming, and building high-performance competition robots since 2016.",
   icons: {
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     apple: "/branding/logo_transparent.webp",
   },
   openGraph: {
-    title: "Artemis Robotics | FRC Team 6621",
+    title: "Artemis Robotics",
     description: "The official website of Artemis Robotics, FRC Team 6621 from Chatham, NY. Designing, programming, and building high-performance competition robots.",
     url: "https://www.artemisfrc.com",
     siteName: "Artemis Robotics",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Artemis Robotics | FRC Team 6621",
+    title: "Artemis Robotics",
     description: "The official website of Artemis Robotics, FRC Team 6621 from Chatham, NY.",
     images: ["/photos/hero/team_with_robot.webp"],
   },
