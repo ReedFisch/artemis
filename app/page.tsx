@@ -977,6 +977,15 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
+           SHARED TOPOGRAPHY BACKGROUND WRAPPER (Timeline → Impact)
+           ══════════════════════════════════════════════════════ */}
+      <div className="relative">
+        {/* Continuous topography lines behind both sections */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden topography-bg opacity-40" aria-hidden="true">
+          <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
+        </div>
+
+      {/* ══════════════════════════════════════════════════════
            2. ABOUT & TIMELINE (HORIZONTAL SCROLL)
            ══════════════════════════════════════════════════════ */}
       <section ref={horizontalScrollRef} id="about" className="relative w-full z-10 h-auto lg:h-[400vh] mt-24 md:mt-0" style={{ scrollSnapAlign: isMobile ? 'none' : 'start' }}>
@@ -988,10 +997,7 @@ export default function Home() {
           <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className={isMobile ? "w-full block relative z-10" : "flex w-[320vw] h-full relative z-10"}>
             
             {/* Section background gradient & floating shapes (scrolling with the content) */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden topography-bg opacity-40" aria-hidden="true" style={{ width: isMobile ? '100%' : '320vw' }}>
-              {/* Starfield */}
-              <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
-            </div>
+            {/* Topography background now provided by shared parent wrapper */}
 
             {/* --- ABOUT US PANE --- */}
             <div className={isMobile ? "w-full h-auto flex flex-col pt-24 pb-8 px-6 relative z-10" : "w-[100vw] h-full flex flex-col justify-center px-6 md:px-12 relative z-10"}>
@@ -1201,10 +1207,7 @@ export default function Home() {
       <section id="outreach" ref={outreachScrollRef} className="relative z-10" style={{ height: isMobile ? 'auto' : '350vh' }}>
         <div className={isMobile ? "relative w-full flex flex-col items-center pt-8 pb-16 px-6" : "sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12"}>
           
-          {/* Background Elements — continuous from timeline */}
-          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden topography-bg opacity-40" aria-hidden="true">
-            <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
-          </div>
+          {/* Background blobs and orbital rings — topography lines now from shared parent */}
           
           {/* Bottom fade only for seamless blending into next section */}
           <div className="absolute bottom-0 left-0 w-full h-[25vh] bg-gradient-to-t from-[#05070B] via-[#05070B]/80 to-transparent pointer-events-none z-[1]" />
@@ -1293,6 +1296,8 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      </div>{/* End shared topography wrapper */}
 
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
