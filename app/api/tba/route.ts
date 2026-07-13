@@ -93,10 +93,34 @@ export async function GET() {
       }
     );
 
+    interface TBAEvent {
+      key: string;
+      name: string;
+      start_date: string;
+      end_date: string;
+      city: string;
+      state_prov: string;
+    }
+
+    interface MappedCompetition {
+      eventName: string;
+      startDate: string;
+      endDate: string;
+      location: string;
+      status: string;
+      teamRecord: {
+        wins: number;
+        losses: number;
+        ties: number;
+      };
+      allianceStatus: string;
+      rank: string;
+    }
+
     const statusesData = statusesRes.ok ? await statusesRes.json() : {};
 
     // 3. Map to the gemini.md schema
-    const mappedCompetitions = eventsData.map((event: any) => {
+    const mappedCompetitions: MappedCompetition[] = eventsData.map((event: TBAEvent) => {
       const statusInfo = statusesData[event.key] || {};
       const qualRecord = statusInfo.qual?.ranking?.record || { wins: 0, losses: 0, ties: 0 };
       const playoffRecord = statusInfo.playoff?.record || { wins: 0, losses: 0, ties: 0 };
@@ -132,7 +156,7 @@ export async function GET() {
 
     // Sort chronologically by start date
     mappedCompetitions.sort(
-      (a: any, b: any) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+      (a: MappedCompetition, b: MappedCompetition) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
     );
 
     return NextResponse.json(mappedCompetitions);

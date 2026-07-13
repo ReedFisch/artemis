@@ -1,18 +1,8 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useMemo } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionValueEvent, useMotionTemplate, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState, useRef } from "react";
+import { motion, useScroll, useTransform, useMotionValue, useMotionValueEvent, AnimatePresence, MotionValue } from "framer-motion";
 import Counter from "./components/Counter";
-
-// ─── Types ──────────────────────────
-interface SponsorshipInterestPayload {
-  companyName: string;
-  contactName: string;
-  email: string;
-  phone?: string;
-  interestedTier: "Hermes" | "Apollo" | "ZEUS" | "Other";
-  message: string;
-}
 
 // ─── NAV LINKS ──────────────────────────────────────────────────
 const NAV_LINKS = [
@@ -75,11 +65,12 @@ const TIERS = [
 ];
 
 const EXPENSES = [
-  { label: "Robot & Field", amount: 5000 },
-  { label: "Competition Season", amount: 20000 },
-  { label: "New Equipment", amount: 2500 },
-  { label: "Off-Season Events", amount: 1000 },
-  { label: "Merchandise", amount: 1500 },
+  { label: "Robot & Field", amount: 5000, isFull: true },
+  { label: "Competition Season", amount: 20000, isFull: true },
+  { label: "New Equipment", amount: 2500, isFull: true },
+  { label: "Off-Season Events", amount: 1000, isFull: true },
+  { label: "Merchandise", amount: 1500, isFull: true },
+  { label: "Worlds", amount: 30000, isFull: false },
 ];
 
 const FUNDING_SOURCES = [
@@ -129,16 +120,23 @@ const OUTREACH_CARDS = [
 ];
 
 // ─── OUTREACH PARALLAX COMPONENT ────────────────────────────────
+interface OutreachCardType {
+  tag: string;
+  title: string;
+  desc: string;
+  image: string;
+}
+
 const OutreachParallaxCard = ({ 
   card, 
   index, 
   totalCards, 
   scrollYProgress 
 }: { 
-  card: any, 
+  card: OutreachCardType, 
   index: number, 
   totalCards: number, 
-  scrollYProgress: any 
+  scrollYProgress: MotionValue<number> 
 }) => {
   const itemsPerRow = 3;
   const totalRows = Math.ceil(totalCards / itemsPerRow);
@@ -195,15 +193,21 @@ const OutreachParallaxCard = ({
   return (
     <motion.div 
       style={{ scale, opacity, y, transformOrigin: 'center center' }} 
-      className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[450px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group hover:border-white/20 hover:shadow-[0_25px_60px_rgba(0,0,0,0.6),0_0_30px_rgba(37,99,235,0.06)] transition-all duration-500"
+      className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[450px] flex flex-col rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group hover:border-white/20 hover:shadow-[0_25px_60px_rgba(0,0,0,0.6),0_0_30px_rgba(37,99,235,0.06)] transition-all duration-500 bg-[#0A0D14]"
     >
-      <img loading="lazy" decoding="async" src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/50 to-transparent opacity-90" />
+      {/* Top Image Portion */}
+      <div className="relative w-full h-[220px] overflow-hidden shrink-0">
+        <img loading="lazy" decoding="async" src={card.image} alt={card.title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D14] to-transparent opacity-60 pointer-events-none" />
+      </div>
       
-      <div className="relative z-10 p-6 md:p-8 backdrop-blur-md bg-white/[0.03] border-t border-white/10 mt-auto">
-        <span className="inline-block px-4 py-1.5 rounded-full bg-stellar-orange/20 text-stellar-orange text-xs md:text-sm font-bold tracking-widest uppercase mb-4 border border-stellar-orange/30 shadow-[0_0_15px_rgba(251,146,60,0.3)]">{card.tag}</span>
-        <h3 className="h3 font-bold mb-3 text-white">{card.title}</h3>
-        <p className="text-xs text-white/70 leading-relaxed font-light">{card.desc}</p>
+      {/* Bottom Text Portion */}
+      <div className="relative z-10 p-6 md:p-8 flex flex-col justify-between flex-grow bg-white/[0.01]">
+        <div>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-stellar-orange/20 text-stellar-orange text-xs md:text-sm font-bold tracking-widest uppercase mb-4 border border-stellar-orange/30 shadow-[0_0_15px_rgba(251,146,60,0.3)]">{card.tag}</span>
+          <h3 className="h3 font-bold mb-3 text-white">{card.title}</h3>
+          <p className="text-xs text-white/70 leading-relaxed font-light">{card.desc}</p>
+        </div>
       </div>
     </motion.div>
   );
@@ -236,38 +240,11 @@ const SPONSOR_LOGO_IMAGES = [
   "/sponsors/stonykill_coffee.webp", "/sponsors/swaying_pine.webp", "/sponsors/taconic_engineering.webp"
 ];
 
-// ═══════════════════════════════════════════════════════════════
-// LIQUID ANIMATION HELPERS
-// ═══════════════════════════════════════════════════════════════
-
-const AutonomousBlob = ({ radius, duration, delay = 0 }: any) => {
-  // Generate random corner-to-corner path points to shoot across randomly
-  const pathX = useMemo(() => Array.from({ length: 12 }, () => `${Math.random() * 160 - 30}%`), []);
-  const pathY = useMemo(() => Array.from({ length: 12 }, () => `${Math.random() * 160 - 30}%`), []);
-
-  return (
-    <motion.g
-      animate={{ x: pathX, y: pathY }}
-      transition={{ repeat: Infinity, duration, ease: "linear", delay }}
-    >
-      <motion.g animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 10 + delay, ease: "linear" }}>
-        <motion.ellipse cx="0" cy="0" rx={radius * 1.6} ry={radius * 0.4} fill="white" animate={{ rotate: [0, -360] }} transition={{ repeat: Infinity, duration: 6, ease: "linear" }} />
-        <motion.ellipse cx="0" cy="0" rx={radius * 0.5} ry={radius * 1.3} fill="white" animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 7.5, ease: "linear" }} />
-      </motion.g>
-    </motion.g>
-  );
-};
-
-// ═══════════════════════════════════════════════════════════════
-// COMPONENT
-// ═══════════════════════════════════════════════════════════════
-
 export default function Home() {
   const [selectedTier, setSelectedTier] = useState<"Hermes" | "Apollo" | "ZEUS" | "Other">("Apollo");
   const [customAmount, setCustomAmount] = useState("");
   const [contactSuccess, setContactSuccess] = useState(false);
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
-  const [isMoving, setIsMoving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -284,7 +261,7 @@ export default function Home() {
     }
   };
 
-  const { scrollYProgress } = useScroll({ container: containerRef });
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -315,7 +292,7 @@ export default function Home() {
     }
   }, [isLoading]);
 
-  const handleFastScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  const handleFastScroll = (e: React.MouseEvent<HTMLElement>, targetId: string) => {
     e.preventDefault();
     
     const actualTargetId = targetId;
@@ -378,36 +355,7 @@ export default function Home() {
     requestAnimationFrame(step);
   };
 
-  const cursorX = useMotionValue(-1000);
-  const cursorY = useMotionValue(-1000);
-  const smoothCursorX = useSpring(cursorX, { stiffness: 150, damping: 12, mass: 1 });
-  const smoothCursorY = useSpring(cursorY, { stiffness: 150, damping: 12, mass: 1 });
 
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    const handleMouseMove = (e: MouseEvent) => {
-      setIsMoving(true);
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        setIsMoving(false);
-      }, 200);
-
-      const hero = document.getElementById('hero');
-      if (hero) {
-        const rect = hero.getBoundingClientRect();
-        cursorX.set(e.clientX - rect.left);
-        cursorY.set(e.clientY - rect.top);
-      } else {
-        cursorX.set(e.clientX);
-        cursorY.set(e.clientY);
-      }
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      clearTimeout(timeout);
-    };
-  }, [cursorX, cursorY]);
 
   // Hero Scroll Scrubbing (Zip Animation)
   
@@ -506,9 +454,6 @@ export default function Home() {
 
   const rafRef = useRef<number | null>(null);
   
-  // Apply a stiff spring to completely eliminate any scroll jitter/jumping back and forth
-  const smoothFrameProgress = useSpring(heroScrollYProgress, { stiffness: 400, damping: 90, mass: 0.1 });
-
   useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
     const frameIndex = Math.min(289, Math.floor(latest * 290));
     if (canvasRef.current && imagesRef.current[frameIndex]) {
@@ -523,50 +468,8 @@ export default function Home() {
     }
   });
 
-  // Parallax Values for Hero
-  const opacityShapes = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
-  const yShapesFast = useTransform(scrollYProgress, [0, 1], ["0vh", "-150vh"]);
-  const yShapesSlow = useTransform(scrollYProgress, [0, 1], ["0vh", "-80vh"]);
-
-  const fadeOutHeroLiquid = useTransform(heroScrollYProgress, [0, 0.0001], [1, 0]);
-
-  // Trajectories for the fanning letters in "ARTEMIS"
-  const letterX0 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "-60vw"]);
-  const letterY0 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-30vh"]);
-  const letterR0 = useTransform(heroScrollYProgress, [0, 0.25], [0, -120]);
-  const letterOp0 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
-
-  const letterX1 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "-35vw"]);
-  const letterY1 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-50vh"]);
-  const letterR1 = useTransform(heroScrollYProgress, [0, 0.25], [0, -60]);
-  const letterOp1 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
-
-  const letterX2 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "-12vw"]);
-  const letterY2 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-60vh"]);
-  const letterR2 = useTransform(heroScrollYProgress, [0, 0.25], [0, -20]);
-  const letterOp2 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
-
-  const letterX3 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "0vw"]);
-  const letterY3 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-65vh"]);
-  const letterR3 = useTransform(heroScrollYProgress, [0, 0.25], [0, 0]);
-  const letterOp3 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
-
-  const letterX4 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "12vw"]);
-  const letterY4 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-60vh"]);
-  const letterR4 = useTransform(heroScrollYProgress, [0, 0.25], [0, 20]);
-  const letterOp4 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
-
-  const letterX5 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "35vw"]);
-  const letterY5 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-50vh"]);
-  const letterR5 = useTransform(heroScrollYProgress, [0, 0.25], [0, 60]);
-  const letterOp5 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
-
-  const letterX6 = useTransform(heroScrollYProgress, [0, 0.25], ["0vw", "60vw"]);
-  const letterY6 = useTransform(heroScrollYProgress, [0, 0.25], ["0vh", "-30vh"]);
-  const letterR6 = useTransform(heroScrollYProgress, [0, 0.25], [0, 120]);
-  const letterOp6 = useTransform(heroScrollYProgress, [0, 0.2], [0.35, 0]);
-
-  const bgParallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  // Opacity fade for "ARTEMIS" text on scroll
+  const letterOpacity = useTransform(heroScrollYProgress, [0, 0.15], [0.35, 0]);
 
   useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
     setIsAtTop(latest < 0.001);
@@ -789,17 +692,14 @@ export default function Home() {
             )}
           </div>
 
-          {/* Centered Fanning Typographic Layer (In front of robot, centered) */}
+          {/* Centered Typographic Layer (In front of robot, centered) */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-            <h1 className="display text-[clamp(2.5rem,15vw,13rem)] font-black uppercase tracking-wider text-white select-none flex leading-none">
-              <motion.span style={{ x: letterX0, y: letterY0, rotate: letterR0, opacity: letterOp0, display: "inline-block" }}>A</motion.span>
-              <motion.span style={{ x: letterX1, y: letterY1, rotate: letterR1, opacity: letterOp1, display: "inline-block" }}>R</motion.span>
-              <motion.span style={{ x: letterX2, y: letterY2, rotate: letterR2, opacity: letterOp2, display: "inline-block" }}>T</motion.span>
-              <motion.span style={{ x: letterX3, y: letterY3, rotate: letterR3, opacity: letterOp3, display: "inline-block" }}>E</motion.span>
-              <motion.span style={{ x: letterX4, y: letterY4, rotate: letterR4, opacity: letterOp4, display: "inline-block" }}>M</motion.span>
-              <motion.span style={{ x: letterX5, y: letterY5, rotate: letterR5, opacity: letterOp5, display: "inline-block" }}>I</motion.span>
-              <motion.span style={{ x: letterX6, y: letterY6, rotate: letterR6, opacity: letterOp6, display: "inline-block" }}>S</motion.span>
-            </h1>
+            <motion.h1 
+              style={{ opacity: letterOpacity }}
+              className="display text-[clamp(2.5rem,12vw,13rem)] font-black uppercase tracking-wider select-none flex leading-none bg-gradient-to-b from-white via-white/50 to-white/10 bg-clip-text text-transparent"
+            >
+              ARTEMIS
+            </motion.h1>
           </div>
 
           {/* 2. Liquid Hero Mask Layer (Fades out immediately when scrolling starts) */}
@@ -813,8 +713,8 @@ export default function Home() {
           <div className={`flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-all duration-500 ${(isAtTop && isMobile) ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}`} onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             <img src="/branding/logo_transparent.webp" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[56px] h-[56px]"} object-contain transition-transform duration-300 hover:scale-105`} />
             <div className="flex flex-col justify-center max-w-[75vw]">
-              <span className={`display ${isMobile ? "text-[11px] tracking-wide" : "text-[22px] tracking-widest"} font-black text-white/80 leading-none uppercase`}>
-                Chatham High School Robotics
+              <span className={`display ${isMobile ? "text-[14px] tracking-wide" : "text-[28px] tracking-widest"} font-black text-white/60 leading-none uppercase`}>
+                Chatham Robotics
               </span>
             </div>
           </div>
@@ -831,90 +731,48 @@ export default function Home() {
           {/* Navigation overlay moved to the bottom of main */}
           
           {/* Mobile Centered Hero Content */}
-          <div className="absolute inset-0 flex flex-col items-center justify-start z-30 pointer-events-auto px-6 pt-[5vh] md:hidden">
-            {/* Huge Centered Logo & Text */}
-            <img src="/branding/logo_transparent.webp" alt="Artemis Logo Large" className="w-32 h-32 object-contain mb-6 drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]" />
-            <p className="text-[10px] uppercase tracking-[0.3em] text-white/50 mt-2 text-center font-mono font-bold drop-shadow-md">
-              Chatham High School Robotics
-            </p>
-
-            {/* Mobile Support Now Button */}
-            <div className="mt-8 relative inline-block cta-glow-wrap" style={{ perspective: '800px' }}>
-              {/* Organic Grainy Glow */}
-              <div className="cta-glow">
-                <div className="cta-glow-blob1" />
-                <div className="cta-glow-blob2" />
-                <div className="cta-glow-blob3" />
-                <div className="cta-glow-blob4" />
+          <div className="absolute inset-0 flex flex-col items-center justify-start z-30 pointer-events-auto px-6 pt-[12vh] md:hidden">
+            
+            {/* Premium Glass Dashboard Box */}
+            <div className="flex flex-col items-center p-8 rounded-[2.5rem] border border-white/10 bg-black/45 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.05)] w-full max-w-[340px]">
+              
+              {/* Logo with pulsing glow */}
+              <div className="relative mb-4">
+                <div className="absolute inset-0 w-24 h-24 bg-stellar-orange/20 rounded-full blur-xl animate-pulse" />
+                <img src="/branding/logo_transparent.webp" alt="Artemis Logo Large" className="relative z-10 w-20 h-20 object-contain drop-shadow-[0_0_20px_rgba(249,115,22,0.3)]" />
               </div>
-              <a 
-                href="#sponsorship" 
-                onClick={(e) => handleFastScroll(e, '#sponsorship')} 
-                className="group relative inline-block px-10 py-5 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
-              >
-                {/* Dynamic Gradient Static Layer (Blue) */}
-                <div className="absolute inset-0 z-0 opacity-100 group-hover:opacity-0 transition-opacity duration-500 overflow-hidden pointer-events-none">
-                  {/* base gradient background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-artemis-blue/10 to-blue-500/10" />
-                  {/* floating moving spheres inside the button */}
-                  <motion.div 
-                    animate={{ 
-                      x: ['-30%', '30%', '-30%'],
-                      y: ['-20%', '20%', '-20%'],
-                      rotate: [0, 360],
-                      scale: [1, 1.2, 1] 
-                    }}
-                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute -top-1/2 -left-1/2 w-full h-full bg-artemis-blue/30 blur-md rounded-full"
-                  />
-                  <motion.div 
-                    animate={{ 
-                      x: ['30%', '-30%', '30%'],
-                      y: ['20%', '-20%', '20%'],
-                      rotate: [360, 0],
-                      scale: [1.2, 0.8, 1.2] 
-                    }}
-                    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-blue-400/35 blur-md rounded-full"
-                  />
-                </div>
 
-                {/* Dynamic Gradient & Grain Hover Layer */}
-                <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
-                  {/* base gradient background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#ff2a00]/20 to-[#ffaa00]/20" />
-                  {/* floating moving spheres inside the button */}
-                  <motion.div 
-                    animate={{ 
-                      x: ['-30%', '30%', '-30%'],
-                      y: ['-20%', '20%', '-20%'],
-                      rotate: [0, 360],
-                      scale: [1, 1.3, 1] 
-                    }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute -top-1/2 -left-1/2 w-full h-full bg-[#ff2a00]/70 blur-md rounded-full"
-                  />
-                  <motion.div 
-                    animate={{ 
-                      x: ['30%', '-30%', '30%'],
-                      y: ['20%', '-20%', '20%'],
-                      rotate: [360, 0],
-                      scale: [1.3, 0.8, 1.3] 
-                    }}
-                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-[#ff8800]/70 blur-md rounded-full"
-                  />
-                  {/* dynamic wiggling grain inside the button on hover */}
-                  <div 
-                    className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] opacity-[0.2] animate-dynamic-grain pointer-events-none" 
-                    style={{ 
-                      mixBlendMode: 'overlay',
-                      backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' 
-                    }} 
-                  />
-                </div>
-                <span className="relative z-10">Support Now</span>
-              </a>
+              {/* Subheading */}
+              <span className="text-[10px] uppercase tracking-[0.4em] text-white/40 font-mono font-semibold">Team 6621</span>
+              
+              {/* Main Title */}
+              <h2 className="text-xl font-black text-white mt-1 uppercase tracking-widest text-center" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                Chatham Robotics
+              </h2>
+
+              <div className="h-px w-3/4 bg-gradient-to-r from-transparent via-white/10 to-transparent my-6" />
+
+              {/* Mobile Support Now Button */}
+              <div className="relative inline-block w-full cta-glow-wrap" style={{ perspective: '800px' }}>
+                <a 
+                  href="#sponsorship" 
+                  onClick={(e) => handleFastScroll(e, '#sponsorship')} 
+                  className="group relative flex justify-center items-center w-full py-4 rounded-xl label font-bold text-white shadow-[0_0_15px_rgba(37,99,235,0.2)] hover:shadow-[0_0_25px_rgba(249,115,22,0.3)] active:scale-[0.98] transition-all duration-300 bg-white/5 border border-white/10 overflow-hidden"
+                >
+                  {/* Dynamic Gradient Static Layer */}
+                  <div className="absolute inset-0 z-0 opacity-100 group-hover:opacity-0 transition-opacity duration-500 overflow-hidden pointer-events-none">
+                    <div className="absolute inset-0 bg-gradient-to-r from-artemis-blue/20 to-blue-500/20" />
+                  </div>
+                  
+                  {/* Hover dynamic gradient */}
+                  <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
+                    <div className="absolute inset-0 bg-gradient-to-r from-stellar-orange/30 to-orange-500/30" />
+                  </div>
+
+                  <span className="relative z-10 text-xs uppercase tracking-widest">Support Now</span>
+                </a>
+              </div>
+
             </div>
           </div>
 
@@ -931,17 +789,10 @@ export default function Home() {
 
           {/* Desktop Support Now Button (Lowered) */}
           <div className="hidden md:flex absolute bottom-16 left-1/2 -translate-x-1/2 z-30 pointer-events-auto cta-glow-wrap" style={{ perspective: '800px' }}>
-            {/* Organic Grainy Glow */}
-            <div className="cta-glow">
-              <div className="cta-glow-blob1" />
-              <div className="cta-glow-blob2" />
-              <div className="cta-glow-blob3" />
-              <div className="cta-glow-blob4" />
-            </div>
             <a 
               href="#sponsorship" 
               onClick={(e) => handleFastScroll(e, '#sponsorship')} 
-              className="group relative inline-block px-12 py-6 rounded-full label font-bold text-white shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
+              className="group relative inline-block px-12 py-6 rounded-full label font-bold text-white shadow-[0_0_25px_rgba(37,99,235,0.25)] hover:shadow-[0_0_40px_rgba(249,115,22,0.4)] hover-playful-3d active:scale-95 preserve-3d transform-gpu origin-bottom transition-all duration-300 backdrop-blur-xl bg-white/10 overflow-hidden"
             >
               {/* Dynamic Gradient Static Layer (Blue) */}
               <div className="absolute inset-0 z-0 opacity-100 group-hover:opacity-0 transition-opacity duration-500 overflow-hidden pointer-events-none">
@@ -1029,7 +880,7 @@ export default function Home() {
             </div>
 
             {/* --- ABOUT US PANE --- */}
-            <div className={isMobile ? "w-full h-auto flex flex-col pt-8 pb-8 px-6 relative z-10" : "w-[100vw] h-full flex flex-col pt-16 md:pt-20 pb-8 px-6 md:px-12 relative z-10"}>
+            <div className={isMobile ? "w-full h-auto flex flex-col pt-24 pb-8 px-6 relative z-10" : "w-[100vw] h-full flex flex-col justify-center px-6 md:px-12 relative z-10"}>
               
               {/* Scattered 3D Shapes */}
               {!isMobile && (
@@ -1051,8 +902,8 @@ export default function Home() {
                     <h2 className="h1 font-black text-white hover-glitch-text transition-all duration-300">
                       About Us
                     </h2>
-                    <p className="body text-white/60 leading-relaxed font-light mt-6">
-                      Founded in 2016, Team 6621 Artemis Robotics is the only FRC team in Columbia County. We represent Chatham High School not only as the only robotics team but as the sole technology and STEAM-centered club for the entire school. We allow students to learn as they desire, advance their STEAM interests, whether that be art, business, or stem there is a place for anyone and everyone at ARTEMIS.
+                    <p className="body text-white/60 leading-relaxed font-light mt-4">
+                      Founded in 2016, Artemis Robotics is Chatham High School&apos;s sole technology and STEAM hub. We offer a welcoming space for all students to explore engineering, design, and business.
                     </p>
                   </div>
                   
@@ -1070,7 +921,7 @@ export default function Home() {
                     
                     {/* About FRC Chip & Text */}
                     <div className="flex flex-col items-start gap-4 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] hover:border-white/20 transition-colors duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.4)]" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
-                      <p className="text-xs text-white/50 font-light leading-snug">We compete in FIRST Robotics Competition, the world's largest high school robotics program.</p>
+                      <p className="text-xs text-white/50 font-light leading-snug">We compete in FRC, the premier global high school robotics league.</p>
                       <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
                     </div>
                   </div>
@@ -1220,6 +1071,11 @@ export default function Home() {
                 </>
               )}
 
+              {/* Photo credit tag */}
+              <div className={isMobile ? "text-center w-full mt-8 opacity-40 font-mono text-[9px] uppercase tracking-widest text-white/50 pb-2" : "absolute bottom-6 right-8 opacity-40 hover:opacity-80 transition-opacity z-40 font-mono text-[10px] uppercase tracking-widest text-white/50"}>
+                Photo Credits: smokingmonkeyphotography
+              </div>
+
             </div>
           </motion.div>
         </div>
@@ -1279,15 +1135,21 @@ export default function Home() {
               {OUTREACH_CARDS.map((card, idx) => (
                 <div 
                   key={idx}
-                  className="relative w-[85vw] max-w-[320px] shrink-0 h-[400px] flex flex-col justify-end rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group snap-center"
+                  className="relative w-[85vw] max-w-[320px] shrink-0 h-[420px] flex flex-col rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group snap-center bg-[#0A0D14]"
                 >
-                  <img loading="lazy" decoding="async" src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-[#05070B]/50 to-transparent opacity-90" />
+                  {/* Top Image Portion */}
+                  <div className="relative w-full h-[200px] overflow-hidden shrink-0">
+                    <img loading="lazy" decoding="async" src={card.image} alt={card.title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D14] to-transparent opacity-60 pointer-events-none" />
+                  </div>
                   
-                  <div className="relative z-10 p-6 backdrop-blur-md bg-white/[0.03] border-t border-white/10 mt-auto">
-                    <span className="inline-block px-4 py-1.5 rounded-full bg-stellar-orange/20 text-stellar-orange text-xs font-bold tracking-widest uppercase mb-4 border border-stellar-orange/30 shadow-[0_0_15px_rgba(251,146,60,0.3)]">{card.tag}</span>
-                    <h3 className="h3 font-bold mb-3 text-white">{card.title}</h3>
-                    <p className="text-xs text-white/70 leading-relaxed font-light">{card.desc}</p>
+                  {/* Bottom Text Portion */}
+                  <div className="relative z-10 p-5 flex flex-col justify-between flex-grow bg-white/[0.01]">
+                    <div>
+                      <span className="inline-block px-3 py-1 rounded-full bg-stellar-orange/20 text-stellar-orange text-[10px] font-bold tracking-widest uppercase mb-3 border border-stellar-orange/30 shadow-[0_0_10px_rgba(251,146,60,0.2)]">{card.tag}</span>
+                      <h3 className="text-base font-bold mb-2 text-white">{card.title}</h3>
+                      <p className="text-xs text-white/60 leading-relaxed font-light line-clamp-4">{card.desc}</p>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -1329,9 +1191,7 @@ export default function Home() {
           <h2 className="display font-black mb-4">
             Budget
           </h2>
-          <p className="text-sm text-white/50 font-light max-w-2xl mb-12">
-            Last year for the first time in multiple year we achieved a balance budget. This was only possible through the support of our sponsors and a sustained fundraising effort from our team. However, as we continue to grow our team, upgrade outdated equipment, and with aspirations to compete at the World Championships we're still falling short of where we want to be.
-          </p>
+
 
           
           {/* MOBILE 3D FLIP DECK */}
@@ -1351,16 +1211,25 @@ export default function Home() {
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="absolute inset-0 w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30"
                 >
-                  <h3 className="h2 font-black mb-6 text-white tracking-wide">Funding Sources</h3>
-                  <div className="space-y-6 mb-8">
-                    {FUNDING_SOURCES.map((item, idx) => (
-                      <div key={idx} className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
-                        <span className="text-white/70 font-mono">{item.label}</span>
-                        <span className="text-artemis-blue font-black">${item.amount.toLocaleString()}</span>
-                      </div>
-                    ))}
+                  <h3 className="h2 font-black mb-4 text-white tracking-wide">Funding Sources</h3>
+                  <div className="space-y-4 mb-8">
+                    {FUNDING_SOURCES.map((item, idx) => {
+                      const maxFunding = Math.max(...FUNDING_SOURCES.map(f => f.amount));
+                      const barWidth = (item.amount / maxFunding) * 100;
+                      return (
+                        <div key={idx} className="flex flex-col gap-1 border-b border-white/5 pb-2">
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="text-white/70 font-mono">{item.label}</span>
+                            <span className="text-artemis-blue font-black">${item.amount.toLocaleString()}</span>
+                          </div>
+                          <div className="w-full h-[3px] rounded-full bg-white/5 overflow-hidden">
+                            <motion.div className="h-full rounded-full bg-gradient-to-r from-artemis-blue/60 to-artemis-blue/20" initial={{ width: 0 }} animate={{ width: `${barWidth}%` }} transition={{ duration: 1.5, ease: 'easeOut', delay: idx * 0.05 }} />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
-                  <div className="flex justify-between items-center text-lg border-t border-white/20 pt-4 mt-auto absolute bottom-8 left-8 right-8">
+                  <div className="flex justify-between items-center text-base border-t border-white/20 pt-3 mt-auto absolute bottom-8 left-8 right-8">
                     <span className="text-white font-bold font-mono">Total Secured</span>
                     <span className="text-artemis-blue font-black">$30,000</span>
                   </div>
@@ -1378,18 +1247,26 @@ export default function Home() {
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="absolute inset-0 w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30"
                 >
-                  <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
-                  <div className="space-y-6 mb-8">
-                    {EXPENSES.map((item, idx) => (
-                      <div key={idx} className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
-                        <span className="text-white/70 font-mono">{item.label}</span>
-                        <span className="text-stellar-orange font-black">${item.amount.toLocaleString()}</span>
-                      </div>
-                    ))}
+                  <h3 className="h2 font-black mb-4 text-white tracking-wide">Expenses</h3>
+                  <div className="space-y-3.5 mb-8">
+                    {EXPENSES.map((item, idx) => {
+                      const barWidth = item.isFull ? 100 : 0;
+                      return (
+                        <div key={idx} className="flex flex-col gap-1 border-b border-white/5 pb-1.5">
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="text-white/70 font-mono">{item.label}</span>
+                            <span className="text-stellar-orange font-black">${item.amount.toLocaleString()}</span>
+                          </div>
+                          <div className="w-full h-[3px] rounded-full bg-white/5 overflow-hidden">
+                            <motion.div className="h-full rounded-full bg-gradient-to-r from-stellar-orange/60 to-stellar-orange/20" initial={{ width: 0 }} animate={{ width: `${barWidth}%` }} transition={{ duration: 1.5, ease: 'easeOut', delay: idx * 0.05 }} />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
-                  <div className="flex justify-between items-center text-lg border-t border-white/20 pt-4 mt-auto absolute bottom-8 left-8 right-8">
+                  <div className="flex justify-between items-center text-base border-t border-white/20 pt-3 mt-auto absolute bottom-8 left-8 right-8">
                     <span className="text-white font-bold font-mono">Total Needed</span>
-                    <span className="text-stellar-orange font-black">$30,000</span>
+                    <span className="text-stellar-orange font-black">$35,000</span>
                   </div>
                 </motion.div>
 
@@ -1420,8 +1297,7 @@ export default function Home() {
               <h3 className="h2 font-black mb-6 text-white tracking-wide">Expenses</h3>
               <div className="space-y-6 mb-8">
                 {EXPENSES.map((item, idx) => {
-                  const maxExpense = Math.max(...EXPENSES.map(e => e.amount));
-                  const barWidth = (item.amount / maxExpense) * 100;
+                  const barWidth = item.isFull ? 100 : 0;
                   return (
                   <div key={idx} className="flex flex-col gap-1.5 border-b border-white/5 pb-3">
                     <div className="flex justify-between items-center text-sm md:text-base">
@@ -1437,7 +1313,7 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-center text-lg md:text-xl border-t border-white/20 pt-4 mt-auto">
                 <span className="text-white font-bold font-mono">Total Needed</span>
-                <span className="text-stellar-orange font-black">$<Counter to={30000} duration={2} format={(v) => v.toLocaleString()} /></span>
+                <span className="text-stellar-orange font-black">$<Counter to={35000} duration={2} format={(v) => v.toLocaleString()} /></span>
               </div>
             </div>
 
@@ -1556,7 +1432,6 @@ export default function Home() {
               // Premium Theme Variables
               let accentColorClass = "";
               let borderClass = "";
-              let badgeClass = "";
               let btnClass = "";
               
               if (tier.name === 'Hermes') {
@@ -1566,7 +1441,6 @@ export default function Home() {
               } else if (tier.name === 'Apollo') {
                 accentColorClass = "text-artemis-blue/60";
                 borderClass = "border-artemis-blue/30 bg-white/[0.02] shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_60px_rgba(37,99,235,0.2)] scale-110 hover:border-artemis-blue/50 hover:shadow-[0_25px_60px_rgba(0,0,0,0.7),0_0_80px_rgba(37,99,235,0.3)]";
-                badgeClass = "bg-artemis-blue/10 border border-artemis-blue/30 text-artemis-blue font-mono shadow-[0_0_15px_rgba(37,99,235,0.15)]";
                 btnClass = "bg-artemis-blue/20 border border-artemis-blue/40 text-white hover:bg-artemis-blue/30 hover:border-artemis-blue/60 hover:shadow-[0_0_25px_rgba(37,99,235,0.3)]";
               } else if (tier.name === 'ZEUS') {
                 accentColorClass = "text-stellar-orange/60";
@@ -1621,7 +1495,7 @@ export default function Home() {
             id="donation-card"
             onClick={(e) => {
               setSelectedTier('Other');
-              handleFastScroll(e as any, '#interest-form');
+              handleFastScroll(e, '#interest-form');
             }}
             className={`hidden md:flex w-full max-w-4xl mx-auto p-6 rounded-2xl border transition-all duration-300 flex-col md:flex-row justify-between items-center gap-6 cursor-pointer mb-8 md:mb-12 ${
               selectedTier === 'Other' ? 'border-white/30 bg-white/[0.04] shadow-[0_15px_30px_rgba(0,0,0,0.3)]' : 'border-white/5 hover:border-white/15'
@@ -1753,7 +1627,7 @@ export default function Home() {
                       <select 
                         required 
                         value={selectedTier}
-                        onChange={(e) => setSelectedTier(e.target.value as any)}
+                        onChange={(e) => setSelectedTier(e.target.value as "Hermes" | "Apollo" | "ZEUS" | "Other")}
                         className="appearance-none bg-white/[0.02] border border-white/10 rounded-xl px-5 py-3.5 text-base md:text-sm text-white/80 focus:outline-none focus:border-stellar-orange/50 focus:bg-white/[0.04] focus:ring-1 focus:ring-stellar-orange/20 transition-all font-sans w-full cursor-pointer"
                       >
                         <option value="" disabled className="bg-[#05070B] text-white">Sponsorship Tier: Select a tier</option>
@@ -2035,7 +1909,15 @@ export default function Home() {
                 Photo Credits: <span className="text-white underline decoration-stellar-orange decoration-2">Smokingmonkey Photography</span>
               </p>
               <p>
-                Website created by <span className="text-white underline decoration-artemis-blue decoration-2">Reed Fisch</span>
+                Website created by{" "}
+                <a 
+                  href="https://sumac.systems" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-white underline decoration-artemis-blue decoration-2 hover:text-artemis-blue transition-colors"
+                >
+                  Sumac Systems
+                </a>
               </p>
               <p>
                 Chatham Central School District

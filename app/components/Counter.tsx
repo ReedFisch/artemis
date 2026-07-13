@@ -18,7 +18,7 @@ export default function Counter({ from = 0, to, duration = 2, format }: CounterP
   useEffect(() => {
     if (!isInView) return;
 
-    let start = performance.now();
+    const start = performance.now();
     
     const tick = (now: number) => {
       const elapsed = now - start;

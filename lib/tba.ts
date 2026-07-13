@@ -9,7 +9,7 @@ export async function getTeamInfo() {
     });
     if (!res.ok) return null;
     return await res.json();
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -25,7 +25,7 @@ export async function getTeamEvents() {
     });
     if (!res.ok) return [];
     return await res.json();
-  } catch (e) {
+  } catch {
     return [];
   }
 }
