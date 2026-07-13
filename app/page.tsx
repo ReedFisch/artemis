@@ -92,6 +92,7 @@ const OUTREACH_CARDS = [
     title: "NY State STEAM Day",
     desc: "Advocated for STEAM grants at New York State STEAM Day alongside Assembly Member Didi Barrett. We demonstrated our robot in action and networked with teams statewide to champion the importance of STEAM education.",
     image: "/photos/outreach/steam_day_assembly.webp",
+    objectPosition: "center 15%",
   },
   {
     tag: "Mentorship",
@@ -125,6 +126,7 @@ interface OutreachCardType {
   title: string;
   desc: string;
   image: string;
+  objectPosition?: string;
 }
 
 const OutreachParallaxCard = ({ 
@@ -197,7 +199,14 @@ const OutreachParallaxCard = ({
     >
       {/* Top Image Portion */}
       <div className="relative w-full h-[220px] overflow-hidden shrink-0">
-        <img loading="lazy" decoding="async" src={card.image} alt={card.title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000" />
+        <img 
+          loading="lazy" 
+          decoding="async" 
+          src={card.image} 
+          alt={card.title} 
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+          style={{ objectPosition: card.objectPosition || 'center' }}
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D14] to-transparent opacity-60 pointer-events-none" />
       </div>
       
