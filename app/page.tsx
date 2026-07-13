@@ -248,7 +248,6 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isBudgetFlipped, setIsBudgetFlipped] = useState(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
@@ -373,7 +372,6 @@ export default function Home() {
   // Preload images on mount
   useEffect(() => {
     const isMobileDevice = window.innerWidth < 1024;
-    // Lower frame count to 96 on desktop to load 3x faster
     const frameCount = isMobileDevice ? 1 : 96;
     
     // Add additional critical images to preload
@@ -392,28 +390,17 @@ export default function Home() {
     
     const currentImages: HTMLImageElement[] = [];
     
-    let minimumTimeElapsed = false;
-    let allAssetsLoaded = false;
-
-    // Fast loading screen delay (300ms) for an instant feel
-    setTimeout(() => {
-      minimumTimeElapsed = true;
-      if (allAssetsLoaded) setIsLoading(false);
-    }, 300);
-
     const onAssetLoaded = () => {
       loadedCount++;
       if (loadedCount >= totalToLoad) {
-        allAssetsLoaded = true;
-        if (minimumTimeElapsed) setIsLoading(false);
+        setIsLoading(false);
       }
     };
 
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
-      // Map to every 3rd frame (up to 288) to cover the full sequence
-      const frameIndex = isMobileDevice ? 1 : Math.min(290, i * 3);
-      const paddedIndex = frameIndex.toString().padStart(3, '0');
+      const frameNum = Math.min(290, (i - 1) * 3 + 1);
+      const paddedIndex = frameNum.toString().padStart(3, '0');
       img.src = (i === 1 || isMobileDevice) ? '/hero_starting_frame.webp' : `/hero_frames/${paddedIndex}.webp`;
       
       img.onload = () => {
@@ -463,7 +450,6 @@ export default function Home() {
   
   useMotionValueEvent(smoothHeroScroll, "change", (latest) => {
     const clamped = Math.max(0, Math.min(1, latest));
-    // Dynamically index based on the size of the preloaded image array
     const imgIndex = Math.min(imagesRef.current.length - 1, Math.floor(clamped * imagesRef.current.length));
     if (canvasRef.current && imagesRef.current[imgIndex]) {
       const ctx = canvasRef.current.getContext('2d');
@@ -686,11 +672,16 @@ export default function Home() {
           {/* 1. Canvas Zip Animation Layer (Bottom) */}
           <div className="absolute inset-0 z-0 bg-black">
             {isMobile ? (
-              <div className="absolute inset-0 bg-[#05070B] pointer-events-none z-0">
-                {/* Starfield */}
-                <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
-                <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-[#05070B] to-transparent" />
-              </div>
+              <>
+              <motion.img 
+                src="/hero_starting_frame.webp"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.45 }}
+                transition={{ duration: 1.5 }}
+                className="absolute inset-0 w-full h-full object-cover object-center" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#05070B]/85 via-[#05070B]/40 to-[#05070B] z-10 pointer-events-none" />
+              </>
             ) : (
               <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.40]" />
             )}
@@ -712,158 +703,70 @@ export default function Home() {
 
           {/* 3. Overlays (Header and Sponsor) */}
           <motion.header 
-            className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-4" : "px-12 py-8"} pointer-events-auto transition-all duration-500 ${(!isAtTop || isMobileMenuOpen) ? 'glass-header-scrolled' : ''}`}
+            className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto transition-all duration-500 ${!isAtTop ? 'glass-header-scrolled' : ''}`}
           >
-            {/* Logo and Two-Line Branding Stack */}
-            <div className="flex items-center gap-3 md:gap-4 cursor-pointer hover:opacity-85 transition-all duration-300 pointer-events-auto" onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-              <img src="/branding/logo_transparent.webp" alt="Artemis Logo" className={`${isMobile ? "w-8 h-8" : "w-[50px] h-[50px]"} object-contain transition-transform duration-300 hover:scale-105`} />
-              <div className="flex flex-col justify-center">
-                <span className="font-extrabold text-white leading-none tracking-wider text-[14px] md:text-[20px] uppercase" style={{ fontFamily: 'var(--font-display)' }}>
-                  Chatham Robotics
-                </span>
-                <span className="text-[8px] md:text-[10px] tracking-[0.3em] text-stellar-orange font-bold font-mono uppercase mt-0.5 leading-none">
-                  FRC Team 6621
-                </span>
-              </div>
+          <div className="flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-all duration-500 opacity-100 pointer-events-auto" onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+            <img src="/branding/logo_transparent.webp" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[56px] h-[56px]"} object-contain transition-transform duration-300 hover:scale-105`} />
+            <div className="flex flex-col justify-center max-w-[75vw]">
+              <span className={`display ${isMobile ? "text-[14px] tracking-wide" : "text-[28px] tracking-widest"} font-black text-white/60 leading-none uppercase`}>
+                Chatham Robotics
+              </span>
             </div>
-            
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex gap-10 text-base md:text-lg tracking-widest uppercase font-bold text-white/50 font-mono">
-              <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">About</a>
-              <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Timeline</a>
-              <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Impact</a>
-              <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Support</a>
-            </nav>
-
-            {/* Mobile Hamburger Menu Button */}
-            <div className="md:hidden pointer-events-auto z-[110]">
-              <button 
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-white active:scale-95 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
-                aria-label="Toggle menu"
-              >
-                <div className="relative w-5 h-4 flex flex-col justify-between">
-                  <motion.span 
-                    animate={{ rotate: isMobileMenuOpen ? 45 : 0, y: isMobileMenuOpen ? 7 : 0 }}
-                    className="w-full h-[2px] bg-white rounded-full origin-left transition-all duration-300"
-                  />
-                  <motion.span 
-                    animate={{ opacity: isMobileMenuOpen ? 0 : 1 }}
-                    className="w-full h-[2px] bg-white rounded-full transition-all duration-300"
-                  />
-                  <motion.span 
-                    animate={{ rotate: isMobileMenuOpen ? -45 : 0, y: isMobileMenuOpen ? -7 : 0 }}
-                    className="w-full h-[2px] bg-white rounded-full origin-left transition-all duration-300"
-                  />
-                </div>
-              </button>
-            </div>
+          </div>
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex gap-10 text-base md:text-lg tracking-widest uppercase font-bold text-white/50 font-mono">
+            <a href="#about" onClick={(e) => handleFastScroll(e, '#about')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">About</a>
+            <a href="#timeline" onClick={(e) => handleFastScroll(e, '#timeline')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Timeline</a>
+            <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Impact</a>
+            <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Support</a>
+          </nav>
           </motion.header>
-
-          {/* Mobile Full-Screen Navigation Menu Overlay */}
-          <AnimatePresence>
-            {isMobileMenuOpen && (
-              <motion.div 
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="fixed inset-x-0 top-0 pt-24 pb-8 px-6 bg-[#05070B]/95 backdrop-blur-2xl border-b border-white/10 z-[105] flex flex-col gap-6"
-              >
-                <div className="flex flex-col gap-4 font-mono text-lg uppercase tracking-widest font-bold text-center">
-                  <a 
-                    href="#about" 
-                    onClick={(e) => { setIsMobileMenuOpen(false); handleFastScroll(e, '#about'); }} 
-                    className="py-3 text-white/70 hover:text-white border-b border-white/5 active:bg-white/5 rounded-lg transition-colors"
-                  >
-                    About
-                  </a>
-                  <a 
-                    href="#timeline" 
-                    onClick={(e) => { setIsMobileMenuOpen(false); handleFastScroll(e, '#timeline'); }} 
-                    className="py-3 text-white/70 hover:text-white border-b border-white/5 active:bg-white/5 rounded-lg transition-colors"
-                  >
-                    Timeline
-                  </a>
-                  <a 
-                    href="#outreach" 
-                    onClick={(e) => { setIsMobileMenuOpen(false); handleFastScroll(e, '#outreach'); }} 
-                    className="py-3 text-white/70 hover:text-white border-b border-white/5 active:bg-white/5 rounded-lg transition-colors"
-                  >
-                    Impact
-                  </a>
-                  <a 
-                    href="#sponsorship" 
-                    onClick={(e) => { setIsMobileMenuOpen(false); handleFastScroll(e, '#sponsorship'); }} 
-                    className="py-3 text-white/70 hover:text-white active:bg-white/5 rounded-lg transition-colors"
-                  >
-                    Support
-                  </a>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
 
           {/* Navigation overlay moved to the bottom of main */}
           
-          {/* Mobile Overhauled Hero Content (Sumac-Inspired) */}
-          <div className="absolute inset-x-0 top-0 pt-28 pb-12 px-6 flex flex-col items-center justify-start z-30 pointer-events-auto md:hidden overflow-y-auto h-full hide-scrollbar">
-            
-            {/* Tag pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-stellar-orange animate-pulse" />
-              <span className="text-[9px] font-mono uppercase tracking-widest text-white/70">FRC Team 6621</span>
-            </div>
-
-            {/* Headline Stack */}
-            <h1 className="text-[2.6rem] font-extrabold text-white leading-[1.2] tracking-tight uppercase text-center mb-4 shrink-0" style={{ fontFamily: 'var(--font-heading)' }}>
-              We build <br />
-              <span className="italic font-light text-transparent bg-clip-text bg-gradient-to-r from-stellar-orange via-amber-500 to-orange-600 font-sans tracking-normal lowercase" style={{ fontSize: '3rem', fontFamily: 'var(--font-body)' }}>championship</span> <br />
-              robots
-            </h1>
-
-            {/* Short Tagline */}
-            <p className="text-xs text-white/50 font-sans leading-relaxed font-light text-center max-w-xs mb-6 shrink-0">
-              Chatham High School&apos;s award-winning engineering hub, competing on the global stage.
-            </p>
-
-            {/* Action Buttons (Stacked Vertically) */}
-            <div className="flex flex-col gap-3 w-full max-w-[260px] mb-8 shrink-0">
-              <a 
-                href="#sponsorship" 
-                onClick={(e) => handleFastScroll(e, '#sponsorship')} 
-                className="w-full py-3.5 rounded-full text-[10px] font-black uppercase tracking-widest text-[#05070B] bg-white shadow-xl hover:scale-105 active:scale-95 transition-all text-center"
-              >
-                Support Our Season
-              </a>
-              <a 
-                href="#about" 
-                onClick={(e) => handleFastScroll(e, '#about')} 
-                className="w-full py-3.5 rounded-full text-[10px] font-black uppercase tracking-widest text-white border border-stellar-orange/50 hover:bg-stellar-orange/10 active:scale-95 transition-all text-center"
-              >
-                Explore More
-              </a>
-            </div>
-
-            {/* Browser Mockup Card of the Robot */}
-            <div className="w-full max-w-[320px] rounded-2xl border border-white/10 bg-[#0A0D14]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden shrink-0 mb-6">
-              {/* Header Bar */}
-              <div className="flex items-center gap-1.5 px-4 py-2.5 bg-white/[0.03] border-b border-white/5">
-                <div className="w-2 h-2 rounded-full bg-[#ff5f56]" />
-                <div className="w-2 h-2 rounded-full bg-[#ffbd2e]" />
-                <div className="w-2 h-2 rounded-full bg-[#27c93f]" />
-                {/* URL bar */}
-                <div className="flex-grow mx-4 py-0.5 rounded bg-black/40 text-[8px] font-mono text-white/30 text-center tracking-wide">
-                  artemisfrc.com/system-active
-                </div>
+          {/* Mobile Cinematic Hero Content */}
+          <div className="absolute inset-0 flex flex-col justify-end z-30 pointer-events-auto px-6 pb-20 md:hidden">
+            <div className="flex flex-col items-start gap-4 w-full">
+              {/* Tag pill */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-stellar-orange animate-pulse" />
+                <span className="text-[10px] font-mono uppercase tracking-widest text-white/70">FRC Team 6621</span>
               </div>
-              {/* Robot Frame Preview */}
-              <div className="relative w-full h-[160px] overflow-hidden bg-black">
-                <img src="/hero_starting_frame.webp" alt="Artemis Robot CAD" className="w-full h-full object-cover object-bottom scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent pointer-events-none" />
+
+              {/* Title stack */}
+              <div className="flex flex-col">
+                <h1 className="text-4xl font-extrabold text-white tracking-tight uppercase leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+                  Artemis
+                </h1>
+                <h2 className="text-4xl font-extrabold tracking-tight uppercase leading-none bg-gradient-to-r from-stellar-orange via-orange-500 to-orange-600 bg-clip-text text-transparent mt-1" style={{ fontFamily: 'var(--font-display)' }}>
+                  Robotics
+                </h2>
+              </div>
+
+              {/* Tagline */}
+              <p className="text-sm text-white/60 font-sans leading-relaxed font-light max-w-sm mt-1">
+                Chatham High School&apos;s sole technology and engineering hub, competing on the global stage.
+              </p>
+
+              {/* Native buttons grid */}
+              <div className="flex w-full gap-3 mt-4">
+                <a 
+                  href="#sponsorship" 
+                  onClick={(e) => handleFastScroll(e, '#sponsorship')} 
+                  className="flex-grow flex items-center justify-center py-4 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-artemis-blue to-blue-600 shadow-[0_4px_20px_rgba(37,99,235,0.3)] active:scale-[0.98] transition-transform duration-200"
+                >
+                  Support Team
+                </a>
+                <a 
+                  href="#about" 
+                  onClick={(e) => handleFastScroll(e, '#about')} 
+                  className="px-6 flex items-center justify-center rounded-xl text-xs font-bold uppercase tracking-wider text-white border border-white/20 bg-white/5 backdrop-blur-md active:scale-[0.98] transition-transform duration-200"
+                >
+                  About
+                </a>
               </div>
             </div>
-
           </div>
 
           {/* Desktop Scroll Down Indicator */}
@@ -959,7 +862,7 @@ export default function Home() {
         
 
         {/* Sticky/Static container that holds the horizontal sliding content or vertical content */}
-        <div className="relative w-full pb-4 pt-24 lg:pt-0 lg:pb-0 flex items-center lg:sticky lg:top-0 lg:h-screen lg:w-full lg:overflow-hidden lg:py-0 blueprint-grid">
+        <div className="relative w-full pb-4 pt-24 lg:pt-0 lg:pb-0 flex items-center lg:sticky lg:top-0 lg:h-screen lg:w-full lg:overflow-hidden lg:py-0">
           
           <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className={isMobile ? "w-full block relative z-10" : "flex w-[320vw] h-full relative z-10"}>
             
@@ -989,8 +892,8 @@ export default function Home() {
                   <div className="absolute top-0 left-0 w-[200%] h-[200%] bg-gradient-to-br from-white/[0.06] via-transparent to-transparent -translate-x-1/3 -translate-y-1/3 pointer-events-none" />
                   
                   <div className="relative z-10">
-                    <h2 className="text-3xl font-black text-white uppercase tracking-wider">
-                      About
+                    <h2 className="h1 font-black text-white hover-glitch-text transition-all duration-300">
+                      About Us
                     </h2>
                     <p className="body text-white/60 leading-relaxed font-light mt-4">
                       Founded in 2016, Artemis Robotics is Chatham High School&apos;s sole technology and STEAM hub. We offer a welcoming space for all students to explore engineering, design, and business.
@@ -1002,9 +905,17 @@ export default function Home() {
                     <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.1) 70%, transparent)' }} />
                     
                     <div className="p-6 md:p-8 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl border border-white/10 hover:border-white/20 hover:bg-white/[0.04]" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(249,115,22,0.05) 100%)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
-                      <p className="subhead text-white/80 italic leading-relaxed font-medium text-center">
-                        &quot;To cultivate a welcoming environment centered on STEAM learning and gracious professionalism regardless of background.&quot;
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <h3 className="h2 font-bold mb-3 text-white tracking-wide hover-glitch-text">Our Mission</h3>
+                      <p className="subhead text-white/70 italic leading-relaxed font-light">
+                        &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
                       </p>
+                    </div>
+                    
+                    {/* About FRC Chip & Text */}
+                    <div className="flex flex-col items-start gap-4 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] hover:border-white/20 transition-colors duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.4)]" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
+                      <p className="text-xs text-white/50 font-light leading-snug">We compete in FRC, the premier global high school robotics league.</p>
+                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
                     </div>
                   </div>
                 </div>
@@ -1051,9 +962,6 @@ export default function Home() {
               
               {isMobile ? (
                 <div className="flex flex-col gap-12 relative pl-8 border-l border-white/10 max-w-xl mx-auto">
-                  <h2 className="text-3xl font-black text-white uppercase tracking-wider mb-2 -ml-8">
-                    Timeline
-                  </h2>
                   {/* Glowing vertical connector line */}
                   <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-artemis-blue via-stellar-orange to-artemis-blue shadow-[0_0_8px_rgba(37,99,235,0.5)]" />
                   
@@ -1114,12 +1022,6 @@ export default function Home() {
                 </div>
               ) : (
                 <>
-                  {/* Timeline section header */}
-                  <div className="absolute top-[8%] left-[5vw] z-30">
-                    <h2 className="text-4xl md:text-5xl font-black text-white/80 uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
-                      Timeline
-                    </h2>
-                  </div>
                   {/* 2024 SECTION (0vw to 70vw) */}
                   <span className="absolute top-[6%] left-[1vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>24</span>
                   <div className="absolute top-[35%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
@@ -1175,7 +1077,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            5. OUTREACH PARALLAX (FLY OUT EFFECT)
            ══════════════════════════════════════════════════════ */}
-      <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B] blueprint-grid" style={{ height: isMobile ? 'auto' : '350vh' }}>
+      <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B]" style={{ height: isMobile ? 'auto' : '350vh' }}>
         <div className={isMobile ? "relative w-full flex flex-col items-center pt-8 pb-16 px-6" : "sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12"}>
           
           {/* Background Elements */}
@@ -1199,9 +1101,10 @@ export default function Home() {
             </>
           )}
           
-          <div className="max-w-7xl mx-auto px-6 w-full text-center mb-16 relative z-10 shrink-0">
-            <h2 className="text-4xl md:text-5xl font-black text-white/80 uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+          <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
+            <h2 className="display font-black text-white/60 tracking-wide hover-glitch-text relative inline-block">
               Impact
+              <div className="absolute inset-0 blur-[60px] bg-gradient-to-r from-artemis-blue/20 via-purple-500/10 to-stellar-orange/15 pointer-events-none -z-10 scale-150" />
             </h2>
             {/* Mobile Scroll Indicator & Controls */}
             <div className="md:hidden mt-4 flex items-center justify-center gap-4">
@@ -1272,13 +1175,13 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" className="relative z-10 bg-[#05070B] pt-2 pb-0 md:py-32 blueprint-grid">
+      <section id="budget" className="relative z-10 bg-[#05070B] pt-2 pb-0 md:py-32">
         {/* Scattered 3D Shapes */}
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
         <div className="max-w-4xl mx-auto px-6 w-full flex flex-col items-center relative z-10 text-center">
           
-          <h2 className="text-4xl md:text-5xl font-black text-white/80 uppercase tracking-widest mb-6" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2 className="display font-black mb-4">
             Budget
           </h2>
 
@@ -1493,8 +1396,9 @@ export default function Home() {
           
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white/80 uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
-              Support
+            <span className="label text-[10px] uppercase tracking-[0.25em] text-white/40 mb-3 block font-mono">Partnership Opportunities</span>
+            <h2 className="display font-black text-white hover-glitch-text mb-4 text-4xl md:text-5xl tracking-tight">
+              Support Us
             </h2>
             
             {/* Mobile Scroll Indicator & Controls */}
