@@ -1198,14 +1198,15 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            5. OUTREACH PARALLAX (FLY OUT EFFECT)
            ══════════════════════════════════════════════════════ */}
-      <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B]" style={{ height: isMobile ? 'auto' : '350vh' }}>
+      <section id="outreach" ref={outreachScrollRef} className="relative z-10" style={{ height: isMobile ? 'auto' : '350vh' }}>
         <div className={isMobile ? "relative w-full flex flex-col items-center pt-8 pb-16 px-6" : "sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12"}>
           
-          {/* Background Elements */}
-          <div className="absolute inset-0 z-0 opacity-20 starfield" />
+          {/* Background Elements — continuous from timeline */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden topography-bg opacity-40" aria-hidden="true">
+            <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 200px, #ffffff, rgba(0,0,0,0)), radial-gradient(1px 1px at 300px 50px, #ffffff, rgba(0,0,0,0))', backgroundSize: '350px 350px' }} />
+          </div>
           
-          {/* Top and Bottom fades for seamless blending */}
-          <div className="absolute top-0 left-0 w-full h-[20vh] bg-gradient-to-b from-[#05070B] via-[#05070B]/80 to-transparent pointer-events-none z-[1]" />
+          {/* Bottom fade only for seamless blending into next section */}
           <div className="absolute bottom-0 left-0 w-full h-[25vh] bg-gradient-to-t from-[#05070B] via-[#05070B]/80 to-transparent pointer-events-none z-[1]" />
           
           {/* Subtle organic gradient blobs */}
