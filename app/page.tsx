@@ -92,7 +92,7 @@ const OUTREACH_CARDS = [
     title: "NY State STEAM Day",
     desc: "Advocated for STEAM grants at New York State STEAM Day with Assembly Member Didi Barrett, using robot demonstrations to champion STEAM education.",
     image: "/photos/outreach/steam_day_assembly.webp",
-    objectPosition: "center 15%",
+    objectPosition: "center 30%",
   },
   {
     tag: "Mentorship",
@@ -195,7 +195,7 @@ const OutreachParallaxCard = ({
   return (
     <motion.div 
       style={{ scale, opacity, y, transformOrigin: 'center center' }} 
-      className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[450px] flex flex-col rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group hover:border-white/20 hover:shadow-[0_25px_60px_rgba(0,0,0,0.6),0_0_30px_rgba(37,99,235,0.06)] transition-all duration-500 bg-[#0A0D14]"
+      className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[450px] flex flex-col rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/20 group hover:border-white/30 hover:shadow-[0_25px_60px_rgba(0,0,0,0.6),0_0_30px_rgba(37,99,235,0.06)] transition-all duration-500 bg-black/40 backdrop-blur-xl"
     >
       {/* Top Image Portion */}
       <div className="relative w-full h-[220px] overflow-hidden shrink-0">
@@ -207,13 +207,13 @@ const OutreachParallaxCard = ({
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
           style={{ objectPosition: card.objectPosition || 'center' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D14] to-transparent opacity-60 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80 pointer-events-none" />
       </div>
       
       {/* Bottom Text Portion */}
-      <div className="relative z-10 p-6 md:p-8 flex flex-col justify-between flex-grow bg-white/[0.01]">
+      <div className="relative z-10 p-6 md:p-8 flex flex-col justify-between flex-grow">
         <div>
-          <span className="inline-block px-4 py-1.5 rounded-full bg-stellar-orange/20 text-stellar-orange text-xs md:text-sm font-bold tracking-widest uppercase mb-4 border border-stellar-orange/30 shadow-[0_0_15px_rgba(251,146,60,0.3)]">{card.tag}</span>
+          <span className="inline-block text-[10px] uppercase tracking-[0.2em] text-white/40 font-mono mb-2">{card.tag}</span>
           <h3 className="h3 font-bold mb-3 text-white">{card.title}</h3>
           <p className="text-xs text-white/70 leading-relaxed font-light">{card.desc}</p>
         </div>
@@ -1249,18 +1249,18 @@ export default function Home() {
               {OUTREACH_CARDS.map((card, idx) => (
                 <div 
                   key={idx}
-                  className="relative w-[85vw] max-w-[320px] shrink-0 h-[420px] flex flex-col rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group snap-center bg-[#0A0D14]"
+                  className="relative w-[85vw] max-w-[320px] shrink-0 h-[420px] flex flex-col rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/20 group snap-center bg-black/40 backdrop-blur-xl"
                 >
                   {/* Top Image Portion */}
                   <div className="relative w-full h-[200px] overflow-hidden shrink-0">
-                    <img loading="lazy" decoding="async" src={card.image} alt={card.title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D14] to-transparent opacity-60 pointer-events-none" />
+                    <img loading="lazy" decoding="async" src={card.image} alt={card.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" style={{ objectPosition: card.objectPosition || 'center' }} />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80 pointer-events-none" />
                   </div>
                   
                   {/* Bottom Text Portion */}
-                  <div className="relative z-10 p-5 flex flex-col justify-between flex-grow bg-white/[0.01]">
+                  <div className="relative z-10 p-5 flex flex-col justify-between flex-grow">
                     <div>
-                      <span className="inline-block px-3 py-1 rounded-full bg-stellar-orange/20 text-stellar-orange text-[10px] font-bold tracking-widest uppercase mb-3 border border-stellar-orange/30 shadow-[0_0_10px_rgba(251,146,60,0.2)]">{card.tag}</span>
+                      <span className="inline-block text-[10px] uppercase tracking-[0.2em] text-white/40 font-mono mb-2">{card.tag}</span>
                       <h3 className="text-base font-bold mb-2 text-white">{card.title}</h3>
                       <p className="text-xs text-white/60 leading-relaxed font-light line-clamp-4">{card.desc}</p>
                     </div>
