@@ -685,11 +685,11 @@ export default function Home() {
               <motion.img 
                 src="/hero_starting_frame.webp"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.40 }}
+                animate={{ opacity: 0.45 }}
                 transition={{ duration: 1.5 }}
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] max-w-none h-auto object-cover object-bottom" 
+                className="absolute inset-0 w-full h-full object-cover object-center" 
               />
-              <div className="absolute bottom-0 left-0 w-full h-[25vh] bg-gradient-to-t from-[#05070B] to-transparent z-10 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#05070B]/85 via-[#05070B]/40 to-[#05070B] z-10 pointer-events-none" />
               </>
             ) : (
               <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.40]" />
@@ -714,7 +714,7 @@ export default function Home() {
           <motion.header 
             className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto transition-all duration-500 ${!isAtTop ? 'glass-header-scrolled' : ''}`}
           >
-          <div className={`flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-all duration-500 ${(isAtTop && isMobile) ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}`} onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+          <div className="flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-all duration-500 opacity-100 pointer-events-auto" onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             <img src="/branding/logo_transparent.webp" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[56px] h-[56px]"} object-contain transition-transform duration-300 hover:scale-105`} />
             <div className="flex flex-col justify-center max-w-[75vw]">
               <span className={`display ${isMobile ? "text-[14px] tracking-wide" : "text-[28px] tracking-widest"} font-black text-white/60 leading-none uppercase`}>
@@ -734,49 +734,47 @@ export default function Home() {
 
           {/* Navigation overlay moved to the bottom of main */}
           
-          {/* Mobile Centered Hero Content */}
-          <div className="absolute inset-0 flex flex-col items-center justify-start z-30 pointer-events-auto px-6 pt-[12vh] md:hidden">
-            
-            {/* Premium Glass Dashboard Box */}
-            <div className="flex flex-col items-center p-8 rounded-[2.5rem] border border-white/10 bg-black/45 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.05)] w-full max-w-[340px]">
-              
-              {/* Logo with pulsing glow */}
-              <div className="relative mb-4">
-                <div className="absolute inset-0 w-24 h-24 bg-stellar-orange/20 rounded-full blur-xl animate-pulse" />
-                <img src="/branding/logo_transparent.webp" alt="Artemis Logo Large" className="relative z-10 w-20 h-20 object-contain drop-shadow-[0_0_20px_rgba(249,115,22,0.3)]" />
+          {/* Mobile Cinematic Hero Content */}
+          <div className="absolute inset-0 flex flex-col justify-end z-30 pointer-events-auto px-6 pb-20 md:hidden">
+            <div className="flex flex-col items-start gap-4 w-full">
+              {/* Tag pill */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-stellar-orange animate-pulse" />
+                <span className="text-[10px] font-mono uppercase tracking-widest text-white/70">FRC Team 6621</span>
               </div>
 
-              {/* Subheading */}
-              <span className="text-[10px] uppercase tracking-[0.4em] text-white/40 font-mono font-semibold">Team 6621</span>
-              
-              {/* Main Title */}
-              <h2 className="text-xl font-black text-white mt-1 uppercase tracking-widest text-center" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
-                Chatham Robotics
-              </h2>
+              {/* Title stack */}
+              <div className="flex flex-col">
+                <h1 className="text-4xl font-extrabold text-white tracking-tight uppercase leading-none" style={{ fontFamily: 'var(--font-display)' }}>
+                  Artemis
+                </h1>
+                <h2 className="text-4xl font-extrabold tracking-tight uppercase leading-none bg-gradient-to-r from-stellar-orange via-orange-500 to-orange-600 bg-clip-text text-transparent mt-1" style={{ fontFamily: 'var(--font-display)' }}>
+                  Robotics
+                </h2>
+              </div>
 
-              <div className="h-px w-3/4 bg-gradient-to-r from-transparent via-white/10 to-transparent my-6" />
+              {/* Tagline */}
+              <p className="text-sm text-white/60 font-sans leading-relaxed font-light max-w-sm mt-1">
+                Chatham High School&apos;s sole technology and engineering hub, competing on the global stage.
+              </p>
 
-              {/* Mobile Support Now Button */}
-              <div className="relative inline-block w-full cta-glow-wrap" style={{ perspective: '800px' }}>
+              {/* Native buttons grid */}
+              <div className="flex w-full gap-3 mt-4">
                 <a 
                   href="#sponsorship" 
                   onClick={(e) => handleFastScroll(e, '#sponsorship')} 
-                  className="group relative flex justify-center items-center w-full py-4 rounded-xl label font-bold text-white shadow-[0_0_15px_rgba(37,99,235,0.2)] hover:shadow-[0_0_25px_rgba(249,115,22,0.3)] active:scale-[0.98] transition-all duration-300 bg-white/5 border border-white/10 overflow-hidden"
+                  className="flex-grow flex items-center justify-center py-4 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-artemis-blue to-blue-600 shadow-[0_4px_20px_rgba(37,99,235,0.3)] active:scale-[0.98] transition-transform duration-200"
                 >
-                  {/* Dynamic Gradient Static Layer */}
-                  <div className="absolute inset-0 z-0 opacity-100 group-hover:opacity-0 transition-opacity duration-500 overflow-hidden pointer-events-none">
-                    <div className="absolute inset-0 bg-gradient-to-r from-artemis-blue/20 to-blue-500/20" />
-                  </div>
-                  
-                  {/* Hover dynamic gradient */}
-                  <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none">
-                    <div className="absolute inset-0 bg-gradient-to-r from-stellar-orange/30 to-orange-500/30" />
-                  </div>
-
-                  <span className="relative z-10 text-xs uppercase tracking-widest">Support Now</span>
+                  Support Team
+                </a>
+                <a 
+                  href="#about" 
+                  onClick={(e) => handleFastScroll(e, '#about')} 
+                  className="px-6 flex items-center justify-center rounded-xl text-xs font-bold uppercase tracking-wider text-white border border-white/20 bg-white/5 backdrop-blur-md active:scale-[0.98] transition-transform duration-200"
+                >
+                  About
                 </a>
               </div>
-
             </div>
           </div>
 
