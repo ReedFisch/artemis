@@ -249,6 +249,7 @@ export default function Home() {
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isBudgetFlipped, setIsBudgetFlipped] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const impactScrollRef = useRef<HTMLDivElement>(null);
@@ -703,12 +704,12 @@ export default function Home() {
 
           {/* 3. Overlays (Header and Sponsor) */}
           <motion.header 
-            className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-6" : "px-12 py-8"} pointer-events-auto transition-all duration-500 ${!isAtTop ? 'glass-header-scrolled' : ''}`}
+            className={`fixed top-0 left-0 w-full z-[110] flex justify-between items-center ${isMobile ? "px-6 py-4" : "px-12 py-8"} pointer-events-auto transition-all duration-500 ${(!isAtTop || isMobileMenuOpen) ? 'glass-header-scrolled' : ''}`}
           >
           <div className="flex items-center gap-3 md:gap-6 cursor-pointer hover-glitch-text transition-all duration-500 opacity-100 pointer-events-auto" onClick={(e) => { e.preventDefault(); containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             <img src="/branding/logo_transparent.webp" alt="Artemis Logo" className={`${isMobile ? "w-10 h-10" : "w-[56px] h-[56px]"} object-contain transition-transform duration-300 hover:scale-105`} />
-            <div className="flex flex-col justify-center max-w-[75vw]">
-              <span className={`display ${isMobile ? "text-[14px] tracking-wide" : "text-[28px] tracking-widest"} font-black text-white/60 leading-none uppercase`}>
+            <div className="hidden md:flex flex-col justify-center max-w-[75vw]">
+              <span className="display text-[28px] tracking-widest font-black text-white/60 leading-none uppercase">
                 Chatham Robotics
               </span>
             </div>
@@ -721,7 +722,75 @@ export default function Home() {
             <a href="#outreach" onClick={(e) => handleFastScroll(e, '#outreach')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Impact</a>
             <a href="#sponsorship" onClick={(e) => handleFastScroll(e, '#sponsorship')} className="nav-link-premium hover:text-white transition-all hover:-translate-y-1 active:scale-90 hover-glitch-text">Support</a>
           </nav>
+
+          {/* Mobile Hamburger Menu Button */}
+          <div className="md:hidden pointer-events-auto z-[110]">
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-white active:scale-95 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
+              aria-label="Toggle menu"
+            >
+              <div className="relative w-5 h-4 flex flex-col justify-between">
+                <motion.span 
+                  animate={{ rotate: isMobileMenuOpen ? 45 : 0, y: isMobileMenuOpen ? 7 : 0 }}
+                  className="w-full h-[2px] bg-white rounded-full origin-left transition-all duration-300"
+                />
+                <motion.span 
+                  animate={{ opacity: isMobileMenuOpen ? 0 : 1 }}
+                  className="w-full h-[2px] bg-white rounded-full transition-all duration-300"
+                />
+                <motion.span 
+                  animate={{ rotate: isMobileMenuOpen ? -45 : 0, y: isMobileMenuOpen ? -7 : 0 }}
+                  className="w-full h-[2px] bg-white rounded-full origin-left transition-all duration-300"
+                />
+              </div>
+            </button>
+          </div>
           </motion.header>
+
+          {/* Mobile Full-Screen Navigation Menu Overlay */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="fixed inset-x-0 top-0 pt-24 pb-8 px-6 bg-[#05070B]/95 backdrop-blur-2xl border-b border-white/10 z-[105] flex flex-col gap-6"
+              >
+                <div className="flex flex-col gap-4 font-mono text-lg uppercase tracking-widest font-bold text-center">
+                  <a 
+                    href="#about" 
+                    onClick={(e) => { setIsMobileMenuOpen(false); handleFastScroll(e, '#about'); }} 
+                    className="py-3 text-white/70 hover:text-white border-b border-white/5 active:bg-white/5 rounded-lg transition-colors"
+                  >
+                    About
+                  </a>
+                  <a 
+                    href="#timeline" 
+                    onClick={(e) => { setIsMobileMenuOpen(false); handleFastScroll(e, '#timeline'); }} 
+                    className="py-3 text-white/70 hover:text-white border-b border-white/5 active:bg-white/5 rounded-lg transition-colors"
+                  >
+                    Timeline
+                  </a>
+                  <a 
+                    href="#outreach" 
+                    onClick={(e) => { setIsMobileMenuOpen(false); handleFastScroll(e, '#outreach'); }} 
+                    className="py-3 text-white/70 hover:text-white border-b border-white/5 active:bg-white/5 rounded-lg transition-colors"
+                  >
+                    Impact
+                  </a>
+                  <a 
+                    href="#sponsorship" 
+                    onClick={(e) => { setIsMobileMenuOpen(false); handleFastScroll(e, '#sponsorship'); }} 
+                    className="py-3 text-white/70 hover:text-white active:bg-white/5 rounded-lg transition-colors"
+                  >
+                    Support
+                  </a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Navigation overlay moved to the bottom of main */}
           
