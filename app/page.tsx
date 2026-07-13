@@ -686,12 +686,12 @@ export default function Home() {
               <motion.img 
                 src="/hero_starting_frame.webp"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.35 }}
+                animate={{ opacity: 0.30 }}
                 transition={{ duration: 1.5 }}
                 className="absolute inset-0 w-full h-full object-cover object-bottom" 
-                style={{ filter: 'blur(1.5px)', transform: 'scale(1.15)' }}
+                style={{ filter: 'blur(3px)', transform: 'scale(1.2)' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#05070B]/80 via-transparent to-[#05070B] z-10 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#05070B]/90 via-[#05070B]/30 to-[#05070B]/95 z-10 pointer-events-none" />
               </>
             ) : (
               <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.40]" />
@@ -700,12 +700,24 @@ export default function Home() {
 
           {/* Centered Typographic Layer (In front of robot, centered) */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-            <motion.h1 
-              style={{ opacity: letterOpacity }}
-              className="display text-[clamp(4.5rem,18vw,13rem)] font-black uppercase tracking-tight text-white select-none flex leading-none"
-            >
-              ARTEMIS
-            </motion.h1>
+            <div className="flex flex-col items-center">
+              <motion.h1 
+                style={{ opacity: letterOpacity }}
+                className="display text-[clamp(4.5rem,18vw,13rem)] font-black uppercase tracking-tight text-white select-none flex leading-none"
+              >
+                ARTEMIS
+              </motion.h1>
+              {isMobile && (
+                <motion.p
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 0.45 }}
+                  transition={{ duration: 1.5, delay: 0.5 }}
+                  className="text-[11px] uppercase tracking-[0.35em] text-white font-mono mt-3"
+                >
+                  Chatham Robotics
+                </motion.p>
+              )}
+            </div>
           </div>
 
           {/* 2. Liquid Hero Mask Layer (Fades out immediately when scrolling starts) */}
