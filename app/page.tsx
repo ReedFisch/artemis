@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useMotionValueEvent, AnimatePresence, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionValueEvent, AnimatePresence, MotionValue } from "framer-motion";
 import Counter from "./components/Counter";
 
 // ─── NAV LINKS ──────────────────────────────────────────────────
@@ -453,9 +453,13 @@ export default function Home() {
   }, [isLoading]);
 
   const rafRef = useRef<number | null>(null);
+
+  // Apply a spring to smooth out scroll input and make frame transitions buttery smooth
+  const smoothHeroScroll = useSpring(heroScrollYProgress, { stiffness: 100, damping: 28, mass: 0.25 });
   
-  useMotionValueEvent(heroScrollYProgress, "change", (latest) => {
-    const frameIndex = Math.min(289, Math.floor(latest * 290));
+  useMotionValueEvent(smoothHeroScroll, "change", (latest) => {
+    const clamped = Math.max(0, Math.min(1, latest));
+    const frameIndex = Math.min(289, Math.floor(clamped * 290));
     if (canvasRef.current && imagesRef.current[frameIndex]) {
       const ctx = canvasRef.current.getContext('2d');
       const img = imagesRef.current[frameIndex];
@@ -696,7 +700,7 @@ export default function Home() {
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
             <motion.h1 
               style={{ opacity: letterOpacity }}
-              className="display text-[clamp(2.5rem,12vw,13rem)] font-black uppercase tracking-wider select-none flex leading-none bg-gradient-to-b from-white via-white/50 to-white/10 bg-clip-text text-transparent"
+              className="display text-[clamp(2.5rem,12vw,13rem)] font-black uppercase tracking-wider text-white select-none flex leading-none"
             >
               ARTEMIS
             </motion.h1>
