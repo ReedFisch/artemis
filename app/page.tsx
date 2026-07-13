@@ -703,16 +703,11 @@ export default function Home() {
           {/* 1. Canvas Zip Animation Layer (Bottom) */}
           <div className="absolute inset-0 z-0 bg-black">
             {isMobile ? (
-              <>
-              <motion.img 
-                src="/hero_starting_frame.webp"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.45 }}
-                transition={{ duration: 1.5 }}
-                className="absolute inset-0 w-full h-full object-cover object-center" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#05070B]/85 via-[#05070B]/40 to-[#05070B] z-10 pointer-events-none" />
-              </>
+              <div className="absolute inset-0 bg-[#05070B] pointer-events-none z-0">
+                {/* Starfield */}
+                <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 80px 140px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 150px 70px, #ffffff, rgba(0,0,0,0))', backgroundSize: '300px 300px' }} />
+                <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-[#05070B] to-transparent" />
+              </div>
             ) : (
               <canvas ref={canvasRef} width={1920} height={1080} className="w-full h-full object-cover opacity-[0.40]" />
             )}
@@ -828,48 +823,64 @@ export default function Home() {
 
           {/* Navigation overlay moved to the bottom of main */}
           
-          {/* Mobile Cinematic Hero Content */}
-          <div className="absolute inset-0 flex flex-col justify-end z-30 pointer-events-auto px-6 pb-20 md:hidden">
-            <div className="flex flex-col items-start gap-4 w-full">
-              {/* Tag pill */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-stellar-orange animate-pulse" />
-                <span className="text-[10px] font-mono uppercase tracking-widest text-white/70">FRC Team 6621</span>
+          {/* Mobile Overhauled Hero Content (Sumac-Inspired) */}
+          <div className="absolute inset-x-0 top-0 pt-28 pb-12 px-6 flex flex-col items-center justify-start z-30 pointer-events-auto md:hidden overflow-y-auto h-full hide-scrollbar">
+            
+            {/* Tag pill */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-stellar-orange animate-pulse" />
+              <span className="text-[9px] font-mono uppercase tracking-widest text-white/70">FRC Team 6621</span>
+            </div>
+
+            {/* Headline Stack */}
+            <h1 className="text-[2.6rem] font-extrabold text-white leading-[1.2] tracking-tight uppercase text-center mb-4 shrink-0" style={{ fontFamily: 'var(--font-heading)' }}>
+              We build <br />
+              <span className="italic font-light text-transparent bg-clip-text bg-gradient-to-r from-stellar-orange via-amber-500 to-orange-600 font-sans tracking-normal lowercase" style={{ fontSize: '3rem', fontFamily: 'var(--font-body)' }}>championship</span> <br />
+              robots
+            </h1>
+
+            {/* Short Tagline */}
+            <p className="text-xs text-white/50 font-sans leading-relaxed font-light text-center max-w-xs mb-6 shrink-0">
+              Chatham High School&apos;s award-winning engineering hub, competing on the global stage.
+            </p>
+
+            {/* Action Buttons (Stacked Vertically) */}
+            <div className="flex flex-col gap-3 w-full max-w-[260px] mb-8 shrink-0">
+              <a 
+                href="#sponsorship" 
+                onClick={(e) => handleFastScroll(e, '#sponsorship')} 
+                className="w-full py-3.5 rounded-full text-[10px] font-black uppercase tracking-widest text-[#05070B] bg-white shadow-xl hover:scale-105 active:scale-95 transition-all text-center"
+              >
+                Support Our Season
+              </a>
+              <a 
+                href="#about" 
+                onClick={(e) => handleFastScroll(e, '#about')} 
+                className="w-full py-3.5 rounded-full text-[10px] font-black uppercase tracking-widest text-white border border-stellar-orange/50 hover:bg-stellar-orange/10 active:scale-95 transition-all text-center"
+              >
+                Explore More
+              </a>
+            </div>
+
+            {/* Browser Mockup Card of the Robot */}
+            <div className="w-full max-w-[320px] rounded-2xl border border-white/10 bg-[#0A0D14]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden shrink-0 mb-6">
+              {/* Header Bar */}
+              <div className="flex items-center gap-1.5 px-4 py-2.5 bg-white/[0.03] border-b border-white/5">
+                <div className="w-2 h-2 rounded-full bg-[#ff5f56]" />
+                <div className="w-2 h-2 rounded-full bg-[#ffbd2e]" />
+                <div className="w-2 h-2 rounded-full bg-[#27c93f]" />
+                {/* URL bar */}
+                <div className="flex-grow mx-4 py-0.5 rounded bg-black/40 text-[8px] font-mono text-white/30 text-center tracking-wide">
+                  artemisfrc.com/system-active
+                </div>
               </div>
-
-              {/* Title stack */}
-              <div className="flex flex-col">
-                <h1 className="text-4xl font-extrabold text-white tracking-tight uppercase leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-                  Artemis
-                </h1>
-                <h2 className="text-4xl font-extrabold tracking-tight uppercase leading-none bg-gradient-to-r from-stellar-orange via-orange-500 to-orange-600 bg-clip-text text-transparent mt-1" style={{ fontFamily: 'var(--font-display)' }}>
-                  Robotics
-                </h2>
-              </div>
-
-              {/* Tagline */}
-              <p className="text-sm text-white/60 font-sans leading-relaxed font-light max-w-sm mt-1">
-                Chatham High School&apos;s sole technology and engineering hub, competing on the global stage.
-              </p>
-
-              {/* Native buttons grid */}
-              <div className="flex w-full gap-3 mt-4">
-                <a 
-                  href="#sponsorship" 
-                  onClick={(e) => handleFastScroll(e, '#sponsorship')} 
-                  className="flex-grow flex items-center justify-center py-4 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-artemis-blue to-blue-600 shadow-[0_4px_20px_rgba(37,99,235,0.3)] active:scale-[0.98] transition-transform duration-200"
-                >
-                  Support Team
-                </a>
-                <a 
-                  href="#about" 
-                  onClick={(e) => handleFastScroll(e, '#about')} 
-                  className="px-6 flex items-center justify-center rounded-xl text-xs font-bold uppercase tracking-wider text-white border border-white/20 bg-white/5 backdrop-blur-md active:scale-[0.98] transition-transform duration-200"
-                >
-                  About
-                </a>
+              {/* Robot Frame Preview */}
+              <div className="relative w-full h-[160px] overflow-hidden bg-black">
+                <img src="/hero_starting_frame.webp" alt="Artemis Robot CAD" className="w-full h-full object-cover object-bottom scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent pointer-events-none" />
               </div>
             </div>
+
           </div>
 
           {/* Desktop Scroll Down Indicator */}
