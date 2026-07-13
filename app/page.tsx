@@ -1211,7 +1211,7 @@ export default function Home() {
           )}
           
           <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
-            <h2 className="display font-black text-white/60 tracking-wide hover-glitch-text relative inline-block">
+            <h2 className="display font-black text-white tracking-wide hover-glitch-text relative inline-block">
               Impact
               <div className="absolute inset-0 blur-[60px] bg-gradient-to-r from-artemis-blue/20 via-purple-500/10 to-stellar-orange/15 pointer-events-none -z-10 scale-150" />
             </h2>
@@ -1290,7 +1290,7 @@ export default function Home() {
         
         <div className="max-w-4xl mx-auto px-6 w-full flex flex-col items-center relative z-10 text-center">
           
-          <h2 className="display font-black mb-4">
+          <h2 className="display font-black text-white mb-4">
             Budget
           </h2>
 
