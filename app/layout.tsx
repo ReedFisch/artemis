@@ -25,9 +25,37 @@ const shareTech = Share_Tech({
 });
 
 export const metadata: Metadata = {
-  title: "ARTEMIS 6621 | FRC Robotics Team — Chatham NY",
+  metadataBase: new URL("https://www.artemisfrc.com"),
+  title: "Artemis Robotics | FRC Team 6621",
   description:
-    "Chatham High School's FIRST Robotics Competition Team 6621. Building the future through competitive engineering, STEM education, and community outreach.",
+    "The official website of Artemis Robotics, FRC Team 6621 from Chatham, NY. Designing, programming, and building high-performance competition robots since 2016.",
+  icons: {
+    icon: "/branding/logo_transparent.webp",
+    shortcut: "/branding/logo_transparent.webp",
+    apple: "/branding/logo_transparent.webp",
+  },
+  openGraph: {
+    title: "Artemis Robotics | FRC Team 6621",
+    description: "The official website of Artemis Robotics, FRC Team 6621 from Chatham, NY. Designing, programming, and building high-performance competition robots.",
+    url: "https://www.artemisfrc.com",
+    siteName: "Artemis Robotics",
+    images: [
+      {
+        url: "/photos/hero/team_with_robot.webp",
+        width: 1200,
+        height: 630,
+        alt: "Artemis Robotics Team 6621",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Artemis Robotics | FRC Team 6621",
+    description: "The official website of Artemis Robotics, FRC Team 6621 from Chatham, NY.",
+    images: ["/photos/hero/team_with_robot.webp"],
+  },
 };
 
 export default function RootLayout({
