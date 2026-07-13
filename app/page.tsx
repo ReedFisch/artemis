@@ -103,13 +103,13 @@ const OUTREACH_CARDS = [
     tag: "Safety & Hardware Fixes",
     title: "Battery Clips & Safety Kits",
     desc: "At each competition we handed out 3D printed battery clips to prevent batteries from disconnecting, and distributed free community safety kits to every team, earning us Safety All-Star awards.",
-    image: "/photos/outreach/community_fair_booth.webp",
+    image: "/photos/outreach/battery_safety_kit.jpg",
   },
   {
     tag: "Community",
     title: "Wellness & Science Fairs",
     desc: "Gave demonstrations to our community and illustrated the importance of robotics at the Chatham Wellness Fair, Science Fair, and Learning Fair.",
-    image: "/photos/outreach/steam_day_assembly.webp",
+    image: "/photos/outreach/community_fair_booth.webp",
   },
   {
     tag: "Recognition",
