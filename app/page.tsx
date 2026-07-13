@@ -127,6 +127,22 @@ interface OutreachCardType {
   image: string;
 }
 
+const GearIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg className={`${className} animate-[spin_6s_linear_infinite] text-stellar-orange shrink-0`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+);
+
+const TechCorners = ({ color = "border-artemis-blue/30" }: { color?: string }) => (
+  <>
+    <div className={`absolute top-2 left-2 w-3.5 h-3.5 border-t-2 border-l-2 ${color} rounded-tl pointer-events-none z-10`} />
+    <div className={`absolute top-2 right-2 w-3.5 h-3.5 border-t-2 border-r-2 ${color} rounded-tr pointer-events-none z-10`} />
+    <div className={`absolute bottom-2 left-2 w-3.5 h-3.5 border-b-2 border-l-2 ${color} rounded-bl pointer-events-none z-10`} />
+    <div className={`absolute bottom-2 right-2 w-3.5 h-3.5 border-b-2 border-r-2 ${color} rounded-br pointer-events-none z-10`} />
+  </>
+);
+
 const OutreachParallaxCard = ({ 
   card, 
   index, 
@@ -195,6 +211,7 @@ const OutreachParallaxCard = ({
       style={{ scale, opacity, y, transformOrigin: 'center center' }} 
       className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[450px] flex flex-col rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group hover:border-white/20 hover:shadow-[0_25px_60px_rgba(0,0,0,0.6),0_0_30px_rgba(37,99,235,0.06)] transition-all duration-500 bg-[#0A0D14]"
     >
+      <TechCorners color="border-stellar-orange/20" />
       {/* Top Image Portion */}
       <div className="relative w-full h-[220px] overflow-hidden shrink-0">
         <img loading="lazy" decoding="async" src={card.image} alt={card.title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000" />
@@ -871,7 +888,7 @@ export default function Home() {
         
 
         {/* Sticky/Static container that holds the horizontal sliding content or vertical content */}
-        <div className="relative w-full pb-4 pt-24 lg:pt-0 lg:pb-0 flex items-center lg:sticky lg:top-0 lg:h-screen lg:w-full lg:overflow-hidden lg:py-0">
+        <div className="relative w-full pb-4 pt-24 lg:pt-0 lg:pb-0 flex items-center lg:sticky lg:top-0 lg:h-screen lg:w-full lg:overflow-hidden lg:py-0 blueprint-grid">
           
           <motion.div style={{ x: xAboutToTimeline, y: yAboutToTimeline }} className={isMobile ? "w-full block relative z-10" : "flex w-[320vw] h-full relative z-10"}>
             
@@ -896,6 +913,7 @@ export default function Home() {
                 
                 {/* Left Side: About Text */}
                 <div className={`${isMobile ? "w-full p-6" : "lg:w-5/12 p-6 md:p-8"} flex flex-col space-y-6 rounded-[2rem] transform-style preserve-3d shadow-[0_10px_40px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)] justify-between relative overflow-hidden backdrop-blur-3xl border border-white/10`} style={{ background: 'rgba(255,255,255,0.02)' }}>
+                  <TechCorners color="border-artemis-blue/35" />
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                   {/* Premium diagonal glass sheen */}
                   <div className="absolute top-0 left-0 w-[200%] h-[200%] bg-gradient-to-br from-white/[0.06] via-transparent to-transparent -translate-x-1/3 -translate-y-1/3 pointer-events-none" />
@@ -914,6 +932,7 @@ export default function Home() {
                     <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.1) 70%, transparent)' }} />
                     
                     <div className="p-6 md:p-8 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl border border-white/10 hover:border-white/20 hover:bg-white/[0.04]" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(249,115,22,0.05) 100%)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
+                      <TechCorners color="border-stellar-orange/35" />
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <h3 className="h2 font-bold mb-3 text-white tracking-wide hover-glitch-text">Our Mission</h3>
                       <p className="subhead text-white/70 italic leading-relaxed font-light">
@@ -922,7 +941,8 @@ export default function Home() {
                     </div>
                     
                     {/* About FRC Chip & Text */}
-                    <div className="flex flex-col items-start gap-4 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] hover:border-white/20 transition-colors duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.4)]" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
+                    <div className="flex flex-col items-start gap-4 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] hover:border-white/20 transition-colors duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.4)] relative overflow-hidden" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
+                      <TechCorners color="border-white/15" />
                       <p className="text-xs text-white/50 font-light leading-snug">We compete in FRC, the premier global high school robotics league.</p>
                       <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
                     </div>
@@ -981,9 +1001,9 @@ export default function Home() {
                     <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
                       <h4 className="text-artemis-blue text-lg font-bold mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.4)' }}>2024 Season</h4>
                       <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
-                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Creativity Award</div></li>
-                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>First Leadership Award Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></div></li>
-                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></div></li>
+                        <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>Creativity Award</div></li>
+                        <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>First Leadership Award Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></div></li>
+                        <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></div></li>
                       </ul>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-4">
@@ -999,10 +1019,10 @@ export default function Home() {
                     <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
                       <h4 className="text-stellar-orange text-lg font-bold mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(249,115,22,0.4)' }}>2025 Season</h4>
                       <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
-                        <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ranked #3 in New York State</div></li>
-                        <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>New York Tech Valley Regional Winner</div></li>
-                        <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Worlds Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division)</span></div></li>
-                        <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ballston Spa Off-Season Finalist</div></li>
+                        <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-stellar-orange" /> <div>Ranked #3 in New York State</div></li>
+                        <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-stellar-orange" /> <div>New York Tech Valley Regional Winner</div></li>
+                        <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-stellar-orange" /> <div>Worlds Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division)</span></div></li>
+                        <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-stellar-orange" /> <div>Ballston Spa Off-Season Finalist</div></li>
                       </ul>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-4">
@@ -1018,9 +1038,9 @@ export default function Home() {
                     <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
                       <h4 className="text-artemis-blue text-lg font-bold mb-3 tracking-widest uppercase" style={{ textShadow: '0 0 10px rgba(37,99,235,0.4)' }}>2026 Season</h4>
                       <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
-                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></div></li>
-                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Tech Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 5</span></div></li>
-                        <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></div></li>
+                        <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></div></li>
+                        <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>Tech Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 5</span></div></li>
+                        <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></div></li>
                       </ul>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-4">
@@ -1036,9 +1056,9 @@ export default function Home() {
                   <div className="absolute top-[35%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
                     <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2024 Season</h4>
                     <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
-                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Creativity Award</div></li>
-                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>First Leadership Award Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></div></li>
-                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></div></li>
+                      <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>Creativity Award</div></li>
+                      <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>First Leadership Award Finalist <br/><span className="text-[10px] text-white/40">(Eion Henchey)</span></div></li>
+                      <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Reed Fisch)</span></div></li>
                     </ul>
                   </div>
                   <img loading="lazy" decoding="async" src="/timeline/1.webp" alt="2024 Event" className="absolute top-[5%] left-[28vw] w-[35vw] max-w-[400px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-2" />
@@ -1049,10 +1069,10 @@ export default function Home() {
                   <div className="absolute top-[25%] left-[60vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(249,115,22,0.15)] z-30 transform rotate-1">
                     <h4 className="text-stellar-orange h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(249,115,22,0.8)' }}>2025 Season</h4>
                     <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
-                      <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ranked #3 in New York State</div></li>
-                      <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>New York Tech Valley Regional Winner</div></li>
-                      <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Worlds Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division)</span></div></li>
-                      <li className="flex items-start gap-2"><span className="text-stellar-orange mt-1">▹</span> <div>Ballston Spa Off-Season Competition Finalist</div></li>
+                      <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-stellar-orange" /> <div>Ranked #3 in New York State</div></li>
+                      <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-stellar-orange" /> <div>New York Tech Valley Regional Winner</div></li>
+                      <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-stellar-orange" /> <div>Worlds Alliance Captain <br/><span className="text-[10px] text-white/40">(Hopper Division)</span></div></li>
+                      <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-stellar-orange" /> <div>Ballston Spa Off-Season Competition Finalist</div></li>
                     </ul>
                   </div>
                   <img loading="lazy" decoding="async" src="/timeline/2025_1_new.webp" alt="2025 Winner" className="absolute bottom-[15%] left-[70vw] w-[45vw] max-w-[600px] rounded-[3rem] shadow-[0_0_40px_rgba(249,115,22,0.15)] object-cover z-20 brightness-80 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-1" />
@@ -1063,9 +1083,9 @@ export default function Home() {
                   <div className="absolute top-[45%] left-[130vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
                     <h4 className="text-artemis-blue h2 font-bold mb-4 tracking-widest uppercase hover-glitch-text" style={{ textShadow: '0 0 10px rgba(37,99,235,0.8)' }}>2026 Season</h4>
                     <ul className="text-white/80 font-mono text-xs leading-relaxed space-y-3 list-none">
-                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></div></li>
-                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Tech Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 5</span></div></li>
-                      <li className="flex items-start gap-2"><span className="text-artemis-blue mt-1">▹</span> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></div></li>
+                      <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>Hudson Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 3</span></div></li>
+                      <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>Tech Valley Regional <br/><span className="text-[10px] text-white/40">Alliance 5</span></div></li>
+                      <li className="flex items-start gap-2.5"><GearIcon className="w-3.5 h-3.5 mt-0.5 text-artemis-blue" /> <div>Safety All-Star <br/><span className="text-[10px] text-white/40">(Josiah Eugenio)</span></div></li>
                     </ul>
                   </div>
                   <img loading="lazy" decoding="async" src="/timeline/2026_1.webp" alt="2026 Event" className="absolute bottom-[15%] left-[155vw] w-[35vw] max-w-[450px] rounded-[3rem] shadow-[0_0_40px_rgba(37,99,235,0.15)] object-cover z-20 brightness-90 hover:brightness-100 hover:scale-[1.05] hover:z-40 transition-all duration-500 transform rotate-3" />
@@ -1086,7 +1106,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            5. OUTREACH PARALLAX (FLY OUT EFFECT)
            ══════════════════════════════════════════════════════ */}
-      <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B]" style={{ height: isMobile ? 'auto' : '350vh' }}>
+      <section id="outreach" ref={outreachScrollRef} className="relative z-10 bg-gradient-to-b from-[#05070B] to-[#05070B] blueprint-grid" style={{ height: isMobile ? 'auto' : '350vh' }}>
         <div className={isMobile ? "relative w-full flex flex-col items-center pt-8 pb-16 px-6" : "sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden pt-24 pb-12"}>
           
           {/* Background Elements */}
@@ -1184,7 +1204,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
            6. BUDGET & SPONSORS
            ══════════════════════════════════════════════════════ */}
-      <section id="budget" className="relative z-10 bg-[#05070B] pt-2 pb-0 md:py-32">
+      <section id="budget" className="relative z-10 bg-[#05070B] pt-2 pb-0 md:py-32 blueprint-grid">
         {/* Scattered 3D Shapes */}
         <motion.div animate={{ x: [0, 25, -15, 0], y: [0, -25, 15, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} style={{ animationDelay: '3s', animationDuration: '14s' }} className="shape-3d shape-cube absolute top-[40%] left-[8%] w-24 h-24 opacity-50 z-0 pointer-events-none" />
         
@@ -1213,6 +1233,7 @@ export default function Home() {
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="absolute inset-0 w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-artemis-blue/30"
                 >
+                  <TechCorners color="border-artemis-blue/35" />
                   <h3 className="h2 font-black mb-4 text-white tracking-wide">Funding Sources</h3>
                   <div className="space-y-4 mb-8">
                     {FUNDING_SOURCES.map((item, idx) => {
@@ -1249,6 +1270,7 @@ export default function Home() {
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="absolute inset-0 w-full glass-panel-deep !bg-[#0A0D14] p-8 rounded-2xl pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-stellar-orange/30"
                 >
+                  <TechCorners color="border-stellar-orange/35" />
                   <h3 className="h2 font-black mb-4 text-white tracking-wide">Expenses</h3>
                   <div className="space-y-3.5 mb-8">
                     {EXPENSES.map((item, idx) => {
@@ -1457,6 +1479,7 @@ export default function Home() {
                   className={`relative p-8 rounded-3xl border backdrop-blur-3xl transition-all duration-500 flex flex-col group cursor-pointer gradient-border ${isMobile ? 'border-white/10 bg-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.3)] scale-100 active:scale-[0.98] w-[85vw] max-w-[320px] shrink-0 snap-center' : borderClass} ${!isMobile ? 'hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)]' : ''}`}
                   style={{ background: (isApollo && !isMobile) ? undefined : 'rgba(255,255,255,0.015)' }}
                 >
+                  <TechCorners color={tier.name === 'Apollo' ? 'border-artemis-blue/45' : tier.name === 'ZEUS' ? 'border-stellar-orange/35' : 'border-white/15'} />
                   
                   <div className="relative z-10 flex flex-col h-full">
                     <p className="label text-[9px] tracking-widest uppercase mb-2 text-white/40 font-mono">{tier.label}</p>
@@ -1470,7 +1493,7 @@ export default function Home() {
                     <ul className="space-y-3 md:space-y-4 text-xs md:text-sm text-white/70 mb-8 flex-grow">
                       {tier.benefits.map((benefit, i) => (
                         <li key={i} className="flex items-start gap-3">
-                          <span className={`text-base leading-none ${accentColorClass}`}>▹</span>
+                          <GearIcon className={`w-3.5 h-3.5 mt-0.5 ${accentColorClass}`} />
                           <span className="font-light">{benefit}</span>
                         </li>
                       ))}
@@ -1748,7 +1771,7 @@ export default function Home() {
             {/* Double the array for seamless infinite scroll */}
             {[...SPONSOR_LOGOS, ...SPONSOR_LOGOS].map((name, i) => (
               <span key={`name-${i}`} className="mx-6 label tracking-widest text-white/30 whitespace-nowrap flex items-center shrink-0">
-                {name} <span className="text-artemis-blue/50 ml-12">▹</span>
+                {name} <span className="ml-12 shrink-0"><GearIcon className="w-3.5 h-3.5 text-artemis-blue/30" /></span>
               </span>
             ))}
           </div>
