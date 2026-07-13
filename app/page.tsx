@@ -389,7 +389,8 @@ export default function Home() {
   // Preload images on mount
   useEffect(() => {
     const isMobileDevice = window.innerWidth < 1024;
-    const frameCount = isMobileDevice ? 1 : 290;
+    // Lower frame count to 96 on desktop to load 3x faster
+    const frameCount = isMobileDevice ? 1 : 96;
     
     // Add additional critical images to preload
     const additionalImages = [
@@ -410,11 +411,11 @@ export default function Home() {
     let minimumTimeElapsed = false;
     let allAssetsLoaded = false;
 
-    // Force the beautiful 3D loading screen to be visible for at least 3.5 seconds
+    // Fast loading screen delay (300ms) for an instant feel
     setTimeout(() => {
       minimumTimeElapsed = true;
       if (allAssetsLoaded) setIsLoading(false);
-    }, 3500);
+    }, 300);
 
     const onAssetLoaded = () => {
       loadedCount++;
@@ -426,7 +427,9 @@ export default function Home() {
 
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
-      const paddedIndex = i.toString().padStart(3, '0');
+      // Map to every 3rd frame (up to 288) to cover the full sequence
+      const frameIndex = isMobileDevice ? 1 : Math.min(290, i * 3);
+      const paddedIndex = frameIndex.toString().padStart(3, '0');
       img.src = (i === 1 || isMobileDevice) ? '/hero_starting_frame.webp' : `/hero_frames/${paddedIndex}.webp`;
       
       img.onload = () => {
@@ -476,10 +479,11 @@ export default function Home() {
   
   useMotionValueEvent(smoothHeroScroll, "change", (latest) => {
     const clamped = Math.max(0, Math.min(1, latest));
-    const frameIndex = Math.min(289, Math.floor(clamped * 290));
-    if (canvasRef.current && imagesRef.current[frameIndex]) {
+    // Dynamically index based on the size of the preloaded image array
+    const imgIndex = Math.min(imagesRef.current.length - 1, Math.floor(clamped * imagesRef.current.length));
+    if (canvasRef.current && imagesRef.current[imgIndex]) {
       const ctx = canvasRef.current.getContext('2d');
-      const img = imagesRef.current[frameIndex];
+      const img = imagesRef.current[imgIndex];
       if (img.complete && img.naturalHeight !== 0) {
         if (rafRef.current) cancelAnimationFrame(rafRef.current);
         rafRef.current = requestAnimationFrame(() => {
@@ -919,8 +923,8 @@ export default function Home() {
                   <div className="absolute top-0 left-0 w-[200%] h-[200%] bg-gradient-to-br from-white/[0.06] via-transparent to-transparent -translate-x-1/3 -translate-y-1/3 pointer-events-none" />
                   
                   <div className="relative z-10">
-                    <h2 className="h1 font-black text-white hover-glitch-text transition-all duration-300">
-                      About Us
+                    <h2 className="text-3xl font-black text-white uppercase tracking-wider">
+                      About
                     </h2>
                     <p className="body text-white/60 leading-relaxed font-light mt-4">
                       Founded in 2016, Artemis Robotics is Chatham High School&apos;s sole technology and STEAM hub. We offer a welcoming space for all students to explore engineering, design, and business.
@@ -933,18 +937,9 @@ export default function Home() {
                     
                     <div className="p-6 md:p-8 rounded-[1.5rem] relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 backdrop-blur-2xl border border-white/10 hover:border-white/20 hover:bg-white/[0.04]" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(249,115,22,0.05) 100%)', boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
                       <TechCorners color="border-stellar-orange/35" />
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <h3 className="h2 font-bold mb-3 text-white tracking-wide hover-glitch-text">Our Mission</h3>
-                      <p className="subhead text-white/70 italic leading-relaxed font-light">
-                        &quot;Our mission is to cultivate a welcoming environment centered on STEAM learning and values of gracious professionalism regardless of background.&quot;
+                      <p className="subhead text-white/80 italic leading-relaxed font-medium text-center">
+                        &quot;To cultivate a welcoming environment centered on STEAM learning and gracious professionalism regardless of background.&quot;
                       </p>
-                    </div>
-                    
-                    {/* About FRC Chip & Text */}
-                    <div className="flex flex-col items-start gap-4 p-5 rounded-[1.5rem] border border-white/10 backdrop-blur-2xl hover:bg-white/[0.08] hover:border-white/20 transition-colors duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.4)] relative overflow-hidden" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
-                      <TechCorners color="border-white/15" />
-                      <p className="text-xs text-white/50 font-light leading-snug">We compete in FRC, the premier global high school robotics league.</p>
-                      <a href="https://www.firstinspires.org/robotics/frc" target="_blank" rel="noopener noreferrer" className="px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-400 hover:scale-105 text-white" style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.3) 0%, rgba(249,115,22,0.2) 100%)', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)' }}>About FRC →</a>
                     </div>
                   </div>
                 </div>
@@ -991,6 +986,9 @@ export default function Home() {
               
               {isMobile ? (
                 <div className="flex flex-col gap-12 relative pl-8 border-l border-white/10 max-w-xl mx-auto">
+                  <h2 className="text-3xl font-black text-white uppercase tracking-wider mb-2 -ml-8">
+                    Timeline
+                  </h2>
                   {/* Glowing vertical connector line */}
                   <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-artemis-blue via-stellar-orange to-artemis-blue shadow-[0_0_8px_rgba(37,99,235,0.5)]" />
                   
@@ -1051,6 +1049,12 @@ export default function Home() {
                 </div>
               ) : (
                 <>
+                  {/* Timeline section header */}
+                  <div className="absolute top-[8%] left-[5vw] z-30">
+                    <h2 className="text-4xl md:text-5xl font-black text-white/80 uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+                      Timeline
+                    </h2>
+                  </div>
                   {/* 2024 SECTION (0vw to 70vw) */}
                   <span className="absolute top-[6%] left-[1vw] text-[18vw] font-black text-white/[0.02] leading-none pointer-events-none select-none z-0" style={{ fontFamily: 'var(--font-display)' }}>24</span>
                   <div className="absolute top-[35%] left-[5vw] w-[28vw] max-w-[400px] bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-[0_0_45px_rgba(37,99,235,0.15)] z-30 transform -rotate-1">
@@ -1130,10 +1134,9 @@ export default function Home() {
             </>
           )}
           
-          <div className="max-w-7xl mx-auto px-6 w-full text-center mb-8 relative z-10 shrink-0">
-            <h2 className="display font-black text-white/60 tracking-wide hover-glitch-text relative inline-block">
+          <div className="max-w-7xl mx-auto px-6 w-full text-center mb-16 relative z-10 shrink-0">
+            <h2 className="text-4xl md:text-5xl font-black text-white/80 uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
               Impact
-              <div className="absolute inset-0 blur-[60px] bg-gradient-to-r from-artemis-blue/20 via-purple-500/10 to-stellar-orange/15 pointer-events-none -z-10 scale-150" />
             </h2>
             {/* Mobile Scroll Indicator & Controls */}
             <div className="md:hidden mt-4 flex items-center justify-center gap-4">
@@ -1210,7 +1213,7 @@ export default function Home() {
         
         <div className="max-w-4xl mx-auto px-6 w-full flex flex-col items-center relative z-10 text-center">
           
-          <h2 className="display font-black mb-4">
+          <h2 className="text-4xl md:text-5xl font-black text-white/80 uppercase tracking-widest mb-6" style={{ fontFamily: 'var(--font-display)' }}>
             Budget
           </h2>
 
@@ -1427,9 +1430,8 @@ export default function Home() {
           
           {/* Section Header */}
           <div className="text-center mb-16">
-            <span className="label text-[10px] uppercase tracking-[0.25em] text-white/40 mb-3 block font-mono">Partnership Opportunities</span>
-            <h2 className="display font-black text-white hover-glitch-text mb-4 text-4xl md:text-5xl tracking-tight">
-              Support Us
+            <h2 className="text-4xl md:text-5xl font-black text-white/80 uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
+              Support
             </h2>
             
             {/* Mobile Scroll Indicator & Controls */}
