@@ -84,38 +84,38 @@ const OUTREACH_CARDS = [
   {
     tag: "Origami for Good",
     title: "1,000 Cranes Initiative",
-    desc: "We folded over 1,000 origami cranes to donate to local hospitals and created custom team-colored origami kits for every team at our competitions - forging meaningful connections across the FRC community.",
+    desc: "Hand-folded and donated over 1,000 origami cranes to local hospitals and provided custom team-colored origami kits to all competition teams to foster community connection.",
     image: "/photos/outreach/origami_for_good.webp",
   },
   {
     tag: "STEAM Advocacy",
     title: "NY State STEAM Day",
-    desc: "Advocated for STEAM grants at New York State STEAM Day alongside Assembly Member Didi Barrett. We demonstrated our robot in action and networked with teams statewide to champion the importance of STEAM education.",
+    desc: "Advocated for STEAM grants at New York State STEAM Day with Assembly Member Didi Barrett, using robot demonstrations to champion STEAM education.",
     image: "/photos/outreach/steam_day_assembly.webp",
     objectPosition: "center 15%",
   },
   {
     tag: "Mentorship",
     title: "Team 7504 Cybearbots",
-    desc: "Met with Cybearbots to advise on fundraising, lead acquisition, and strategy. Helped increase their funding from $15k to $30k in one year. Shared scouting and strategic data at Tech Valley.",
+    desc: "Advised Team 7504 Cybearbots on fundraising, lead acquisition, and strategy, moreover during competition we shared crucial scouting and strategic data.",
     image: "/photos/outreach/mentorship_growth.webp",
   },
   {
-    tag: "Safety & Hardware Fixes",
+    tag: "Safety & Hardware Enhancements",
     title: "Battery Clips & Safety Kits",
-    desc: "At each competition we handed out 3D printed battery clips to prevent batteries from disconnecting, and distributed free community safety kits to every team, earning us Safety All-Star awards.",
+    desc: "Distributed 3D printed battery clips and free community safety kits to all competition teams, earning us Safety All-Star awards.",
     image: "/photos/outreach/battery_safety_kit.jpg",
   },
   {
-    tag: "Community",
+    tag: "Community Engagement",
     title: "Wellness & Science Fairs",
-    desc: "Gave demonstrations to our community and illustrated the importance of robotics at the Chatham Wellness Fair, Science Fair, and Learning Fair.",
+    desc: "Provided robotics demonstrations and educational activities at the Chatham Wellness, Science, and Learning Fairs.",
     image: "/photos/outreach/community_fair_booth.webp",
   },
   {
-    tag: "Recognition",
+    tag: "Peer Recognition",
     title: "Unconventional Awards",
-    desc: "Created custom awards to give out and recognize teams that go above and beyond in unconventional ways that are not traditionally recognized by FIRST.",
+    desc: "Created and presented unique awards to recognize teams that go above and beyond in unconventional ways not typically honored by FIRST.",
     image: "/photos/outreach/unconventional_awards.webp",
   }
 ];
